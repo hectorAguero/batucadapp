@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:samba_public_app/extensions/media_query_context_extension.dart';
+import 'package:samba_public_app/features/home/home_page_controller.dart';
 import 'package:samba_public_app/features/home/widgets/adaptive_navigation_bar.dart';
+import 'package:samba_public_app/features/home/widgets/adaptive_navigation_rail.dart';
 
 class HomePage extends ConsumerWidget {
   const HomePage(this.navigationShell, {super.key});
@@ -10,43 +13,33 @@ class HomePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final size = MediaQuery.sizeOf(context);
     return Scaffold(
-      body: navigationShell,
-      bottomNavigationBar: AdaptiveNavigationBar(
-        tabDestinations: TabDestination.values,
-        onDestinationSelected: (index) {
-          ///GoRouter redirect update the provider
-          navigationShell.goBranch(
-            index,
-            initialLocation: index == navigationShell.currentIndex,
-          );
-        },
-        selectedIndex: navigationShell.currentIndex,
-      ),
+      body: size.isSmallScreen
+          ? navigationShell
+          : Row(
+              children: [
+                AdaptiveNavigationRail(
+                  destinations: TabDestination.values,
+                  selectedIndex: navigationShell.currentIndex,
+                ),
+                const VerticalDivider(thickness: 1, width: 1),
+                Expanded(child: navigationShell),
+              ],
+            ),
+      bottomNavigationBar: size.isSmallScreen
+          ? AdaptiveNavigationBar(
+              tabDestinations: TabDestination.values,
+              onDestinationSelected: (index) {
+                ///GoRouter redirect update the provider
+                navigationShell.goBranch(
+                  index,
+                  initialLocation: index == navigationShell.currentIndex,
+                );
+              },
+              selectedIndex: navigationShell.currentIndex,
+            )
+          : null,
     );
   }
-}
-
-enum TabDestination {
-  instruments,
-  parades,
-  schools;
-
-  String get label => switch (this) {
-        TabDestination.instruments => 'Instruments',
-        TabDestination.parades => 'Parades',
-        TabDestination.schools => 'Schools'
-      };
-
-  IconData get icon => switch (this) {
-        TabDestination.instruments => Icons.music_note,
-        TabDestination.parades => Icons.flag,
-        TabDestination.schools => Icons.school
-      };
-
-  IconData get selectedIcon => switch (this) {
-        TabDestination.instruments => Icons.music_note_outlined,
-        TabDestination.parades => Icons.flag_outlined,
-        TabDestination.schools => Icons.school_outlined
-      };
 }

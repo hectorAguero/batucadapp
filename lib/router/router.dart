@@ -9,18 +9,6 @@ import 'package:samba_public_app/features/schools/schools_tab.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'root');
 
-enum _HomeTab {
-  instruments,
-  parades,
-  schools;
-
-  String get path => switch (this) {
-        _HomeTab.instruments => InstrumentsTab.route.path,
-        _HomeTab.parades => ParadesTab.route.path,
-        _HomeTab.schools => SchoolsTab.route.path,
-      };
-}
-
 class AppBaseRoute {
   const AppBaseRoute({
     required this.path,
@@ -36,15 +24,16 @@ class AppBaseRoute {
 final appRouterProvider = Provider<GoRouter>(
   (ref) {
     final primaryScrolls = List.generate(
-      _HomeTab.values.length,
+      TabDestination.values.length,
       (_) => ScrollController(),
     );
     final router = GoRouter(
       navigatorKey: _rootNavigatorKey,
       redirect: (context, state) {
-        if (_HomeTab.values.any((tab) => tab.path == state.uri.toString())) {
+        if (TabDestination.values
+            .any((tab) => tab.path == state.uri.toString())) {
           final currentIndex = ref.read(selectedHomeTabIndexProvider);
-          final newIndex = _HomeTab.values.indexWhere(
+          final newIndex = TabDestination.values.indexWhere(
             (tab) => tab.path == state.uri.toString(),
           );
           if (currentIndex != newIndex) {

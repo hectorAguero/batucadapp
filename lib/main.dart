@@ -20,13 +20,15 @@ class MyApp extends ConsumerWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData.from(
         colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xff6750a4),
+          seedColor: const Color(0xffff00a5),
+          secondary: const Color(0xff00a859),
         ),
       ),
       darkTheme: ThemeData.from(
         colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xff6750a4),
           brightness: Brightness.dark,
+          seedColor: const Color(0xffff00a5),
+          secondary: const Color(0xff00a859),
         ),
       ),
     );

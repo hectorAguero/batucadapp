@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:samba_public_app/router/router.dart';
 
 class ParadesTab extends StatelessWidget {

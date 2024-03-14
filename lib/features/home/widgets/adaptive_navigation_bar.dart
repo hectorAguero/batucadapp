@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:samba_public_app/extensions/is_ios_or_macos_platform_extension.dart';
-import 'package:samba_public_app/features/home/home_page.dart';
+import 'package:samba_public_app/features/home/home_page_controller.dart';
 
 /// Shows a widget for cupertino or material.
 class AdaptiveNavigationBar extends StatelessWidget {
