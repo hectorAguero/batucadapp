@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:samba_public_app/router/router.dart';
+import 'package:samba_public_app/theme/theme_data.dart';
+import 'package:samba_public_app/theme/theme_provider.dart';
 
 void main() {
   runApp(const ProviderScope(child: MyApp()));
@@ -18,19 +20,9 @@ class MyApp extends ConsumerWidget {
       routerConfig: router,
       title: 'Samba Public App',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData.from(
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xffff00a5),
-          secondary: const Color(0xff00a859),
-        ),
-      ),
-      darkTheme: ThemeData.from(
-        colorScheme: ColorScheme.fromSeed(
-          brightness: Brightness.dark,
-          seedColor: const Color(0xffff00a5),
-          secondary: const Color(0xff00a859),
-        ),
-      ),
+      theme: AppTheme.lightTheme,
+      darkTheme: AppTheme.darkTheme,
+      themeMode: ref.watch(appThemeModeProvider),
     );
   }
 }
