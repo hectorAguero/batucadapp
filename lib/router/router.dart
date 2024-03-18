@@ -9,18 +9,6 @@ import 'package:samba_public_app/features/schools/schools_tab.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'root');
 
-class AppBaseRoute {
-  const AppBaseRoute({
-    required this.path,
-    required this.builder,
-    this.routes = const <RouteBase>[],
-  });
-
-  final String path;
-  final Widget Function(BuildContext, GoRouterState, ScrollController) builder;
-  final List<RouteBase> routes;
-}
-
 final appRouterProvider = Provider<GoRouter>(
   (ref) {
     final primaryScrolls = List.generate(
@@ -28,7 +16,9 @@ final appRouterProvider = Provider<GoRouter>(
       (_) => ScrollController(),
     );
     final router = GoRouter(
+      debugLogDiagnostics: true,
       navigatorKey: _rootNavigatorKey,
+      initialLocation: '/instruments',
       redirect: (context, state) {
         if (TabDestination.values
             .any((tab) => tab.path == state.uri.toString())) {
@@ -45,9 +35,9 @@ final appRouterProvider = Provider<GoRouter>(
             );
           }
         }
+
         return null;
       },
-      initialLocation: InstrumentsTab.route.path,
       routes: [
         StatefulShellRoute.indexedStack(
           builder: (context, state, navigationShell) =>
@@ -62,7 +52,9 @@ final appRouterProvider = Provider<GoRouter>(
                     state,
                     primaryScrolls[0], // InstrumentsTab
                   ),
-                  routes: InstrumentsTab.route.routes,
+                  routes: InstrumentsTab.route.routes.isNotEmpty
+                      ? InstrumentsTab.route.routes
+                      : [],
                 ),
               ],
             ),

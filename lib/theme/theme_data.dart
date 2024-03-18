@@ -10,7 +10,7 @@ class AppTheme {
           background: CupertinoColors.systemGroupedBackground,
         ),
       ).copyWith(
-        splashFactory: InkRipple.splashFactory,
+        splashFactory: InkSparkle.splashFactory,
         cupertinoOverrideTheme: getCupertinoTheme(Brightness.light),
       );
 

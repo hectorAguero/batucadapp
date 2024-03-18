@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:samba_public_app/router/router.dart';
+import 'package:samba_public_app/router/go_route_scroll_tab.dart';
 
 class SchoolsTab extends ConsumerStatefulWidget {
   const SchoolsTab({super.key});
 
-  static final route = AppBaseRoute(
+  static final route = GoRouteScrollTab(
     path: '/schools',
     builder: (context, state, controller) => PrimaryScrollController(
       controller: controller,
