@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:samba_public_app/features/home/home_page.dart';
 import 'package:samba_public_app/features/home/home_page_controller.dart';
-import 'package:samba_public_app/features/instruments/instruments_tab.dart';
+import 'package:samba_public_app/features/instruments/instruments_tab_page.dart';
 import 'package:samba_public_app/features/parades/parades_tab.dart';
 import 'package:samba_public_app/features/schools/schools_tab.dart';
 
@@ -46,14 +46,14 @@ final appRouterProvider = Provider<GoRouter>(
             StatefulShellBranch(
               routes: <RouteBase>[
                 GoRoute(
-                  path: InstrumentsTab.route.path,
-                  builder: (context, state) => InstrumentsTab.route.builder(
+                  path: InstrumentsTabPage.route.path,
+                  builder: (context, state) => InstrumentsTabPage.route.builder(
                     context,
                     state,
                     primaryScrolls[0], // InstrumentsTab
                   ),
-                  routes: InstrumentsTab.route.routes.isNotEmpty
-                      ? InstrumentsTab.route.routes
+                  routes: InstrumentsTabPage.route.routes.isNotEmpty
+                      ? InstrumentsTabPage.route.routes
                       : [],
                 ),
               ],

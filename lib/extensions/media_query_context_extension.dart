@@ -18,11 +18,11 @@ extension ScreenSizeExtension on Size {
 
   bool get isExtraLargeScreen => width >= largeScreen;
 
-  int getAxisCount([int small = 1, int mediumLarge = 2, int extraLarge = 3]) {
-    if (isSmallScreen) {
+  int getAxisCount([int small = 1, int large = 2, int extraLarge = 3]) {
+    if (isSmallScreen || isMediumScreen) {
       return small;
-    } else if (isMediumScreen || isLargeScreen) {
-      return mediumLarge;
+    } else if (isLargeScreen) {
+      return large;
     } else {
       return extraLarge;
     }

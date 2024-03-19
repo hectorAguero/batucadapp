@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:samba_public_app/features/instruments/instruments_tab.dart';
+import 'package:samba_public_app/features/instruments/instruments_tab_page.dart';
 import 'package:samba_public_app/features/parades/parades_tab.dart';
 import 'package:samba_public_app/features/schools/schools_tab.dart';
 
@@ -24,7 +24,7 @@ enum TabDestination {
   schools;
 
   String get path => switch (this) {
-        TabDestination.instruments => InstrumentsTab.route.path,
+        TabDestination.instruments => InstrumentsTabPage.route.path,
         TabDestination.parades => ParadesTab.route.path,
         TabDestination.schools => SchoolsTab.route.path,
       };

@@ -11,10 +11,3 @@ class Instrument {
   final String description;
   final String imageUrl;
 }
-
-const mockInstrument = Instrument(
-  id: 1,
-  name: 'Guitar',
-  description: 'Description of the guitar.',
-  imageUrl: 'https://source.unsplash.com/random/?instrument',
-);

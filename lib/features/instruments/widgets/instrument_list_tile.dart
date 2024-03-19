@@ -37,7 +37,12 @@ class _InstrumentListTileState extends State<InstrumentListTile> {
         ),
         leading: ClipRRect(
           borderRadius: BorderRadius.circular(8),
-          child: AppImageNetwork(widget.imageUrl),
+          child: AppImageNetwork(
+            widget.imageUrl,
+            height: 48,
+            width: 48,
+            fit: BoxFit.cover,
+          ),
         ),
         trailing: isExpanded
             ? const Icon(Icons.music_note)
