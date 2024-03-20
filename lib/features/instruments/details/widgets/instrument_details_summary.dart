@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:samba_public_app/features/instruments/instrument.dart';
 
 class InstrumentDetailsSummary extends StatelessWidget {
   const InstrumentDetailsSummary({

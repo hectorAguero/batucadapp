@@ -18,6 +18,8 @@ class AdaptiveNavigationRail extends StatelessWidget {
   final ValueChanged<int> onDestinationSelected;
 
   static const footerSize = 97.0;
+  static const largeRailWidth = 256.0;
+  static const smallRailWidth = 96.0;
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +63,9 @@ class AdaptiveNavigationRail extends StatelessWidget {
             final themeMode = ref.watch(appThemeModeProvider);
             return SizedBox(
               height: footerSize,
-              width: size.isLargeScreen || size.isExtraLargeScreen ? 256 : 96,
+              width: size.isLargeScreen || size.isExtraLargeScreen
+                  ? largeRailWidth
+                  : smallRailWidth,
               child: ColoredBox(
                 color: context.colorScheme.surface,
                 child: Column(
@@ -115,8 +119,8 @@ class AdaptiveNavigationRail extends StatelessWidget {
                                   : Icons.dark_mode,
                             )
                           : null,
-                      onTap:
-                          ref.read(appThemeModeProvider.notifier).toggleTheme,
+                      onTap: () async =>
+                          ref.read(appThemeModeProvider.notifier).toggleTheme(),
                     ),
                   ],
                 ),

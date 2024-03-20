@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:samba_public_app/app_providers.dart';
 
 part 'theme_provider.g.dart';
 
@@ -7,16 +8,36 @@ part 'theme_provider.g.dart';
 class AppThemeMode extends _$AppThemeMode {
   @override
   ThemeMode build() {
-    return ThemeMode.light;
+    try {
+      final mode = ref
+          .watch(sharedPreferencesProvider)
+          .requireValue
+          .getString('theme_mode');
+      return switch (mode) {
+        'light' => ThemeMode.light,
+        'dark' => ThemeMode.dark,
+        'system' || (_) => ThemeMode.system,
+      };
+    } catch (e) {
+      // TODO(hectorAguero): Add logging
+      print(e);
+      return ThemeMode.system;
+    }
   }
 
-  void toggleTheme() {
+  Future<void> toggleTheme() async {
     switch (state) {
       case ThemeMode.system:
+        final prefs = ref.read(sharedPreferencesProvider).requireValue;
+        await prefs.setString('theme_mode', 'light');
         state = ThemeMode.light;
       case ThemeMode.light:
+        final prefs = ref.read(sharedPreferencesProvider).requireValue;
+        await prefs.setString('theme_mode', 'dark');
         state = ThemeMode.dark;
       case ThemeMode.dark:
+        final prefs = ref.read(sharedPreferencesProvider).requireValue;
+        await prefs.remove('theme_mode');
         state = ThemeMode.system;
     }
   }
@@ -26,10 +47,26 @@ class AppThemeMode extends _$AppThemeMode {
 class AppThemeTrueBlack extends _$AppThemeTrueBlack {
   @override
   bool build() {
-    return false;
+    try {
+      return ref
+              .watch(sharedPreferencesProvider)
+              .requireValue
+              .getBool('true_black') ??
+          false;
+    } catch (e) {
+      // TODO(hectorAguero): Add logging
+      print(e);
+      return false;
+    }
   }
 
   void toggleTrueBlack() {
+    final prefs = ref.read(sharedPreferencesProvider).requireValue;
+    if (!state) {
+      prefs.setBool('true_black', !state);
+    } else {
+      prefs.remove('true_black');
+    }
     state = !state;
   }
 }

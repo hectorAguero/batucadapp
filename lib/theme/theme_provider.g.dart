@@ -20,7 +20,7 @@ final appThemeModeProvider = NotifierProvider<AppThemeMode, ThemeMode>.internal(
 );
 
 typedef _$AppThemeMode = Notifier<ThemeMode>;
-String _$appThemeTrueBlackHash() => r'14a5c4606dc3764dfd8ce7de4b960eefb8ceab46';
+String _$appThemeTrueBlackHash() => r'e3ab2ff795559fd2253112014f342f3ded3088be';
 
 /// See also [AppThemeTrueBlack].
 @ProviderFor(AppThemeTrueBlack)

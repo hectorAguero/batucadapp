@@ -14,7 +14,7 @@ class GoBackButton extends StatelessWidget {
       minSize: 0,
       child: Icon(
         kIsCupertino ? Icons.arrow_back_ios : Icons.arrow_back,
-        color: context.colorScheme.onBackground,
+        color: context.colorScheme.onSurface,
         size: 22,
       ),
       onPressed: () {
