@@ -22,6 +22,13 @@ class HomePage extends ConsumerWidget {
                 AdaptiveNavigationRail(
                   destinations: TabDestination.values,
                   selectedIndex: navigationShell.currentIndex,
+                  onDestinationSelected: (index) {
+                    ///GoRouter redirect update the provider
+                    navigationShell.goBranch(
+                      index,
+                      initialLocation: index == navigationShell.currentIndex,
+                    );
+                  },
                 ),
                 const VerticalDivider(thickness: 1, width: 1),
                 Expanded(child: navigationShell),

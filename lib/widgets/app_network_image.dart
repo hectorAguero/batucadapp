@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
-class AppImageNetwork extends StatelessWidget {
-  const AppImageNetwork(
+class AppImage extends StatelessWidget {
+  const AppImage.network(
     this.url, {
+    this.fit,
     this.height,
     this.width,
-    this.fit,
     super.key,
   });
 

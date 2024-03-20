@@ -9,11 +9,13 @@ class AdaptiveNavigationRail extends StatelessWidget {
   const AdaptiveNavigationRail({
     required this.destinations,
     required this.selectedIndex,
+    required this.onDestinationSelected,
     super.key,
   });
 
   final List<TabDestination> destinations;
   final int selectedIndex;
+  final ValueChanged<int> onDestinationSelected;
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +33,7 @@ class AdaptiveNavigationRail extends StatelessWidget {
                 size: 80,
               ),
             ),
+            onDestinationSelected: onDestinationSelected,
             extended: size.isLargeScreen || size.isExtraLargeScreen,
             selectedIndex: selectedIndex,
             indicatorShape: const RoundedRectangleBorder(

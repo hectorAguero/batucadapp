@@ -37,7 +37,7 @@ class _InstrumentListTileState extends State<InstrumentListTile> {
         ),
         leading: ClipRRect(
           borderRadius: BorderRadius.circular(8),
-          child: AppImageNetwork(
+          child: AppImage.network(
             widget.imageUrl,
             height: 48,
             width: 48,
@@ -58,9 +58,10 @@ class _InstrumentListTileState extends State<InstrumentListTile> {
         children: [
           const Padding(
             padding: EdgeInsets.all(8),
-            child: Text(
-              'This is a longer description of the instrument. It could be a few paragraphs long.',
-            ),
+            child: Text('''
+               This is a longer description of the instrument.
+               It could be a few paragraphs long.
+               '''),
           ),
           Padding(
             padding: const EdgeInsets.all(8),

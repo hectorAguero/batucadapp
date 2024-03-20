@@ -35,7 +35,7 @@ final appRouterProvider = Provider<GoRouter>(
             );
           }
         }
-
+        print('Redirected: ${state.uri}');
         return null;
       },
       routes: [
