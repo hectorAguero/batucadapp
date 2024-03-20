@@ -17,13 +17,15 @@ class AdaptiveNavigationRail extends StatelessWidget {
   final int selectedIndex;
   final ValueChanged<int> onDestinationSelected;
 
+  static const footerSize = 97.0;
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.sizeOf(context);
     return Column(
       children: [
         SizedBox(
-          height: size.height - 56,
+          height: size.height - footerSize,
           child: NavigationRail(
             leading: Padding(
               padding: const EdgeInsets.all(8),
@@ -33,13 +35,13 @@ class AdaptiveNavigationRail extends StatelessWidget {
                 size: 80,
               ),
             ),
+            backgroundColor: context.colorScheme.surface,
             onDestinationSelected: onDestinationSelected,
             extended: size.isLargeScreen || size.isExtraLargeScreen,
             selectedIndex: selectedIndex,
             indicatorShape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(8)),
             ),
-            indicatorColor: context.colorScheme.secondary,
             destinations: [
               for (final destination in destinations)
                 NavigationRailDestination(
@@ -54,37 +56,70 @@ class AdaptiveNavigationRail extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(
-          child: Divider(
-            thickness: 1,
-            height: 1,
-          ),
-        ),
         Consumer(
           builder: (context, ref, child) {
+            final themeMode = ref.watch(appThemeModeProvider);
             return SizedBox(
-              height: 55,
+              height: footerSize,
               width: size.isLargeScreen || size.isExtraLargeScreen ? 256 : 96,
-              child: ListTile(
-                tileColor: context.colorScheme.surface,
-                contentPadding: const EdgeInsets.symmetric(horizontal: 32),
-                title: size.isLargeScreen || size.isExtraLargeScreen
-                    ? Padding(
-                        padding: const EdgeInsets.only(right: 16),
-                        child: Text(
-                          context.isLight ? 'Light Theme' : 'Dark Theme',
+              child: ColoredBox(
+                color: context.colorScheme.surface,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    if (themeMode == ThemeMode.dark)
+                      SwitchListTile(
+                        contentPadding: const EdgeInsets.only(
+                          left: 72,
+                          right: 24,
+                        ),
+                        value: ref.watch(appThemeTrueBlackProvider),
+                        title: Text(
+                          'True Black',
                           style: context.textTheme.titleMedium,
                         ),
-                      )
-                    : Icon(
-                        context.isLight ? Icons.light_mode : Icons.dark_mode,
+                        onChanged: (value) => ref
+                            .read(appThemeTrueBlackProvider.notifier)
+                            .toggleTrueBlack(),
                       ),
-                leading: size.isLargeScreen || size.isExtraLargeScreen
-                    ? Icon(
-                        context.isLight ? Icons.light_mode : Icons.dark_mode,
-                      )
-                    : null,
-                onTap: ref.read(appThemeModeProvider.notifier).toggleTheme,
+                    const SizedBox(
+                      child: Divider(
+                        thickness: 1,
+                        height: 1,
+                      ),
+                    ),
+                    ListTile(
+                      contentPadding:
+                          const EdgeInsets.symmetric(horizontal: 32),
+                      title: size.isLargeScreen || size.isExtraLargeScreen
+                          ? Padding(
+                              padding: const EdgeInsets.only(right: 16),
+                              child: Text(
+                                switch (themeMode) {
+                                  (ThemeMode.system) => 'System Theme',
+                                  (ThemeMode.light) => 'Light Theme',
+                                  (ThemeMode.dark) => 'Dark Theme',
+                                },
+                                style: context.textTheme.titleMedium,
+                              ),
+                            )
+                          : Icon(
+                              context.isLight
+                                  ? Icons.light_mode
+                                  : Icons.dark_mode,
+                            ),
+                      leading: size.isLargeScreen || size.isExtraLargeScreen
+                          ? Icon(
+                              context.isLight
+                                  ? Icons.light_mode
+                                  : Icons.dark_mode,
+                            )
+                          : null,
+                      onTap:
+                          ref.read(appThemeModeProvider.notifier).toggleTheme,
+                    ),
+                  ],
+                ),
               ),
             );
           },

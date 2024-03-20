@@ -1,29 +1,38 @@
+import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class AppTheme {
-  static ThemeData get lightTheme => ThemeData.from(
+  static ThemeData get lightTheme => FlexThemeData.light(
         useMaterial3: true,
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xffff00a5),
-          secondary: const Color(0xff00a859),
-          background: CupertinoColors.systemGroupedBackground,
+        keyColors: const FlexKeyColors(useSecondary: true),
+        colors: const FlexSchemeColor(
+          primary: Color(0xffff00a5),
+          secondary: Color(0xff00a859),
         ),
-      ).copyWith(
+        background: CupertinoColors.systemGroupedBackground,
+        surface: CupertinoColors.systemBackground,
+        subThemesData: const FlexSubThemesData(),
         splashFactory: InkSparkle.splashFactory,
+      ).copyWith(
         cupertinoOverrideTheme: getCupertinoTheme(Brightness.light),
       );
 
-  static ThemeData get darkTheme => ThemeData.from(
+  static ThemeData darkTheme({required bool trueBlack}) => FlexThemeData.dark(
         useMaterial3: true,
-        colorScheme: ColorScheme.fromSeed(
-          brightness: Brightness.dark,
-          seedColor: const Color(0xffff00a5),
-          secondary: const Color(0xff00a859),
-          background: CupertinoColors.systemBackground.darkColor,
+        keyColors: const FlexKeyColors(
+          useSecondary: true,
         ),
-      ).copyWith(
+        colors: const FlexSchemeColor(
+          primary: Color(0xffff00a5),
+          secondary: Color(0xff00a859),
+        ),
+        subThemesData: const FlexSubThemesData(),
+        surface: CupertinoColors.systemBackground.darkColor,
+        background: CupertinoColors.systemGroupedBackground.darkColor,
         splashFactory: InkSparkle.splashFactory,
+        darkIsTrueBlack: trueBlack,
+      ).copyWith(
         cupertinoOverrideTheme: getCupertinoTheme(Brightness.dark),
       );
 

@@ -16,12 +16,13 @@ class MyApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final router = ref.watch(appRouterProvider);
+    final isTrueBlack = ref.watch(appThemeTrueBlackProvider);
     return MaterialApp.router(
       routerConfig: router,
       title: 'Samba Public App',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.lightTheme,
-      darkTheme: AppTheme.darkTheme,
+      darkTheme: AppTheme.darkTheme(trueBlack: isTrueBlack),
       themeMode: ref.watch(appThemeModeProvider),
     );
   }

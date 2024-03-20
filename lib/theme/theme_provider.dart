@@ -21,3 +21,15 @@ class AppThemeMode extends _$AppThemeMode {
     }
   }
 }
+
+@riverpod
+class AppThemeTrueBlack extends _$AppThemeTrueBlack {
+  @override
+  bool build() {
+    return false;
+  }
+
+  void toggleTrueBlack() {
+    state = !state;
+  }
+}

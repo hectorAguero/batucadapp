@@ -22,67 +22,66 @@ class InstrumentListTile extends StatefulWidget {
 }
 
 class _InstrumentListTileState extends State<InstrumentListTile> {
-  bool isExpanded = false;
-
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8),
-      child: ExpansionTile(
-        collapsedShape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8),
-        ),
+    return SizedBox(
+      height: 252,
+      child: Card(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8),
         ),
-        leading: ClipRRect(
-          borderRadius: BorderRadius.circular(8),
-          child: AppImage.network(
-            widget.imageUrl,
-            height: 48,
-            width: 48,
-            fit: BoxFit.cover,
-          ),
-        ),
-        trailing: isExpanded
-            ? const Icon(Icons.music_note)
-            : const Icon(Icons.music_note_outlined),
-        backgroundColor: Theme.of(context).colorScheme.primaryContainer,
-        title: Text(widget.title),
-        subtitle: Text(widget.subtitle),
-        onExpansionChanged: (expanded) {
-          setState(() {
-            isExpanded = expanded;
-          });
-        },
-        children: [
-          const Padding(
-            padding: EdgeInsets.all(8),
-            child: Text('''
-               This is a longer description of the instrument.
-               It could be a few paragraphs long.
-               '''),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8),
-            child: ConstrainedBox(
-              constraints: const BoxConstraints(
-                maxWidth: 400,
+        color: Theme.of(context).colorScheme.secondaryContainer,
+        margin: const EdgeInsets.all(8),
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(bottom: 8),
+                child: Text(
+                  widget.title,
+                  style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                        fontWeight: FontWeight.w500,
+                      ),
+                ),
               ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  TextButton(
-                    onPressed: () {
-                      widget.onTap();
-                    },
-                    child: const Text('Learn More'),
+                  const Flexible(
+                    child: Text(
+                      'This is a longer description of the instrument. It could be a few paragraphs long, Fugiat do occaecat laboris est non minim minim voluptate sunt Lorem ullamco dolor. Amet in qui minim consectetur et. Nulla irure non fugiat sunt do ex ea ut culpa.',
+                      maxLines: 6,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                  const SizedBox(width: 16),
+                  Column(
+                    children: [
+                      ClipRRect(
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(8),
+                        ),
+                        child: AppImage.network(
+                          widget.imageUrl,
+                          height: 120,
+                          width: 120,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      TextButton(
+                        onPressed: widget.onTap,
+                        child: const Text('View Details'),
+                      ),
+                    ],
                   ),
                 ],
               ),
-            ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
