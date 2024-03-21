@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:samba_public_app/extensions/media_query_context_extension.dart';
 import 'package:samba_public_app/extensions/theme_of_context_extension.dart';
 import 'package:samba_public_app/features/home/home_page_controller.dart';
-import 'package:samba_public_app/theme/theme_provider.dart';
+import 'package:samba_public_app/features/home/widgets/theme_selector.dart';
 
 class AdaptiveNavigationRail extends StatelessWidget {
   const AdaptiveNavigationRail({
@@ -17,7 +16,7 @@ class AdaptiveNavigationRail extends StatelessWidget {
   final int selectedIndex;
   final ValueChanged<int> onDestinationSelected;
 
-  static const footerSize = 97.0;
+  static const footerSize = 115.0;
   static const largeRailWidth = 256.0;
   static const smallRailWidth = 96.0;
 
@@ -58,75 +57,15 @@ class AdaptiveNavigationRail extends StatelessWidget {
             ],
           ),
         ),
-        Consumer(
-          builder: (context, ref, child) {
-            final themeMode = ref.watch(appThemeModeProvider);
-            return SizedBox(
-              height: footerSize,
-              width: size.isLargeScreen || size.isExtraLargeScreen
-                  ? largeRailWidth
-                  : smallRailWidth,
-              child: ColoredBox(
-                color: context.colorScheme.surface,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    if (themeMode == ThemeMode.dark)
-                      SwitchListTile(
-                        contentPadding: const EdgeInsets.only(
-                          left: 72,
-                          right: 24,
-                        ),
-                        value: ref.watch(appThemeTrueBlackProvider),
-                        title: Text(
-                          'True Black',
-                          style: context.textTheme.titleMedium,
-                        ),
-                        onChanged: (value) => ref
-                            .read(appThemeTrueBlackProvider.notifier)
-                            .toggleTrueBlack(),
-                      ),
-                    const SizedBox(
-                      child: Divider(
-                        thickness: 1,
-                        height: 1,
-                      ),
-                    ),
-                    ListTile(
-                      contentPadding:
-                          const EdgeInsets.symmetric(horizontal: 32),
-                      title: size.isLargeScreen || size.isExtraLargeScreen
-                          ? Padding(
-                              padding: const EdgeInsets.only(right: 16),
-                              child: Text(
-                                switch (themeMode) {
-                                  (ThemeMode.system) => 'System Theme',
-                                  (ThemeMode.light) => 'Light Theme',
-                                  (ThemeMode.dark) => 'Dark Theme',
-                                },
-                                style: context.textTheme.titleMedium,
-                              ),
-                            )
-                          : Icon(
-                              context.isLight
-                                  ? Icons.light_mode
-                                  : Icons.dark_mode,
-                            ),
-                      leading: size.isLargeScreen || size.isExtraLargeScreen
-                          ? Icon(
-                              context.isLight
-                                  ? Icons.light_mode
-                                  : Icons.dark_mode,
-                            )
-                          : null,
-                      onTap: () async =>
-                          ref.read(appThemeModeProvider.notifier).toggleTheme(),
-                    ),
-                  ],
-                ),
-              ),
-            );
-          },
+        SizedBox(
+          height: footerSize,
+          width: size.isLargeScreen || size.isExtraLargeScreen
+              ? largeRailWidth
+              : smallRailWidth,
+          child: ColoredBox(
+            color: context.colorScheme.surface,
+            child: const ThemeSelectorRail(),
+          ),
         ),
       ],
     );

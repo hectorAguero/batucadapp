@@ -30,6 +30,9 @@ class AppThemeMode extends _$AppThemeMode {
       case ThemeMode.system:
         final prefs = ref.read(sharedPreferencesProvider).requireValue;
         await prefs.setString('theme_mode', 'light');
+        ref
+            .read(appThemeTrueBlackProvider.notifier)
+            .toggleTrueBlack(forceState: false);
         state = ThemeMode.light;
       case ThemeMode.light:
         final prefs = ref.read(sharedPreferencesProvider).requireValue;
@@ -60,13 +63,13 @@ class AppThemeTrueBlack extends _$AppThemeTrueBlack {
     }
   }
 
-  void toggleTrueBlack() {
+  void toggleTrueBlack({bool? forceState}) {
     final prefs = ref.read(sharedPreferencesProvider).requireValue;
-    if (!state) {
-      prefs.setBool('true_black', !state);
+    state = forceState ?? !state;
+    if (state) {
+      prefs.setBool('true_black', state);
     } else {
       prefs.remove('true_black');
     }
-    state = !state;
   }
 }
