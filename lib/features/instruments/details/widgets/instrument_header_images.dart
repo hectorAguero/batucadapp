@@ -1,7 +1,7 @@
 import 'package:easy_image_viewer/easy_image_viewer.dart';
 import 'package:flutter/material.dart';
 import 'package:samba_public_app/features/instruments/instrument.dart';
-import 'package:samba_public_app/widgets/app_network_image.dart';
+import 'package:samba_public_app/widgets/app_fade_in_image.dart';
 
 class InstrumentHeaderImages extends StatelessWidget {
   const InstrumentHeaderImages({
@@ -38,7 +38,7 @@ class InstrumentHeaderImages extends StatelessWidget {
                             borderRadius: const BorderRadius.all(
                               Radius.circular(8),
                             ),
-                            child: AppImage.network(
+                            child: AppFadeInImage(
                               'https://picsum.photos/id/100/4912/3264',
                               height: imageHeight,
                               fit: BoxFit.cover,
@@ -62,7 +62,7 @@ class InstrumentHeaderImages extends StatelessWidget {
                       borderRadius: const BorderRadius.all(
                         Radius.circular(8),
                       ),
-                      child: AppImage.network(
+                      child: AppFadeInImage(
                         'https://picsum.photos/id/100/4912/3264',
                         height: imageHeight * 3 + 32,
                         fit: BoxFit.cover,

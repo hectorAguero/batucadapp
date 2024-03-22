@@ -2,23 +2,21 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:samba_public_app/extensions/theme_of_context_extension.dart';
-import 'package:samba_public_app/features/schools/school.dart';
 import 'package:samba_public_app/features/schools/schools_extensions.dart';
 import 'package:samba_public_app/features/schools/schools_tab_providers.dart';
-import 'package:samba_public_app/widgets/app_network_image.dart';
+import 'package:samba_public_app/widgets/app_fade_in_image.dart';
 
 class SchoolCard extends ConsumerWidget {
   const SchoolCard({
-    required this.school,
     this.margin = const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
     super.key,
   });
 
-  final School school;
   final EdgeInsets margin;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final school = ref.watch(currentSchoolProvider);
     final colorScheme = context.colorScheme;
     return Card(
       margin: margin,
@@ -66,15 +64,12 @@ class SchoolCard extends ConsumerWidget {
                       );
                     },
                     blendMode: BlendMode.srcOver,
-                    child: Container(
+                    child: SizedBox(
                       height: 160,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          fit: BoxFit.cover,
-                          image: AppNetworkImage(
-                            school.imageUrl,
-                          ),
-                        ),
+                      child: AppFadeInImage(
+                        school.imageUrl,
+                        fit: BoxFit.cover,
+                        width: double.maxFinite,
                       ),
                     ),
                   ),
@@ -84,13 +79,18 @@ class SchoolCard extends ConsumerWidget {
                     return Align(
                       alignment: Alignment.topRight,
                       child: CupertinoButton(
-                        child: Icon(
-                          school.isFavorite
-                              ? CupertinoIcons.heart_fill
-                              : CupertinoIcons.heart,
-                          color: school.isFavorite
-                              ? Colors.redAccent
-                              : Colors.white,
+                        child: AnimatedSwitcher(
+                          duration: kThemeAnimationDuration,
+                          switchInCurve: Curves.elasticIn,
+                          switchOutCurve: Curves.elasticOut,
+                          child: Icon(
+                            school.isFavorite
+                                ? CupertinoIcons.heart_fill
+                                : CupertinoIcons.heart,
+                            color: school.isFavorite
+                                ? Colors.redAccent
+                                : Colors.white,
+                          ),
                         ),
                         onPressed: () {
                           ref
@@ -105,13 +105,15 @@ class SchoolCard extends ConsumerWidget {
             ),
             Row(
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(top: 8, left: 8),
-                  child: Text(
-                    school.name,
-                    style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                          color: colorScheme.onSurface,
-                        ),
+                Flexible(
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 8, left: 16),
+                    child: Text(
+                      school.name,
+                      style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                            color: colorScheme.onSurface,
+                          ),
+                    ),
                   ),
                 ),
               ],
@@ -121,7 +123,7 @@ class SchoolCard extends ConsumerWidget {
               children: [
                 Flexible(
                   child: Padding(
-                    padding: const EdgeInsets.only(left: 8, bottom: 8),
+                    padding: const EdgeInsets.only(bottom: 16, left: 16),
                     child: Text(
                       school.currentDivision.fullName,
                       maxLines: 2,
@@ -134,7 +136,7 @@ class SchoolCard extends ConsumerWidget {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(right: 8, bottom: 8),
+                  padding: const EdgeInsets.only(bottom: 16, right: 16),
                   child: OutlinedButton(
                     style: OutlinedButton.styleFrom(
                       padding: const EdgeInsets.all(8),

@@ -40,37 +40,52 @@ class _SchoolsTabState extends ConsumerState<SchoolsTabPage> {
             maxCrossAxisExtent: largeScreen,
             child: SchoolDivisionChips(),
           ),
-          Consumer(
-            builder: (context, ref, child) {
-              final schools = ref.watch(filteredSchoolsProvider);
-              return SliverCrossAxisConstrained(
-                maxCrossAxisExtent: largeScreen,
-                child: SliverPadding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-                  sliver: switch (schools) {
-                    AsyncData(:final value) => SliverAlignedGrid.count(
-                        crossAxisCount: context.querySize.getAxisCount(),
-                        itemCount: value.length,
-                        itemBuilder: (context, index) {
-                          final school = value[index];
-                          return SchoolCard(school: school);
-                        },
-                      ),
-                    AsyncError(:final error) => SliverFillRemaining(
-                        child: Center(
-                          child: Text('Error: $error'),
-                        ),
-                      ),
-                    _ => const SliverFillRemaining(
-                        child: Center(
-                          child: CircularProgressIndicator.adaptive(),
-                        ),
-                      ),
+          SliverAnimatedSwitcher(
+            duration: kThemeAnimationDuration,
+            child: ref.watch(schoolsProvider).when(
+                  data: (schools) {
+                    return Consumer(
+                      builder: (context, ref, child) {
+                        final schools = ref.watch(filteredSchoolsProvider);
+                        return SliverCrossAxisConstrained(
+                          maxCrossAxisExtent: largeScreen,
+                          child: SliverPadding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 8,
+                              vertical: 8,
+                            ),
+                            sliver: SliverAlignedGrid.count(
+                              crossAxisCount: context.querySize.getAxisCount(),
+                              itemCount: schools.length,
+                              itemBuilder: (context, index) {
+                                final school = schools[index];
+                                return ProviderScope(
+                                  overrides: [
+                                    currentSchoolProvider.overrideWithValue(
+                                      schools
+                                          .firstWhere((s) => s.id == school.id),
+                                    ),
+                                  ],
+                                  child: const SchoolCard(),
+                                );
+                              },
+                            ),
+                          ),
+                        );
+                      },
+                    );
                   },
+                  loading: () => const SliverFillRemaining(
+                    child: Center(
+                      child: CircularProgressIndicator.adaptive(),
+                    ),
+                  ),
+                  error: (error, stackTrace) => SliverFillRemaining(
+                    child: Center(
+                      child: Text('Error: $error'),
+                    ),
+                  ),
                 ),
-              );
-            },
           ),
         ],
       ),

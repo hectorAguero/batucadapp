@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:samba_public_app/widgets/app_network_image.dart';
+import 'package:samba_public_app/widgets/app_fade_in_image.dart';
 
 typedef ImageUrl = String;
 
@@ -63,7 +63,7 @@ class _InstrumentListTileState extends State<InstrumentListTile> {
                         borderRadius: const BorderRadius.all(
                           Radius.circular(8),
                         ),
-                        child: AppImage.network(
+                        child: AppFadeInImage(
                           widget.imageUrl,
                           height: 120,
                           width: 120,

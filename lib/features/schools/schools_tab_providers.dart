@@ -1,6 +1,7 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:samba_public_app/features/schools/school.dart';
 import 'package:samba_public_app/features/schools/schools_repo.dart';
+import 'package:samba_public_app/features/schools/widgets/school_card.dart';
 
 part 'schools_tab_providers.g.dart';
 
@@ -43,20 +44,24 @@ class Schools extends _$Schools {
       state = AsyncData(updatedSchools);
     }
   }
-
-  List<int> getSchooldIds() {
-    return state.requireValue.map((e) => e.id).toList();
-  }
 }
 
-@riverpod
-class FilteredSchools extends _$FilteredSchools {
-  @override
-  FutureOr<List<School>> build() async {
-    final schools = await ref.watch(schoolsProvider.future);
-    final filter = ref.watch(selectedDivisionsProvider);
-    return schools
-        .where((school) => filter[school.currentDivision] ?? false)
-        .toList();
-  }
-}
+final filteredSchoolsProvider = Provider.autoDispose<List<School>>((ref) {
+  final filter = ref.watch(selectedDivisionsProvider);
+  final schools = ref.watch(schoolsProvider);
+
+  return schools.value
+          ?.where((school) => filter[school.currentDivision] ?? false)
+          .toList() ??
+      [];
+});
+
+/// A provider which exposes the [School] displayed by a [SchoolCard].
+///
+/// By retrieving the [School] through a provider instead of through its
+/// constructor, this allows [SchoolCard] to be instantiated using the `const` keyword.
+///
+/// This ensures that when we add/remove/edit todos, only what the
+/// impacted widgets rebuilds, instead of the entire list of items.
+final currentSchoolProvider =
+    Provider<School>((ref) => throw UnimplementedError());

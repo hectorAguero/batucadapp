@@ -22,7 +22,7 @@ final selectedDivisionsProvider = AutoDisposeNotifierProvider<SelectedDivisions,
 );
 
 typedef _$SelectedDivisions = AutoDisposeNotifier<Map<SchoolDivision, bool>>;
-String _$schoolsHash() => r'88a7c623aa9fc0ee3f51931aa193f1058ebcd8c2';
+String _$schoolsHash() => r'de570650ab1154f1fa90196141b4512233265df9';
 
 /// See also [Schools].
 @ProviderFor(Schools)
@@ -37,21 +37,5 @@ final schoolsProvider =
 );
 
 typedef _$Schools = AutoDisposeAsyncNotifier<List<School>>;
-String _$filteredSchoolsHash() => r'7dd93fa1a56be1fb9466e7254509be67599b1895';
-
-/// See also [FilteredSchools].
-@ProviderFor(FilteredSchools)
-final filteredSchoolsProvider =
-    AutoDisposeAsyncNotifierProvider<FilteredSchools, List<School>>.internal(
-  FilteredSchools.new,
-  name: r'filteredSchoolsProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$filteredSchoolsHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-typedef _$FilteredSchools = AutoDisposeAsyncNotifier<List<School>>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
