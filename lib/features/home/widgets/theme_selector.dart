@@ -104,6 +104,7 @@ class ThemeSelectorTile extends ConsumerWidget {
     return Column(
       children: [
         CupertinoListTile.notched(
+          backgroundColorActivated: Colors.transparent,
           trailing: CupertinoButton.filled(
             onPressed: null,
             padding: const EdgeInsets.symmetric(horizontal: 8),

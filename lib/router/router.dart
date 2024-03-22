@@ -6,7 +6,7 @@ import 'package:samba_public_app/features/home/home_page.dart';
 import 'package:samba_public_app/features/home/home_page_controller.dart';
 import 'package:samba_public_app/features/instruments/instruments_tab_page.dart';
 import 'package:samba_public_app/features/parades/parades_tab.dart';
-import 'package:samba_public_app/features/schools/schools_tab.dart';
+import 'package:samba_public_app/features/schools/schools_tab_page.dart';
 import 'package:samba_public_app/router/app_startup_widget.dart';
 
 part 'router.g.dart';
@@ -104,13 +104,13 @@ GoRouter goRouter(GoRouterRef ref) {
           StatefulShellBranch(
             routes: <RouteBase>[
               GoRoute(
-                path: SchoolsTab.route.path,
-                builder: (context, state) => SchoolsTab.route.builder(
+                path: SchoolsTabPage.route.path,
+                builder: (context, state) => SchoolsTabPage.route.builder(
                   context,
                   state,
                   primaryScrolls[2],
                 ),
-                routes: SchoolsTab.route.routes,
+                routes: SchoolsTabPage.route.routes,
               ),
             ],
           ),

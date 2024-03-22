@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +15,9 @@ class AppTheme {
         surface: CupertinoColors.systemBackground,
         subThemesData: const FlexSubThemesData(),
         splashFactory: InkSparkle.splashFactory,
+        extensions: [
+          AppColorTextTheme.light(),
+        ],
       ).copyWith(
         cupertinoOverrideTheme: getCupertinoTheme(Brightness.light),
       );
@@ -32,6 +36,9 @@ class AppTheme {
         background: CupertinoColors.systemGroupedBackground.darkColor,
         splashFactory: InkSparkle.splashFactory,
         darkIsTrueBlack: trueBlack,
+        extensions: [
+          AppColorTextTheme.dark(),
+        ],
       ).copyWith(
         cupertinoOverrideTheme: getCupertinoTheme(Brightness.dark),
       );
@@ -59,4 +66,49 @@ class AppTheme {
       ),
     );
   }
+}
+
+class AppColorTextTheme extends ThemeExtension<AppColorTextTheme> {
+  final Color? textColor;
+
+  final Color? inverseTextColor;
+
+  AppColorTextTheme({
+    required this.textColor,
+    required this.inverseTextColor,
+  });
+
+  AppColorTextTheme.light()
+      : textColor = const Color(0xff000000),
+        inverseTextColor = const Color(0xffffffff);
+
+  AppColorTextTheme.dark()
+      : textColor = const Color(0xffffffff),
+        inverseTextColor = const Color(0xff000000);
+
+  @override
+  AppColorTextTheme copyWith({
+    Color? appTextColor,
+    Color? appInverseTextColor,
+  }) {
+    return AppColorTextTheme(
+      textColor: appTextColor ?? textColor,
+      inverseTextColor: appInverseTextColor ?? inverseTextColor,
+    );
+  }
+
+  @override
+  AppColorTextTheme lerp(AppColorTextTheme? other, double t) {
+    if (other is! AppColorTextTheme) {
+      return this;
+    }
+    return AppColorTextTheme(
+      textColor: Color.lerp(textColor, other.textColor, t),
+      inverseTextColor: Color.lerp(inverseTextColor, other.inverseTextColor, t),
+    );
+  }
+}
+
+extension ThemeDataExtension on ThemeData {
+  AppColorTextTheme get colorTheme => extension<AppColorTextTheme>()!;
 }
