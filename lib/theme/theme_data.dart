@@ -2,6 +2,7 @@
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
 class AppTheme {
   static ThemeData get lightTheme => FlexThemeData.light(
@@ -17,6 +18,13 @@ class AppTheme {
         splashFactory: InkSparkle.splashFactory,
         extensions: [
           AppColorTextTheme.light(),
+          const WoltModalSheetThemeData(
+            bottomSheetShape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.vertical(
+                top: Radius.circular(16),
+              ),
+            ),
+          ),
         ],
       ).copyWith(
         cupertinoOverrideTheme: getCupertinoTheme(Brightness.light),

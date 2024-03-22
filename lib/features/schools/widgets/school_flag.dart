@@ -8,7 +8,7 @@ import 'package:samba_public_app/widgets/app_fade_in_image.dart';
 class SchoolFlag extends ConsumerWidget {
   const SchoolFlag({
     required this.school,
-    this.borderRadius = const BorderRadius.all(Radius.circular(24)),
+    this.borderRadius = const BorderRadius.all(Radius.circular(16)),
     this.leading,
     this.heartSize = 24,
     super.key,

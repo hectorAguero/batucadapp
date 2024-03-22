@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:samba_public_app/extensions/theme_of_context_extension.dart';
 import 'package:samba_public_app/features/schools/details/school_details_page.dart';
@@ -30,28 +31,40 @@ class SchoolCard extends ConsumerWidget {
       margin: margin,
       elevation: 2,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(24),
+        borderRadius: BorderRadius.circular(16),
       ),
       child: DecoratedBox(
         decoration: BoxDecoration(
           gradient: LinearGradient(
-            stops: const [0.75, 1.0],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            transform: const GradientRotation(0.4),
             colors: [
               CupertinoDynamicColor.resolve(
                 CupertinoColors.systemGrey5,
                 context,
               ),
               school.colors.first.withOpacity(0.5),
+              if (school.colors.length > 1) school.colors[1].withOpacity(0.5),
+              if (school.colors.length > 2) school.colors[2].withOpacity(0.5),
             ],
           ),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SchoolFlag(school: school),
+            DecoratedBox(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(16),
+                boxShadow: const [
+                  BoxShadow(
+                    color: Colors.black26,
+                    blurRadius: 16,
+                    offset: Offset(0, 4),
+                  ),
+                ],
+              ),
+              child: SchoolFlag(school: school),
+            ),
             Row(
               children: [
                 Flexible(
@@ -108,14 +121,22 @@ class SchoolCard extends ConsumerWidget {
   void _showDetails(BuildContext context, School school) {
     WoltModalSheet.show<dynamic>(
       context: context,
+      useSafeArea: false,
       pageListBuilder: (context) {
         return [
-          WoltModalSheetPage(
+          SliverWoltModalSheetPage(
             hasTopBarLayer: false,
-            child: SchoolDetailsPage(
-              id: school.id,
-              isModalSheet: true,
-            ),
+            isTopBarLayerAlwaysVisible: false,
+            mainContentSlivers: [
+              SliverPadding(
+                padding: const EdgeInsets.only(top: 12),
+                sliver: SliverToBoxAdapter(
+                  child: SchoolDetailsPage(
+                    id: school.id,
+                  ),
+                ),
+              ),
+            ],
           ),
         ];
       },
