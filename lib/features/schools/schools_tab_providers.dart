@@ -59,9 +59,10 @@ final filteredSchoolsProvider = Provider.autoDispose<List<School>>((ref) {
 /// A provider which exposes the [School] displayed by a [SchoolCard].
 ///
 /// By retrieving the [School] through a provider instead of through its
-/// constructor, this allows [SchoolCard] to be instantiated using the `const` keyword.
+/// constructor, this allows [SchoolCard] to be instantiated using the `const`
+/// keyword.
 ///
-/// This ensures that when we add/remove/edit todos, only what the
+/// This ensures that when we add/remove/edit schools, only what the
 /// impacted widgets rebuilds, instead of the entire list of items.
 final currentSchoolProvider =
     Provider<School>((ref) => throw UnimplementedError());

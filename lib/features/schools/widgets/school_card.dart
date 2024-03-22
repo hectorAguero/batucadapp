@@ -1,10 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:samba_public_app/extensions/theme_of_context_extension.dart';
+import 'package:samba_public_app/features/schools/details/school_details_page.dart';
+import 'package:samba_public_app/features/schools/school.dart';
 import 'package:samba_public_app/features/schools/schools_extensions.dart';
 import 'package:samba_public_app/features/schools/schools_tab_providers.dart';
-import 'package:samba_public_app/widgets/app_fade_in_image.dart';
+import 'package:samba_public_app/features/schools/widgets/school_flag.dart';
+import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
 class SchoolCard extends ConsumerWidget {
   const SchoolCard({
@@ -14,15 +18,19 @@ class SchoolCard extends ConsumerWidget {
 
   final EdgeInsets margin;
 
+  static const double cardMaxWidth = 400;
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    timeDilation = 1.0; // 1.0 means normal animation speed.
+
     final school = ref.watch(currentSchoolProvider);
     final colorScheme = context.colorScheme;
     return Card(
       margin: margin,
       elevation: 2,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(24),
       ),
       child: DecoratedBox(
         decoration: BoxDecoration(
@@ -32,7 +40,10 @@ class SchoolCard extends ConsumerWidget {
             end: Alignment.bottomRight,
             transform: const GradientRotation(0.4),
             colors: [
-              colorScheme.onInverseSurface,
+              CupertinoDynamicColor.resolve(
+                CupertinoColors.systemGrey5,
+                context,
+              ),
               school.colors.first.withOpacity(0.5),
             ],
           ),
@@ -40,69 +51,7 @@ class SchoolCard extends ConsumerWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Stack(
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(16),
-                  child: ShaderMask(
-                    shaderCallback: (bounds) {
-                      return const LinearGradient(
-                        begin: Alignment.topRight,
-                        end: Alignment.bottomLeft,
-                        colors: [
-                          Colors.black26,
-                          Colors.transparent,
-                        ],
-                      ).createShader(
-                        Rect.fromPoints(
-                          Offset(bounds.width, 0),
-                          Offset(
-                            bounds.width - 40,
-                            40,
-                          ),
-                        ),
-                      );
-                    },
-                    blendMode: BlendMode.srcOver,
-                    child: SizedBox(
-                      height: 160,
-                      child: AppFadeInImage(
-                        school.imageUrl,
-                        fit: BoxFit.cover,
-                        width: double.maxFinite,
-                      ),
-                    ),
-                  ),
-                ),
-                Consumer(
-                  builder: (context, ref, child) {
-                    return Align(
-                      alignment: Alignment.topRight,
-                      child: CupertinoButton(
-                        child: AnimatedSwitcher(
-                          duration: kThemeAnimationDuration,
-                          switchInCurve: Curves.elasticIn,
-                          switchOutCurve: Curves.elasticOut,
-                          child: Icon(
-                            school.isFavorite
-                                ? CupertinoIcons.heart_fill
-                                : CupertinoIcons.heart,
-                            color: school.isFavorite
-                                ? Colors.redAccent
-                                : Colors.white,
-                          ),
-                        ),
-                        onPressed: () {
-                          ref
-                              .read(schoolsProvider.notifier)
-                              .toggleFavorite(school.id);
-                        },
-                      ),
-                    );
-                  },
-                ),
-              ],
-            ),
+            SchoolFlag(school: school),
             Row(
               children: [
                 Flexible(
@@ -141,7 +90,7 @@ class SchoolCard extends ConsumerWidget {
                     style: OutlinedButton.styleFrom(
                       padding: const EdgeInsets.all(8),
                     ),
-                    onPressed: () {},
+                    onPressed: () => _showDetails(context, school),
                     child: Text(
                       'Learn More',
                       style: context.textTheme.titleSmall,
@@ -153,6 +102,23 @@ class SchoolCard extends ConsumerWidget {
           ],
         ),
       ),
+    );
+  }
+
+  void _showDetails(BuildContext context, School school) {
+    WoltModalSheet.show<dynamic>(
+      context: context,
+      pageListBuilder: (context) {
+        return [
+          WoltModalSheetPage(
+            hasTopBarLayer: false,
+            child: SchoolDetailsPage(
+              id: school.id,
+              isModalSheet: true,
+            ),
+          ),
+        ];
+      },
     );
   }
 }

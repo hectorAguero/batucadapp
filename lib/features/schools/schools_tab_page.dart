@@ -54,8 +54,8 @@ class _SchoolsTabState extends ConsumerState<SchoolsTabPage> {
                               horizontal: 8,
                               vertical: 8,
                             ),
-                            sliver: SliverAlignedGrid.count(
-                              crossAxisCount: context.querySize.getAxisCount(),
+                            sliver: SliverAlignedGrid.extent(
+                              maxCrossAxisExtent: SchoolCard.cardMaxWidth,
                               itemCount: schools.length,
                               itemBuilder: (context, index) {
                                 final school = schools[index];
