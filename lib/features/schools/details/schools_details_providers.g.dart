@@ -6,7 +6,7 @@ part of 'schools_details_providers.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$selectedSchoolHash() => r'bf315c2c4e7062daa8737a4dd4c4bd93a8e82923';
+String _$selectedSchoolHash() => r'caae5ffd4b733525c963b09b2b47726e3a1920ec';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -42,9 +42,23 @@ abstract class _$SelectedSchool extends BuildlessAutoDisposeNotifier<School> {
 const selectedSchoolProvider = SelectedSchoolFamily();
 
 /// See also [SelectedSchool].
-class SelectedSchoolFamily extends Family<School> {
+class SelectedSchoolFamily extends Family {
   /// See also [SelectedSchool].
   const SelectedSchoolFamily();
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'selectedSchoolProvider';
 
   /// See also [SelectedSchool].
   SelectedSchoolProvider call(
@@ -55,6 +69,7 @@ class SelectedSchoolFamily extends Family<School> {
     );
   }
 
+  @visibleForOverriding
   @override
   SelectedSchoolProvider getProviderOverride(
     covariant SelectedSchoolProvider provider,
@@ -64,19 +79,26 @@ class SelectedSchoolFamily extends Family<School> {
     );
   }
 
-  static const Iterable<ProviderOrFamily>? _dependencies = null;
+  /// Enables overriding the behavior of this provider, no matter the parameters.
+  Override overrideWith(SelectedSchool Function() create) {
+    return _$SelectedSchoolFamilyOverride(this, create);
+  }
+}
+
+class _$SelectedSchoolFamilyOverride implements FamilyOverride {
+  _$SelectedSchoolFamilyOverride(this.overriddenFamily, this.create);
+
+  final SelectedSchool Function() create;
 
   @override
-  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
-
-  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+  final SelectedSchoolFamily overriddenFamily;
 
   @override
-  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
-      _allTransitiveDependencies;
-
-  @override
-  String? get name => r'selectedSchoolProvider';
+  SelectedSchoolProvider getProviderOverride(
+    covariant SelectedSchoolProvider provider,
+  ) {
+    return provider._copyWith(create);
+  }
 }
 
 /// See also [SelectedSchool].
@@ -100,7 +122,7 @@ class SelectedSchoolProvider
         );
 
   SelectedSchoolProvider._internal(
-    super._createNotifier, {
+    super.create, {
     required super.name,
     required super.dependencies,
     required super.allTransitiveDependencies,
@@ -137,8 +159,27 @@ class SelectedSchoolProvider
   }
 
   @override
+  (int,) get argument {
+    return (id,);
+  }
+
+  @override
   AutoDisposeNotifierProviderElement<SelectedSchool, School> createElement() {
     return _SelectedSchoolProviderElement(this);
+  }
+
+  SelectedSchoolProvider _copyWith(
+    SelectedSchool Function() create,
+  ) {
+    return SelectedSchoolProvider._internal(
+      () => create()..id = id,
+      name: name,
+      dependencies: dependencies,
+      allTransitiveDependencies: allTransitiveDependencies,
+      debugGetCreateSourceHash: debugGetCreateSourceHash,
+      from: from,
+      id: id,
+    );
   }
 
   @override
@@ -169,4 +210,4 @@ class _SelectedSchoolProviderElement
   int get id => (origin as SelectedSchoolProvider).id;
 }
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, inference_failure_on_uninitialized_variable, inference_failure_on_function_return_type, inference_failure_on_untyped_parameter, deprecated_member_use_from_same_package

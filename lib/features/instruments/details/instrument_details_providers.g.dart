@@ -43,9 +43,23 @@ abstract class _$InstrumentDetails
 const instrumentDetailsProvider = InstrumentDetailsFamily();
 
 /// See also [InstrumentDetails].
-class InstrumentDetailsFamily extends Family<AsyncValue<Instrument>> {
+class InstrumentDetailsFamily extends Family {
   /// See also [InstrumentDetails].
   const InstrumentDetailsFamily();
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'instrumentDetailsProvider';
 
   /// See also [InstrumentDetails].
   InstrumentDetailsProvider call(
@@ -56,6 +70,7 @@ class InstrumentDetailsFamily extends Family<AsyncValue<Instrument>> {
     );
   }
 
+  @visibleForOverriding
   @override
   InstrumentDetailsProvider getProviderOverride(
     covariant InstrumentDetailsProvider provider,
@@ -65,19 +80,26 @@ class InstrumentDetailsFamily extends Family<AsyncValue<Instrument>> {
     );
   }
 
-  static const Iterable<ProviderOrFamily>? _dependencies = null;
+  /// Enables overriding the behavior of this provider, no matter the parameters.
+  Override overrideWith(InstrumentDetails Function() create) {
+    return _$InstrumentDetailsFamilyOverride(this, create);
+  }
+}
+
+class _$InstrumentDetailsFamilyOverride implements FamilyOverride {
+  _$InstrumentDetailsFamilyOverride(this.overriddenFamily, this.create);
+
+  final InstrumentDetails Function() create;
 
   @override
-  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
-
-  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+  final InstrumentDetailsFamily overriddenFamily;
 
   @override
-  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
-      _allTransitiveDependencies;
-
-  @override
-  String? get name => r'instrumentDetailsProvider';
+  InstrumentDetailsProvider getProviderOverride(
+    covariant InstrumentDetailsProvider provider,
+  ) {
+    return provider._copyWith(create);
+  }
 }
 
 /// See also [InstrumentDetails].
@@ -101,7 +123,7 @@ class InstrumentDetailsProvider extends AutoDisposeAsyncNotifierProviderImpl<
         );
 
   InstrumentDetailsProvider._internal(
-    super._createNotifier, {
+    super.create, {
     required super.name,
     required super.dependencies,
     required super.allTransitiveDependencies,
@@ -138,9 +160,28 @@ class InstrumentDetailsProvider extends AutoDisposeAsyncNotifierProviderImpl<
   }
 
   @override
+  (int,) get argument {
+    return (id,);
+  }
+
+  @override
   AutoDisposeAsyncNotifierProviderElement<InstrumentDetails, Instrument>
       createElement() {
     return _InstrumentDetailsProviderElement(this);
+  }
+
+  InstrumentDetailsProvider _copyWith(
+    InstrumentDetails Function() create,
+  ) {
+    return InstrumentDetailsProvider._internal(
+      () => create()..id = id,
+      name: name,
+      dependencies: dependencies,
+      allTransitiveDependencies: allTransitiveDependencies,
+      debugGetCreateSourceHash: debugGetCreateSourceHash,
+      from: from,
+      id: id,
+    );
   }
 
   @override
@@ -171,4 +212,4 @@ class _InstrumentDetailsProviderElement
   int get id => (origin as InstrumentDetailsProvider).id;
 }
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, inference_failure_on_uninitialized_variable, inference_failure_on_function_return_type, inference_failure_on_untyped_parameter, deprecated_member_use_from_same_package

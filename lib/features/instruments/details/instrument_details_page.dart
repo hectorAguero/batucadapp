@@ -128,7 +128,7 @@ class _InstrumentDetailsPageState extends ConsumerState<InstrumentDetailsPage> {
                           vertical: 8,
                         ),
                         sliver: SliverToBoxAdapter(
-                          // TODO(hectorAguero): Needed hardcode size to avoid overscroll
+                          // TODO(hectorAguero): Needed size to avoid overscroll
                           child: SizedBox(
                             height: 800,
                             child: TabBarView(

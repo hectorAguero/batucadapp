@@ -51,7 +51,8 @@ class _InstrumentListTileState extends State<InstrumentListTile> {
                 children: [
                   const Flexible(
                     child: Text(
-                      'This is a longer description of the instrument. It could be a few paragraphs long, Fugiat do occaecat laboris est non minim minim voluptate sunt Lorem ullamco dolor. Amet in qui minim consectetur et. Nulla irure non fugiat sunt do ex ea ut culpa.',
+                      '''
+This is a longer description of the instrument. It could be a few paragraphs long, Fugiat do occaecat laboris est non minim minim voluptate sunt Lorem ullamco dolor. Amet in qui minim consectetur et. Nulla irure non fugiat sunt do ex ea ut culpa.''',
                       maxLines: 6,
                       overflow: TextOverflow.ellipsis,
                     ),
