@@ -1,12 +1,9 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:samba_public_app/extensions/theme_of_context_extension.dart';
+import 'package:samba_public_app/common_widgets/app_page_indicator.dart';
 import 'package:samba_public_app/features/schools/details/schools_details_providers.dart';
 import 'package:samba_public_app/features/schools/widgets/school_flag.dart';
-import 'package:samba_public_app/widgets/app_page_indicator.dart';
 
 class SchoolDetailsPage extends ConsumerStatefulWidget {
   const SchoolDetailsPage({

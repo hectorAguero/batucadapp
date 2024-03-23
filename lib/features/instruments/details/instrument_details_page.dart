@@ -2,13 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:samba_public_app/common_widgets/go_back_button.dart';
 import 'package:samba_public_app/extensions/media_query_context_extension.dart';
 import 'package:samba_public_app/features/instruments/details/instrument_details_providers.dart';
 import 'package:samba_public_app/features/instruments/details/widgets/instrument_details_gallery.dart';
 import 'package:samba_public_app/features/instruments/details/widgets/instrument_details_summary.dart';
 import 'package:samba_public_app/features/instruments/details/widgets/instrument_details_type.dart';
 import 'package:samba_public_app/features/instruments/details/widgets/instrument_header_images.dart';
-import 'package:samba_public_app/widgets/go_back_button.dart';
 import 'package:sliver_tools/sliver_tools.dart';
 
 typedef InstrumentId = int;
@@ -128,7 +128,7 @@ class _InstrumentDetailsPageState extends ConsumerState<InstrumentDetailsPage> {
                           vertical: 8,
                         ),
                         sliver: SliverToBoxAdapter(
-                          // TODO(hectorAguero): Needed size to avoid overscroll
+                          // TODO(hectorAguero): size needed to avoid overscroll
                           child: SizedBox(
                             height: 800,
                             child: TabBarView(

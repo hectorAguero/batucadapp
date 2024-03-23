@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:samba_public_app/widgets/app_fade_in_image.dart';
+import 'package:samba_public_app/common_widgets/app_fade_in_image.dart';
 
 typedef ImageUrl = String;
 

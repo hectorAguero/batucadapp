@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:samba_public_app/app_providers.dart';
+import 'package:samba_public_app/main_logger.dart';
+import 'package:samba_public_app/main_providers.dart';
 
 part 'theme_provider.g.dart';
 
@@ -19,8 +20,7 @@ class AppThemeMode extends _$AppThemeMode {
         'system' || (_) => ThemeMode.system,
       };
     } catch (e) {
-      // TODO(hectorAguero): Add logging
-      print(e);
+      debugLog('$e');
       return ThemeMode.system;
     }
   }
@@ -57,8 +57,7 @@ class AppThemeTrueBlack extends _$AppThemeTrueBlack {
               .getBool('true_black') ??
           false;
     } catch (e) {
-      // TODO(hectorAguero): Add logging
-      print(e);
+      debugLog('$e');
       return false;
     }
   }

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:samba_public_app/extensions/hardcode_extension.dart';
+import 'package:samba_public_app/common_widgets/app_cupertino_sliver_nav_bar.dart';
+import 'package:samba_public_app/extensions/hardcoded_extension.dart';
 import 'package:samba_public_app/extensions/media_query_context_extension.dart';
 import 'package:samba_public_app/features/schools/schools_tab_providers.dart';
 import 'package:samba_public_app/features/schools/widgets/school_card.dart';
 import 'package:samba_public_app/features/schools/widgets/school_division_chips.dart';
 import 'package:samba_public_app/router/go_route_scroll_tab.dart';
-import 'package:samba_public_app/widgets/app_cupertino_sliver_nav_bar.dart';
 import 'package:sliver_tools/sliver_tools.dart';
 
 class SchoolsTabPage extends ConsumerStatefulWidget {
@@ -34,7 +34,7 @@ class _SchoolsTabState extends ConsumerState<SchoolsTabPage> {
         slivers: <Widget>[
           SliverCrossAxisConstrained(
             maxCrossAxisExtent: largeScreen,
-            child: AppCupertinoSliverNavBar(largeTitle: 'Schools'.hardcode),
+            child: AppCupertinoSliverNavBar(largeTitle: 'Schools'.hardcoded),
           ),
           const SliverCrossAxisConstrained(
             maxCrossAxisExtent: largeScreen,

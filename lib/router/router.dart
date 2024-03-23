@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:samba_public_app/app_providers.dart';
 import 'package:samba_public_app/features/home/home_page.dart';
 import 'package:samba_public_app/features/home/home_page_controller.dart';
 import 'package:samba_public_app/features/instruments/instruments_tab_page.dart';
 import 'package:samba_public_app/features/parades/parades_tab.dart';
 import 'package:samba_public_app/features/schools/schools_tab_page.dart';
+import 'package:samba_public_app/main_providers.dart';
 import 'package:samba_public_app/router/app_startup_widget.dart';
 
 part 'router.g.dart';
