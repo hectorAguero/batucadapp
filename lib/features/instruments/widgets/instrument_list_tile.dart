@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:samba_public_app/common_widgets/app_fade_in_image.dart';
+import 'package:samba_public_app/extensions/hardcoded_extension.dart';
 
 typedef ImageUrl = String;
 
@@ -49,10 +50,11 @@ class _InstrumentListTileState extends State<InstrumentListTile> {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Flexible(
+                  Flexible(
                     child: Text(
                       '''
-This is a longer description of the instrument. It could be a few paragraphs long, Fugiat do occaecat laboris est non minim minim voluptate sunt Lorem ullamco dolor. Amet in qui minim consectetur et. Nulla irure non fugiat sunt do ex ea ut culpa.''',
+This is a longer description of the instrument. It could be a few paragraphs long, Fugiat do occaecat laboris est non minim minim voluptate sunt Lorem ullamco dolor. Amet in qui minim consectetur et. Nulla irure non fugiat sunt do ex ea ut culpa.'''
+                          .hardcoded,
                       maxLines: 6,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -74,7 +76,7 @@ This is a longer description of the instrument. It could be a few paragraphs lon
                       const SizedBox(height: 8),
                       TextButton(
                         onPressed: widget.onTap,
-                        child: const Text('View Details'),
+                        child: Text('View Details'.hardcoded),
                       ),
                     ],
                   ),

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:samba_public_app/extensions/hardcoded_extension.dart';
 import 'package:samba_public_app/extensions/media_query_context_extension.dart';
 import 'package:samba_public_app/extensions/theme_of_context_extension.dart';
 import 'package:samba_public_app/theme/theme_provider.dart';
@@ -49,7 +50,7 @@ class ThemeSelectorRail extends ConsumerWidget {
                   ),
                 )
               : Text(
-                  'True Black',
+                  'True Black'.hardcoded,
                   style: themeMode.isLight
                       ? context.textTheme.titleMedium!
                           .copyWith(color: Colors.grey)
@@ -70,11 +71,7 @@ class ThemeSelectorRail extends ConsumerWidget {
         CupertinoListTile.notched(
           title: size.isLargeScreen || size.isExtraLargeScreen
               ? Text(
-                  switch (themeMode) {
-                    (ThemeMode.system) => 'System Theme',
-                    (ThemeMode.light) => 'Light Theme',
-                    (ThemeMode.dark) => 'Dark Theme',
-                  },
+                  themeMode.labelName,
                   style: context.textTheme.titleMedium,
                 )
               : Padding(
@@ -115,18 +112,14 @@ class ThemeSelectorTile extends ConsumerWidget {
                 ),
                 const SizedBox(width: 8),
                 Text(
-                  switch (themeMode) {
-                    (ThemeMode.system) => 'System',
-                    (ThemeMode.light) => 'Light',
-                    (ThemeMode.dark) => 'Dark',
-                  },
+                  themeMode.label,
                   style: context.textTheme.titleMedium,
                 ),
                 const SizedBox(width: 8),
               ],
             ),
           ),
-          title: const Text('Switch Theme'),
+          title: Text('Switch Theme'.hardcoded),
           onTap: () async =>
               ref.read(appThemeModeProvider.notifier).toggleTheme(),
         ),
@@ -143,7 +136,7 @@ class ThemeSelectorTile extends ConsumerWidget {
             ),
           ),
           title: Text(
-            'True Black',
+            'True Black'.hardcoded,
             style:
                 themeMode.isLight ? const TextStyle(color: Colors.grey) : null,
           ),

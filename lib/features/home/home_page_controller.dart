@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:samba_public_app/extensions/hardcoded_extension.dart';
 import 'package:samba_public_app/features/instruments/instruments_tab_page.dart';
 import 'package:samba_public_app/features/parades/parades_tab.dart';
 import 'package:samba_public_app/features/schools/schools_tab_page.dart';
@@ -30,9 +31,9 @@ enum TabDestination {
       };
 
   String get label => switch (this) {
-        TabDestination.instruments => 'Instruments',
-        TabDestination.parades => 'Parades',
-        TabDestination.schools => 'Schools'
+        TabDestination.instruments => 'Instruments'.hardcoded,
+        TabDestination.parades => 'Parades'.hardcoded,
+        TabDestination.schools => 'Schools'.hardcoded
       };
 
   IconData get icon => switch (this) {

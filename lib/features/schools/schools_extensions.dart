@@ -2,25 +2,26 @@
 library;
 
 import 'package:flutter/material.dart';
+import 'package:samba_public_app/extensions/hardcoded_extension.dart';
 import 'package:samba_public_app/features/schools/school.dart';
 
 extension SchoolDivisionExtension on SchoolDivision {
   String get fullName => switch (this) {
-        (SchoolDivision.especial) => 'Grupo Especial',
-        (SchoolDivision.ouro) => 'Série Ouro',
-        (SchoolDivision.prata) => 'Série Prata',
-        (SchoolDivision.bronze) => 'Série Bronze',
-        (SchoolDivision.avaliacao) => 'Grupo de Avaliação',
-        (SchoolDivision.mirins) => 'Mirins',
+        (SchoolDivision.especial) => 'Grupo Especial'.hardcoded,
+        (SchoolDivision.ouro) => 'Série Ouro'.hardcoded,
+        (SchoolDivision.prata) => 'Série Prata'.hardcoded,
+        (SchoolDivision.bronze) => 'Série Bronze'.hardcoded,
+        (SchoolDivision.avaliacao) => 'Grupo de Avaliação'.hardcoded,
+        (SchoolDivision.mirins) => 'Mirins'.hardcoded,
       };
 
   String get shortName => switch (this) {
-        (SchoolDivision.especial) => 'Especial',
-        (SchoolDivision.ouro) => 'Ouro',
-        (SchoolDivision.prata) => 'Prata',
-        (SchoolDivision.bronze) => 'Bronze',
-        (SchoolDivision.avaliacao) => 'Avaliação',
-        (SchoolDivision.mirins) => 'Mirins',
+        (SchoolDivision.especial) => 'Especial'.hardcoded,
+        (SchoolDivision.ouro) => 'Ouro'.hardcoded,
+        (SchoolDivision.prata) => 'Prata'.hardcoded,
+        (SchoolDivision.bronze) => 'Bronze'.hardcoded,
+        (SchoolDivision.avaliacao) => 'Avaliação'.hardcoded,
+        (SchoolDivision.mirins) => 'Mirins'.hardcoded,
       };
 
   Color get color => switch (this) {

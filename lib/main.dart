@@ -44,7 +44,7 @@ class MainApp extends ConsumerWidget {
     final isTrueBlack = ref.watch(appThemeTrueBlackProvider);
     return MaterialApp.router(
       routerConfig: router,
-      title: 'Samba Public App',
+      title: 'Samba Public App'.hardcoded,
       debugShowCheckedModeBanner: false,
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme(trueBlack: isTrueBlack),

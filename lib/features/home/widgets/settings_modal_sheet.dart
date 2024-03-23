@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:samba_public_app/extensions/hardcoded_extension.dart';
 import 'package:samba_public_app/extensions/theme_of_context_extension.dart';
 import 'package:samba_public_app/features/home/widgets/theme_selector.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
@@ -29,7 +30,7 @@ class SettingsTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(
-      'Settings',
+      'Settings'.hardcoded,
       style: context.textTheme.titleLarge,
     );
   }

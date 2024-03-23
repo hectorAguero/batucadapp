@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:samba_public_app/extensions/hardcoded_extension.dart';
 
 class InstrumentDetailsSummary extends StatelessWidget {
   const InstrumentDetailsSummary({
@@ -12,7 +13,7 @@ class InstrumentDetailsSummary extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView(
       physics: const NeverScrollableScrollPhysics(),
-      children: const [
+      children: [
         Row(
           children: [
             Flexible(
@@ -27,7 +28,8 @@ Incididunt sit enim nisi nostrud officia exercitation non labore incididunt labo
 Lorem incididunt ullamco eiusmod voluptate cillum. Tempor deserunt enim nisi ex velit deserunt aliquip mollit. Do commodo nisi ea sit sint duis sint exercitation dolor proident. Duis Lorem enim labore laboris officia commodo anim veniam non ea elit. Aliquip id consectetur labore dolore aliqua ullamco culpa consectetur minim Lorem. Et eiusmod laboris laborum aliqua officia excepteur consequat aliquip aliquip occaecat dolore commodo culpa.
     
 Laborum ullamco non aliqua nisi laboris. Anim ullamco velit laboris occaecat non commodo ut. Minim velit in ad velit. Est exercitation incididunt elit quis deserunt. Amet quis commodo cillum exercitation ut reprehenderit aliqua deserunt velit Lorem consequat tempor sit duis.
-              ''',
+              '''
+                    .hardcoded,
               ),
             ),
           ],

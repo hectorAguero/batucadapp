@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:samba_public_app/common_widgets/go_back_button.dart';
+import 'package:samba_public_app/extensions/hardcoded_extension.dart';
 import 'package:samba_public_app/extensions/media_query_context_extension.dart';
 import 'package:samba_public_app/features/instruments/details/instrument_details_providers.dart';
 import 'package:samba_public_app/features/instruments/details/widgets/instrument_details_gallery.dart';
@@ -57,13 +58,13 @@ class _InstrumentDetailsPageState extends ConsumerState<InstrumentDetailsPage> {
                 handle: NestedScrollView.sliverOverlapAbsorberHandleFor(
                   context,
                 ),
-                sliver: const SliverCrossAxisConstrained(
+                sliver: SliverCrossAxisConstrained(
                   maxCrossAxisExtent: screenConstraint,
                   child: CupertinoSliverNavigationBar(
-                    leading: GoBackButton(),
-                    border: Border(),
+                    leading: const GoBackButton(),
+                    border: const Border(),
                     backgroundColor: Colors.transparent,
-                    largeTitle: Text('Instrument Details'),
+                    largeTitle: Text('Instrument Details'.hardcoded),
                     stretch: true,
                   ),
                 ),
@@ -111,10 +112,10 @@ class _InstrumentDetailsPageState extends ConsumerState<InstrumentDetailsPage> {
                             indicatorPadding: const EdgeInsets.symmetric(
                               horizontal: 4,
                             ),
-                            tabs: const [
-                              Tab(text: 'Summary'),
-                              Tab(text: 'Type'),
-                              Tab(text: 'Gallery'),
+                            tabs: [
+                              Tab(text: 'Summary'.hardcoded),
+                              Tab(text: 'Type'.hardcoded),
+                              Tab(text: 'Gallery'.hardcoded),
                             ],
                           ),
                         ),
