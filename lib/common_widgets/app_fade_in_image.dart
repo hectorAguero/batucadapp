@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:samba_public_app/extensions/theme_of_context_extension.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 class AppFadeInImage extends StatelessWidget {
@@ -20,9 +19,7 @@ class AppFadeInImage extends StatelessWidget {
   Widget build(BuildContext context) {
     return FadeInImage.memoryNetwork(
       placeholder: kTransparentImage,
-      colorBlendMode: BlendMode.dst,
       image: image,
-      color: context.colorScheme.outlineVariant,
       fit: fit ?? BoxFit.cover,
       height: height,
       width: width,

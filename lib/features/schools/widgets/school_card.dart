@@ -42,7 +42,13 @@ class SchoolCard extends ConsumerWidget {
                 CupertinoColors.systemGrey5,
                 context,
               ),
-              school.colors.first.withOpacity(0.5),
+              if (school.colors.isNotEmpty)
+                school.colors.first.withOpacity(0.5)
+              else
+                CupertinoDynamicColor.resolve(
+                  CupertinoColors.systemGrey5,
+                  context,
+                ),
               if (school.colors.length > 1) school.colors[1].withOpacity(0.5),
               if (school.colors.length > 2) school.colors[2].withOpacity(0.5),
             ],
@@ -73,6 +79,7 @@ class SchoolCard extends ConsumerWidget {
                       school.name,
                       style: Theme.of(context).textTheme.titleMedium!.copyWith(
                             color: colorScheme.onSurface,
+                            fontWeight: FontWeight.bold,
                           ),
                     ),
                   ),

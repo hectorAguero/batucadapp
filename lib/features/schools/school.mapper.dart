@@ -27,10 +27,12 @@ class SchoolLeagueMapper extends EnumMapper<SchoolLeague> {
     switch (value) {
       case 'LIESA':
         return SchoolLeague.liesa;
-      case 'LIERJ':
-        return SchoolLeague.lierj;
+      case 'LIGARJ':
+        return SchoolLeague.ligarj;
       case 'SUPERLIGA':
         return SchoolLeague.superliga;
+      case 'ACAS':
+        return SchoolLeague.acas;
       default:
         throw MapperException.unknownEnumValue(value);
     }
@@ -41,10 +43,12 @@ class SchoolLeagueMapper extends EnumMapper<SchoolLeague> {
     switch (self) {
       case SchoolLeague.liesa:
         return 'LIESA';
-      case SchoolLeague.lierj:
-        return 'LIERJ';
+      case SchoolLeague.ligarj:
+        return 'LIGARJ';
       case SchoolLeague.superliga:
         return 'SUPERLIGA';
+      case SchoolLeague.acas:
+        return 'ACAS';
     }
   }
 }
@@ -140,14 +144,13 @@ class SchoolMapper extends ClassMapperBase<School> {
   static const Field<School, String> _f$name = Field('name', _$name);
   static String _$imageUrl(School v) => v.imageUrl;
   static const Field<School, String> _f$imageUrl =
-      Field('imageUrl', _$imageUrl, key: 'image_url');
+      Field('imageUrl', _$imageUrl, hook: ImageUrlHook());
   static DateTime _$foundationDate(School v) => v.foundationDate;
-  static const Field<School, DateTime> _f$foundationDate = Field(
-      'foundationDate', _$foundationDate,
-      key: 'foundation_date', hook: DateTimeHook());
+  static const Field<School, DateTime> _f$foundationDate =
+      Field('foundationDate', _$foundationDate, hook: DateTimeHook());
   static String _$godmotherSchool(School v) => v.godmotherSchool;
   static const Field<School, String> _f$godmotherSchool =
-      Field('godmotherSchool', _$godmotherSchool, key: 'godmother_school');
+      Field('godmotherSchool', _$godmotherSchool);
   static List<Color> _$colors(School v) => v.colors;
   static const Field<School, List<Color>> _f$colors =
       Field('colors', _$colors, hook: ColorHook());
@@ -159,11 +162,10 @@ class SchoolMapper extends ClassMapperBase<School> {
       Field('league', _$league);
   static SchoolDivision _$currentDivision(School v) => v.currentDivision;
   static const Field<School, SchoolDivision> _f$currentDivision =
-      Field('currentDivision', _$currentDivision, key: 'division_number');
+      Field('currentDivision', _$currentDivision, key: 'divisionNumber');
   static bool _$isFavorite(School v) => v.isFavorite;
-  static const Field<School, bool> _f$isFavorite = Field(
-      'isFavorite', _$isFavorite,
-      key: 'is_favorite', opt: true, def: false);
+  static const Field<School, bool> _f$isFavorite =
+      Field('isFavorite', _$isFavorite, opt: true, def: false);
 
   @override
   final MappableFields<School> fields = const {

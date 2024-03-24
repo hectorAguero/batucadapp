@@ -6,7 +6,7 @@ part of 'schools_repo.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$schoolsRepoHash() => r'699517bdd77f49a1116158f4c587d7d4a2f03f13';
+String _$schoolsRepoHash() => r'b2872384c20af1948e0457d21cd5e58236f13951';
 
 /// See also [schoolsRepo].
 @ProviderFor(schoolsRepo)

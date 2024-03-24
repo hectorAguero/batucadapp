@@ -1,60 +1,46 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:samba_public_app/features/schools/school.dart';
+import 'package:samba_public_app/main_providers.dart';
 
 part 'schools_repo.g.dart';
 
+typedef ListDynamic = List<dynamic>;
+typedef ListMap = List<Map<String, dynamic>>;
+
 @riverpod
 SchoolsRepo schoolsRepo(SchoolsRepoRef ref) {
-  return MockSchoolsRepo();
+  return SchoolsRepoImpls(ref);
 }
 
 abstract class SchoolsRepo {
   Future<List<School>> getSchools();
 }
 
+class SchoolsRepoImpls implements SchoolsRepo {
+  SchoolsRepoImpls(this.ref);
+
+  final SchoolsRepoRef ref;
+
+  @override
+  Future<List<School>> getSchools() async {
+    final response =
+        await ref.watch(dioProvider).get<List<dynamic>>('/schools');
+    final data = response.data!.cast<Map<String, dynamic>>();
+    return [
+      for (final item in data) School.fromMap(item),
+    ];
+  }
+}
+
 class MockSchoolsRepo implements SchoolsRepo {
+  MockSchoolsRepo(this.ref);
+
+  final SchoolsRepoRef ref;
+
   @override
   Future<List<School>> getSchools() async {
     await Future<void>.delayed(const Duration(seconds: 1));
     return [
-      SchoolMapper.fromMap({
-        'id': 1,
-        'name': 'Imperatriz Leopoldinense',
-        'image_url':
-            'https://samba.deno.dev/static/images/schools/imperatriz_leopoldinense.jpg',
-        'foundation_date': '1959/3/6',
-        'godmother_school': 'Império Serrano',
-        'colors': [
-          'Verde',
-          'Blanco',
-          'Oro',
-        ],
-        'symbols': [
-          'Corona',
-        ],
-        'league': 'LIESA',
-        'current_division': 'Grupo Especial',
-        'division_number': 1,
-      }),
-      SchoolMapper.fromMap({
-        'id': 2,
-        'name': 'Unidos do Viradouro',
-        'image_url':
-            'https://samba.deno.dev/static/images/schools/unidos_do_viradouro.jpg',
-        'foundation_date': '1946/6/24',
-        'godmother_school': 'Portela',
-        'colors': [
-          'Rojo',
-          'Blanco',
-        ],
-        'symbols': [
-          'Corona',
-          'Apretón de manos interracial',
-        ],
-        'league': 'LIESA',
-        'current_division': 'Grupo Especial',
-        'division_number': 1,
-      }),
       SchoolMapper.fromMap(
         {
           'id': 3,

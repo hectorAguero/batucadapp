@@ -40,9 +40,7 @@ class AppStartupLoadingWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.sizeOf(context);
     return Scaffold(
-      appBar: AppBar(
-        toolbarHeight: kMinInteractiveDimensionCupertino + 52,
-      ),
+      appBar: AppBar(toolbarHeight: kMinInteractiveDimensionCupertino + 52),
       backgroundColor: Colors.transparent,
       body: size.isSmallScreen
           ? const Center(child: CircularProgressIndicator.adaptive())

@@ -23,12 +23,11 @@ Future<void> appStartup(AppStartupRef ref) async {
 
 @riverpod
 GoRouter goRouter(GoRouterRef ref) {
-  final appStartupState = ref.watch(appStartupProvider);
-
   final primaryScrolls = List.generate(
     TabDestination.values.length,
     (_) => ScrollController(),
   );
+  final appStartupState = ref.watch(appStartupProvider);
   final router = GoRouter(
     debugLogDiagnostics: true,
     navigatorKey: _rootNavigatorKey,
@@ -56,16 +55,16 @@ GoRouter goRouter(GoRouterRef ref) {
           );
         }
       }
-      return null;
+      return state.path == 'startup' ? '/instruments' : null;
     },
     routes: [
       GoRoute(
-        path: '/startup',
+        path: AppStartupWidget.routePath,
         pageBuilder: (context, state) => NoTransitionPage(
           child: AppStartupWidget(
             // * This is just a placeholder
             // * The loaded route will be managed by GoRouter on state change
-            onLoaded: (_) => const SizedBox.shrink(),
+            onLoaded: (_) => const CircularProgressIndicator.adaptive(),
           ),
         ),
       ),

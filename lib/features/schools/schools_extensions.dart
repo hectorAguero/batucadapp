@@ -49,7 +49,7 @@ extension SchoolDivisionExtension on SchoolDivision {
         (SchoolDivision.prata ||
               SchoolDivision.bronze ||
               SchoolDivision.avaliacao) =>
-          SchoolLeague.lierj,
+          SchoolLeague.superliga,
       };
 
   int get divisionNumber => switch (this) {

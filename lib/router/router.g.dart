@@ -20,7 +20,7 @@ final appStartupProvider = FutureProvider<void>.internal(
 );
 
 typedef AppStartupRef = FutureProviderRef<void>;
-String _$goRouterHash() => r'5155b010d317b95a6a3eb5db43d30de3a1f539be';
+String _$goRouterHash() => r'e93107c913a3a2567247de14f7a8e7706fa6fdec';
 
 /// See also [goRouter].
 @ProviderFor(goRouter)
