@@ -2,18 +2,23 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:samba_public_app/extensions/is_ios_or_macos_platform_extension.dart';
 import 'package:samba_public_app/extensions/media_query_context_extension.dart';
-import 'package:samba_public_app/extensions/theme_of_context_extension.dart';
 import 'package:samba_public_app/features/home/widgets/settings_modal_sheet.dart';
 
 class AppCupertinoSliverNavBar extends StatelessWidget {
-  const AppCupertinoSliverNavBar({required this.largeTitle, super.key});
+  const AppCupertinoSliverNavBar({
+    required this.largeTitle,
+    this.leading,
+    super.key,
+  });
 
   final String largeTitle;
+  final Widget? leading;
 
   @override
   Widget build(BuildContext context) {
     return CupertinoSliverNavigationBar(
       largeTitle: Text(largeTitle),
+      leading: leading,
       border: const Border(),
       backgroundColor: Colors.transparent,
       trailing: context.querySize.isSmallScreen
@@ -24,7 +29,6 @@ class AppCupertinoSliverNavBar extends StatelessWidget {
               onPressed: () => showSettingModalSheet(context),
               child: Icon(
                 kIsCupertino ? CupertinoIcons.settings : Icons.settings,
-                color: context.colorScheme.onSurface,
               ),
             )
           : null,

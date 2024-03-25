@@ -6,22 +6,22 @@ part of 'schools_tab_providers.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$selectedDivisionsHash() => r'934311f99c0814f935ec2ce9cd2c4b66f3615bdc';
+String _$schoolDivisionsHash() => r'f6d237814451cdcc436abdf44ca0fd012c8b394d';
 
-/// See also [SelectedDivisions].
-@ProviderFor(SelectedDivisions)
-final selectedDivisionsProvider = AutoDisposeNotifierProvider<SelectedDivisions,
+/// See also [SchoolDivisions].
+@ProviderFor(SchoolDivisions)
+final schoolDivisionsProvider = AutoDisposeNotifierProvider<SchoolDivisions,
     Map<SchoolDivision, bool>>.internal(
-  SelectedDivisions.new,
-  name: r'selectedDivisionsProvider',
+  SchoolDivisions.new,
+  name: r'schoolDivisionsProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$selectedDivisionsHash,
+      : _$schoolDivisionsHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$SelectedDivisions = AutoDisposeNotifier<Map<SchoolDivision, bool>>;
+typedef _$SchoolDivisions = AutoDisposeNotifier<Map<SchoolDivision, bool>>;
 String _$schoolsHash() => r'de570650ab1154f1fa90196141b4512233265df9';
 
 /// See also [Schools].

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:samba_public_app/extensions/hardcoded_extension.dart';
 import 'package:samba_public_app/features/schools/schools_extensions.dart';
 import 'package:samba_public_app/features/schools/schools_tab_providers.dart';
 
@@ -13,7 +14,7 @@ class SchoolDivisionChips extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final selectedDivisions = ref.watch(selectedDivisionsProvider);
+    final selectedDivisions = ref.watch(schoolDivisionsProvider);
     return SliverToBoxAdapter(
       child: SizedBox(
         height: 64,
@@ -21,21 +22,45 @@ class SchoolDivisionChips extends ConsumerWidget {
           padding: margin,
           scrollDirection: Axis.horizontal,
           children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 4),
+              child: FilterChip(
+                showCheckmark: false,
+                selected: selectedDivisions.values.every((element) => element),
+                label: Text('All'.hardcoded),
+                onSelected: (value) {
+                  final notifier = ref.read(schoolDivisionsProvider.notifier);
+                  if (value) {
+                    notifier.selectAll();
+                  } else {
+                    notifier.removeAll();
+                  }
+                },
+              ),
+            ),
             for (final (division, isActive)
                 in selectedDivisions.entries.map((e) => (e.key, e.value)))
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8),
-                child: FilterChip(
-                  selected: isActive,
-                  label: Text(division.fullName),
-                  onSelected: (value) {
-                    final notif = ref.read(selectedDivisionsProvider.notifier);
-                    if (value) {
-                      notif.selectDivision(division);
-                    } else {
-                      notif.removeDivision(division);
-                    }
+                padding: const EdgeInsets.symmetric(horizontal: 4),
+                child: GestureDetector(
+                  onLongPress: () {
+                    ref.read(schoolDivisionsProvider.notifier)
+                      ..removeAll()
+                      ..selectDivision(division);
                   },
+                  child: FilterChip(
+                    selected: isActive,
+                    label: Text(division.fullName),
+                    onSelected: (value) {
+                      final notifier =
+                          ref.read(schoolDivisionsProvider.notifier);
+                      if (value) {
+                        notifier.selectDivision(division);
+                      } else {
+                        notifier.removeDivision(division);
+                      }
+                    },
+                  ),
                 ),
               ),
           ],

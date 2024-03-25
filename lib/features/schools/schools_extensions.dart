@@ -75,13 +75,12 @@ extension SchoolDivisionExtension on SchoolDivision {
       };
 }
 
-//Made an extension in the School class to search in the fields that are strings o list string
-//But prioritizing the name field
 extension SearchLogicSchoolExtension on School {
   bool searchLogic(String search) {
     if (name.removeAccents.contains(search)) {
       return true;
     }
+    // TODO: Add more search logic
 
     return false;
   }

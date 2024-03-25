@@ -7,11 +7,17 @@ import 'package:samba_public_app/features/schools/widgets/school_card.dart';
 part 'schools_tab_providers.g.dart';
 
 @riverpod
-class SelectedDivisions extends _$SelectedDivisions {
+class SchoolDivisions extends _$SchoolDivisions {
   @override
   Map<SchoolDivision, bool> build() {
+    final divisions = ref
+            .watch(schoolsProvider)
+            .value
+            ?.map((e) => e.currentDivision)
+            .toSet() ??
+        {};
     return <SchoolDivision, bool>{
-      for (final division in SchoolDivision.values) division: true,
+      for (final division in divisions) division: true,
     };
   }
 
@@ -21,6 +27,18 @@ class SelectedDivisions extends _$SelectedDivisions {
 
   void removeDivision(SchoolDivision division) {
     state = {...state, division: false};
+  }
+
+  void removeAll() {
+    state = <SchoolDivision, bool>{
+      for (final division in state.keys) division: false,
+    };
+  }
+
+  void selectAll() {
+    state = <SchoolDivision, bool>{
+      for (final division in state.keys) division: true,
+    };
   }
 }
 
@@ -60,7 +78,7 @@ class SearchSchool extends _$SearchSchool {
 }
 
 final filteredSchoolsProvider = Provider.autoDispose<List<School>>((ref) {
-  final filter = ref.watch(selectedDivisionsProvider);
+  final filter = ref.watch(schoolDivisionsProvider);
   final search = ref.watch(searchSchoolProvider);
   final schools = ref.watch(schoolsProvider);
 

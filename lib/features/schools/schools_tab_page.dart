@@ -2,10 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:pull_down_button/pull_down_button.dart';
 import 'package:samba_public_app/common_widgets/app_cupertino_button.dart';
 import 'package:samba_public_app/common_widgets/app_cupertino_sliver_nav_bar.dart';
 import 'package:samba_public_app/extensions/hardcoded_extension.dart';
 import 'package:samba_public_app/extensions/media_query_context_extension.dart';
+import 'package:samba_public_app/extensions/theme_of_context_extension.dart';
+import 'package:samba_public_app/features/home/widgets/adaptive_navigation_rail.dart';
 import 'package:samba_public_app/features/schools/schools_tab_providers.dart';
 import 'package:samba_public_app/features/schools/widgets/school_card.dart';
 import 'package:samba_public_app/features/schools/widgets/school_division_chips.dart';
@@ -36,7 +39,24 @@ class _SchoolsTabState extends ConsumerState<SchoolsTabPage> {
         slivers: <Widget>[
           SliverCrossAxisConstrained(
             maxCrossAxisExtent: largeScreen,
-            child: AppCupertinoSliverNavBar(largeTitle: 'Schools'.hardcoded),
+            child: AppCupertinoSliverNavBar(
+              largeTitle: 'Schools'.hardcoded,
+              leading: PullDownButton(
+                menuOffset: context.querySize.currentRailWidth,
+                itemBuilder: (context) => [
+                  PullDownMenuItem.selectable(
+                    title: '🇧🇷 Rio de Janeiro'.hardcoded,
+                    selected: true,
+                    onTap: () {},
+                  ),
+                ],
+                buttonBuilder: (context, showMenu) => AppCupertinoButton(
+                  onPressed: showMenu,
+                  padding: EdgeInsets.zero,
+                  child: const Icon(CupertinoIcons.ellipsis_circle),
+                ),
+              ),
+            ),
           ),
           SliverCrossAxisConstrained(
             maxCrossAxisExtent: largeScreen,
@@ -55,15 +75,34 @@ class _SchoolsTabState extends ConsumerState<SchoolsTabPage> {
                           ),
                         ),
                         AppCupertinoButton(
-                          padding: const EdgeInsets.only(left: 8),
-                          onPressed: () {},
-                          child: Icon(
-                            ref.watch(searchSchoolProvider).isNotEmpty
-                                ? CupertinoIcons
-                                    .line_horizontal_3_decrease_circle_fill
-                                : CupertinoIcons
-                                    .line_horizontal_3_decrease_circle,
-                            size: 24,
+                          onPressed: () {
+                            showPullDownMenu(
+                              context: context,
+                              position: Rect.fromLTWH(
+                                context.querySize.width > largeScreen
+                                    ? largeScreen +
+                                        AdaptiveNavigationRail.largeRailWidth
+                                    : context.querySize.width,
+                                100,
+                                -48,
+                                48,
+                              ),
+                              items: [
+                                PullDownMenuTitle(
+                                  title: const Text('Sort by'),
+                                  titleStyle: context.textTheme.labelLarge,
+                                ),
+                                PullDownMenuItem.selectable(
+                                  onTap: () {},
+                                  selected: true,
+                                  title: 'Last position',
+                                ),
+                              ],
+                            );
+                          },
+                          padding: const EdgeInsets.symmetric(horizontal: 8),
+                          child: const Icon(
+                            CupertinoIcons.line_horizontal_3_decrease,
                           ),
                         ),
                       ],
@@ -73,10 +112,11 @@ class _SchoolsTabState extends ConsumerState<SchoolsTabPage> {
               ),
             ),
           ),
-          const SliverCrossAxisConstrained(
-            maxCrossAxisExtent: largeScreen,
-            child: SchoolDivisionChips(),
-          ),
+          if (ref.watch(schoolDivisionsProvider).length > 1)
+            const SliverCrossAxisConstrained(
+              maxCrossAxisExtent: largeScreen,
+              child: SchoolDivisionChips(),
+            ),
           SliverAnimatedSwitcher(
             duration: kThemeAnimationDuration,
             child: ref.watch(schoolsProvider).when(

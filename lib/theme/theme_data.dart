@@ -22,8 +22,8 @@ class AppTheme {
           AppColorTextTheme.light(),
           const WoltModalSheetThemeData(
             bottomSheetShape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(
-                Radius.circular(28),
+              borderRadius: BorderRadius.vertical(
+                top: Radius.circular(28),
               ),
             ),
             dialogShape: RoundedRectangleBorder(
@@ -57,8 +57,8 @@ class AppTheme {
           AppColorTextTheme.dark(),
           const WoltModalSheetThemeData(
             bottomSheetShape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(
-                Radius.circular(28),
+              borderRadius: BorderRadius.vertical(
+                top: Radius.circular(28),
               ),
             ),
             dialogShape: RoundedRectangleBorder(
