@@ -16,7 +16,7 @@ class SchoolDivisionChips extends ConsumerWidget {
     final selectedDivisions = ref.watch(selectedDivisionsProvider);
     return SliverToBoxAdapter(
       child: SizedBox(
-        height: 72,
+        height: 64,
         child: ListView(
           padding: margin,
           scrollDirection: Axis.horizontal,
@@ -24,7 +24,7 @@ class SchoolDivisionChips extends ConsumerWidget {
             for (final (division, isActive)
                 in selectedDivisions.entries.map((e) => (e.key, e.value)))
               Padding(
-                padding: const EdgeInsets.all(8),
+                padding: const EdgeInsets.symmetric(horizontal: 8),
                 child: FilterChip(
                   selected: isActive,
                   label: Text(division.fullName),

@@ -3,7 +3,20 @@ library;
 
 import 'package:flutter/material.dart';
 import 'package:samba_public_app/extensions/hardcoded_extension.dart';
+import 'package:samba_public_app/extensions/string_extension.dart';
 import 'package:samba_public_app/features/schools/school.dart';
+
+extension SchoolLeagueExtension on SchoolLeague {
+  String get fullName => switch (this) {
+        (SchoolLeague.liesa) =>
+          'Liga Independente das Escolas de Samba'.hardcoded,
+        (SchoolLeague.ligarj) =>
+          'Liga das Escolas de Samba do Rio de Janeiro'.hardcoded,
+        (SchoolLeague.superliga) => 'Superliga das Escolas de Samba'.hardcoded,
+        (SchoolLeague.acas) =>
+          'Associação Cultural das Escolas de Samba'.hardcoded,
+      };
+}
 
 extension SchoolDivisionExtension on SchoolDivision {
   String get fullName => switch (this) {
@@ -60,4 +73,16 @@ extension SchoolDivisionExtension on SchoolDivision {
         (SchoolDivision.avaliacao) => 5,
         (SchoolDivision.mirins) => 6,
       };
+}
+
+//Made an extension in the School class to search in the fields that are strings o list string
+//But prioritizing the name field
+extension SearchLogicSchoolExtension on School {
+  bool searchLogic(String search) {
+    if (name.removeAccents.contains(search)) {
+      return true;
+    }
+
+    return false;
+  }
 }

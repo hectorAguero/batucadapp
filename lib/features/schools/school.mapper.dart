@@ -151,6 +151,9 @@ class SchoolMapper extends ClassMapperBase<School> {
   static String _$godmotherSchool(School v) => v.godmotherSchool;
   static const Field<School, String> _f$godmotherSchool =
       Field('godmotherSchool', _$godmotherSchool);
+  static List<String> _$colorNames(School v) => v.colorNames;
+  static const Field<School, List<String>> _f$colorNames =
+      Field('colorNames', _$colorNames, key: 'colors');
   static List<Color> _$colors(School v) => v.colors;
   static const Field<School, List<Color>> _f$colors =
       Field('colors', _$colors, hook: ColorHook());
@@ -163,6 +166,9 @@ class SchoolMapper extends ClassMapperBase<School> {
   static SchoolDivision _$currentDivision(School v) => v.currentDivision;
   static const Field<School, SchoolDivision> _f$currentDivision =
       Field('currentDivision', _$currentDivision, key: 'divisionNumber');
+  static int _$divisionNumber(School v) => v.divisionNumber;
+  static const Field<School, int> _f$divisionNumber =
+      Field('divisionNumber', _$divisionNumber);
   static bool _$isFavorite(School v) => v.isFavorite;
   static const Field<School, bool> _f$isFavorite =
       Field('isFavorite', _$isFavorite, opt: true, def: false);
@@ -174,10 +180,12 @@ class SchoolMapper extends ClassMapperBase<School> {
     #imageUrl: _f$imageUrl,
     #foundationDate: _f$foundationDate,
     #godmotherSchool: _f$godmotherSchool,
+    #colorNames: _f$colorNames,
     #colors: _f$colors,
     #symbols: _f$symbols,
     #league: _f$league,
     #currentDivision: _f$currentDivision,
+    #divisionNumber: _f$divisionNumber,
     #isFavorite: _f$isFavorite,
   };
 
@@ -188,10 +196,12 @@ class SchoolMapper extends ClassMapperBase<School> {
         imageUrl: data.dec(_f$imageUrl),
         foundationDate: data.dec(_f$foundationDate),
         godmotherSchool: data.dec(_f$godmotherSchool),
+        colorNames: data.dec(_f$colorNames),
         colors: data.dec(_f$colors),
         symbols: data.dec(_f$symbols),
         league: data.dec(_f$league),
         currentDivision: data.dec(_f$currentDivision),
+        divisionNumber: data.dec(_f$divisionNumber),
         isFavorite: data.dec(_f$isFavorite));
   }
 
@@ -244,6 +254,7 @@ extension SchoolValueCopy<$R, $Out> on ObjectCopyWith<$R, School, $Out> {
 
 abstract class SchoolCopyWith<$R, $In extends School, $Out>
     implements ClassCopyWith<$R, $In, $Out> {
+  ListCopyWith<$R, String, ObjectCopyWith<$R, String, String>> get colorNames;
   ListCopyWith<$R, Color, ObjectCopyWith<$R, Color, Color>> get colors;
   ListCopyWith<$R, String, ObjectCopyWith<$R, String, String>> get symbols;
   $R call(
@@ -252,10 +263,12 @@ abstract class SchoolCopyWith<$R, $In extends School, $Out>
       String? imageUrl,
       DateTime? foundationDate,
       String? godmotherSchool,
+      List<String>? colorNames,
       List<Color>? colors,
       List<String>? symbols,
       SchoolLeague? league,
       SchoolDivision? currentDivision,
+      int? divisionNumber,
       bool? isFavorite});
   SchoolCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(Then<$Out2, $R2> t);
 }
@@ -266,6 +279,10 @@ class _SchoolCopyWithImpl<$R, $Out> extends ClassCopyWithBase<$R, School, $Out>
 
   @override
   late final ClassMapperBase<School> $mapper = SchoolMapper.ensureInitialized();
+  @override
+  ListCopyWith<$R, String, ObjectCopyWith<$R, String, String>> get colorNames =>
+      ListCopyWith($value.colorNames, (v, t) => ObjectCopyWith(v, $identity, t),
+          (v) => call(colorNames: v));
   @override
   ListCopyWith<$R, Color, ObjectCopyWith<$R, Color, Color>> get colors =>
       ListCopyWith($value.colors, (v, t) => ObjectCopyWith(v, $identity, t),
@@ -281,10 +298,12 @@ class _SchoolCopyWithImpl<$R, $Out> extends ClassCopyWithBase<$R, School, $Out>
           String? imageUrl,
           DateTime? foundationDate,
           String? godmotherSchool,
+          List<String>? colorNames,
           List<Color>? colors,
           List<String>? symbols,
           SchoolLeague? league,
           SchoolDivision? currentDivision,
+          int? divisionNumber,
           bool? isFavorite}) =>
       $apply(FieldCopyWithData({
         if (id != null) #id: id,
@@ -292,10 +311,12 @@ class _SchoolCopyWithImpl<$R, $Out> extends ClassCopyWithBase<$R, School, $Out>
         if (imageUrl != null) #imageUrl: imageUrl,
         if (foundationDate != null) #foundationDate: foundationDate,
         if (godmotherSchool != null) #godmotherSchool: godmotherSchool,
+        if (colorNames != null) #colorNames: colorNames,
         if (colors != null) #colors: colors,
         if (symbols != null) #symbols: symbols,
         if (league != null) #league: league,
         if (currentDivision != null) #currentDivision: currentDivision,
+        if (divisionNumber != null) #divisionNumber: divisionNumber,
         if (isFavorite != null) #isFavorite: isFavorite
       }));
   @override
@@ -305,10 +326,12 @@ class _SchoolCopyWithImpl<$R, $Out> extends ClassCopyWithBase<$R, School, $Out>
       imageUrl: data.get(#imageUrl, or: $value.imageUrl),
       foundationDate: data.get(#foundationDate, or: $value.foundationDate),
       godmotherSchool: data.get(#godmotherSchool, or: $value.godmotherSchool),
+      colorNames: data.get(#colorNames, or: $value.colorNames),
       colors: data.get(#colors, or: $value.colors),
       symbols: data.get(#symbols, or: $value.symbols),
       league: data.get(#league, or: $value.league),
       currentDivision: data.get(#currentDivision, or: $value.currentDivision),
+      divisionNumber: data.get(#divisionNumber, or: $value.divisionNumber),
       isFavorite: data.get(#isFavorite, or: $value.isFavorite));
 
   @override

@@ -1,5 +1,6 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:samba_public_app/features/schools/school.dart';
+import 'package:samba_public_app/features/schools/schools_extensions.dart';
 import 'package:samba_public_app/features/schools/schools_repo.dart';
 import 'package:samba_public_app/features/schools/widgets/school_card.dart';
 
@@ -46,14 +47,33 @@ class Schools extends _$Schools {
   }
 }
 
+@riverpod
+class SearchSchool extends _$SearchSchool {
+  @override
+  String build() {
+    return '';
+  }
+
+  void setSearch(String value) {
+    state = value.trim().toLowerCase();
+  }
+}
+
 final filteredSchoolsProvider = Provider.autoDispose<List<School>>((ref) {
   final filter = ref.watch(selectedDivisionsProvider);
+  final search = ref.watch(searchSchoolProvider);
   final schools = ref.watch(schoolsProvider);
 
-  return schools.value
-          ?.where((school) => filter[school.currentDivision] ?? false)
-          .toList() ??
-      [];
+  if (schools.value == null) return const [];
+
+  final filteredSchools = schools.value!
+      .where(
+        (school) =>
+            (filter[school.currentDivision] ?? false) &&
+            school.searchLogic(search),
+      )
+      .toList();
+  return filteredSchools;
 });
 
 /// A provider which exposes the [School] displayed by a [SchoolCard].

@@ -1,6 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:samba_public_app/common_widgets/app_cupertino_button.dart';
 import 'package:samba_public_app/common_widgets/app_cupertino_sliver_nav_bar.dart';
 import 'package:samba_public_app/extensions/hardcoded_extension.dart';
 import 'package:samba_public_app/extensions/media_query_context_extension.dart';
@@ -36,6 +38,41 @@ class _SchoolsTabState extends ConsumerState<SchoolsTabPage> {
             maxCrossAxisExtent: largeScreen,
             child: AppCupertinoSliverNavBar(largeTitle: 'Schools'.hardcoded),
           ),
+          SliverCrossAxisConstrained(
+            maxCrossAxisExtent: largeScreen,
+            child: SliverPadding(
+              padding: const EdgeInsets.only(top: 12, left: 16, right: 16),
+              sliver: SliverCrossAxisGroup(
+                slivers: [
+                  SliverToBoxAdapter(
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: CupertinoSearchTextField(
+                            onChanged: (value) => ref
+                                .read(searchSchoolProvider.notifier)
+                                .setSearch(value),
+                          ),
+                        ),
+                        AppCupertinoButton(
+                          padding: const EdgeInsets.only(left: 8),
+                          onPressed: () {},
+                          child: Icon(
+                            ref.watch(searchSchoolProvider).isNotEmpty
+                                ? CupertinoIcons
+                                    .line_horizontal_3_decrease_circle_fill
+                                : CupertinoIcons
+                                    .line_horizontal_3_decrease_circle,
+                            size: 24,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
           const SliverCrossAxisConstrained(
             maxCrossAxisExtent: largeScreen,
             child: SchoolDivisionChips(),
@@ -52,7 +89,6 @@ class _SchoolsTabState extends ConsumerState<SchoolsTabPage> {
                           child: SliverPadding(
                             padding: const EdgeInsets.symmetric(
                               horizontal: 8,
-                              vertical: 8,
                             ),
                             sliver: SliverAlignedGrid.extent(
                               maxCrossAxisExtent: SchoolCard.cardMaxWidth,

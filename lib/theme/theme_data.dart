@@ -14,14 +14,21 @@ class AppTheme {
         ),
         background: CupertinoColors.systemGroupedBackground,
         surface: CupertinoColors.systemBackground,
-        subThemesData: const FlexSubThemesData(),
+        subThemesData: const FlexSubThemesData(
+          tooltipSchemeColor: SchemeColor.inverseSurface,
+        ),
         splashFactory: InkSparkle.splashFactory,
         extensions: [
           AppColorTextTheme.light(),
           const WoltModalSheetThemeData(
             bottomSheetShape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.vertical(
-                top: Radius.circular(16),
+              borderRadius: BorderRadius.all(
+                Radius.circular(28),
+              ),
+            ),
+            dialogShape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(
+                Radius.circular(28),
               ),
             ),
           ),
@@ -39,13 +46,27 @@ class AppTheme {
           primary: Color(0xffff00a5),
           secondary: Color(0xff00a859),
         ),
-        subThemesData: const FlexSubThemesData(),
+        subThemesData: const FlexSubThemesData(
+          tooltipSchemeColor: SchemeColor.inverseSurface,
+        ),
         surface: CupertinoColors.systemBackground.darkColor,
         background: CupertinoColors.systemGroupedBackground.darkColor,
         splashFactory: InkSparkle.splashFactory,
         darkIsTrueBlack: trueBlack,
         extensions: [
           AppColorTextTheme.dark(),
+          const WoltModalSheetThemeData(
+            bottomSheetShape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(
+                Radius.circular(28),
+              ),
+            ),
+            dialogShape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(
+                Radius.circular(28),
+              ),
+            ),
+          ),
         ],
       ).copyWith(
         cupertinoOverrideTheme: getCupertinoTheme(Brightness.dark),

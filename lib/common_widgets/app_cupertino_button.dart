@@ -6,6 +6,7 @@ class AppCupertinoButton extends StatelessWidget {
   const AppCupertinoButton({
     required this.child,
     required this.onPressed,
+    this.color,
     this.padding,
     this.minSize,
     super.key,
@@ -15,6 +16,7 @@ class AppCupertinoButton extends StatelessWidget {
   final VoidCallback? onPressed;
   final EdgeInsetsGeometry? padding;
   final double? minSize;
+  final Color? color;
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +24,8 @@ class AppCupertinoButton extends StatelessWidget {
       onPressed: onPressed,
       padding: padding ?? EdgeInsets.zero,
       minSize: minSize ?? 0,
+      borderRadius: BorderRadius.circular(32),
+      color: color,
       child: child,
     );
   }

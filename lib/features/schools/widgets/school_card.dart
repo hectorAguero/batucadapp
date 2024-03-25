@@ -3,12 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:samba_public_app/extensions/theme_of_context_extension.dart';
-import 'package:samba_public_app/features/schools/details/school_details_page.dart';
-import 'package:samba_public_app/features/schools/school.dart';
+import 'package:samba_public_app/features/schools/details/show_details.dart';
 import 'package:samba_public_app/features/schools/schools_extensions.dart';
 import 'package:samba_public_app/features/schools/schools_tab_providers.dart';
 import 'package:samba_public_app/features/schools/widgets/school_flag.dart';
-import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
 class SchoolCard extends ConsumerWidget {
   const SchoolCard({
@@ -109,7 +107,7 @@ class SchoolCard extends ConsumerWidget {
                     style: OutlinedButton.styleFrom(
                       padding: const EdgeInsets.all(8),
                     ),
-                    onPressed: () => _showDetails(context, school),
+                    onPressed: () => showSchoolDetails(context, school),
                     child: Text(
                       'Learn More',
                       style: context.textTheme.titleSmall,
@@ -121,31 +119,6 @@ class SchoolCard extends ConsumerWidget {
           ],
         ),
       ),
-    );
-  }
-
-  void _showDetails(BuildContext context, School school) {
-    WoltModalSheet.show<dynamic>(
-      context: context,
-      useSafeArea: false,
-      pageListBuilder: (context) {
-        return [
-          SliverWoltModalSheetPage(
-            hasTopBarLayer: false,
-            isTopBarLayerAlwaysVisible: false,
-            mainContentSlivers: [
-              SliverPadding(
-                padding: const EdgeInsets.only(top: 12),
-                sliver: SliverToBoxAdapter(
-                  child: SchoolDetailsPage(
-                    id: school.id,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ];
-      },
     );
   }
 }

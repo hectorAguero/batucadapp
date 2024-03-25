@@ -36,10 +36,12 @@ class School with SchoolMappable {
     required this.imageUrl,
     required this.foundationDate,
     required this.godmotherSchool,
+    required this.colorNames,
     required this.colors,
     required this.symbols,
     required this.league,
     required this.currentDivision,
+    required this.divisionNumber,
     this.isFavorite = false,
   });
 
@@ -50,12 +52,15 @@ class School with SchoolMappable {
   @MappableField(hook: DateTimeHook())
   final DateTime foundationDate;
   final String godmotherSchool;
+  @MappableField(key: 'colors')
+  final List<String> colorNames;
   @MappableField(hook: ColorHook())
   final List<Color> colors;
   final List<String> symbols;
   final SchoolLeague league;
   @MappableField(key: 'divisionNumber')
   final SchoolDivision currentDivision;
+  final int divisionNumber;
   final bool isFavorite;
 
   static const fromMap = SchoolMapper.fromMap;
@@ -67,9 +72,10 @@ class ColorHook extends MappingHook {
 
   @override
   Object? beforeDecode(Object? value) {
-    if (value is List<String>) {
+    if (value is List) {
+      final colorsNames = List<String>.from(value);
       return [
-        for (final Object color in value) _getColor(color),
+        for (final String color in colorsNames) _getColor(color),
       ];
     }
     return <Color>[];
@@ -98,6 +104,7 @@ class ColorHook extends MappingHook {
         ('lime' || 'lima' || 'lima' || 'ライム' || 'ライム色') => Colors.lime,
         ('yellow' || 'amarelo' || 'amarillo' || 'きいろ' || '黄色') => Colors.yellow,
         ('amber' || 'âmbar' || 'ámbar' || 'こはくいろ' || '琥珀色') => Colors.amber,
+        ('gold' || 'oro' || 'ouro' || 'ゴールド') => Colors.amber,
         ('orange' || 'laranja' || 'naranja' || 'オレンジ' || '橙色') => Colors.orange,
         ('deep orange' ||
               'laranja escuro' ||
