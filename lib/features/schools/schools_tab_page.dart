@@ -9,6 +9,7 @@ import 'package:samba_public_app/extensions/hardcoded_extension.dart';
 import 'package:samba_public_app/extensions/media_query_context_extension.dart';
 import 'package:samba_public_app/extensions/theme_of_context_extension.dart';
 import 'package:samba_public_app/features/home/widgets/adaptive_navigation_rail.dart';
+import 'package:samba_public_app/features/schools/school_sort.dart';
 import 'package:samba_public_app/features/schools/schools_tab_providers.dart';
 import 'package:samba_public_app/features/schools/widgets/school_card.dart';
 import 'package:samba_public_app/features/schools/widgets/school_division_chips.dart';
@@ -58,110 +59,138 @@ class _SchoolsTabState extends ConsumerState<SchoolsTabPage> {
               ),
             ),
           ),
-          SliverCrossAxisConstrained(
-            maxCrossAxisExtent: largeScreen,
-            child: SliverPadding(
-              padding: const EdgeInsets.only(top: 12, left: 16, right: 16),
-              sliver: SliverCrossAxisGroup(
-                slivers: [
-                  SliverToBoxAdapter(
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: CupertinoSearchTextField(
-                            onChanged: (value) => ref
-                                .read(searchSchoolProvider.notifier)
-                                .setSearch(value),
+          SliverSafeArea(
+            top: false,
+            bottom: false,
+            sliver: SliverCrossAxisConstrained(
+              maxCrossAxisExtent: largeScreen,
+              child: SliverPadding(
+                padding: const EdgeInsets.only(top: 12, left: 16, right: 16),
+                sliver: SliverCrossAxisGroup(
+                  slivers: [
+                    SliverToBoxAdapter(
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: CupertinoSearchTextField(
+                              onChanged: (value) => ref
+                                  .read(searchSchoolProvider.notifier)
+                                  .setSearch(value),
+                            ),
                           ),
-                        ),
-                        AppCupertinoButton(
-                          onPressed: () {
-                            showPullDownMenu(
-                              context: context,
-                              position: Rect.fromLTWH(
-                                context.querySize.width > largeScreen
-                                    ? largeScreen +
-                                        AdaptiveNavigationRail.largeRailWidth
-                                    : context.querySize.width,
-                                100,
-                                -48,
-                                48,
+                          AppCupertinoButton(
+                            onPressed: () {
+                              showPullDownMenu(
+                                context: context,
+                                position: Rect.fromLTWH(
+                                  context.querySize.width > largeScreen
+                                      ? largeScreen +
+                                          AdaptiveNavigationRail.largeRailWidth
+                                      : context.querySize.width,
+                                  100,
+                                  -48,
+                                  48,
+                                ),
+                                items: [
+                                  PullDownMenuTitle(
+                                    title: const Text('Sort by'),
+                                    titleStyle: context.textTheme.labelLarge,
+                                  ),
+                                  for (final sort in SchoolSort.values)
+                                    PullDownMenuItem.selectable(
+                                      onTap: () {
+                                        ref
+                                            .read(
+                                              selectedSchoolSortProvider
+                                                  .notifier,
+                                            )
+                                            .setSort(sort);
+                                      },
+                                      selected: sort ==
+                                          ref.watch(selectedSchoolSortProvider),
+                                      title: sort.fullName,
+                                    ),
+                                ],
+                              );
+                            },
+                            padding: const EdgeInsets.symmetric(horizontal: 8),
+                            child: Container(
+                              padding: const EdgeInsets.all(4),
+                              decoration: const BoxDecoration(
+                                shape: BoxShape.circle,
                               ),
-                              items: [
-                                PullDownMenuTitle(
-                                  title: const Text('Sort by'),
-                                  titleStyle: context.textTheme.labelLarge,
-                                ),
-                                PullDownMenuItem.selectable(
-                                  onTap: () {},
-                                  selected: true,
-                                  title: 'Last position',
-                                ),
-                              ],
-                            );
-                          },
-                          padding: const EdgeInsets.symmetric(horizontal: 8),
-                          child: const Icon(
-                            CupertinoIcons.line_horizontal_3_decrease,
+                              child: const Icon(
+                                CupertinoIcons.line_horizontal_3_decrease,
+                                size: 20,
+                              ),
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),
           if (ref.watch(schoolDivisionsProvider).length > 1)
-            const SliverCrossAxisConstrained(
-              maxCrossAxisExtent: largeScreen,
-              child: SchoolDivisionChips(),
+            const SliverSafeArea(
+              top: false,
+              bottom: false,
+              sliver: SliverCrossAxisConstrained(
+                maxCrossAxisExtent: largeScreen,
+                child: SchoolDivisionChips(),
+              ),
             ),
-          SliverAnimatedSwitcher(
-            duration: kThemeAnimationDuration,
-            child: ref.watch(schoolsProvider).when(
-                  data: (schools) {
-                    return Consumer(
-                      builder: (context, ref, child) {
-                        final schools = ref.watch(filteredSchoolsProvider);
-                        return SliverCrossAxisConstrained(
-                          maxCrossAxisExtent: largeScreen,
-                          child: SliverPadding(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 8,
+          SliverSafeArea(
+            top: false,
+            sliver: SliverAnimatedSwitcher(
+              duration: kThemeAnimationDuration,
+              child: ref.watch(schoolsProvider).when(
+                    data: (schools) {
+                      return Consumer(
+                        builder: (context, ref, child) {
+                          final schools = ref.watch(filteredSchoolsProvider);
+                          return SliverCrossAxisConstrained(
+                            maxCrossAxisExtent: largeScreen,
+                            child: SliverPadding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 8,
+                              ),
+                              sliver: SliverAlignedGrid.extent(
+                                maxCrossAxisExtent: SchoolCard.cardMaxWidth,
+                                itemCount: schools.length,
+                                itemBuilder: (context, index) {
+                                  final school = schools[index];
+                                  return ProviderScope(
+                                    overrides: [
+                                      currentSchoolProvider.overrideWithValue(
+                                        schools.firstWhere(
+                                          (s) => s.id == school.id,
+                                        ),
+                                      ),
+                                    ],
+                                    child: const SchoolCard(),
+                                  );
+                                },
+                              ),
                             ),
-                            sliver: SliverAlignedGrid.extent(
-                              maxCrossAxisExtent: SchoolCard.cardMaxWidth,
-                              itemCount: schools.length,
-                              itemBuilder: (context, index) {
-                                final school = schools[index];
-                                return ProviderScope(
-                                  overrides: [
-                                    currentSchoolProvider.overrideWithValue(
-                                      schools
-                                          .firstWhere((s) => s.id == school.id),
-                                    ),
-                                  ],
-                                  child: const SchoolCard(),
-                                );
-                              },
-                            ),
-                          ),
-                        );
-                      },
-                    );
-                  },
-                  loading: () => const SliverFillRemaining(
-                    child: Center(
-                      child: CircularProgressIndicator.adaptive(),
+                          );
+                        },
+                      );
+                    },
+                    loading: () => const SliverFillRemaining(
+                      child: Center(
+                        child: CircularProgressIndicator.adaptive(),
+                      ),
+                    ),
+                    error: (error, stackTrace) => SliverFillRemaining(
+                      child: Center(
+                        child: Text('Error: $error'),
+                      ),
                     ),
                   ),
-                  error: (error, stackTrace) => SliverFillRemaining(
-                    child: Center(
-                      child: Text('Error: $error'),
-                    ),
-                  ),
-                ),
+            ),
           ),
         ],
       ),

@@ -26,6 +26,7 @@ class AppTheme {
                 top: Radius.circular(28),
               ),
             ),
+            mainContentScrollPhysics: ClampingScrollPhysics(),
             dialogShape: RoundedRectangleBorder(
               borderRadius: BorderRadius.all(
                 Radius.circular(28),
@@ -61,6 +62,7 @@ class AppTheme {
                 top: Radius.circular(28),
               ),
             ),
+            mainContentScrollPhysics: ClampingScrollPhysics(),
             dialogShape: RoundedRectangleBorder(
               borderRadius: BorderRadius.all(
                 Radius.circular(28),

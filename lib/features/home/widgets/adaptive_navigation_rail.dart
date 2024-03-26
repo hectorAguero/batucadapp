@@ -18,7 +18,7 @@ class AdaptiveNavigationRail extends StatelessWidget {
 
   static const footerSize = 115.0;
   static const largeRailWidth = 256.0;
-  static const smallRailWidth = 96.0;
+  static const smallRailWidth = 80.0;
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +33,7 @@ class AdaptiveNavigationRail extends StatelessWidget {
               child: Icon(
                 Icons.library_music,
                 color: context.colorScheme.primary,
-                size: 80,
+                size: (context.querySize.height * 0.1).clamp(24, 80),
               ),
             ),
             backgroundColor: context.colorScheme.surface,
@@ -46,7 +46,6 @@ class AdaptiveNavigationRail extends StatelessWidget {
             destinations: [
               for (final destination in destinations)
                 NavigationRailDestination(
-                  padding: const EdgeInsets.symmetric(vertical: 16),
                   icon: Icon(destination.icon),
                   selectedIcon: Icon(destination.selectedIcon),
                   label: Text(
@@ -57,14 +56,22 @@ class AdaptiveNavigationRail extends StatelessWidget {
             ],
           ),
         ),
-        SizedBox(
-          height: footerSize,
-          width: size.isLargeScreen || size.isExtraLargeScreen
-              ? largeRailWidth
-              : smallRailWidth,
-          child: ColoredBox(
-            color: context.colorScheme.surface,
-            child: const ThemeSelectorRail(),
+        ColoredBox(
+          color: context.colorScheme.surface,
+          child: SafeArea(
+            bottom: false,
+            left: Directionality.of(context) == TextDirection.ltr,
+            right: Directionality.of(context) == TextDirection.rtl,
+            child: SizedBox(
+              height: footerSize,
+              width: size.isLargeScreen || size.isExtraLargeScreen
+                  ? largeRailWidth
+                  : smallRailWidth,
+              child: ColoredBox(
+                color: context.colorScheme.surface,
+                child: const ThemeSelectorRail(),
+              ),
+            ),
           ),
         ),
       ],

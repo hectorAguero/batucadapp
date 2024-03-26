@@ -1,37 +1,32 @@
 import 'package:flutter/material.dart';
-import 'package:samba_public_app/extensions/hardcoded_extension.dart';
-import 'package:samba_public_app/extensions/theme_of_context_extension.dart';
 import 'package:samba_public_app/features/home/widgets/theme_selector.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
 void showSettingModalSheet(BuildContext context) {
   WoltModalSheet.show<void>(
     context: context,
+    showDragHandle: false,
     pageListBuilder: (context) {
       return [
         WoltModalSheetPage(
-          topBarTitle: const SettingsTitle(),
-          hasTopBarLayer: true,
-          isTopBarLayerAlwaysVisible: true,
-          child: const Column(
-            children: [
-              ThemeSelectorTile(),
-            ],
+          surfaceTintColor: Colors.transparent,
+          backgroundColor: Colors.transparent,
+          hasTopBarLayer: false,
+          child: const SafeArea(
+            minimum: EdgeInsets.only(top: 24),
+            child: ClipRRect(
+              borderRadius: BorderRadius.vertical(
+                top: Radius.circular(8),
+              ),
+              child: Column(
+                children: [
+                  ThemeSelectorTile(),
+                ],
+              ),
+            ),
           ),
         ),
       ];
     },
   );
-}
-
-class SettingsTitle extends StatelessWidget {
-  const SettingsTitle({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Text(
-      'Settings'.hardcoded,
-      style: context.textTheme.titleLarge,
-    );
-  }
 }

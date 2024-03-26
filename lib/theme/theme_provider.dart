@@ -44,6 +44,21 @@ class AppThemeMode extends _$AppThemeMode {
         state = ThemeMode.system;
     }
   }
+
+  void setTheme(ThemeMode mode) {
+    final prefs = ref.read(sharedPreferencesProvider).requireValue;
+    switch (mode) {
+      case ThemeMode.system:
+        prefs.remove('theme_mode');
+        state = ThemeMode.system;
+      case ThemeMode.light:
+        prefs.setString('theme_mode', 'light');
+        state = ThemeMode.light;
+      case ThemeMode.dark:
+        prefs.setString('theme_mode', 'dark');
+        state = ThemeMode.dark;
+    }
+  }
 }
 
 @riverpod

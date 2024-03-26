@@ -23,14 +23,16 @@ class HomePage extends ConsumerWidget {
                   destinations: TabDestination.values,
                   selectedIndex: navigationShell.currentIndex,
                   onDestinationSelected: (index) {
-                    ///GoRouter redirect update the provider
                     navigationShell.goBranch(
                       index,
                       initialLocation: index == navigationShell.currentIndex,
                     );
                   },
                 ),
-                const VerticalDivider(thickness: 1, width: 1),
+                const VerticalDivider(
+                  width: 1,
+                  thickness: 1,
+                ),
                 Expanded(child: navigationShell),
               ],
             ),
@@ -38,7 +40,6 @@ class HomePage extends ConsumerWidget {
           ? AdaptiveNavigationBar(
               tabDestinations: TabDestination.values,
               onDestinationSelected: (index) {
-                ///GoRouter redirect update the provider
                 navigationShell.goBranch(
                   index,
                   initialLocation: index == navigationShell.currentIndex,

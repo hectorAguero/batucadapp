@@ -1,5 +1,7 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:samba_public_app/extensions/intl_extension.dart';
 import 'package:samba_public_app/features/schools/school.dart';
+import 'package:samba_public_app/features/schools/school_sort.dart';
 import 'package:samba_public_app/features/schools/schools_extensions.dart';
 import 'package:samba_public_app/features/schools/schools_repo.dart';
 import 'package:samba_public_app/features/schools/widgets/school_card.dart';
@@ -77,10 +79,28 @@ class SearchSchool extends _$SearchSchool {
   }
 }
 
+@riverpod
+class SelectedSchoolSort extends _$SelectedSchoolSort {
+  @override
+  SchoolSort build() {
+    return SchoolSort.lastPerformance;
+  }
+
+  void setSort(SchoolSort sort) {
+    state = sort;
+  }
+}
+
+extension SelectedSchoolSortExtension on SchoolSort {
+  String getSortedValue(School school) =>
+      switch (this) { _ => school.foundationDate.intlShort };
+}
+
 final filteredSchoolsProvider = Provider.autoDispose<List<School>>((ref) {
   final filter = ref.watch(schoolDivisionsProvider);
   final search = ref.watch(searchSchoolProvider);
   final schools = ref.watch(schoolsProvider);
+  final sort = ref.watch(selectedSchoolSortProvider);
 
   if (schools.value == null) return const [];
 
@@ -90,7 +110,9 @@ final filteredSchoolsProvider = Provider.autoDispose<List<School>>((ref) {
             (filter[school.currentDivision] ?? false) &&
             school.searchLogic(search),
       )
-      .toList();
+      .toList()
+    ..sort(sort.sort);
+
   return filteredSchools;
 });
 

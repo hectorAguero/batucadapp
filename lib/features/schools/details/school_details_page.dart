@@ -159,12 +159,15 @@ class SchoolDetailsText extends StatelessWidget {
             content: school.foundationDate.intlShort,
           ),
           const SizedBox(height: 8),
-          SchoolTextTile(
-            icon: Icons.school_outlined,
-            title: 'Godmother: '.hardcoded,
-            content: school.godmotherSchool,
-          ),
-          const SizedBox(height: 8),
+          if (school.godmotherSchool.isNotEmpty)
+            Padding(
+              padding: const EdgeInsets.only(bottom: 8),
+              child: SchoolTextTile(
+                icon: Icons.school_outlined,
+                title: 'Godmother: '.hardcoded,
+                content: school.godmotherSchool,
+              ),
+            ),
           SchoolTextTile(
             icon: Icons.star_border_outlined,
             title: 'League: '.hardcoded,

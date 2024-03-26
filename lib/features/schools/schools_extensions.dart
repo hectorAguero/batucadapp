@@ -80,7 +80,18 @@ extension SearchLogicSchoolExtension on School {
     if (name.removeAccents.contains(search)) {
       return true;
     }
-    // TODO: Add more search logic
+
+    if (symbols.join(' ').removeAccents.contains(search)) {
+      return true;
+    }
+
+    if (godmotherSchool.removeAccents.contains(search)) {
+      return true;
+    }
+
+    if (colorNames.join(' ').removeAccents.contains(search)) {
+      return true;
+    }
 
     return false;
   }

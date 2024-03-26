@@ -17,72 +17,70 @@ class ThemeSelectorRail extends ConsumerWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
-        CupertinoListTile.notched(
-          trailing: IgnorePointer(
-            child: size.isMediumScreen
-                ? null
-                : Switch.adaptive(
-                    value: trueBlack,
-                    applyCupertinoTheme: true,
-                    onChanged: themeMode.isLight
-                        ? null
-                        : (_) => ref
-                            .read(appThemeTrueBlackProvider.notifier)
-                            .toggleTrueBlack(),
-                  ),
-          ),
-          leading: size.isLargeScreen || size.isExtraLargeScreen
-              ? Icon(
-                  CupertinoIcons.moon_stars,
-                  color: themeMode.isLight
-                      ? context.colorScheme.onSurface.withOpacity(0.5)
-                      : context.colorScheme.onSurface,
-                )
-              : null,
-          title: size.isMediumScreen
-              ? Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
-                  child: Icon(
-                    CupertinoIcons.moon_stars,
-                    color: themeMode.isLight
-                        ? context.colorScheme.onSurface.withOpacity(0.5)
-                        : context.colorScheme.onSurface,
-                  ),
-                )
-              : Text(
-                  'True Black'.hardcoded,
-                  style: themeMode.isLight
-                      ? context.textTheme.titleMedium!
-                          .copyWith(color: Colors.grey)
-                      : context.textTheme.titleMedium,
-                ),
+        InkWell(
           onTap: themeMode.isLight
               ? null
               : () async => ref
                   .read(appThemeTrueBlackProvider.notifier)
                   .toggleTrueBlack(),
-        ),
-        const SizedBox(
-          child: Divider(
-            thickness: 1,
-            height: 1,
+          child: CupertinoListTile.notched(
+            trailing: IgnorePointer(
+              child: size.isMediumScreen
+                  ? null
+                  : Switch.adaptive(
+                      value: trueBlack,
+                      applyCupertinoTheme: true,
+                      onChanged: themeMode.isLight
+                          ? null
+                          : (_) => ref
+                              .read(appThemeTrueBlackProvider.notifier)
+                              .toggleTrueBlack(),
+                    ),
+            ),
+            leading: size.isLargeScreen || size.isExtraLargeScreen
+                ? Icon(
+                    CupertinoIcons.moon_stars,
+                    color: themeMode.isLight
+                        ? context.colorScheme.onSurface.withOpacity(0.5)
+                        : context.colorScheme.onSurface,
+                  )
+                : null,
+            title: size.isMediumScreen
+                ? Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    child: Icon(
+                      CupertinoIcons.moon_stars,
+                      color: themeMode.isLight
+                          ? context.colorScheme.onSurface.withOpacity(0.5)
+                          : context.colorScheme.onSurface,
+                    ),
+                  )
+                : Text(
+                    'True Black'.hardcoded,
+                    style: themeMode.isLight
+                        ? context.textTheme.titleMedium!
+                            .copyWith(color: Colors.grey)
+                        : context.textTheme.titleMedium,
+                  ),
           ),
         ),
-        CupertinoListTile.notched(
-          title: size.isLargeScreen || size.isExtraLargeScreen
-              ? Text(
-                  themeMode.labelName,
-                  style: context.textTheme.titleMedium,
-                )
-              : Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
-                  child: Icon(themeMode.icon),
-                ),
-          leading: size.isLargeScreen || size.isExtraLargeScreen
-              ? Icon(themeMode.icon)
-              : null,
+        InkWell(
           onTap: () async =>
               ref.read(appThemeModeProvider.notifier).toggleTheme(),
+          child: CupertinoListTile.notched(
+            title: size.isLargeScreen || size.isExtraLargeScreen
+                ? Text(
+                    themeMode.labelName,
+                    style: context.textTheme.titleMedium,
+                  )
+                : Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    child: Icon(themeMode.icon),
+                  ),
+            leading: size.isLargeScreen || size.isExtraLargeScreen
+                ? Icon(themeMode.icon)
+                : null,
+          ),
         ),
       ],
     );
@@ -97,33 +95,39 @@ class ThemeSelectorTile extends ConsumerWidget {
     final themeMode = ref.watch(appThemeModeProvider);
     final trueBlack = ref.watch(appThemeTrueBlackProvider);
 
-    return Column(
+    return CupertinoListSection.insetGrouped(
+      header: Text('Theme'.hardcoded),
       children: [
-        CupertinoListTile.notched(
-          backgroundColorActivated: Colors.transparent,
-          trailing: CupertinoButton.filled(
-            onPressed: null,
-            padding: const EdgeInsets.symmetric(horizontal: 8),
-            child: Row(
-              children: [
-                Icon(
-                  themeMode.icon,
-                  color: context.colorScheme.onSurface,
-                ),
-                const SizedBox(width: 8),
-                Text(
-                  themeMode.label,
-                  style: context.textTheme.titleMedium,
-                ),
-                const SizedBox(width: 8),
-              ],
-            ),
+        CupertinoListTile(
+          backgroundColor: context.colorScheme.surface,
+          trailing: CupertinoSegmentedControl<ThemeMode>(
+            padding: EdgeInsets.zero,
+            // This represents a currently selected segmented control.
+            groupValue: ref.watch(appThemeModeProvider),
+            // Callback that sets the selected segmented control.
+            onValueChanged: (ThemeMode value) {
+              ref.read(appThemeModeProvider.notifier).setTheme(value);
+            },
+            children: <ThemeMode, Widget>{
+              ThemeMode.light: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 4),
+                child: Text('Light'.hardcoded),
+              ),
+              ThemeMode.dark: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 4),
+                child: Text('Dark'.hardcoded),
+              ),
+              ThemeMode.system: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 4),
+                child: Text('System'.hardcoded),
+              ),
+            },
           ),
           title: Text('Switch Theme'.hardcoded),
-          onTap: () async =>
-              ref.read(appThemeModeProvider.notifier).toggleTheme(),
         ),
-        CupertinoListTile.notched(
+        CupertinoListTile(
+          backgroundColor: context.colorScheme.surface,
+          backgroundColorActivated: Colors.transparent,
           trailing: IgnorePointer(
             child: Switch.adaptive(
               value: trueBlack,
