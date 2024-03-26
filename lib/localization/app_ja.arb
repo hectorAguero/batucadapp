@@ -1,0 +1,8 @@
+{
+    "@@locale": "ja",
+     "appTitle": "flutter_skeleton",
+     "@appTitle": {
+       "description": "アプリケーションのタイトル"
+     }
+   }
+   

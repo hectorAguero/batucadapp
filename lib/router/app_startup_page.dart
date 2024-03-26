@@ -8,7 +8,7 @@ import 'package:samba_public_app/features/home/widgets/adaptive_navigation_rail.
 import 'package:samba_public_app/main_providers.dart';
 import 'package:samba_public_app/theme/theme_provider.dart';
 
-part 'app_startup_widget.g.dart';
+part 'app_startup_page.g.dart';
 
 @Riverpod(keepAlive: true)
 Future<void> appStartup(AppStartupRef ref) async {

@@ -1,0 +1,8 @@
+{
+    "@@locale": "pt",
+     "appTitle": "flutter_skeleton",
+     "@appTitle": {
+       "description": "O título do aplicativo"
+     }
+   }
+   
