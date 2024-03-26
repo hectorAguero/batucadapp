@@ -27,7 +27,7 @@ class InstrumentsTabPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final size = context.querySize;
+    final colorScheme = Theme.of(context).colorScheme;
     const maxCrossAxisExtent = largeScreen;
     return CustomScrollView(
       slivers: [
@@ -40,14 +40,17 @@ class InstrumentsTabPage extends ConsumerWidget {
               SliverAnimatedSwitcher(
                 duration: const Duration(milliseconds: 300),
                 child: ref.watch(instrumentsTabProvider).when(
-                      data: (data) => SliverAlignedGrid.count(
-                        crossAxisCount: size.getAxisCount(),
-                        itemCount: data.length,
+                      data: (instruments) => SliverAlignedGrid.extent(
+                        maxCrossAxisExtent: InstrumentListTile.cardMaxWidth,
+                        itemCount: instruments.length,
                         itemBuilder: (context, index) {
-                          final mockInstrument = data[index];
+                          final mockInstrument = instruments[index];
                           return InstrumentListTile(
                             title: mockInstrument.name,
                             subtitle: mockInstrument.description,
+                            backgroundColor: index.isEven
+                                ? colorScheme.primaryContainer
+                                : colorScheme.secondaryContainer,
                             onTap: () {
                               context.go(
                                 '${InstrumentsTabPage.route.path}/${InstrumentDetailsPage.route.path}',
