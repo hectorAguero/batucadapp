@@ -16,6 +16,7 @@ class AppTheme {
         surface: CupertinoColors.systemBackground,
         subThemesData: const FlexSubThemesData(
           tooltipSchemeColor: SchemeColor.inverseSurface,
+          adaptiveSplash: FlexAdaptive.appleWeb(),
         ),
         splashFactory: InkSparkle.splashFactory,
         extensions: [

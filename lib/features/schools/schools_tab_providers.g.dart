@@ -22,7 +22,7 @@ final schoolDivisionsProvider = AutoDisposeNotifierProvider<SchoolDivisions,
 );
 
 typedef _$SchoolDivisions = AutoDisposeNotifier<Map<SchoolDivision, bool>>;
-String _$schoolsHash() => r'de570650ab1154f1fa90196141b4512233265df9';
+String _$schoolsHash() => r'48c4145c07d8e7bdba2adc1a48facebbb154579b';
 
 /// See also [Schools].
 @ProviderFor(Schools)
@@ -53,7 +53,7 @@ final searchSchoolProvider =
 
 typedef _$SearchSchool = AutoDisposeNotifier<String>;
 String _$selectedSchoolSortHash() =>
-    r'892bdd7bfc490da6b4288e56d8038d9998fc3425';
+    r'8f4660b369237d9cef5039f2eaca196bb62c0898';
 
 /// See also [SelectedSchoolSort].
 @ProviderFor(SelectedSchoolSort)

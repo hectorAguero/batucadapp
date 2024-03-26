@@ -19,17 +19,22 @@ class AdaptiveNavigationBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (kIsCupertino) {
-      return CupertinoTabBar(
-        onTap: onDestinationSelected,
-        currentIndex: selectedIndex,
-        items: [
-          for (final destination in tabDestinations)
-            BottomNavigationBarItem(
-              icon: Icon(destination.icon),
-              activeIcon: Icon(destination.selectedIcon),
-              label: destination.label,
-            ),
-        ],
+      return AnimatedTheme(
+        data: Theme.of(context),
+        child: CupertinoTabBar(
+          onTap: onDestinationSelected,
+          currentIndex: selectedIndex,
+          backgroundColor:
+              Theme.of(context).bottomNavigationBarTheme.backgroundColor,
+          items: [
+            for (final destination in tabDestinations)
+              BottomNavigationBarItem(
+                icon: Icon(destination.icon),
+                activeIcon: Icon(destination.selectedIcon),
+                label: destination.label,
+              ),
+          ],
+        ),
       );
     }
     return NavigationBar(

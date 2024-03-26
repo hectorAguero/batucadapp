@@ -18,6 +18,7 @@ class AppCupertinoSliverNavBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return CupertinoSliverNavigationBar(
       largeTitle: Text(largeTitle),
+      brightness: Theme.of(context).brightness,
       leading: leading,
       border: const Border(),
       backgroundColor: Colors.transparent,

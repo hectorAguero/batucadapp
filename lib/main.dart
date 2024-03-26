@@ -53,6 +53,7 @@ class MainApp extends ConsumerWidget {
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme(trueBlack: isTrueBlack),
       themeMode: themeMode,
+      themeAnimationStyle: AnimationStyle.noAnimation,
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,

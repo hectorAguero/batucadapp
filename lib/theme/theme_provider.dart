@@ -10,10 +10,8 @@ class AppThemeMode extends _$AppThemeMode {
   @override
   ThemeMode build() {
     try {
-      final mode = ref
-          .watch(sharedPreferencesProvider)
-          .requireValue
-          .getString('theme_mode');
+      final mode =
+          ref.watch(sharedPreferencesProvider).value!.getString('theme_mode');
       return switch (mode) {
         'light' => ThemeMode.light,
         'dark' => ThemeMode.dark,
@@ -68,7 +66,7 @@ class AppThemeTrueBlack extends _$AppThemeTrueBlack {
     try {
       return ref
               .watch(sharedPreferencesProvider)
-              .requireValue
+              .value!
               .getBool('true_black') ??
           false;
     } catch (e) {

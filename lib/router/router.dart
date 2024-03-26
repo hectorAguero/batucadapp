@@ -6,20 +6,11 @@ import 'package:samba_public_app/features/home/home_page_controller.dart';
 import 'package:samba_public_app/features/instruments/instruments_tab_page.dart';
 import 'package:samba_public_app/features/parades/parades_tab.dart';
 import 'package:samba_public_app/features/schools/schools_tab_page.dart';
-import 'package:samba_public_app/main_providers.dart';
-import 'package:samba_public_app/router/app_startup_widget.dart';
+import 'package:samba_public_app/router/app_startup_page.dart';
 
 part 'router.g.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'root');
-
-@Riverpod(keepAlive: true)
-Future<void> appStartup(AppStartupRef ref) async {
-  ref.onDispose(() {
-    ref.invalidate(sharedPreferencesProvider);
-  });
-  await ref.watch(sharedPreferencesProvider.future);
-}
 
 @riverpod
 GoRouter goRouter(GoRouterRef ref) {
@@ -38,7 +29,7 @@ GoRouter goRouter(GoRouterRef ref) {
     redirect: (context, state) {
       // * If the app is still initializing, show the /startup route
       if (appStartupState.isLoading || appStartupState.hasError) {
-        return AppStartupWidget.routePath;
+        return AppStartupPage.routePath;
       }
       if (TabDestination.values
           .any((tab) => tab.path == state.uri.toString())) {
@@ -59,9 +50,9 @@ GoRouter goRouter(GoRouterRef ref) {
     },
     routes: [
       GoRoute(
-        path: AppStartupWidget.routePath,
+        path: AppStartupPage.routePath,
         pageBuilder: (context, state) => NoTransitionPage(
-          child: AppStartupWidget(
+          child: AppStartupPage(
             // * This is just a placeholder
             // * The loaded route will be managed by GoRouter on state change
             onLoaded: (_) => const CircularProgressIndicator.adaptive(),

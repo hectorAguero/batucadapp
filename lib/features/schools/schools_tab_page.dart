@@ -16,7 +16,7 @@ import 'package:samba_public_app/features/schools/widgets/school_division_chips.
 import 'package:samba_public_app/router/go_route_scroll_tab.dart';
 import 'package:sliver_tools/sliver_tools.dart';
 
-class SchoolsTabPage extends ConsumerStatefulWidget {
+class SchoolsTabPage extends StatefulWidget {
   const SchoolsTabPage({super.key});
 
   static final route = GoRouteScrollTab(
@@ -28,171 +28,201 @@ class SchoolsTabPage extends ConsumerStatefulWidget {
   );
 
   @override
-  ConsumerState<SchoolsTabPage> createState() => _SchoolsTabState();
+  State<SchoolsTabPage> createState() => _SchoolsTabState();
 }
 
-class _SchoolsTabState extends ConsumerState<SchoolsTabPage> {
+class _SchoolsTabState extends State<SchoolsTabPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: CustomScrollView(
         controller: PrimaryScrollController.of(context),
         slivers: <Widget>[
-          SliverCrossAxisConstrained(
-            maxCrossAxisExtent: largeScreen,
-            child: AppCupertinoSliverNavBar(
-              largeTitle: 'Schools'.hardcoded,
-              leading: PullDownButton(
-                menuOffset: context.querySize.currentRailWidth,
-                itemBuilder: (context) => [
-                  PullDownMenuItem.selectable(
-                    title: '🇧🇷 Rio de Janeiro'.hardcoded,
-                    selected: true,
-                    onTap: () {},
-                  ),
-                ],
-                buttonBuilder: (context, showMenu) => AppCupertinoButton(
-                  onPressed: showMenu,
-                  padding: EdgeInsets.zero,
-                  child: const Icon(CupertinoIcons.ellipsis_circle),
-                ),
-              ),
-            ),
+          const SchoolsTabNavBar(),
+          const SchoolsTabSearchHeader(),
+          Consumer(
+            child: const SliverToBoxAdapter(child: SizedBox.shrink()),
+            builder: (context, ref, child) {
+              if (ref.watch(schoolDivisionsProvider).length > 1) {
+                return const SchoolDivisionChips();
+              }
+              return child!;
+            },
           ),
-          SliverSafeArea(
-            top: false,
-            bottom: false,
-            sliver: SliverCrossAxisConstrained(
-              maxCrossAxisExtent: largeScreen,
-              child: SliverPadding(
-                padding: const EdgeInsets.only(top: 12, left: 16, right: 16),
-                sliver: SliverCrossAxisGroup(
-                  slivers: [
-                    SliverToBoxAdapter(
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: CupertinoSearchTextField(
-                              onChanged: (value) => ref
-                                  .read(searchSchoolProvider.notifier)
-                                  .setSearch(value),
-                            ),
+          const SchoolsTabList(),
+        ],
+      ),
+    );
+  }
+}
+
+class SchoolsTabNavBar extends StatelessWidget {
+  const SchoolsTabNavBar({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SliverCrossAxisConstrained(
+      maxCrossAxisExtent: largeScreen,
+      child: AppCupertinoSliverNavBar(
+        largeTitle: 'Schools'.hardcoded,
+        leading: PullDownButton(
+          menuOffset: context.querySize.currentRailWidth,
+          itemBuilder: (context) => [
+            PullDownMenuItem.selectable(
+              title: '🇧🇷 Rio de Janeiro'.hardcoded,
+              selected: true,
+              onTap: () {},
+            ),
+          ],
+          buttonBuilder: (context, showMenu) => AppCupertinoButton(
+            onPressed: showMenu,
+            padding: EdgeInsets.zero,
+            child: const Icon(CupertinoIcons.ellipsis_circle),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class SchoolsTabSearchHeader extends ConsumerWidget {
+  const SchoolsTabSearchHeader({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return SliverSafeArea(
+      top: false,
+      bottom: false,
+      sliver: SliverCrossAxisConstrained(
+        maxCrossAxisExtent: largeScreen,
+        child: SliverPadding(
+          padding: const EdgeInsets.only(top: 12, left: 16, right: 16),
+          sliver: SliverCrossAxisGroup(
+            slivers: [
+              SliverToBoxAdapter(
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: CupertinoSearchTextField(
+                        onChanged: (value) => ref
+                            .read(searchSchoolProvider.notifier)
+                            .setSearch(value),
+                      ),
+                    ),
+                    AppCupertinoButton(
+                      onPressed: () {
+                        showPullDownMenu(
+                          context: context,
+                          position: Rect.fromLTWH(
+                            context.querySize.width > largeScreen
+                                ? largeScreen +
+                                    AdaptiveNavigationRail.largeRailWidth
+                                : context.querySize.width,
+                            100,
+                            -48,
+                            48,
                           ),
-                          AppCupertinoButton(
-                            onPressed: () {
-                              showPullDownMenu(
-                                context: context,
-                                position: Rect.fromLTWH(
-                                  context.querySize.width > largeScreen
-                                      ? largeScreen +
-                                          AdaptiveNavigationRail.largeRailWidth
-                                      : context.querySize.width,
-                                  100,
-                                  -48,
-                                  48,
-                                ),
-                                items: [
-                                  PullDownMenuTitle(
-                                    title: const Text('Sort by'),
-                                    titleStyle: context.textTheme.labelLarge,
-                                  ),
-                                  for (final sort in SchoolSort.values)
-                                    PullDownMenuItem.selectable(
-                                      onTap: () {
-                                        ref
-                                            .read(
-                                              selectedSchoolSortProvider
-                                                  .notifier,
-                                            )
-                                            .setSort(sort);
-                                      },
-                                      selected: sort ==
-                                          ref.watch(selectedSchoolSortProvider),
-                                      title: sort.fullName,
-                                    ),
-                                ],
-                              );
-                            },
-                            padding: const EdgeInsets.symmetric(horizontal: 8),
-                            child: Container(
-                              padding: const EdgeInsets.all(4),
-                              decoration: const BoxDecoration(
-                                shape: BoxShape.circle,
-                              ),
-                              child: const Icon(
-                                CupertinoIcons.line_horizontal_3_decrease,
-                                size: 20,
-                              ),
+                          items: [
+                            PullDownMenuTitle(
+                              title: const Text('Sort by'),
+                              titleStyle: context.textTheme.labelLarge,
                             ),
-                          ),
-                        ],
+                            for (final sort in SchoolSort.values)
+                              PullDownMenuItem.selectable(
+                                onTap: () {
+                                  ref
+                                      .read(
+                                        selectedSchoolSortProvider.notifier,
+                                      )
+                                      .setSort(sort);
+                                },
+                                selected: sort ==
+                                    ref.watch(selectedSchoolSortProvider),
+                                title: sort.fullName,
+                              ),
+                          ],
+                        );
+                      },
+                      padding: const EdgeInsets.symmetric(horizontal: 8),
+                      child: Container(
+                        padding: const EdgeInsets.all(4),
+                        decoration: const BoxDecoration(
+                          shape: BoxShape.circle,
+                        ),
+                        child: const Icon(
+                          CupertinoIcons.line_horizontal_3_decrease,
+                          size: 20,
+                        ),
                       ),
                     ),
                   ],
                 ),
               ),
-            ),
+            ],
           ),
-          if (ref.watch(schoolDivisionsProvider).length > 1)
-            const SliverSafeArea(
-              top: false,
-              bottom: false,
-              sliver: SliverCrossAxisConstrained(
-                maxCrossAxisExtent: largeScreen,
-                child: SchoolDivisionChips(),
+        ),
+      ),
+    );
+  }
+}
+
+class SchoolsTabList extends ConsumerWidget {
+  const SchoolsTabList({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final future = ref.watch(schoolsProvider);
+    return SliverSafeArea(
+      top: false,
+      sliver: SliverAnimatedSwitcher(
+        duration: kThemeAnimationDuration,
+        child: switch (future) {
+          AsyncError(:final error) => SliverFillRemaining(
+              child: Center(
+                child: Text(
+                  error.toString(),
+                  style: context.textTheme.titleLarge,
+                ),
               ),
             ),
-          SliverSafeArea(
-            top: false,
-            sliver: SliverAnimatedSwitcher(
-              duration: kThemeAnimationDuration,
-              child: ref.watch(schoolsProvider).when(
-                    data: (schools) {
-                      return Consumer(
-                        builder: (context, ref, child) {
-                          final schools = ref.watch(filteredSchoolsProvider);
-                          return SliverCrossAxisConstrained(
-                            maxCrossAxisExtent: largeScreen,
-                            child: SliverPadding(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 8,
-                              ),
-                              sliver: SliverAlignedGrid.extent(
-                                maxCrossAxisExtent: SchoolCard.cardMaxWidth,
-                                itemCount: schools.length,
-                                itemBuilder: (context, index) {
-                                  final school = schools[index];
-                                  return ProviderScope(
-                                    overrides: [
-                                      currentSchoolProvider.overrideWithValue(
-                                        schools.firstWhere(
-                                          (s) => s.id == school.id,
-                                        ),
-                                      ),
-                                    ],
-                                    child: const SchoolCard(),
-                                  );
-                                },
+          AsyncLoading() => const SliverFillRemaining(
+              child: Center(
+                child: CircularProgressIndicator.adaptive(),
+              ),
+            ),
+          AsyncData() => Consumer(
+              builder: (context, ref, child) {
+                final filteredSchools = ref.watch(filteredSchoolsProvider);
+                return SliverCrossAxisConstrained(
+                  maxCrossAxisExtent: largeScreen,
+                  child: SliverPadding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8,
+                    ),
+                    sliver: SliverAlignedGrid.extent(
+                      maxCrossAxisExtent: SchoolCard.cardMaxWidth,
+                      itemCount: filteredSchools.length,
+                      itemBuilder: (context, index) {
+                        final school = filteredSchools[index];
+                        return ProviderScope(
+                          overrides: [
+                            currentSchoolProvider.overrideWithValue(
+                              filteredSchools.firstWhere(
+                                (item) => item.id == school.id,
                               ),
                             ),
-                          );
-                        },
-                      );
-                    },
-                    loading: () => const SliverFillRemaining(
-                      child: Center(
-                        child: CircularProgressIndicator.adaptive(),
-                      ),
-                    ),
-                    error: (error, stackTrace) => SliverFillRemaining(
-                      child: Center(
-                        child: Text('Error: $error'),
-                      ),
+                          ],
+                          child: const SchoolCard(),
+                        );
+                      },
                     ),
                   ),
-            ),
-          ),
-        ],
+                );
+              },
+            )
+        },
       ),
     );
   }

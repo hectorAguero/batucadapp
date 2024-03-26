@@ -73,83 +73,81 @@ class _InstrumentDetailsPageState extends ConsumerState<InstrumentDetailsPage> {
           },
           body: AnimatedSwitcher(
             duration: kThemeAnimationDuration,
-            child: data.when(
-              loading: () => const Center(
-                child: CircularProgressIndicator(),
-              ),
-              error: (error, stackTrace) => Center(
-                child: Text('Error: $error'),
-              ),
-              data: (instrument) => Builder(
-                builder: (context) => CustomScrollView(
-                  slivers: [
-                    SliverOverlapInjector(
-                      handle: NestedScrollView.sliverOverlapAbsorberHandleFor(
-                        context,
-                      ),
-                    ),
-                    SliverCrossAxisConstrained(
-                      maxCrossAxisExtent: screenConstraint,
-                      child: SliverToBoxAdapter(
-                        child: InstrumentHeaderImages(
-                          instrument: instrument,
-                          imageHeight: imageHeight,
+            child: switch (data) {
+              AsyncLoading() => const Center(
+                  child: CircularProgressIndicator.adaptive(),
+                ),
+              AsyncError(:final error) => Center(child: Text('Error: $error')),
+              AsyncData(:final value) => Builder(
+                  builder: (context) => CustomScrollView(
+                    slivers: [
+                      SliverOverlapInjector(
+                        handle: NestedScrollView.sliverOverlapAbsorberHandleFor(
+                          context,
                         ),
                       ),
-                    ),
-                    SliverCrossAxisConstrained(
-                      maxCrossAxisExtent: smallScreen,
-                      child: SliverPadding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 24,
-                        ),
-                        sliver: SliverToBoxAdapter(
-                          child: TabBar(
-                            overlayColor: MaterialStateProperty.all(
-                              Colors.transparent,
-                            ),
-                            indicatorSize: TabBarIndicatorSize.tab,
-                            indicatorPadding: const EdgeInsets.symmetric(
-                              horizontal: 4,
-                            ),
-                            tabs: [
-                              Tab(text: 'Summary'.hardcoded),
-                              Tab(text: 'Type'.hardcoded),
-                              Tab(text: 'Gallery'.hardcoded),
-                            ],
+                      SliverCrossAxisConstrained(
+                        maxCrossAxisExtent: screenConstraint,
+                        child: SliverToBoxAdapter(
+                          child: InstrumentHeaderImages(
+                            instrument: value,
+                            imageHeight: imageHeight,
                           ),
                         ),
                       ),
-                    ),
-                    SliverCrossAxisConstrained(
-                      maxCrossAxisExtent: screenConstraint,
-                      child: SliverPadding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 16,
-                          vertical: 8,
-                        ),
-                        sliver: SliverToBoxAdapter(
-                          // TODO(hectorAguero): size needed to avoid overscroll
-                          child: SizedBox(
-                            height: 800,
-                            child: TabBarView(
-                              physics: const ClampingScrollPhysics(),
-                              children: [
-                                InstrumentDetailsSummary(
-                                  details: instrument.description,
-                                ),
-                                const InstrumentDetailsType(),
-                                const InstrumentDetailsGallery(),
+                      SliverCrossAxisConstrained(
+                        maxCrossAxisExtent: smallScreen,
+                        child: SliverPadding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 24,
+                          ),
+                          sliver: SliverToBoxAdapter(
+                            child: TabBar(
+                              overlayColor: MaterialStateProperty.all(
+                                Colors.transparent,
+                              ),
+                              indicatorSize: TabBarIndicatorSize.tab,
+                              indicatorPadding: const EdgeInsets.symmetric(
+                                horizontal: 4,
+                              ),
+                              tabs: [
+                                Tab(text: 'Summary'.hardcoded),
+                                Tab(text: 'Type'.hardcoded),
+                                Tab(text: 'Gallery'.hardcoded),
                               ],
                             ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
+                      SliverCrossAxisConstrained(
+                        maxCrossAxisExtent: screenConstraint,
+                        child: SliverPadding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 16,
+                            vertical: 8,
+                          ),
+                          sliver: SliverToBoxAdapter(
+                            // TODO(hectorAguero): size to avoid overscroll
+                            child: SizedBox(
+                              height: 800,
+                              child: TabBarView(
+                                physics: const ClampingScrollPhysics(),
+                                children: [
+                                  InstrumentDetailsSummary(
+                                    details: value.description,
+                                  ),
+                                  const InstrumentDetailsType(),
+                                  const InstrumentDetailsGallery(),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ),
+            },
           ),
         ),
       ),

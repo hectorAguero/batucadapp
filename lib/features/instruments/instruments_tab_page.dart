@@ -29,54 +29,62 @@ class InstrumentsTabPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final colorScheme = Theme.of(context).colorScheme;
     const maxCrossAxisExtent = largeScreen;
-    return CustomScrollView(
-      slivers: [
-        SliverCrossAxisConstrained(
-          maxCrossAxisExtent: maxCrossAxisExtent,
-          child: SliverMainAxisGroup(
-            slivers: [
-              AppCupertinoSliverNavBar(largeTitle: 'Instruments'.hardcoded),
-              const SliverPadding(padding: EdgeInsets.only(top: 8)),
-              SliverAnimatedSwitcher(
-                duration: const Duration(milliseconds: 300),
-                child: ref.watch(instrumentsTabProvider).when(
-                      data: (instruments) => SliverAlignedGrid.extent(
-                        maxCrossAxisExtent: InstrumentListTile.cardMaxWidth,
-                        itemCount: instruments.length,
-                        itemBuilder: (context, index) {
-                          final mockInstrument = instruments[index];
-                          return InstrumentListTile(
-                            title: mockInstrument.name,
-                            subtitle: mockInstrument.description,
-                            backgroundColor: index.isEven
-                                ? colorScheme.primaryContainer
-                                : colorScheme.secondaryContainer,
-                            onTap: () {
-                              context.go(
-                                '${InstrumentsTabPage.route.path}/${InstrumentDetailsPage.route.path}',
-                                extra: {'id': mockInstrument.id},
-                              );
-                            },
-                            imageUrl: mockInstrument.imageUrl,
-                          );
-                        },
+    final instruments = ref.watch(instrumentsTabProvider);
+    return Scaffold(
+      body: CustomScrollView(
+        slivers: [
+          SliverCrossAxisConstrained(
+            maxCrossAxisExtent: maxCrossAxisExtent,
+            child: SliverMainAxisGroup(
+              slivers: [
+                AppCupertinoSliverNavBar(largeTitle: 'Instruments'.hardcoded),
+                const SliverPadding(padding: EdgeInsets.only(top: 8)),
+                SliverAnimatedSwitcher(
+                  duration: const Duration(milliseconds: 300),
+                  child: switch (instruments) {
+                    AsyncLoading() => const SliverFillRemaining(
+                        child:
+                            Center(child: CircularProgressIndicator.adaptive()),
                       ),
-                      error: (error, stackTrace) => SliverFillRemaining(
+                    AsyncError(:final error) => SliverFillRemaining(
                         child: Center(
-                          child: Text('Error: $error'),
+                          child: Text(
+                            error.toString(),
+                            style: Theme.of(context).textTheme.titleLarge,
+                          ),
                         ),
                       ),
-                      loading: () => const SliverFillRemaining(
-                        child: Center(
-                          child: CircularProgressIndicator(),
+                    AsyncData(:final value) => SliverSafeArea(
+                        top: false,
+                        sliver: SliverAlignedGrid.extent(
+                          maxCrossAxisExtent: InstrumentListTile.cardMaxWidth,
+                          itemCount: value.length,
+                          itemBuilder: (context, index) {
+                            final mockInstrument = value[index];
+                            return InstrumentListTile(
+                              title: mockInstrument.name,
+                              subtitle: mockInstrument.description,
+                              backgroundColor: index.isEven
+                                  ? colorScheme.primaryContainer
+                                  : colorScheme.secondaryContainer,
+                              onTap: () {
+                                context.go(
+                                  '${InstrumentsTabPage.route.path}/${InstrumentDetailsPage.route.path}',
+                                  extra: {'id': mockInstrument.id},
+                                );
+                              },
+                              imageUrl: mockInstrument.imageUrl,
+                            );
+                          },
                         ),
                       ),
-                    ),
-              ),
-            ],
+                  },
+                ),
+              ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
