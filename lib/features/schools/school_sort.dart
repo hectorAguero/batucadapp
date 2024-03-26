@@ -11,14 +11,14 @@ enum SchoolSort {
 }
 
 extension SchoolSortExtension on SchoolSort {
-  int sort(School first, School second) => switch (this) {
+  int sortSwitch(School first, School second) => switch (this) {
         (SchoolSort.name) => first.name.compareTo(second.name),
         (SchoolSort.ranking) => first.id.compareTo(second.id),
         (SchoolSort.lastPerformance) => first.id.compareTo(second.id),
         (SchoolSort.location) => first.id.compareTo(second.id),
         (SchoolSort.foundationDate) =>
           first.foundationDate.compareTo(second.foundationDate),
-        (SchoolSort.favorite) => second.isFavorite ? -1 : 1,
+        (SchoolSort.favorite) => first.isFavorite ? -1 : 1,
       };
 
   String get fullName => switch (this) {

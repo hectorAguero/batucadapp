@@ -5,6 +5,7 @@ import 'package:samba_public_app/features/schools/school_sort.dart';
 import 'package:samba_public_app/features/schools/schools_extensions.dart';
 import 'package:samba_public_app/features/schools/schools_repo.dart';
 import 'package:samba_public_app/features/schools/widgets/school_card.dart';
+import 'package:samba_public_app/main_providers.dart';
 
 part 'schools_tab_providers.g.dart';
 
@@ -49,21 +50,35 @@ class Schools extends _$Schools {
   @override
   FutureOr<List<School>> build() async {
     final schools = await ref.watch(schoolsRepoProvider).getSchools();
-    return schools;
+    final prefs = ref.watch(sharedPreferencesProvider).value!;
+    final favoriteSchools = prefs.getStringList('favoriteSchools') ?? [];
+    return [
+      for (final school in schools)
+        if (favoriteSchools.contains('${school.id}'))
+          school.copyWith(isFavorite: true)
+        else
+          school,
+    ];
   }
 
-  void toggleFavorite(SchoolId id) {
-    // Find the index of the school to update
-    final index = state.requireValue.indexWhere((s) => s.id == id);
-    if (index != -1) {
-      final updatedSchools = List<School>.from(state.requireValue);
+  Future<void> toggleFavorite(SchoolId id) async {
+    final prefs = ref.watch(sharedPreferencesProvider).value!;
+    final favoriteSchools = prefs.getStringList('favoriteSchools') ?? [];
+    final schools = [...state.value!];
+    final index = schools.indexWhere((school) => school.id == id);
 
-      updatedSchools[index] = updatedSchools[index].copyWith(
-        isFavorite: !updatedSchools[index].isFavorite,
-      );
+    if (index == -1) return;
 
-      state = AsyncData(updatedSchools);
+    schools[index] = schools[index].copyWith(
+      isFavorite: !schools[index].isFavorite,
+    );
+    if (schools[index].isFavorite) {
+      favoriteSchools.add('${schools[index].id}');
+    } else {
+      favoriteSchools.remove('${schools[index].id}');
     }
+    await prefs.setStringList('favoriteSchools', favoriteSchools);
+    state = AsyncData(schools);
   }
 }
 
@@ -111,7 +126,7 @@ final filteredSchoolsProvider = Provider.autoDispose<List<School>>((ref) {
             school.searchLogic(search),
       )
       .toList()
-    ..sort(sort.sort);
+    ..sort(sort.sortSwitch);
 
   return filteredSchools;
 });

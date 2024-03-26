@@ -132,10 +132,7 @@ class SchoolInfoCard extends StatelessWidget {
                 return Padding(
                   padding: const EdgeInsets.only(bottom: 8, right: 8),
                   child: TextButton(
-                    onPressed: context.querySize.isLargeScreen ||
-                            context.querySize.isExtraLargeScreen
-                        ? () => showSchoolDetails(context, school)
-                        : null,
+                    onPressed: null,
                     style: TextButton.styleFrom(
                       textStyle: Theme.of(context).textTheme.labelLarge,
                     ),
