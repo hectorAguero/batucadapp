@@ -1,9 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pull_down_button/pull_down_button.dart';
 import 'package:samba_public_app/extensions/hardcoded_extension.dart';
 import 'package:samba_public_app/extensions/media_query_context_extension.dart';
 import 'package:samba_public_app/extensions/theme_of_context_extension.dart';
+import 'package:samba_public_app/localization/language.dart';
+import 'package:samba_public_app/localization/language_app_provider.dart';
 import 'package:samba_public_app/theme/theme_provider.dart';
 
 class ThemeSelectorRail extends ConsumerWidget {
@@ -14,9 +17,56 @@ class ThemeSelectorRail extends ConsumerWidget {
     final size = MediaQuery.sizeOf(context);
     final themeMode = ref.watch(appThemeModeProvider);
     final trueBlack = ref.watch(appThemeTrueBlackProvider);
+    final platformLanguage =
+        WidgetsBinding.instance.platformDispatcher.locale.languageCode;
     return Column(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
+        PullDownButton(
+          scrollController: ScrollController(),
+          itemBuilder: (context) => [
+            for (final language in Language.values)
+              PullDownMenuItem.selectable(
+                icon: language.languageCode == platformLanguage
+                    ? CupertinoIcons.device_phone_portrait
+                    : null,
+                title: language.name,
+                subtitle: language.nativeName,
+                selected: language == ref.watch(languageAppProvider).value,
+                onTap: () {
+                  ref.read(languageAppProvider.notifier).setLanguage(
+                        language,
+                        isSameAsPlatform:
+                            language.languageCode == platformLanguage,
+                      );
+                },
+              ),
+          ],
+          buttonBuilder: (context, showMenu) => CupertinoListTile.notched(
+            onTap: showMenu,
+            leading: size.isLargeScreen || size.isExtraLargeScreen
+                ? Icon(
+                    CupertinoIcons.flag,
+                    color: context.colorScheme.onSurface,
+                  )
+                : null,
+            title: size.isMediumScreen
+                ? Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    child: Icon(
+                      CupertinoIcons.flag,
+                      color: context.colorScheme.onSurface,
+                    ),
+                  )
+                : Text(
+                    'Language'.hardcoded,
+                    style: themeMode.isLight
+                        ? context.textTheme.titleMedium!
+                            .copyWith(color: Colors.grey)
+                        : context.textTheme.titleMedium,
+                  ),
+          ),
+        ),
         InkWell(
           onTap: themeMode.isLight
               ? null

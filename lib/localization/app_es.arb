@@ -1,9 +1,17 @@
 {
-    "@@locale": "es",
-     "appTitle": "flutter_skeleton",
-     "@appTitle": {
-       "description": "El título de la aplicación"
-     }
-   }
-  
-   
+	"@@locale": "es",
+	"@_MAIN_APP": {},
+	"appTitle": "SambApp",
+	"@appTitle": {
+		"description": "El título de la aplicación"
+	},
+	"@_HOME_PAGE": {},
+	"@_INSTRUMENTS_PAGE": {},
+	"instrumentsTitle": "Instrumentos",
+	"@_PARADES_PAGE": {},
+	"paradesTitle": "Desfiles",
+	"@_SCHOOLS_PAGE": {},
+	"schoolsTitle": "Escuelas",
+	"@_SETTINGS_PAGE": {},
+	"settingsTitle": "Configuración"
+}

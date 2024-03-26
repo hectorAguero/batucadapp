@@ -1,8 +1,17 @@
 {
-    "@@locale": "ja",
-     "appTitle": "flutter_skeleton",
-     "@appTitle": {
-       "description": "アプリケーションのタイトル"
-     }
-   }
-   
+	"@@locale": "ja",
+	"@_MAIN_APP": {},
+	"appTitle": "SambApp",
+	"@appTitle": {
+		"description": "アプリケーションのタイトル"
+	},
+	"@_HOME_PAGE": {},
+	"@_INSTRUMENTS_PAGE": {},
+	"instrumentsTitle": "楽器",
+	"@_PARADES_PAGE": {},
+	"paradesTitle": "パレード",
+	"@_SCHOOLS_PAGE": {},
+	"schoolsTitle": "サンバの団体",
+	"@_SETTINGS_PAGE": {},
+	"settingsTitle": "設定"
+}

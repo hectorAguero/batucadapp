@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:go_router/go_router.dart';
 import 'package:samba_public_app/common_widgets/app_cupertino_sliver_nav_bar.dart';
-import 'package:samba_public_app/extensions/hardcoded_extension.dart';
+import 'package:samba_public_app/extensions/app_localization_extension.dart';
 import 'package:samba_public_app/extensions/media_query_context_extension.dart';
 import 'package:samba_public_app/features/instruments/details/instrument_details_page.dart';
 import 'package:samba_public_app/features/instruments/instruments_tab_providers.dart';
@@ -37,7 +37,9 @@ class InstrumentsTabPage extends ConsumerWidget {
             maxCrossAxisExtent: maxCrossAxisExtent,
             child: SliverMainAxisGroup(
               slivers: [
-                AppCupertinoSliverNavBar(largeTitle: 'Instruments'.hardcoded),
+                AppCupertinoSliverNavBar(
+                  largeTitle: context.loc.instrumentsTitle,
+                ),
                 const SliverPadding(padding: EdgeInsets.only(top: 8)),
                 SliverAnimatedSwitcher(
                   duration: const Duration(milliseconds: 300),

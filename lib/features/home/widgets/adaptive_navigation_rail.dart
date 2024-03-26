@@ -16,7 +16,7 @@ class AdaptiveNavigationRail extends StatelessWidget {
   final int selectedIndex;
   final ValueChanged<int> onDestinationSelected;
 
-  static const footerSize = 115.0;
+  static const footerSize = 150.0;
   static const largeRailWidth = 256.0;
   static const smallRailWidth = 80.0;
 

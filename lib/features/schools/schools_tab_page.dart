@@ -5,6 +5,7 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:pull_down_button/pull_down_button.dart';
 import 'package:samba_public_app/common_widgets/app_cupertino_button.dart';
 import 'package:samba_public_app/common_widgets/app_cupertino_sliver_nav_bar.dart';
+import 'package:samba_public_app/extensions/app_localization_extension.dart';
 import 'package:samba_public_app/extensions/hardcoded_extension.dart';
 import 'package:samba_public_app/extensions/media_query_context_extension.dart';
 import 'package:samba_public_app/extensions/theme_of_context_extension.dart';
@@ -66,7 +67,7 @@ class SchoolsTabNavBar extends StatelessWidget {
     return SliverCrossAxisConstrained(
       maxCrossAxisExtent: largeScreen,
       child: AppCupertinoSliverNavBar(
-        largeTitle: 'Schools'.hardcoded,
+        largeTitle: context.loc.schoolsTitle,
         leading: PullDownButton(
           menuOffset: context.querySize.currentRailWidth,
           itemBuilder: (context) => [

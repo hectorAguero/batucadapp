@@ -1,5 +1,7 @@
 import 'dart:ui';
 
+import 'package:samba_public_app/extensions/hardcoded_extension.dart';
+
 enum Language {
   en,
   es,
@@ -13,6 +15,20 @@ extension LanguageExtension on Language {
         Language.es => const Locale('es', ''),
         Language.pt => const Locale('pt', ''),
         Language.ja => const Locale('ja', '')
+      };
+
+  String get name => switch (this) {
+        Language.en => 'English'.hardcoded,
+        Language.es => 'Spanish'.hardcoded,
+        Language.pt => 'Portuguese'.hardcoded,
+        Language.ja => 'Japanese'.hardcoded
+      };
+
+  String get nativeName => switch (this) {
+        Language.en => 'English'.hardcoded,
+        Language.es => 'Español'.hardcoded,
+        Language.pt => 'Português'.hardcoded,
+        Language.ja => '日本語'.hardcoded
       };
 
   String get languageCode => switch (this) {

@@ -4,7 +4,7 @@ import 'package:samba_public_app/main_providers.dart';
 
 part 'language_app_provider.g.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 class LanguageApp extends _$LanguageApp {
   @override
   FutureOr<Language?> build() async {
@@ -12,12 +12,21 @@ class LanguageApp extends _$LanguageApp {
     final localeKey = prefs.getString('locale');
     return Language.values.firstWhere(
       (e) => e.languageCode == localeKey,
+      // TODO(hectorAguero): Add correct default language
+      orElse: () => Language.en,
     );
   }
 
-  Future<void> setLanguage(Language language) async {
+  Future<void> setLanguage(
+    Language language, {
+    required bool isSameAsPlatform,
+  }) async {
     final prefs = ref.read(sharedPreferencesProvider).value!;
-    await prefs.setString('locale', language.languageCode);
+    if (isSameAsPlatform) {
+      await prefs.remove('locale');
+    } else {
+      await prefs.setString('locale', language.languageCode);
+    }
     state = AsyncData(language);
   }
 }
