@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:samba_public_app/common_widgets/app_page_indicator.dart';
-import 'package:samba_public_app/extensions/hardcoded_extension.dart';
+import 'package:samba_public_app/extensions/app_localization_extension.dart';
 import 'package:samba_public_app/extensions/intl_extension.dart';
 import 'package:samba_public_app/extensions/theme_of_context_extension.dart';
 import 'package:samba_public_app/features/schools/details/schools_details_providers.dart';
@@ -149,14 +149,14 @@ class SchoolDetailsText extends StatelessWidget {
           const SizedBox(height: 8),
           SchoolTextTile(
             icon: Icons.music_note_outlined,
-            title: 'Symbols: '.hardcoded,
+            title: '${context.loc.schoolSymbols}: ',
             content: school.symbols.join(', '),
           ),
           const SizedBox(height: 8),
           SchoolTextTile(
             icon: Icons.date_range_outlined,
-            title: 'Foundation: '.hardcoded,
-            content: school.foundationDate.intlShort,
+            title: '${context.loc.schoolFoundation}: ',
+            content: school.foundationDate.intlShort(context),
           ),
           const SizedBox(height: 8),
           if (school.godmotherSchool.isNotEmpty)
@@ -164,21 +164,21 @@ class SchoolDetailsText extends StatelessWidget {
               padding: const EdgeInsets.only(bottom: 8),
               child: SchoolTextTile(
                 icon: Icons.school_outlined,
-                title: 'Godmother: '.hardcoded,
+                title: '${context.loc.schoolGodmother}: ',
                 content: school.godmotherSchool,
               ),
             ),
           SchoolTextTile(
             icon: Icons.star_border_outlined,
-            title: 'League: '.hardcoded,
+            title: '${context.loc.schoolLeague}: ',
             content: school.league.name.toUpperCase(),
-            contentTooltip: school.league.fullName,
+            contentTooltip: school.league.fullName(context),
           ),
           const SizedBox(height: 8),
           SchoolTextTile(
             icon: Icons.sports_soccer_outlined,
-            title: 'Division: '.hardcoded,
-            content: school.currentDivision.fullName,
+            title: '${context.loc.schoolDivision}: ',
+            content: school.currentDivision.fullName(context),
           ),
           const SizedBox(height: 8),
         ],

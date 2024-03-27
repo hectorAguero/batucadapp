@@ -1,7 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:samba_public_app/extensions/hardcoded_extension.dart';
+import 'package:samba_public_app/extensions/app_localization_extension.dart';
 import 'package:samba_public_app/extensions/media_query_context_extension.dart';
+import 'package:samba_public_app/extensions/theme_of_context_extension.dart';
 import 'package:samba_public_app/features/schools/schools_extensions.dart';
 import 'package:samba_public_app/features/schools/schools_tab_providers.dart';
 import 'package:sliver_tools/sliver_tools.dart';
@@ -35,7 +37,7 @@ class SchoolDivisionChips extends ConsumerWidget {
                     showCheckmark: false,
                     selected:
                         selectedDivisions.values.every((element) => element),
-                    label: Text('All'.hardcoded),
+                    label: Text(context.loc.all),
                     onSelected: (value) {
                       final notifier =
                           ref.read(schoolDivisionsProvider.notifier);
@@ -59,7 +61,7 @@ class SchoolDivisionChips extends ConsumerWidget {
                       },
                       child: FilterChip(
                         selected: isActive,
-                        label: Text(division.fullName),
+                        label: Text(division.fullName(context)),
                         onSelected: (value) {
                           final notifier =
                               ref.read(schoolDivisionsProvider.notifier);
@@ -72,6 +74,23 @@ class SchoolDivisionChips extends ConsumerWidget {
                       ),
                     ),
                   ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 4),
+                  child: ChoiceChip(
+                    showCheckmark: false,
+                    avatar: !ref.watch(isFavoriteSchoolsProvider)
+                        ? const Icon(CupertinoIcons.heart)
+                        : const Icon(CupertinoIcons.heart_fill),
+                    selected: ref.watch(isFavoriteSchoolsProvider),
+                    label: Text(context.loc.schoolFavorites),
+                    selectedColor: context.colorScheme.primaryContainer,
+                    onSelected: (value) {
+                      ref
+                          .read(isFavoriteSchoolsProvider.notifier)
+                          .toggleFavorite();
+                    },
+                  ),
+                ),
               ],
             ),
           ),

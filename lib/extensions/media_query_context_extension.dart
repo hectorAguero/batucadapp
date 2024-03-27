@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:samba_public_app/features/home/widgets/adaptive_navigation_rail.dart';
 
 const double smallScreen = 600;
+const double smallHeight = 600;
 const double mediumScreen = 900;
 const double largeScreen = 1200;
 const double extraLargeScreen = 1536;

@@ -40,7 +40,7 @@ class _InstrumentListTileState extends State<InstrumentListTile> {
         color: widget.backgroundColor,
         margin: const EdgeInsets.all(8),
         child: InkWell(
-          onTap: isSmallScreen ? widget.onTap : null,
+          onTap: widget.onTap,
           child: Padding(
             padding: const EdgeInsets.all(16),
             child: Column(
@@ -81,14 +81,6 @@ This is a longer description of the instrument. It could be a few paragraphs lon
                             fit: BoxFit.cover,
                           ),
                         ),
-                        if (!isSmallScreen)
-                          Padding(
-                            padding: const EdgeInsets.only(top: 8),
-                            child: TextButton(
-                              onPressed: widget.onTap,
-                              child: Text('View Details'.hardcoded),
-                            ),
-                          ),
                       ],
                     ),
                   ],

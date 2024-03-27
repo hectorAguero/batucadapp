@@ -31,7 +31,7 @@ class AdaptiveNavigationBar extends StatelessWidget {
               BottomNavigationBarItem(
                 icon: Icon(destination.icon),
                 activeIcon: Icon(destination.selectedIcon),
-                label: destination.label,
+                label: destination.label(context),
               ),
           ],
         ),
@@ -45,7 +45,7 @@ class AdaptiveNavigationBar extends StatelessWidget {
           NavigationDestination(
             icon: Icon(destination.icon),
             selectedIcon: Icon(destination.selectedIcon),
-            label: destination.label,
+            label: destination.label(context),
           ),
       ],
     );

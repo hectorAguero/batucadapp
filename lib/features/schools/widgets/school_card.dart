@@ -102,7 +102,7 @@ class SchoolInfoCard extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.only(top: 8, left: 16, right: 16),
             child: Text(
-              '${school.name}${context.querySize.isMediumScreen ? '\n' : ' '}',
+              '${school.name}${!context.querySize.isSmallScreen ? '\n' : ' '}',
               maxLines: 2,
               style: Theme.of(context).textTheme.titleLarge!.copyWith(
                     color: colorScheme.onSurface,
@@ -118,7 +118,7 @@ class SchoolInfoCard extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.only(bottom: 8, left: 16),
                 child: Text(
-                  school.currentDivision.fullName,
+                  school.currentDivision.fullName(context),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   style: Theme.of(context).textTheme.titleMedium!.copyWith(
@@ -139,7 +139,7 @@ class SchoolInfoCard extends StatelessWidget {
                     child: Text(
                       ref
                           .watch(selectedSchoolSortProvider)
-                          .getSortedValue(school),
+                          .getSortedValue(school, context),
                     ),
                   ),
                 );

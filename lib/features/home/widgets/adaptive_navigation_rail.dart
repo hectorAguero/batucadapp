@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:samba_public_app/extensions/media_query_context_extension.dart';
 import 'package:samba_public_app/extensions/theme_of_context_extension.dart';
 import 'package:samba_public_app/features/home/home_page_controller.dart';
-import 'package:samba_public_app/features/home/widgets/theme_selector.dart';
+import 'package:samba_public_app/features/home/widgets/adaptive_navigation_rail_footer.dart';
 
 class AdaptiveNavigationRail extends StatelessWidget {
   const AdaptiveNavigationRail({
@@ -16,13 +16,14 @@ class AdaptiveNavigationRail extends StatelessWidget {
   final int selectedIndex;
   final ValueChanged<int> onDestinationSelected;
 
-  static const footerSize = 150.0;
+  static const footerSize = 162.0;
   static const largeRailWidth = 256.0;
   static const smallRailWidth = 80.0;
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.sizeOf(context);
+
     return Column(
       children: [
         SizedBox(
@@ -49,7 +50,7 @@ class AdaptiveNavigationRail extends StatelessWidget {
                   icon: Icon(destination.icon),
                   selectedIcon: Icon(destination.selectedIcon),
                   label: Text(
-                    destination.label,
+                    destination.label(context),
                     style: context.textTheme.titleMedium,
                   ),
                 ),
@@ -69,7 +70,7 @@ class AdaptiveNavigationRail extends StatelessWidget {
                   : smallRailWidth,
               child: ColoredBox(
                 color: context.colorScheme.surface,
-                child: const ThemeSelectorRail(),
+                child: const AdaptiveNavigationRailFooter(),
               ),
             ),
           ),

@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:samba_public_app/extensions/hardcoded_extension.dart';
+import 'package:samba_public_app/extensions/app_localization_extension.dart';
 import 'package:samba_public_app/extensions/media_query_context_extension.dart';
 import 'package:samba_public_app/features/home/widgets/adaptive_navigation_rail.dart';
 import 'package:samba_public_app/main_providers.dart';
@@ -101,7 +101,7 @@ class AppStartupErrorWidget extends StatelessWidget {
             const SizedBox(height: 16),
             ElevatedButton(
               onPressed: onRetry,
-              child: Text('Retry'.hardcoded),
+              child: Text(context.loc.retry),
             ),
           ],
         ),

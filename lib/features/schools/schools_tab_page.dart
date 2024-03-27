@@ -71,6 +71,7 @@ class SchoolsTabNavBar extends StatelessWidget {
         leading: PullDownButton(
           menuOffset: context.querySize.currentRailWidth,
           itemBuilder: (context) => [
+            // TODO(hectorAguero): Get from the current schools API UPDATE
             PullDownMenuItem.selectable(
               title: '🇧🇷 Rio de Janeiro'.hardcoded,
               selected: true,
@@ -127,7 +128,7 @@ class SchoolsTabSearchHeader extends ConsumerWidget {
                           ),
                           items: [
                             PullDownMenuTitle(
-                              title: const Text('Sort by'),
+                              title: Text(context.loc.schoolSortBy),
                               titleStyle: context.textTheme.labelLarge,
                             ),
                             for (final sort in SchoolSort.values)
@@ -141,7 +142,7 @@ class SchoolsTabSearchHeader extends ConsumerWidget {
                                 },
                                 selected: sort ==
                                     ref.watch(selectedSchoolSortProvider),
-                                title: sort.fullName,
+                                title: sort.fullName(context),
                               ),
                           ],
                         );

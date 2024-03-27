@@ -8,17 +8,20 @@ class AppCupertinoSliverNavBar extends StatelessWidget {
   const AppCupertinoSliverNavBar({
     required this.largeTitle,
     this.leading,
+    this.stretch,
     super.key,
   });
 
   final String largeTitle;
   final Widget? leading;
+  final bool? stretch;
 
   @override
   Widget build(BuildContext context) {
     return CupertinoSliverNavigationBar(
       largeTitle: Text(largeTitle),
       brightness: Theme.of(context).brightness,
+      stretch: stretch ?? false,
       leading: leading,
       border: const Border(),
       backgroundColor: Colors.transparent,

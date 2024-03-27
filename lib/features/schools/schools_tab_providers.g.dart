@@ -69,5 +69,21 @@ final selectedSchoolSortProvider =
 );
 
 typedef _$SelectedSchoolSort = AutoDisposeNotifier<SchoolSort>;
+String _$isFavoriteSchoolsHash() => r'98bdd9f510eef969c7b4aaafd1d5f14f1c1e7d3d';
+
+/// See also [IsFavoriteSchools].
+@ProviderFor(IsFavoriteSchools)
+final isFavoriteSchoolsProvider =
+    AutoDisposeNotifierProvider<IsFavoriteSchools, bool>.internal(
+  IsFavoriteSchools.new,
+  name: r'isFavoriteSchoolsProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$isFavoriteSchoolsHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$IsFavoriteSchools = AutoDisposeNotifier<bool>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, inference_failure_on_uninitialized_variable, inference_failure_on_function_return_type, inference_failure_on_untyped_parameter, deprecated_member_use_from_same_package

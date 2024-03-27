@@ -1,6 +1,5 @@
-import 'dart:ui';
-
-import 'package:samba_public_app/extensions/hardcoded_extension.dart';
+import 'package:flutter/material.dart';
+import 'package:samba_public_app/extensions/app_localization_extension.dart';
 
 enum Language {
   en,
@@ -17,18 +16,18 @@ extension LanguageExtension on Language {
         Language.ja => const Locale('ja', '')
       };
 
-  String get name => switch (this) {
-        Language.en => 'English'.hardcoded,
-        Language.es => 'Spanish'.hardcoded,
-        Language.pt => 'Portuguese'.hardcoded,
-        Language.ja => 'Japanese'.hardcoded
+  String name(BuildContext context) => switch (this) {
+        Language.en => context.loc.english,
+        Language.es => context.loc.spanish,
+        Language.pt => context.loc.portuguese,
+        Language.ja => context.loc.japanese
       };
 
   String get nativeName => switch (this) {
-        Language.en => 'English'.hardcoded,
-        Language.es => 'Español'.hardcoded,
-        Language.pt => 'Português'.hardcoded,
-        Language.ja => '日本語'.hardcoded
+        Language.en => 'English',
+        Language.es => 'Español',
+        Language.pt => 'Português',
+        Language.ja => '日本語'
       };
 
   String get languageCode => switch (this) {
@@ -37,6 +36,19 @@ extension LanguageExtension on Language {
         Language.pt => 'pt',
         Language.ja => 'ja'
       };
+
+  String get languageCountryCode => switch (this) {
+        Language.en => 'en_US',
+        Language.es => 'es_ES',
+        Language.pt => 'pt_BR',
+        Language.ja => 'ja_JP'
+      };
+
+  bool get isSameAsPlatform {
+    final platformLanguage =
+        WidgetsBinding.instance.platformDispatcher.locale.languageCode;
+    return languageCode == platformLanguage;
+  }
 }
 
 extension LocaleExtension on Locale {

@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:samba_public_app/extensions/intl_extension.dart';
 import 'package:samba_public_app/features/schools/school.dart';
@@ -107,8 +108,20 @@ class SelectedSchoolSort extends _$SelectedSchoolSort {
 }
 
 extension SelectedSchoolSortExtension on SchoolSort {
-  String getSortedValue(School school) =>
-      switch (this) { _ => school.foundationDate.intlShort };
+  String getSortedValue(School school, BuildContext context) =>
+      switch (this) { _ => school.foundationDate.intlShort(context) };
+}
+
+@riverpod
+class IsFavoriteSchools extends _$IsFavoriteSchools {
+  @override
+  bool build() {
+    return false;
+  }
+
+  void toggleFavorite() {
+    state = !state;
+  }
 }
 
 final filteredSchoolsProvider = Provider.autoDispose<List<School>>((ref) {
@@ -116,6 +129,7 @@ final filteredSchoolsProvider = Provider.autoDispose<List<School>>((ref) {
   final search = ref.watch(searchSchoolProvider);
   final schools = ref.watch(schoolsProvider);
   final sort = ref.watch(selectedSchoolSortProvider);
+  final isNotFavorite = !ref.watch(isFavoriteSchoolsProvider);
 
   if (schools.value == null) return const [];
 
@@ -123,7 +137,8 @@ final filteredSchoolsProvider = Provider.autoDispose<List<School>>((ref) {
       .where(
         (school) =>
             (filter[school.currentDivision] ?? false) &&
-            school.searchLogic(search),
+            school.searchLogic(search) &&
+            (isNotFavorite || school.isFavorite),
       )
       .toList()
     ..sort(sort.sortSwitch);

@@ -1,4 +1,5 @@
-import 'package:samba_public_app/extensions/hardcoded_extension.dart';
+import 'package:flutter/material.dart';
+import 'package:samba_public_app/extensions/app_localization_extension.dart';
 import 'package:samba_public_app/features/schools/school.dart';
 
 enum SchoolSort {
@@ -21,12 +22,12 @@ extension SchoolSortExtension on SchoolSort {
         (SchoolSort.favorite) => first.isFavorite ? -1 : 1,
       };
 
-  String get fullName => switch (this) {
-        (SchoolSort.name) => 'Name'.hardcoded,
-        (SchoolSort.ranking) => 'Ranking'.hardcoded,
-        (SchoolSort.lastPerformance) => 'Last Performance'.hardcoded,
-        (SchoolSort.location) => 'Location'.hardcoded,
-        (SchoolSort.foundationDate) => 'Foundation Date'.hardcoded,
-        (SchoolSort.favorite) => 'Favorite'.hardcoded,
+  String fullName(BuildContext context) => switch (this) {
+        (SchoolSort.name) => context.loc.schoolSortByName,
+        (SchoolSort.ranking) => context.loc.schoolSortByRanking,
+        (SchoolSort.lastPerformance) => context.loc.schoolSortByLastPerformance,
+        (SchoolSort.location) => context.loc.schoolSortByLocation,
+        (SchoolSort.foundationDate) => context.loc.schoolFoundationDate,
+        (SchoolSort.favorite) => context.loc.shoolSortByFavorite,
       };
 }

@@ -21,7 +21,7 @@ final sharedPreferencesProvider = FutureProvider<SharedPreferences>.internal(
 );
 
 typedef SharedPreferencesRef = FutureProviderRef<SharedPreferences>;
-String _$dioHash() => r'9f1b63226849744c90fd68e42d8ebd488f29b59d';
+String _$dioHash() => r'db3d5bf2855084ff759d70b9f2d062f67e100dbb';
 
 /// See also [dio].
 @ProviderFor(dio)

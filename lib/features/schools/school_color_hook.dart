@@ -16,7 +16,7 @@ class ColorHook extends MappingHook {
   }
 
   Color _getColor(Object color) => switch (color.toString().toLowerCase()) {
-        ('red' || 'vermelho' || 'rojo' || 'あか' || '赤') => Colors.red,
+        ('red' || 'vermelho' || 'rojo' || 'あか' || '赤' || 'レッド') => Colors.red,
         ('pink' || 'rosa' || 'ピンク' || '桃色') => Colors.pink,
         ('purple' || 'roxo' || 'morado' || 'むらさき' || '紫') => Colors.purple,
         ('deep purple' ||
@@ -49,11 +49,13 @@ class ColorHook extends MappingHook {
           Colors.cyan,
         ('teal' || 'verde azulado' || 'verde azulado' || 'アクア' || '青緑') =>
           Colors.teal,
-        ('green' || 'verde' || 'verde' || 'みどり' || '緑') => Colors.green,
+        ('green' || 'verde' || 'verde' || 'みどり' || '緑' || 'グリーン') =>
+          Colors.green,
         ('light green' || 'verde claro' || 'verde claro' || 'うすみどり' || '浅緑') =>
           Colors.lightGreen,
         ('lime' || 'lima' || 'lima' || 'ライム' || 'ライム色') => Colors.lime,
-        ('yellow' || 'amarelo' || 'amarillo' || 'きいろ' || '黄色') => Colors.yellow,
+        ('yellow' || 'amarelo' || 'amarillo' || 'きいろ' || '黄色' || 'イエロー') =>
+          Colors.yellow,
         ('amber' || 'âmbar' || 'ámbar' || 'こはくいろ' || '琥珀色') => Colors.amber,
         ('gold' || 'oro' || 'ouro' || 'ゴールド') => Colors.amber,
         ('orange' || 'laranja' || 'naranja' || 'オレンジ' || '橙色') => Colors.orange,
@@ -67,8 +69,10 @@ class ColorHook extends MappingHook {
         ('grey' || 'cinza' || 'gris' || 'はいいろ' || '灰色') => Colors.grey,
         ('blue grey' || 'azul cinza' || 'azul grisáceo' || 'あおはいいろ' || '藍灰色') =>
           Colors.blueGrey,
-        ('black' || 'preto' || 'negro' || 'くろ' || '黒') => Colors.black,
-        ('white' || 'branco' || 'blanco' || 'しろ' || '白') => Colors.white,
+        ('black' || 'preto' || 'negro' || 'くろ' || 'ブラック' || '黒') =>
+          Colors.black,
+        ('white' || 'branco' || 'blanco' || 'しろ' || '白' || 'ホワイト') =>
+          Colors.white,
         // Add more colors as needed
         (_) => Colors.white // default case
       };

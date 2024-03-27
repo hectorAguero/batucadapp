@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:samba_public_app/extensions/hardcoded_extension.dart';
+import 'package:samba_public_app/extensions/app_localization_extension.dart';
 
 extension TextThemeOfContextExtension on BuildContext {
   TextTheme get textTheme => Theme.of(this).textTheme;
@@ -12,16 +12,10 @@ extension TextThemeOfContextExtension on BuildContext {
 }
 
 extension ThemeModeExtension on ThemeMode {
-  String get labelName => switch (this) {
-        ThemeMode.system => 'System Theme'.hardcoded,
-        ThemeMode.light => 'Light Theme'.hardcoded,
-        ThemeMode.dark => 'Dark Theme'.hardcoded
-      };
-
-  String get label => switch (this) {
-        ThemeMode.system => 'System'.hardcoded,
-        ThemeMode.light => 'Light'.hardcoded,
-        ThemeMode.dark => 'Dark'.hardcoded
+  String label(BuildContext context) => switch (this) {
+        ThemeMode.system => context.loc.system,
+        ThemeMode.light => context.loc.light,
+        ThemeMode.dark => context.loc.dark
       };
 
   IconData get icon => switch (this) {

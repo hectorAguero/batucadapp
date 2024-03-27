@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:samba_public_app/common_widgets/go_back_button.dart';
-import 'package:samba_public_app/extensions/hardcoded_extension.dart';
+import 'package:samba_public_app/extensions/app_localization_extension.dart';
 import 'package:samba_public_app/extensions/media_query_context_extension.dart';
 import 'package:samba_public_app/features/instruments/details/instrument_details_providers.dart';
 import 'package:samba_public_app/features/instruments/details/widgets/instrument_details_gallery.dart';
@@ -64,7 +64,7 @@ class _InstrumentDetailsPageState extends ConsumerState<InstrumentDetailsPage> {
                     leading: const GoBackButton(),
                     border: const Border(),
                     backgroundColor: Colors.transparent,
-                    largeTitle: Text('Instrument Details'.hardcoded),
+                    largeTitle: Text(context.loc.instrumentDetails),
                     stretch: true,
                   ),
                 ),
@@ -111,9 +111,9 @@ class _InstrumentDetailsPageState extends ConsumerState<InstrumentDetailsPage> {
                                 horizontal: 4,
                               ),
                               tabs: [
-                                Tab(text: 'Summary'.hardcoded),
-                                Tab(text: 'Type'.hardcoded),
-                                Tab(text: 'Gallery'.hardcoded),
+                                Tab(text: context.loc.instrumentDescription),
+                                Tab(text: context.loc.instrumentLearning),
+                                Tab(text: context.loc.instrumentGallery),
                               ],
                             ),
                           ),
