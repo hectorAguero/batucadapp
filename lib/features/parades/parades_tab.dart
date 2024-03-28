@@ -17,25 +17,27 @@ class ParadesTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: CustomScrollView(
-        slivers: [
-          AppCupertinoSliverNavBar(
-            largeTitle: context.loc.paradesTitle,
-          ),
-          SliverSafeArea(
-            top: false,
-            sliver: SliverList.builder(
-              itemBuilder: (context, index) {
-                return ListTile(
-                  title: Text('Parade $index'.hardcoded),
-                  onTap: () {},
-                );
-              },
-              itemCount: 100,
+    return SelectionArea(
+      child: Scaffold(
+        body: CustomScrollView(
+          slivers: [
+            AppCupertinoSliverNavBar(
+              largeTitle: context.loc.paradesTitle,
             ),
-          ),
-        ],
+            SliverSafeArea(
+              top: false,
+              sliver: SliverList.builder(
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    title: Text('Parade $index'.hardcoded),
+                    onTap: () {},
+                  );
+                },
+                itemCount: 100,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

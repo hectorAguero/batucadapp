@@ -44,9 +44,11 @@ class _SchoolDetailsPageState extends ConsumerState<SchoolDetailsPage> {
   Widget build(BuildContext context) {
     final school = ref.watch(selectedSchoolProvider(widget.id));
     return InkWell(
-      onLongPress: () {
-        showOriginal.value = !showOriginal.value;
-      },
+      onLongPress: school.name == school.originalName
+          ? null
+          : () {
+              showOriginal.value = !showOriginal.value;
+            },
       child: Column(
         children: [
           LayoutBuilder(
@@ -208,7 +210,8 @@ class _SchoolDetailsTextState extends State<SchoolDetailsText> {
             SchoolTextTile(
               icon: Icons.sports_soccer_outlined,
               title: '${context.loc.schoolSortByLastPerformance}: ',
-              content: '${widget.school.lastPosition}º',
+              content:
+                  '${widget.school.lastPosition}${context.loc.schoolPerformancePlace}',
             ),
             SchoolTextTile(
               icon: CupertinoIcons.flag,

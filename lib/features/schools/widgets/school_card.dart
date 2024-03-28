@@ -5,6 +5,7 @@ import 'package:samba_public_app/extensions/media_query_context_extension.dart';
 import 'package:samba_public_app/extensions/theme_of_context_extension.dart';
 import 'package:samba_public_app/features/schools/details/show_details.dart';
 import 'package:samba_public_app/features/schools/school.dart';
+import 'package:samba_public_app/features/schools/school_sort.dart';
 import 'package:samba_public_app/features/schools/schools_extensions.dart';
 import 'package:samba_public_app/features/schools/schools_tab_providers.dart';
 import 'package:samba_public_app/features/schools/widgets/school_flag.dart';
@@ -41,9 +42,11 @@ class _SchoolCardState extends ConsumerState<SchoolCard> {
           onTap: () {
             showSchoolDetails(context, school);
           },
-          onLongPress: () {
-            showOriginal.value = !showOriginal.value;
-          },
+          onLongPress: school.name == school.originalName
+              ? null
+              : () {
+                  showOriginal.value = !showOriginal.value;
+                },
           child: Container(
             decoration: BoxDecoration(
               gradient: LinearGradient(
@@ -127,7 +130,8 @@ class SchoolInfoCard extends StatelessWidget {
               key: ValueKey(showOriginal),
               child: !showOriginal
                   ? Text(
-                      '${school.originalName}${!context.querySize.isSmallScreen ? '\n' : ' '}',
+                      '${school.originalName}'
+                      '${context.querySize.isNotSmallNorMedium ? '\n' : ' '}',
                       maxLines: 2,
                       style: Theme.of(context).textTheme.titleLarge!.copyWith(
                             color: colorScheme.onSurface,
@@ -135,7 +139,8 @@ class SchoolInfoCard extends StatelessWidget {
                           ),
                     )
                   : Text(
-                      '${school.name}${!context.querySize.isSmallScreen ? '\n' : ' '}',
+                      '${school.name}'
+                      '${context.querySize.isNotSmallNorMedium ? '\n' : ' '}',
                       maxLines: 2,
                       style: Theme.of(context).textTheme.titleLarge!.copyWith(
                             color: colorScheme.onSurface,
@@ -148,11 +153,23 @@ class SchoolInfoCard extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Flexible(
+            Expanded(
               child: Padding(
                 padding: const EdgeInsets.only(bottom: 8, left: 16),
-                child: Text(
-                  school.currentDivision.fullName(context),
+                child: Text.rich(
+                  TextSpan(
+                    text: school.currentDivision.fullName(context),
+                    children: [
+                      if (school.lastPosition == 1)
+                        const TextSpan(
+                          text: ' 🏆',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                    ],
+                  ),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   style: Theme.of(context).textTheme.titleMedium!.copyWith(
@@ -161,23 +178,39 @@ class SchoolInfoCard extends StatelessWidget {
                 ),
               ),
             ),
-            Consumer(
-              builder: (context, ref, child) {
-                return Padding(
-                  padding: const EdgeInsets.only(bottom: 8, right: 8),
-                  child: TextButton(
-                    onPressed: null,
-                    style: TextButton.styleFrom(
-                      textStyle: Theme.of(context).textTheme.labelLarge,
+            Flexible(
+              child: Consumer(
+                builder: (context, ref, child) {
+                  final sort = ref.watch(selectedSchoolSortProvider);
+                  return Padding(
+                    padding: const EdgeInsets.only(bottom: 8, right: 8),
+                    child: TextButton(
+                      onPressed: null,
+                      style: TextButton.styleFrom(
+                        textStyle:
+                            Theme.of(context).textTheme.labelLarge!.copyWith(
+                                  wordSpacing: -1,
+                                  letterSpacing: -0.5,
+                                ),
+                      ),
+                      child: Text.rich(
+                        TextSpan(
+                          children: [
+                            TextSpan(
+                              text: sort.getSortedValue(school, context),
+                            ),
+                            if (sort == SchoolSort.location)
+                              TextSpan(
+                                text: ', ${school.leagueLocation}',
+                              ),
+                          ],
+                        ),
+                        maxLines: 2,
+                      ),
                     ),
-                    child: Text(
-                      ref
-                          .watch(selectedSchoolSortProvider)
-                          .getSortedValue(school, context),
-                    ),
-                  ),
-                );
-              },
+                  );
+                },
+              ),
             ),
           ],
         ),

@@ -49,105 +49,110 @@ class _InstrumentDetailsPageState extends ConsumerState<InstrumentDetailsPage> {
     const screenConstraint = largeScreen;
     return DefaultTabController(
       length: InstrumentDetailsTab.values.length,
-      child: Scaffold(
-        body: NestedScrollView(
-          controller: _controller,
-          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-            return <Widget>[
-              SliverOverlapAbsorber(
-                handle: NestedScrollView.sliverOverlapAbsorberHandleFor(
-                  context,
-                ),
-                sliver: SliverCrossAxisConstrained(
-                  maxCrossAxisExtent: screenConstraint,
-                  child: CupertinoSliverNavigationBar(
-                    leading: const GoBackButton(),
-                    border: const Border(),
-                    backgroundColor: Colors.transparent,
-                    largeTitle: Text(context.loc.instrumentDetails),
-                    stretch: true,
+      child: SelectionArea(
+        child: Scaffold(
+          body: NestedScrollView(
+            controller: _controller,
+            headerSliverBuilder:
+                (BuildContext context, bool innerBoxIsScrolled) {
+              return <Widget>[
+                SliverOverlapAbsorber(
+                  handle: NestedScrollView.sliverOverlapAbsorberHandleFor(
+                    context,
+                  ),
+                  sliver: SliverCrossAxisConstrained(
+                    maxCrossAxisExtent: screenConstraint,
+                    child: CupertinoSliverNavigationBar(
+                      leading: const GoBackButton(),
+                      border: const Border(),
+                      backgroundColor: Colors.transparent,
+                      largeTitle: Text(context.loc.instrumentDetails),
+                      stretch: true,
+                    ),
                   ),
                 ),
-              ),
-            ];
-          },
-          body: AnimatedSwitcher(
-            duration: kThemeAnimationDuration,
-            child: switch (data) {
-              AsyncLoading() => const Center(
-                  child: CircularProgressIndicator.adaptive(),
-                ),
-              AsyncError(:final error) => Center(child: Text('Error: $error')),
-              AsyncData(:final value) => Builder(
-                  builder: (context) => CustomScrollView(
-                    slivers: [
-                      SliverOverlapInjector(
-                        handle: NestedScrollView.sliverOverlapAbsorberHandleFor(
-                          context,
-                        ),
-                      ),
-                      SliverCrossAxisConstrained(
-                        maxCrossAxisExtent: screenConstraint,
-                        child: SliverToBoxAdapter(
-                          child: InstrumentHeaderImages(
-                            instrument: value,
-                            imageHeight: imageHeight,
+              ];
+            },
+            body: AnimatedSwitcher(
+              duration: kThemeAnimationDuration,
+              child: switch (data) {
+                AsyncLoading() => const Center(
+                    child: CircularProgressIndicator.adaptive(),
+                  ),
+                AsyncError(:final error) =>
+                  Center(child: Text('Error: $error')),
+                AsyncData(:final value) => Builder(
+                    builder: (context) => CustomScrollView(
+                      slivers: [
+                        SliverOverlapInjector(
+                          handle:
+                              NestedScrollView.sliverOverlapAbsorberHandleFor(
+                            context,
                           ),
                         ),
-                      ),
-                      SliverCrossAxisConstrained(
-                        maxCrossAxisExtent: smallScreen,
-                        child: SliverPadding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 24,
-                          ),
-                          sliver: SliverToBoxAdapter(
-                            child: TabBar(
-                              overlayColor: MaterialStateProperty.all(
-                                Colors.transparent,
-                              ),
-                              indicatorSize: TabBarIndicatorSize.tab,
-                              indicatorPadding: const EdgeInsets.symmetric(
-                                horizontal: 4,
-                              ),
-                              tabs: [
-                                Tab(text: context.loc.instrumentDescription),
-                                Tab(text: context.loc.instrumentLearning),
-                                Tab(text: context.loc.instrumentGallery),
-                              ],
+                        SliverCrossAxisConstrained(
+                          maxCrossAxisExtent: screenConstraint,
+                          child: SliverToBoxAdapter(
+                            child: InstrumentHeaderImages(
+                              instrument: value,
+                              imageHeight: imageHeight,
                             ),
                           ),
                         ),
-                      ),
-                      SliverCrossAxisConstrained(
-                        maxCrossAxisExtent: screenConstraint,
-                        child: SliverPadding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 16,
-                            vertical: 8,
-                          ),
-                          sliver: SliverToBoxAdapter(
-                            // TODO(hectorAguero): size to avoid overscroll
-                            child: SizedBox(
-                              height: 800,
-                              child: TabBarView(
-                                physics: const ClampingScrollPhysics(),
-                                children: [
-                                  InstrumentDetailsSummary(
-                                    details: value.description,
-                                  ),
-                                  const InstrumentDetailsType(),
-                                  const InstrumentDetailsGallery(),
+                        SliverCrossAxisConstrained(
+                          maxCrossAxisExtent: smallScreen,
+                          child: SliverPadding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 24,
+                            ),
+                            sliver: SliverToBoxAdapter(
+                              child: TabBar(
+                                overlayColor: MaterialStateProperty.all(
+                                  Colors.transparent,
+                                ),
+                                indicatorSize: TabBarIndicatorSize.tab,
+                                indicatorPadding: const EdgeInsets.symmetric(
+                                  horizontal: 4,
+                                ),
+                                tabs: [
+                                  Tab(text: context.loc.instrumentDescription),
+                                  Tab(text: context.loc.instrumentLearning),
+                                  Tab(text: context.loc.instrumentGallery),
                                 ],
                               ),
                             ),
                           ),
                         ),
-                      ),
-                    ],
+                        SliverCrossAxisConstrained(
+                          maxCrossAxisExtent: screenConstraint,
+                          child: SliverPadding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 16,
+                              vertical: 8,
+                            ),
+                            sliver: SliverToBoxAdapter(
+                              // TODO(hectorAguero): size to avoid overscroll
+                              child: SizedBox(
+                                height: 800,
+                                child: TabBarView(
+                                  physics: const ClampingScrollPhysics(),
+                                  children: [
+                                    InstrumentDetailsSummary(
+                                      details: value.description,
+                                    ),
+                                    const InstrumentDetailsType(),
+                                    const InstrumentDetailsGallery(),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-            },
+              },
+            ),
           ),
         ),
       ),

@@ -24,7 +24,7 @@ GoRouter goRouter(GoRouterRef ref) {
     navigatorKey: _rootNavigatorKey,
     initialLocation: '/instruments',
     errorPageBuilder: (context, state) => const NoTransitionPage(
-      child: Scaffold(body: Text('404 - Not Found')),
+      child: SelectionArea(child: Scaffold(body: Text('404 - Not Found'))),
     ),
     redirect: (context, state) {
       // * If the app is still initializing, show the /startup route

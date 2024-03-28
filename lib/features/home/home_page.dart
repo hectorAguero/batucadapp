@@ -14,40 +14,42 @@ class HomePage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final size = MediaQuery.sizeOf(context);
-    return Scaffold(
-      body: size.isSmallScreen
-          ? navigationShell
-          : Row(
-              children: [
-                AdaptiveNavigationRail(
-                  destinations: TabDestination.values,
-                  selectedIndex: navigationShell.currentIndex,
-                  onDestinationSelected: (index) {
-                    navigationShell.goBranch(
-                      index,
-                      initialLocation: index == navigationShell.currentIndex,
-                    );
-                  },
-                ),
-                const VerticalDivider(
-                  width: 1,
-                  thickness: 1,
-                ),
-                Expanded(child: navigationShell),
-              ],
-            ),
-      bottomNavigationBar: size.isSmallScreen
-          ? AdaptiveNavigationBar(
-              tabDestinations: TabDestination.values,
-              onDestinationSelected: (index) {
-                navigationShell.goBranch(
-                  index,
-                  initialLocation: index == navigationShell.currentIndex,
-                );
-              },
-              selectedIndex: navigationShell.currentIndex,
-            )
-          : null,
+    return SelectionArea(
+      child: Scaffold(
+        body: size.isSmallScreen
+            ? navigationShell
+            : Row(
+                children: [
+                  AdaptiveNavigationRail(
+                    destinations: TabDestination.values,
+                    selectedIndex: navigationShell.currentIndex,
+                    onDestinationSelected: (index) {
+                      navigationShell.goBranch(
+                        index,
+                        initialLocation: index == navigationShell.currentIndex,
+                      );
+                    },
+                  ),
+                  const VerticalDivider(
+                    width: 1,
+                    thickness: 1,
+                  ),
+                  Expanded(child: navigationShell),
+                ],
+              ),
+        bottomNavigationBar: size.isSmallScreen
+            ? AdaptiveNavigationBar(
+                tabDestinations: TabDestination.values,
+                onDestinationSelected: (index) {
+                  navigationShell.goBranch(
+                    index,
+                    initialLocation: index == navigationShell.currentIndex,
+                  );
+                },
+                selectedIndex: navigationShell.currentIndex,
+              )
+            : null,
+      ),
     );
   }
 }

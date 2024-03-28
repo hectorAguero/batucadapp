@@ -53,29 +53,31 @@ class AppStartupLoadingWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.sizeOf(context);
     final padding = MediaQuery.paddingOf(context);
-    return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        toolbarHeight:
-            kMinInteractiveDimensionCupertino + padding.top.clamp(52, 100),
+    return SelectionArea(
+      child: Scaffold(
+        appBar: AppBar(
+          elevation: 0,
+          toolbarHeight:
+              kMinInteractiveDimensionCupertino + padding.top.clamp(52, 100),
+        ),
+        bottomNavigationBar: size.isSmallScreen
+            ? null
+            : const SizedBox(height: kMinInteractiveDimensionCupertino),
+        body: size.isSmallScreen
+            ? const Center(child: CircularProgressIndicator.adaptive())
+            : Row(
+                children: [
+                  SizedBox(
+                    width: size.isExtraLargeScreen || size.isLargeScreen
+                        ? AdaptiveNavigationRail.largeRailWidth
+                        : AdaptiveNavigationRail.smallRailWidth,
+                  ),
+                  const Expanded(
+                    child: Center(child: CircularProgressIndicator.adaptive()),
+                  ),
+                ],
+              ),
       ),
-      bottomNavigationBar: size.isSmallScreen
-          ? null
-          : const SizedBox(height: kMinInteractiveDimensionCupertino),
-      body: size.isSmallScreen
-          ? const Center(child: CircularProgressIndicator.adaptive())
-          : Row(
-              children: [
-                SizedBox(
-                  width: size.isExtraLargeScreen || size.isLargeScreen
-                      ? AdaptiveNavigationRail.largeRailWidth
-                      : AdaptiveNavigationRail.smallRailWidth,
-                ),
-                const Expanded(
-                  child: Center(child: CircularProgressIndicator.adaptive()),
-                ),
-              ],
-            ),
     );
   }
 }
@@ -91,19 +93,21 @@ class AppStartupErrorWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(),
-      body: Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(message, style: Theme.of(context).textTheme.headlineSmall),
-            const SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: onRetry,
-              child: Text(context.loc.retry),
-            ),
-          ],
+    return SelectionArea(
+      child: Scaffold(
+        appBar: AppBar(),
+        body: Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(message, style: Theme.of(context).textTheme.headlineSmall),
+              const SizedBox(height: 16),
+              ElevatedButton(
+                onPressed: onRetry,
+                child: Text(context.loc.retry),
+              ),
+            ],
+          ),
         ),
       ),
     );

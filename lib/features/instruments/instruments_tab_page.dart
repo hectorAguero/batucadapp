@@ -30,62 +30,65 @@ class InstrumentsTabPage extends ConsumerWidget {
     final colorScheme = Theme.of(context).colorScheme;
     const maxCrossAxisExtent = largeScreen;
     final instruments = ref.watch(instrumentsTabProvider);
-    return Scaffold(
-      body: CustomScrollView(
-        slivers: [
-          SliverCrossAxisConstrained(
-            maxCrossAxisExtent: maxCrossAxisExtent,
-            child: SliverMainAxisGroup(
-              slivers: [
-                AppCupertinoSliverNavBar(
-                  largeTitle: context.loc.instrumentsTitle,
-                ),
-                const SliverPadding(padding: EdgeInsets.only(top: 8)),
-                SliverAnimatedSwitcher(
-                  duration: const Duration(milliseconds: 300),
-                  child: switch (instruments) {
-                    AsyncLoading() => const SliverFillRemaining(
-                        child:
-                            Center(child: CircularProgressIndicator.adaptive()),
-                      ),
-                    AsyncError(:final error) => SliverFillRemaining(
-                        child: Center(
-                          child: Text(
-                            error.toString(),
-                            style: Theme.of(context).textTheme.titleLarge,
+    return SelectionArea(
+      child: Scaffold(
+        body: CustomScrollView(
+          slivers: [
+            SliverCrossAxisConstrained(
+              maxCrossAxisExtent: maxCrossAxisExtent,
+              child: SliverMainAxisGroup(
+                slivers: [
+                  AppCupertinoSliverNavBar(
+                    largeTitle: context.loc.instrumentsTitle,
+                  ),
+                  const SliverPadding(padding: EdgeInsets.only(top: 8)),
+                  SliverAnimatedSwitcher(
+                    duration: const Duration(milliseconds: 300),
+                    child: switch (instruments) {
+                      AsyncLoading() => const SliverFillRemaining(
+                          child: Center(
+                            child: CircularProgressIndicator.adaptive(),
                           ),
                         ),
-                      ),
-                    AsyncData(:final value) => SliverSafeArea(
-                        top: false,
-                        sliver: SliverAlignedGrid.extent(
-                          maxCrossAxisExtent: InstrumentListTile.cardMaxWidth,
-                          itemCount: value.length,
-                          itemBuilder: (context, index) {
-                            final mockInstrument = value[index];
-                            return InstrumentListTile(
-                              title: mockInstrument.name,
-                              subtitle: mockInstrument.description,
-                              backgroundColor: index.isEven
-                                  ? colorScheme.primaryContainer
-                                  : colorScheme.secondaryContainer,
-                              onTap: () {
-                                context.go(
-                                  '${InstrumentsTabPage.route.path}/${InstrumentDetailsPage.route.path}',
-                                  extra: {'id': mockInstrument.id},
-                                );
-                              },
-                              imageUrl: mockInstrument.imageUrl,
-                            );
-                          },
+                      AsyncError(:final error) => SliverFillRemaining(
+                          child: Center(
+                            child: Text(
+                              error.toString(),
+                              style: Theme.of(context).textTheme.titleLarge,
+                            ),
+                          ),
                         ),
-                      ),
-                  },
-                ),
-              ],
+                      AsyncData(:final value) => SliverSafeArea(
+                          top: false,
+                          sliver: SliverAlignedGrid.extent(
+                            maxCrossAxisExtent: InstrumentListTile.cardMaxWidth,
+                            itemCount: value.length,
+                            itemBuilder: (context, index) {
+                              final mockInstrument = value[index];
+                              return InstrumentListTile(
+                                title: mockInstrument.name,
+                                subtitle: mockInstrument.description,
+                                backgroundColor: index.isEven
+                                    ? colorScheme.primaryContainer
+                                    : colorScheme.secondaryContainer,
+                                onTap: () {
+                                  context.go(
+                                    '${InstrumentsTabPage.route.path}/${InstrumentDetailsPage.route.path}',
+                                    extra: {'id': mockInstrument.id},
+                                  );
+                                },
+                                imageUrl: mockInstrument.imageUrl,
+                              );
+                            },
+                          ),
+                        ),
+                    },
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

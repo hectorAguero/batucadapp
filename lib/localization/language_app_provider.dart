@@ -1,3 +1,4 @@
+import 'package:flutter/widgets.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:samba_public_app/localization/language.dart';
 import 'package:samba_public_app/main_providers.dart';
@@ -9,10 +10,10 @@ class LanguageApp extends _$LanguageApp {
   @override
   FutureOr<Language?> build() async {
     final prefs = await ref.watch(sharedPreferencesProvider.future);
-    final localeKey = prefs.getString('locale');
+    final localeKey = prefs.getString('locale') ??
+        WidgetsBinding.instance.platformDispatcher.locale.languageCode;
     return Language.values.firstWhere(
       (e) => e.languageCode == localeKey,
-      // TODO(hectorAguero): Add correct default language
       orElse: () => Language.en,
     );
   }

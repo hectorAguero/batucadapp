@@ -1,3 +1,4 @@
+import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -41,6 +42,7 @@ class _MainAppState extends ConsumerState<MainApp> {
       themeMode: themeMode,
       themeAnimationStyle: AnimationStyle.noAnimation,
       localizationsDelegates: const [
+        CountryLocalizations.delegate,
         AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,

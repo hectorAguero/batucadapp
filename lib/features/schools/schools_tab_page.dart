@@ -35,23 +35,25 @@ class SchoolsTabPage extends StatefulWidget {
 class _SchoolsTabState extends State<SchoolsTabPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: CustomScrollView(
-        controller: PrimaryScrollController.of(context),
-        slivers: <Widget>[
-          const SchoolsTabNavBar(),
-          const SchoolsTabSearchHeader(),
-          Consumer(
-            child: const SliverToBoxAdapter(child: SizedBox.shrink()),
-            builder: (context, ref, child) {
-              if (ref.watch(schoolDivisionsProvider).length > 1) {
-                return const SchoolDivisionChips();
-              }
-              return child!;
-            },
-          ),
-          const SchoolsTabList(),
-        ],
+    return SelectionArea(
+      child: Scaffold(
+        body: CustomScrollView(
+          controller: PrimaryScrollController.of(context),
+          slivers: <Widget>[
+            const SchoolsTabNavBar(),
+            const SchoolsTabSearchHeader(),
+            Consumer(
+              child: const SliverToBoxAdapter(child: SizedBox.shrink()),
+              builder: (context, ref, child) {
+                if (ref.watch(schoolDivisionsProvider).length > 1) {
+                  return const SchoolDivisionChips();
+                }
+                return child!;
+              },
+            ),
+            const SchoolsTabList(),
+          ],
+        ),
       ),
     );
   }

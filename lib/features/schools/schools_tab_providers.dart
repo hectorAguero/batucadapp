@@ -1,5 +1,7 @@
+import 'package:country_picker/country_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:samba_public_app/extensions/app_localization_extension.dart';
 import 'package:samba_public_app/extensions/intl_extension.dart';
 import 'package:samba_public_app/features/schools/school.dart';
 import 'package:samba_public_app/features/schools/school_sort.dart';
@@ -108,8 +110,13 @@ class SelectedSchoolSort extends _$SelectedSchoolSort {
 }
 
 extension SelectedSchoolSortExtension on SchoolSort {
-  String getSortedValue(School school, BuildContext context) =>
-      switch (this) { _ => school.foundationDate.intlShort(context) };
+  String getSortedValue(School school, BuildContext context) => switch (this) {
+        (SchoolSort.lastPerformance) =>
+          '${school.lastPosition}${context.loc.schoolPerformancePlace}',
+        (SchoolSort.location) =>
+          CountryLocalizations.of(context)!.countryName(countryCode: 'BR')!,
+        _ => school.foundationDate.intlShort(context)
+      };
 }
 
 @riverpod
