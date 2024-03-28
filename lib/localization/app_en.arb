@@ -7,6 +7,7 @@
 	"@_MAIN_APP": {},
 	"error": "Error",
 	"errorMessage": "An error occurred",
+	"errorLoadingImage": "Failed to load data",
 	"language": "Language",
 	"portuguese": "Portuguese",
 	"english": "English",

@@ -32,6 +32,23 @@ class SchoolDivisionChips extends ConsumerWidget {
               scrollDirection: Axis.horizontal,
               children: [
                 Padding(
+                  padding: const EdgeInsets.only(right: 4, left: 8),
+                  child: ChoiceChip(
+                    showCheckmark: false,
+                    avatar: !ref.watch(isFavoriteSchoolsProvider)
+                        ? const Icon(CupertinoIcons.heart)
+                        : const Icon(CupertinoIcons.heart_fill),
+                    selected: ref.watch(isFavoriteSchoolsProvider),
+                    label: Text(context.loc.schoolFavorites),
+                    selectedColor: context.colorScheme.primaryContainer,
+                    onSelected: (value) {
+                      ref
+                          .read(isFavoriteSchoolsProvider.notifier)
+                          .toggleFavorite();
+                    },
+                  ),
+                ),
+                Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 4),
                   child: FilterChip(
                     showCheckmark: false,
@@ -74,23 +91,6 @@ class SchoolDivisionChips extends ConsumerWidget {
                       ),
                     ),
                   ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 4),
-                  child: ChoiceChip(
-                    showCheckmark: false,
-                    avatar: !ref.watch(isFavoriteSchoolsProvider)
-                        ? const Icon(CupertinoIcons.heart)
-                        : const Icon(CupertinoIcons.heart_fill),
-                    selected: ref.watch(isFavoriteSchoolsProvider),
-                    label: Text(context.loc.schoolFavorites),
-                    selectedColor: context.colorScheme.primaryContainer,
-                    onSelected: (value) {
-                      ref
-                          .read(isFavoriteSchoolsProvider.notifier)
-                          .toggleFavorite();
-                    },
-                  ),
-                ),
               ],
             ),
           ),

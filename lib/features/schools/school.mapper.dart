@@ -142,6 +142,9 @@ class SchoolMapper extends ClassMapperBase<School> {
   static const Field<School, int> _f$id = Field('id', _$id);
   static String _$name(School v) => v.name;
   static const Field<School, String> _f$name = Field('name', _$name);
+  static String _$originalName(School v) => v.originalName;
+  static const Field<School, String> _f$originalName =
+      Field('originalName', _$originalName);
   static String _$imageUrl(School v) => v.imageUrl;
   static const Field<School, String> _f$imageUrl =
       Field('imageUrl', _$imageUrl, hook: ImageUrlHook());
@@ -169,6 +172,18 @@ class SchoolMapper extends ClassMapperBase<School> {
   static int _$divisionNumber(School v) => v.divisionNumber;
   static const Field<School, int> _f$divisionNumber =
       Field('divisionNumber', _$divisionNumber);
+  static int _$firstDivisionChampionships(School v) =>
+      v.firstDivisionChampionships;
+  static const Field<School, int> _f$firstDivisionChampionships =
+      Field('firstDivisionChampionships', _$firstDivisionChampionships);
+  static String _$country(School v) => v.country;
+  static const Field<School, String> _f$country = Field('country', _$country);
+  static String _$leagueLocation(School v) => v.leagueLocation;
+  static const Field<School, String> _f$leagueLocation =
+      Field('leagueLocation', _$leagueLocation);
+  static int _$lastPosition(School v) => v.lastPosition;
+  static const Field<School, int> _f$lastPosition =
+      Field('lastPosition', _$lastPosition);
   static bool _$isFavorite(School v) => v.isFavorite;
   static const Field<School, bool> _f$isFavorite =
       Field('isFavorite', _$isFavorite, opt: true, def: false);
@@ -177,6 +192,7 @@ class SchoolMapper extends ClassMapperBase<School> {
   final MappableFields<School> fields = const {
     #id: _f$id,
     #name: _f$name,
+    #originalName: _f$originalName,
     #imageUrl: _f$imageUrl,
     #foundationDate: _f$foundationDate,
     #godmotherSchool: _f$godmotherSchool,
@@ -186,6 +202,10 @@ class SchoolMapper extends ClassMapperBase<School> {
     #league: _f$league,
     #currentDivision: _f$currentDivision,
     #divisionNumber: _f$divisionNumber,
+    #firstDivisionChampionships: _f$firstDivisionChampionships,
+    #country: _f$country,
+    #leagueLocation: _f$leagueLocation,
+    #lastPosition: _f$lastPosition,
     #isFavorite: _f$isFavorite,
   };
 
@@ -193,6 +213,7 @@ class SchoolMapper extends ClassMapperBase<School> {
     return School(
         id: data.dec(_f$id),
         name: data.dec(_f$name),
+        originalName: data.dec(_f$originalName),
         imageUrl: data.dec(_f$imageUrl),
         foundationDate: data.dec(_f$foundationDate),
         godmotherSchool: data.dec(_f$godmotherSchool),
@@ -202,6 +223,10 @@ class SchoolMapper extends ClassMapperBase<School> {
         league: data.dec(_f$league),
         currentDivision: data.dec(_f$currentDivision),
         divisionNumber: data.dec(_f$divisionNumber),
+        firstDivisionChampionships: data.dec(_f$firstDivisionChampionships),
+        country: data.dec(_f$country),
+        leagueLocation: data.dec(_f$leagueLocation),
+        lastPosition: data.dec(_f$lastPosition),
         isFavorite: data.dec(_f$isFavorite));
   }
 
@@ -260,6 +285,7 @@ abstract class SchoolCopyWith<$R, $In extends School, $Out>
   $R call(
       {int? id,
       String? name,
+      String? originalName,
       String? imageUrl,
       DateTime? foundationDate,
       String? godmotherSchool,
@@ -269,6 +295,10 @@ abstract class SchoolCopyWith<$R, $In extends School, $Out>
       SchoolLeague? league,
       SchoolDivision? currentDivision,
       int? divisionNumber,
+      int? firstDivisionChampionships,
+      String? country,
+      String? leagueLocation,
+      int? lastPosition,
       bool? isFavorite});
   SchoolCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(Then<$Out2, $R2> t);
 }
@@ -295,6 +325,7 @@ class _SchoolCopyWithImpl<$R, $Out> extends ClassCopyWithBase<$R, School, $Out>
   $R call(
           {int? id,
           String? name,
+          String? originalName,
           String? imageUrl,
           DateTime? foundationDate,
           String? godmotherSchool,
@@ -304,10 +335,15 @@ class _SchoolCopyWithImpl<$R, $Out> extends ClassCopyWithBase<$R, School, $Out>
           SchoolLeague? league,
           SchoolDivision? currentDivision,
           int? divisionNumber,
+          int? firstDivisionChampionships,
+          String? country,
+          String? leagueLocation,
+          int? lastPosition,
           bool? isFavorite}) =>
       $apply(FieldCopyWithData({
         if (id != null) #id: id,
         if (name != null) #name: name,
+        if (originalName != null) #originalName: originalName,
         if (imageUrl != null) #imageUrl: imageUrl,
         if (foundationDate != null) #foundationDate: foundationDate,
         if (godmotherSchool != null) #godmotherSchool: godmotherSchool,
@@ -317,12 +353,18 @@ class _SchoolCopyWithImpl<$R, $Out> extends ClassCopyWithBase<$R, School, $Out>
         if (league != null) #league: league,
         if (currentDivision != null) #currentDivision: currentDivision,
         if (divisionNumber != null) #divisionNumber: divisionNumber,
+        if (firstDivisionChampionships != null)
+          #firstDivisionChampionships: firstDivisionChampionships,
+        if (country != null) #country: country,
+        if (leagueLocation != null) #leagueLocation: leagueLocation,
+        if (lastPosition != null) #lastPosition: lastPosition,
         if (isFavorite != null) #isFavorite: isFavorite
       }));
   @override
   School $make(CopyWithData data) => School(
       id: data.get(#id, or: $value.id),
       name: data.get(#name, or: $value.name),
+      originalName: data.get(#originalName, or: $value.originalName),
       imageUrl: data.get(#imageUrl, or: $value.imageUrl),
       foundationDate: data.get(#foundationDate, or: $value.foundationDate),
       godmotherSchool: data.get(#godmotherSchool, or: $value.godmotherSchool),
@@ -332,6 +374,11 @@ class _SchoolCopyWithImpl<$R, $Out> extends ClassCopyWithBase<$R, School, $Out>
       league: data.get(#league, or: $value.league),
       currentDivision: data.get(#currentDivision, or: $value.currentDivision),
       divisionNumber: data.get(#divisionNumber, or: $value.divisionNumber),
+      firstDivisionChampionships: data.get(#firstDivisionChampionships,
+          or: $value.firstDivisionChampionships),
+      country: data.get(#country, or: $value.country),
+      leagueLocation: data.get(#leagueLocation, or: $value.leagueLocation),
+      lastPosition: data.get(#lastPosition, or: $value.lastPosition),
       isFavorite: data.get(#isFavorite, or: $value.isFavorite));
 
   @override

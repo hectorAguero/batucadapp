@@ -9,7 +9,7 @@ import 'package:samba_public_app/features/schools/schools_extensions.dart';
 import 'package:samba_public_app/features/schools/schools_tab_providers.dart';
 import 'package:samba_public_app/features/schools/widgets/school_flag.dart';
 
-class SchoolCard extends ConsumerWidget {
+class SchoolCard extends ConsumerStatefulWidget {
   const SchoolCard({
     this.margin = const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
     super.key,
@@ -20,20 +20,30 @@ class SchoolCard extends ConsumerWidget {
   static const double cardMaxWidth = 400;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<SchoolCard> createState() => _SchoolCardState();
+}
+
+class _SchoolCardState extends ConsumerState<SchoolCard> {
+  ValueNotifier<bool> showOriginal = ValueNotifier<bool>(false);
+
+  @override
+  Widget build(BuildContext context) {
     final school = ref.watch(currentSchoolProvider);
     return Padding(
-      padding: margin,
-      child: InkWell(
-        borderRadius: BorderRadius.circular(16),
-        onTap: () {
-          showSchoolDetails(context, school);
-        },
-        child: Card(
-          elevation: 2,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
-          ),
+      padding: widget.margin,
+      child: Card(
+        elevation: 2,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+        ),
+        child: InkWell(
+          borderRadius: BorderRadius.circular(16),
+          onTap: () {
+            showSchoolDetails(context, school);
+          },
+          onLongPress: () {
+            showOriginal.value = !showOriginal.value;
+          },
           child: Container(
             decoration: BoxDecoration(
               gradient: LinearGradient(
@@ -73,7 +83,15 @@ class SchoolCard extends ConsumerWidget {
                   ),
                   child: SchoolFlag(school: school),
                 ),
-                SchoolInfoCard(school: school),
+                ValueListenableBuilder(
+                  valueListenable: showOriginal,
+                  builder: (context, value, child) {
+                    return SchoolInfoCard(
+                      school: school,
+                      showOriginal: value,
+                    );
+                  },
+                ),
               ],
             ),
           ),
@@ -86,14 +104,17 @@ class SchoolCard extends ConsumerWidget {
 class SchoolInfoCard extends StatelessWidget {
   const SchoolInfoCard({
     required this.school,
+    required this.showOriginal,
     super.key,
   });
 
   final School school;
+  final bool showOriginal;
 
   @override
   Widget build(BuildContext context) {
     final colorScheme = context.colorScheme;
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
@@ -101,13 +122,26 @@ class SchoolInfoCard extends StatelessWidget {
           alignment: Alignment.centerLeft,
           child: Padding(
             padding: const EdgeInsets.only(top: 8, left: 16, right: 16),
-            child: Text(
-              '${school.name}${!context.querySize.isSmallScreen ? '\n' : ' '}',
-              maxLines: 2,
-              style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                    color: colorScheme.onSurface,
-                    fontWeight: FontWeight.bold,
-                  ),
+            child: AnimatedSwitcher(
+              duration: kThemeAnimationDuration,
+              key: ValueKey(showOriginal),
+              child: !showOriginal
+                  ? Text(
+                      '${school.originalName}${!context.querySize.isSmallScreen ? '\n' : ' '}',
+                      maxLines: 2,
+                      style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                            color: colorScheme.onSurface,
+                            fontWeight: FontWeight.bold,
+                          ),
+                    )
+                  : Text(
+                      '${school.name}${!context.querySize.isSmallScreen ? '\n' : ' '}',
+                      maxLines: 2,
+                      style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                            color: colorScheme.onSurface,
+                            fontWeight: FontWeight.bold,
+                          ),
+                    ),
             ),
           ),
         ),

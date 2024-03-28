@@ -135,9 +135,7 @@ class SchoolsTabSearchHeader extends ConsumerWidget {
                               PullDownMenuItem.selectable(
                                 onTap: () {
                                   ref
-                                      .read(
-                                        selectedSchoolSortProvider.notifier,
-                                      )
+                                      .read(selectedSchoolSortProvider.notifier)
                                       .setSort(sort);
                                 },
                                 selected: sort ==

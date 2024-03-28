@@ -34,6 +34,7 @@ class School with SchoolMappable {
   const School({
     required this.id,
     required this.name,
+    required this.originalName,
     required this.imageUrl,
     required this.foundationDate,
     required this.godmotherSchool,
@@ -43,11 +44,16 @@ class School with SchoolMappable {
     required this.league,
     required this.currentDivision,
     required this.divisionNumber,
+    required this.firstDivisionChampionships,
+    required this.country,
+    required this.leagueLocation,
+    required this.lastPosition,
     this.isFavorite = false,
   });
 
   final SchoolId id;
   final String name;
+  final String originalName;
   @MappableField(hook: ImageUrlHook())
   final String imageUrl;
   @MappableField(hook: DateTimeHook())
@@ -63,6 +69,10 @@ class School with SchoolMappable {
   final SchoolDivision currentDivision;
   final int divisionNumber;
   final bool isFavorite;
+  final int firstDivisionChampionships;
+  final String country;
+  final String leagueLocation;
+  final int lastPosition;
 
   static const fromMap = SchoolMapper.fromMap;
   static const fromJson = SchoolMapper.fromJson;
