@@ -1,6 +1,6 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:samba_public_app/core/client_network_provider.dart';
 import 'package:samba_public_app/features/schools/school.dart';
-import 'package:samba_public_app/main_providers.dart';
 
 part 'schools_repo.g.dart';
 
@@ -24,7 +24,7 @@ class SchoolsRepoImpls implements SchoolsRepo {
   @override
   Future<List<School>> getSchools() async {
     final response =
-        await ref.watch(dioProvider).get<List<dynamic>>('/schools');
+        await ref.watch(clientNetworkProvider).get<List<dynamic>>('/schools');
     final data = response.data!.cast<Map<String, dynamic>>();
     return [
       for (final item in data) School.fromMap(item),

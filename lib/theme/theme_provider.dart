@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:samba_public_app/main_logger.dart';
-import 'package:samba_public_app/main_providers.dart';
+import 'package:samba_public_app/core/shared_preferences_provider.dart';
+import 'package:samba_public_app/utils/main_logger.dart';
 
 part 'theme_provider.g.dart';
 

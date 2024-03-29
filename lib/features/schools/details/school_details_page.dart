@@ -210,8 +210,8 @@ class _SchoolDetailsTextState extends State<SchoolDetailsText> {
             SchoolTextTile(
               icon: Icons.sports_soccer_outlined,
               title: '${context.loc.schoolSortByLastPerformance}: ',
-              content:
-                  '${widget.school.lastPosition}${context.loc.schoolPerformancePlace}',
+              content: '${widget.school.lastPosition}'
+                  '${context.loc.schoolPerformancePlace}',
             ),
             SchoolTextTile(
               icon: CupertinoIcons.flag,

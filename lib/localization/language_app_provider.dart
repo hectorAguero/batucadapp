@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:samba_public_app/core/shared_preferences_provider.dart';
 import 'package:samba_public_app/localization/language.dart';
-import 'package:samba_public_app/main_providers.dart';
 
 part 'language_app_provider.g.dart';
 
@@ -22,11 +22,11 @@ class LanguageApp extends _$LanguageApp {
     Language language, {
     required bool isSameAsPlatform,
   }) async {
-    final prefs = ref.read(sharedPreferencesProvider).value!;
+    final prefs = ref.read(sharedPreferencesProvider).value;
     if (isSameAsPlatform) {
-      await prefs.remove('locale');
+      await prefs!.remove('locale');
     } else {
-      await prefs.setString('locale', language.languageCode);
+      await prefs!.setString('locale', language.languageCode);
     }
     state = AsyncData(language);
   }

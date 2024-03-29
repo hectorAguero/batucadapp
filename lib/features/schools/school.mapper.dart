@@ -147,7 +147,7 @@ class SchoolMapper extends ClassMapperBase<School> {
       Field('originalName', _$originalName);
   static String _$imageUrl(School v) => v.imageUrl;
   static const Field<School, String> _f$imageUrl =
-      Field('imageUrl', _$imageUrl, hook: ImageUrlHook());
+      Field('imageUrl', _$imageUrl);
   static DateTime _$foundationDate(School v) => v.foundationDate;
   static const Field<School, DateTime> _f$foundationDate =
       Field('foundationDate', _$foundationDate, hook: DateTimeHook());

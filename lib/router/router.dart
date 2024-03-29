@@ -6,7 +6,7 @@ import 'package:samba_public_app/features/home/home_page_controller.dart';
 import 'package:samba_public_app/features/instruments/instruments_tab_page.dart';
 import 'package:samba_public_app/features/parades/parades_tab.dart';
 import 'package:samba_public_app/features/schools/schools_tab_page.dart';
-import 'package:samba_public_app/router/app_startup_page.dart';
+import 'package:samba_public_app/initialization_page.dart';
 
 part 'router.g.dart';
 
@@ -18,7 +18,7 @@ GoRouter goRouter(GoRouterRef ref) {
     TabDestination.values.length,
     (_) => ScrollController(),
   );
-  final appStartupState = ref.watch(appStartupProvider);
+  final initProvider = ref.watch(initializationProvider);
   final router = GoRouter(
     debugLogDiagnostics: true,
     navigatorKey: _rootNavigatorKey,
@@ -28,8 +28,8 @@ GoRouter goRouter(GoRouterRef ref) {
     ),
     redirect: (context, state) {
       // * If the app is still initializing, show the /startup route
-      if (appStartupState.isLoading || appStartupState.hasError) {
-        return AppStartupPage.routePath;
+      if (initProvider.isLoading || initProvider.hasError) {
+        return InitializationPage.routePath;
       }
       if (TabDestination.values
           .any((tab) => tab.path == state.uri.toString())) {
@@ -50,9 +50,9 @@ GoRouter goRouter(GoRouterRef ref) {
     },
     routes: [
       GoRoute(
-        path: AppStartupPage.routePath,
+        path: InitializationPage.routePath,
         pageBuilder: (context, state) => NoTransitionPage(
-          child: AppStartupPage(
+          child: InitializationPage(
             // * This is just a placeholder
             // * The loaded route will be managed by GoRouter on state change
             onLoaded: (_) => const CircularProgressIndicator.adaptive(),

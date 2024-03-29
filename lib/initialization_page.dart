@@ -1,44 +1,51 @@
+import 'package:dio/dio.dart';
+import 'package:dio_image_provider/dio_image_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:samba_public_app/core/get_native_adapter.dart'
+    if (dart.library.js_interop) 'package:samba_public_app/core/get_native_adapter_web.dart';
+import 'package:samba_public_app/core/shared_preferences_provider.dart';
 import 'package:samba_public_app/extensions/app_localization_extension.dart';
 import 'package:samba_public_app/extensions/media_query_context_extension.dart';
 import 'package:samba_public_app/features/home/widgets/adaptive_navigation_rail.dart';
-import 'package:samba_public_app/main_providers.dart';
 import 'package:samba_public_app/theme/theme_provider.dart';
 
-part 'app_startup_page.g.dart';
+part 'initialization_page.g.dart';
 
 @Riverpod(keepAlive: true)
-Future<void> appStartup(AppStartupRef ref) async {
+Future<void> initialization(InitializationRef ref) async {
+  final imageDio = Dio()..httpClientAdapter = getNativeAdapter();
+  DioImage.defaultDio = imageDio;
   ref.onDispose(() {
     ref.invalidate(sharedPreferencesProvider);
   });
+
   await ref.watch(sharedPreferencesProvider.future);
 }
 
 /// Widget class to manage asynchronous app initialization
-class AppStartupPage extends ConsumerWidget {
-  const AppStartupPage({required this.onLoaded, super.key});
+class InitializationPage extends ConsumerWidget {
+  const InitializationPage({required this.onLoaded, super.key});
   final WidgetBuilder onLoaded;
 
   static const routePath = '/startup';
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final appStartupState = ref.watch(appStartupProvider);
+    final initProvider = ref.watch(initializationProvider);
     ref.watch(appThemeModeProvider);
     return AnimatedSwitcher(
       duration: const Duration(milliseconds: 300),
-      key: ValueKey(appStartupState.isLoading),
-      child: switch (appStartupState) {
+      key: ValueKey(initProvider.isLoading),
+      child: switch (initProvider) {
         AsyncData() => onLoaded(context),
         AsyncLoading() => const AppStartupLoadingWidget(),
         AsyncError(:final error) => AppStartupErrorWidget(
             message: error.toString(),
             onRetry: () {
-              ref.invalidate(appStartupProvider);
+              ref.invalidate(initializationProvider);
             },
           ),
       },
