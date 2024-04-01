@@ -183,7 +183,7 @@ class _SchoolDetailsTextState extends State<SchoolDetailsText> {
             SchoolTextTile(
               icon: Icons.music_note_outlined,
               title: '${context.loc.schoolSymbols}: ',
-              content: widget.school.symbols.join(', '),
+              content: widget.school.translatedSymbols.join(', '),
             ),
             SchoolTextTile(
               icon: Icons.date_range_outlined,
@@ -194,7 +194,7 @@ class _SchoolDetailsTextState extends State<SchoolDetailsText> {
               SchoolTextTile(
                 icon: Icons.school_outlined,
                 title: '${context.loc.schoolGodmother}: ',
-                content: widget.school.godmotherSchool,
+                content: widget.school.translatedGodmotherSchool,
               ),
             SchoolTextTile(
               icon: Icons.star_border_outlined,
@@ -217,7 +217,7 @@ class _SchoolDetailsTextState extends State<SchoolDetailsText> {
               icon: CupertinoIcons.flag,
               title: '',
               content:
-                  '${widget.school.country}, ${widget.school.leagueLocation}',
+                  '${widget.school.translatedCountry}, ${widget.school.translatedLeagueLocation}',
             ),
             const SizedBox(height: 8),
           ],

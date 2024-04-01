@@ -77,7 +77,7 @@ class InstrumentsTabPage extends ConsumerWidget {
                                     extra: {'id': mockInstrument.id},
                                   );
                                 },
-                                imageUrl: mockInstrument.imageUrl,
+                                imageUrl: mockInstrument.imageUri,
                               );
                             },
                           ),

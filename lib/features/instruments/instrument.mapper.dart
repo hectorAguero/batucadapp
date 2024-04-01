@@ -27,20 +27,32 @@ class InstrumentMapper extends ClassMapperBase<Instrument> {
   static String _$description(Instrument v) => v.description;
   static const Field<Instrument, String> _f$description =
       Field('description', _$description);
-  static String _$imageUrl(Instrument v) => v.imageUrl;
-  static const Field<Instrument, String> _f$imageUrl =
-      Field('imageUrl', _$imageUrl);
-  static String? _$details(Instrument v) => v.details;
-  static const Field<Instrument, String> _f$details =
-      Field('details', _$details, opt: true);
+  static String _$imageUri(Instrument v) => v.imageUri;
+  static const Field<Instrument, String> _f$imageUri =
+      Field('imageUri', _$imageUri);
+  static List<String> _$gallery(Instrument v) => v.gallery;
+  static const Field<Instrument, List<String>> _f$gallery =
+      Field('gallery', _$gallery);
+  static String _$type(Instrument v) => v.type;
+  static const Field<Instrument, String> _f$type = Field('type', _$type);
+  static String _$translatedName(Instrument v) => v.translatedName;
+  static const Field<Instrument, String> _f$translatedName =
+      Field('translatedName', _$translatedName);
+  static String _$translatedDescription(Instrument v) =>
+      v.translatedDescription;
+  static const Field<Instrument, String> _f$translatedDescription =
+      Field('translatedDescription', _$translatedDescription);
 
   @override
   final MappableFields<Instrument> fields = const {
     #id: _f$id,
     #name: _f$name,
     #description: _f$description,
-    #imageUrl: _f$imageUrl,
-    #details: _f$details,
+    #imageUri: _f$imageUri,
+    #gallery: _f$gallery,
+    #type: _f$type,
+    #translatedName: _f$translatedName,
+    #translatedDescription: _f$translatedDescription,
   };
 
   static Instrument _instantiate(DecodingData data) {
@@ -48,8 +60,11 @@ class InstrumentMapper extends ClassMapperBase<Instrument> {
         id: data.dec(_f$id),
         name: data.dec(_f$name),
         description: data.dec(_f$description),
-        imageUrl: data.dec(_f$imageUrl),
-        details: data.dec(_f$details));
+        imageUri: data.dec(_f$imageUri),
+        gallery: data.dec(_f$gallery),
+        type: data.dec(_f$type),
+        translatedName: data.dec(_f$translatedName),
+        translatedDescription: data.dec(_f$translatedDescription));
   }
 
   @override
@@ -105,12 +120,16 @@ extension InstrumentValueCopy<$R, $Out>
 
 abstract class InstrumentCopyWith<$R, $In extends Instrument, $Out>
     implements ClassCopyWith<$R, $In, $Out> {
+  ListCopyWith<$R, String, ObjectCopyWith<$R, String, String>> get gallery;
   $R call(
       {int? id,
       String? name,
       String? description,
-      String? imageUrl,
-      String? details});
+      String? imageUri,
+      List<String>? gallery,
+      String? type,
+      String? translatedName,
+      String? translatedDescription});
   InstrumentCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(Then<$Out2, $R2> t);
 }
 
@@ -123,26 +142,41 @@ class _InstrumentCopyWithImpl<$R, $Out>
   late final ClassMapperBase<Instrument> $mapper =
       InstrumentMapper.ensureInitialized();
   @override
+  ListCopyWith<$R, String, ObjectCopyWith<$R, String, String>> get gallery =>
+      ListCopyWith($value.gallery, (v, t) => ObjectCopyWith(v, $identity, t),
+          (v) => call(gallery: v));
+  @override
   $R call(
           {int? id,
           String? name,
           String? description,
-          String? imageUrl,
-          Object? details = $none}) =>
+          String? imageUri,
+          List<String>? gallery,
+          String? type,
+          String? translatedName,
+          String? translatedDescription}) =>
       $apply(FieldCopyWithData({
         if (id != null) #id: id,
         if (name != null) #name: name,
         if (description != null) #description: description,
-        if (imageUrl != null) #imageUrl: imageUrl,
-        if (details != $none) #details: details
+        if (imageUri != null) #imageUri: imageUri,
+        if (gallery != null) #gallery: gallery,
+        if (type != null) #type: type,
+        if (translatedName != null) #translatedName: translatedName,
+        if (translatedDescription != null)
+          #translatedDescription: translatedDescription
       }));
   @override
   Instrument $make(CopyWithData data) => Instrument(
       id: data.get(#id, or: $value.id),
       name: data.get(#name, or: $value.name),
       description: data.get(#description, or: $value.description),
-      imageUrl: data.get(#imageUrl, or: $value.imageUrl),
-      details: data.get(#details, or: $value.details));
+      imageUri: data.get(#imageUri, or: $value.imageUri),
+      gallery: data.get(#gallery, or: $value.gallery),
+      type: data.get(#type, or: $value.type),
+      translatedName: data.get(#translatedName, or: $value.translatedName),
+      translatedDescription:
+          data.get(#translatedDescription, or: $value.translatedDescription));
 
   @override
   InstrumentCopyWith<$R2, Instrument, $Out2> $chain<$R2, $Out2>(
