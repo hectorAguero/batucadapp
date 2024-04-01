@@ -42,7 +42,7 @@ class _SchoolCardState extends ConsumerState<SchoolCard> {
           onTap: () {
             showSchoolDetails(context, school);
           },
-          onLongPress: school.name == school.originalName
+          onLongPress: school.name == school.translatedName
               ? null
               : () {
                   showOriginal.value = !showOriginal.value;
@@ -130,7 +130,7 @@ class SchoolInfoCard extends StatelessWidget {
               key: ValueKey(showOriginal),
               child: !showOriginal
                   ? Text(
-                      '${school.originalName}'
+                      '${school.translatedName}'
                       '${context.querySize.isNotSmallNorMedium ? '\n' : ' '}',
                       maxLines: 2,
                       style: Theme.of(context).textTheme.titleLarge!.copyWith(

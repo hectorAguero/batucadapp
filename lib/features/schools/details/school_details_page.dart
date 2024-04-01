@@ -44,7 +44,7 @@ class _SchoolDetailsPageState extends ConsumerState<SchoolDetailsPage> {
   Widget build(BuildContext context) {
     final school = ref.watch(selectedSchoolProvider(widget.id));
     return InkWell(
-      onLongPress: school.name == school.originalName
+      onLongPress: school.name == school.translatedName
           ? null
           : () {
               showOriginal.value = !showOriginal.value;
@@ -138,7 +138,7 @@ class _SchoolDetailsTextState extends State<SchoolDetailsText> {
                 Flexible(
                   child: Text(
                     widget.showOriginal
-                        ? '${widget.school.originalName}${'\n'}'
+                        ? '${widget.school.translatedName}${'\n'}'
                         : '${widget.school.name}${'\n'}',
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,

@@ -142,9 +142,9 @@ class SchoolMapper extends ClassMapperBase<School> {
   static const Field<School, int> _f$id = Field('id', _$id);
   static String _$name(School v) => v.name;
   static const Field<School, String> _f$name = Field('name', _$name);
-  static String _$originalName(School v) => v.originalName;
-  static const Field<School, String> _f$originalName =
-      Field('originalName', _$originalName);
+  static String _$translatedName(School v) => v.translatedName;
+  static const Field<School, String> _f$translatedName =
+      Field('translatedName', _$translatedName);
   static String _$imageUrl(School v) => v.imageUrl;
   static const Field<School, String> _f$imageUrl =
       Field('imageUrl', _$imageUrl);
@@ -184,6 +184,25 @@ class SchoolMapper extends ClassMapperBase<School> {
   static int _$lastPosition(School v) => v.lastPosition;
   static const Field<School, int> _f$lastPosition =
       Field('lastPosition', _$lastPosition);
+  static List<String> _$translatedColorNames(School v) =>
+      v.translatedColorNames;
+  static const Field<School, List<String>> _f$translatedColorNames = Field(
+      'translatedColorNames', _$translatedColorNames,
+      key: 'translatedColors');
+  static List<String> _$translatedSymbols(School v) => v.translatedSymbols;
+  static const Field<School, List<String>> _f$translatedSymbols =
+      Field('translatedSymbols', _$translatedSymbols);
+  static String _$translatedGodmotherSchool(School v) =>
+      v.translatedGodmotherSchool;
+  static const Field<School, String> _f$translatedGodmotherSchool =
+      Field('translatedGodmotherSchool', _$translatedGodmotherSchool);
+  static String _$translatedLeagueLocation(School v) =>
+      v.translatedLeagueLocation;
+  static const Field<School, String> _f$translatedLeagueLocation =
+      Field('translatedLeagueLocation', _$translatedLeagueLocation);
+  static String _$translatedCountry(School v) => v.translatedCountry;
+  static const Field<School, String> _f$translatedCountry =
+      Field('translatedCountry', _$translatedCountry);
   static bool _$isFavorite(School v) => v.isFavorite;
   static const Field<School, bool> _f$isFavorite =
       Field('isFavorite', _$isFavorite, opt: true, def: false);
@@ -192,7 +211,7 @@ class SchoolMapper extends ClassMapperBase<School> {
   final MappableFields<School> fields = const {
     #id: _f$id,
     #name: _f$name,
-    #originalName: _f$originalName,
+    #translatedName: _f$translatedName,
     #imageUrl: _f$imageUrl,
     #foundationDate: _f$foundationDate,
     #godmotherSchool: _f$godmotherSchool,
@@ -206,6 +225,11 @@ class SchoolMapper extends ClassMapperBase<School> {
     #country: _f$country,
     #leagueLocation: _f$leagueLocation,
     #lastPosition: _f$lastPosition,
+    #translatedColorNames: _f$translatedColorNames,
+    #translatedSymbols: _f$translatedSymbols,
+    #translatedGodmotherSchool: _f$translatedGodmotherSchool,
+    #translatedLeagueLocation: _f$translatedLeagueLocation,
+    #translatedCountry: _f$translatedCountry,
     #isFavorite: _f$isFavorite,
   };
 
@@ -213,7 +237,7 @@ class SchoolMapper extends ClassMapperBase<School> {
     return School(
         id: data.dec(_f$id),
         name: data.dec(_f$name),
-        originalName: data.dec(_f$originalName),
+        translatedName: data.dec(_f$translatedName),
         imageUrl: data.dec(_f$imageUrl),
         foundationDate: data.dec(_f$foundationDate),
         godmotherSchool: data.dec(_f$godmotherSchool),
@@ -227,6 +251,11 @@ class SchoolMapper extends ClassMapperBase<School> {
         country: data.dec(_f$country),
         leagueLocation: data.dec(_f$leagueLocation),
         lastPosition: data.dec(_f$lastPosition),
+        translatedColorNames: data.dec(_f$translatedColorNames),
+        translatedSymbols: data.dec(_f$translatedSymbols),
+        translatedGodmotherSchool: data.dec(_f$translatedGodmotherSchool),
+        translatedLeagueLocation: data.dec(_f$translatedLeagueLocation),
+        translatedCountry: data.dec(_f$translatedCountry),
         isFavorite: data.dec(_f$isFavorite));
   }
 
@@ -282,10 +311,14 @@ abstract class SchoolCopyWith<$R, $In extends School, $Out>
   ListCopyWith<$R, String, ObjectCopyWith<$R, String, String>> get colorNames;
   ListCopyWith<$R, Color, ObjectCopyWith<$R, Color, Color>> get colors;
   ListCopyWith<$R, String, ObjectCopyWith<$R, String, String>> get symbols;
+  ListCopyWith<$R, String, ObjectCopyWith<$R, String, String>>
+      get translatedColorNames;
+  ListCopyWith<$R, String, ObjectCopyWith<$R, String, String>>
+      get translatedSymbols;
   $R call(
       {int? id,
       String? name,
-      String? originalName,
+      String? translatedName,
       String? imageUrl,
       DateTime? foundationDate,
       String? godmotherSchool,
@@ -299,6 +332,11 @@ abstract class SchoolCopyWith<$R, $In extends School, $Out>
       String? country,
       String? leagueLocation,
       int? lastPosition,
+      List<String>? translatedColorNames,
+      List<String>? translatedSymbols,
+      String? translatedGodmotherSchool,
+      String? translatedLeagueLocation,
+      String? translatedCountry,
       bool? isFavorite});
   SchoolCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(Then<$Out2, $R2> t);
 }
@@ -322,10 +360,22 @@ class _SchoolCopyWithImpl<$R, $Out> extends ClassCopyWithBase<$R, School, $Out>
       ListCopyWith($value.symbols, (v, t) => ObjectCopyWith(v, $identity, t),
           (v) => call(symbols: v));
   @override
+  ListCopyWith<$R, String, ObjectCopyWith<$R, String, String>>
+      get translatedColorNames => ListCopyWith(
+          $value.translatedColorNames,
+          (v, t) => ObjectCopyWith(v, $identity, t),
+          (v) => call(translatedColorNames: v));
+  @override
+  ListCopyWith<$R, String, ObjectCopyWith<$R, String, String>>
+      get translatedSymbols => ListCopyWith(
+          $value.translatedSymbols,
+          (v, t) => ObjectCopyWith(v, $identity, t),
+          (v) => call(translatedSymbols: v));
+  @override
   $R call(
           {int? id,
           String? name,
-          String? originalName,
+          String? translatedName,
           String? imageUrl,
           DateTime? foundationDate,
           String? godmotherSchool,
@@ -339,11 +389,16 @@ class _SchoolCopyWithImpl<$R, $Out> extends ClassCopyWithBase<$R, School, $Out>
           String? country,
           String? leagueLocation,
           int? lastPosition,
+          List<String>? translatedColorNames,
+          List<String>? translatedSymbols,
+          String? translatedGodmotherSchool,
+          String? translatedLeagueLocation,
+          String? translatedCountry,
           bool? isFavorite}) =>
       $apply(FieldCopyWithData({
         if (id != null) #id: id,
         if (name != null) #name: name,
-        if (originalName != null) #originalName: originalName,
+        if (translatedName != null) #translatedName: translatedName,
         if (imageUrl != null) #imageUrl: imageUrl,
         if (foundationDate != null) #foundationDate: foundationDate,
         if (godmotherSchool != null) #godmotherSchool: godmotherSchool,
@@ -358,13 +413,21 @@ class _SchoolCopyWithImpl<$R, $Out> extends ClassCopyWithBase<$R, School, $Out>
         if (country != null) #country: country,
         if (leagueLocation != null) #leagueLocation: leagueLocation,
         if (lastPosition != null) #lastPosition: lastPosition,
+        if (translatedColorNames != null)
+          #translatedColorNames: translatedColorNames,
+        if (translatedSymbols != null) #translatedSymbols: translatedSymbols,
+        if (translatedGodmotherSchool != null)
+          #translatedGodmotherSchool: translatedGodmotherSchool,
+        if (translatedLeagueLocation != null)
+          #translatedLeagueLocation: translatedLeagueLocation,
+        if (translatedCountry != null) #translatedCountry: translatedCountry,
         if (isFavorite != null) #isFavorite: isFavorite
       }));
   @override
   School $make(CopyWithData data) => School(
       id: data.get(#id, or: $value.id),
       name: data.get(#name, or: $value.name),
-      originalName: data.get(#originalName, or: $value.originalName),
+      translatedName: data.get(#translatedName, or: $value.translatedName),
       imageUrl: data.get(#imageUrl, or: $value.imageUrl),
       foundationDate: data.get(#foundationDate, or: $value.foundationDate),
       godmotherSchool: data.get(#godmotherSchool, or: $value.godmotherSchool),
@@ -379,6 +442,16 @@ class _SchoolCopyWithImpl<$R, $Out> extends ClassCopyWithBase<$R, School, $Out>
       country: data.get(#country, or: $value.country),
       leagueLocation: data.get(#leagueLocation, or: $value.leagueLocation),
       lastPosition: data.get(#lastPosition, or: $value.lastPosition),
+      translatedColorNames:
+          data.get(#translatedColorNames, or: $value.translatedColorNames),
+      translatedSymbols:
+          data.get(#translatedSymbols, or: $value.translatedSymbols),
+      translatedGodmotherSchool: data.get(#translatedGodmotherSchool,
+          or: $value.translatedGodmotherSchool),
+      translatedLeagueLocation: data.get(#translatedLeagueLocation,
+          or: $value.translatedLeagueLocation),
+      translatedCountry:
+          data.get(#translatedCountry, or: $value.translatedCountry),
       isFavorite: data.get(#isFavorite, or: $value.isFavorite));
 
   @override

@@ -33,7 +33,7 @@ class School with SchoolMappable {
   const School({
     required this.id,
     required this.name,
-    required this.originalName,
+    required this.translatedName,
     required this.imageUrl,
     required this.foundationDate,
     required this.godmotherSchool,
@@ -47,12 +47,16 @@ class School with SchoolMappable {
     required this.country,
     required this.leagueLocation,
     required this.lastPosition,
+    required this.translatedColorNames,
+    required this.translatedSymbols,
+    required this.translatedGodmotherSchool,
+    required this.translatedLeagueLocation,
+    required this.translatedCountry,
     this.isFavorite = false,
   });
 
   final SchoolId id;
   final String name;
-  final String originalName;
   final String imageUrl;
   @MappableField(hook: DateTimeHook())
   final DateTime foundationDate;
@@ -71,6 +75,13 @@ class School with SchoolMappable {
   final String country;
   final String leagueLocation;
   final int lastPosition;
+  final String translatedName;
+  @MappableField(key: 'translatedColors')
+  final List<String> translatedColorNames;
+  final List<String> translatedSymbols;
+  final String translatedGodmotherSchool;
+  final String translatedLeagueLocation;
+  final String translatedCountry;
 
   static const fromMap = SchoolMapper.fromMap;
   static const fromJson = SchoolMapper.fromJson;
@@ -82,7 +93,7 @@ class DateTimeHook extends MappingHook {
   @override
   Object? beforeDecode(Object? value) {
     if (value is String) {
-      //1946/6/24",
+      //1946/6/24
       final data = value.split('/');
       return DateTime(
         int.parse(data.first),
