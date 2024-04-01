@@ -8,7 +8,7 @@ class Instrument with InstrumentMappable {
     required this.id,
     required this.name,
     required this.description,
-    required this.imageUri,
+    required this.imageUrl,
     required this.gallery,
     required this.type,
     required this.translatedName,
@@ -19,7 +19,7 @@ class Instrument with InstrumentMappable {
   final String name;
   final String type;
   final String description;
-  final String imageUri;
+  final String imageUrl;
   final List<String> gallery;
   final String translatedName;
   final String translatedDescription;

@@ -27,7 +27,6 @@ class InstrumentsTabPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final colorScheme = Theme.of(context).colorScheme;
     const maxCrossAxisExtent = largeScreen;
     final instruments = ref.watch(instrumentsTabProvider);
     return SelectionArea(
@@ -68,16 +67,14 @@ class InstrumentsTabPage extends ConsumerWidget {
                               return InstrumentListTile(
                                 title: mockInstrument.name,
                                 subtitle: mockInstrument.description,
-                                backgroundColor: index.isEven
-                                    ? colorScheme.primaryContainer
-                                    : colorScheme.secondaryContainer,
+                                index: index,
                                 onTap: () {
                                   context.go(
                                     '${InstrumentsTabPage.route.path}/${InstrumentDetailsPage.route.path}',
                                     extra: {'id': mockInstrument.id},
                                   );
                                 },
-                                imageUrl: mockInstrument.imageUri,
+                                imageUrl: mockInstrument.imageUrl,
                               );
                             },
                           ),

@@ -1,6 +1,8 @@
+import 'package:dio_image_provider/dio_image_provider.dart';
 import 'package:easy_image_viewer/easy_image_viewer.dart';
 import 'package:flutter/material.dart';
 import 'package:samba_public_app/common_widgets/app_fade_in_image.dart';
+import 'package:samba_public_app/extensions/theme_of_context_extension.dart';
 import 'package:samba_public_app/features/instruments/instrument.dart';
 
 class InstrumentHeaderImages extends StatelessWidget {
@@ -30,7 +32,14 @@ class InstrumentHeaderImages extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(bottom: 16),
                         child: InkWell(
-                          onTap: () => showImage(context),
+                          onTap: () => showImage(
+                            context,
+                            [
+                              ...instrument.gallery.take(3),
+                              instrument.imageUrl,
+                            ],
+                            initialIndex: i,
+                          ),
                           borderRadius: const BorderRadius.all(
                             Radius.circular(8),
                           ),
@@ -38,10 +47,15 @@ class InstrumentHeaderImages extends StatelessWidget {
                             borderRadius: const BorderRadius.all(
                               Radius.circular(8),
                             ),
-                            child: AppFadeInImage(
-                              'https://picsum.photos/id/100/4912/3264',
+                            child: SizedBox(
                               height: imageHeight,
-                              fit: BoxFit.cover,
+                              child: AspectRatio(
+                                aspectRatio: 1,
+                                child: AppFadeInImage(
+                                  instrument.gallery[i],
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
                             ),
                           ),
                         ),
@@ -54,18 +68,27 @@ class InstrumentHeaderImages extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.only(bottom: 16),
                   child: InkWell(
-                    onTap: () => showImage(context),
+                    onTap: () => showImage(
+                      context,
+                      [...instrument.gallery.take(3), instrument.imageUrl],
+                      initialIndex: 3,
+                    ),
                     borderRadius: const BorderRadius.all(
                       Radius.circular(8),
                     ),
-                    child: ClipRRect(
-                      borderRadius: const BorderRadius.all(
-                        Radius.circular(8),
-                      ),
-                      child: AppFadeInImage(
-                        'https://picsum.photos/id/100/4912/3264',
-                        height: imageHeight * 3 + 32,
-                        fit: BoxFit.cover,
+                    child: Hero(
+                      tag: instrument.imageUrl,
+                      child: ClipRRect(
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(8),
+                        ),
+                        child: SizedBox(
+                          height: imageHeight * 3 + 32,
+                          child: AppFadeInImage(
+                            instrument.imageUrl,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
                       ),
                     ),
                   ),
@@ -74,23 +97,27 @@ class InstrumentHeaderImages extends StatelessWidget {
             ],
           ),
           Align(
-            alignment: Alignment.centerLeft,
-            child: Text(
-              instrument.name,
-              style: const TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-          const SizedBox(height: 8),
-          Align(
-            alignment: Alignment.centerLeft,
-            child: Text(
-              instrument.name,
-              style: const TextStyle(
-                fontSize: 16,
-                color: Colors.grey,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              child: Text.rich(
+                TextSpan(
+                  text: instrument.translatedName,
+                  children: [
+                    if (instrument.name != instrument.translatedName)
+                      TextSpan(
+                        text: ' ${instrument.name}',
+                        style: TextStyle(
+                          color: context.colorScheme.onSurfaceVariant,
+                          fontSize: 24,
+                          fontWeight: FontWeight.normal,
+                        ),
+                      ),
+                  ],
+                ),
+                style: const TextStyle(
+                  fontSize: 32,
+                  fontWeight: FontWeight.w700,
+                ),
               ),
             ),
           ),
@@ -99,21 +126,17 @@ class InstrumentHeaderImages extends StatelessWidget {
     );
   }
 
-  void showImage(BuildContext context) {
-    final multiImageProvider = MultiImageProvider([
-      const NetworkImage(
-        'https://picsum.photos/id/1001/4912/3264',
-      ),
-      const NetworkImage(
-        'https://picsum.photos/id/1003/1181/1772',
-      ),
-      const NetworkImage(
-        'https://picsum.photos/id/1004/4912/3264',
-      ),
-      const NetworkImage(
-        'https://picsum.photos/id/1005/4912/3264',
-      ),
-    ]);
+  void showImage(
+    BuildContext context,
+    List<String> images, {
+    int? initialIndex,
+  }) {
+    final multiImageProvider = MultiImageProvider(
+      [
+        for (final image in images) DioImage(Uri.parse(image)),
+      ],
+      initialIndex: initialIndex ?? 0,
+    );
 
     showImageViewerPager(
       context,

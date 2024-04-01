@@ -6,19 +6,13 @@ import 'package:samba_public_app/common_widgets/go_back_button.dart';
 import 'package:samba_public_app/extensions/app_localization_extension.dart';
 import 'package:samba_public_app/extensions/media_query_context_extension.dart';
 import 'package:samba_public_app/features/instruments/details/instrument_details_providers.dart';
-import 'package:samba_public_app/features/instruments/details/widgets/instrument_details_gallery.dart';
 import 'package:samba_public_app/features/instruments/details/widgets/instrument_details_summary.dart';
-import 'package:samba_public_app/features/instruments/details/widgets/instrument_details_type.dart';
 import 'package:samba_public_app/features/instruments/details/widgets/instrument_header_images.dart';
 import 'package:sliver_tools/sliver_tools.dart';
 
 typedef InstrumentId = int;
 
-enum InstrumentDetailsTab {
-  summary,
-  type,
-  gallery,
-}
+enum InstrumentDetailsTab { summary, learning }
 
 class InstrumentDetailsPage extends ConsumerStatefulWidget {
   const InstrumentDetailsPage({required this.id, super.key});
@@ -117,7 +111,6 @@ class _InstrumentDetailsPageState extends ConsumerState<InstrumentDetailsPage> {
                                 tabs: [
                                   Tab(text: context.loc.instrumentDescription),
                                   Tab(text: context.loc.instrumentLearning),
-                                  Tab(text: context.loc.instrumentGallery),
                                 ],
                               ),
                             ),
@@ -133,15 +126,23 @@ class _InstrumentDetailsPageState extends ConsumerState<InstrumentDetailsPage> {
                             sliver: SliverToBoxAdapter(
                               // TODO(hectorAguero): size to avoid overscroll
                               child: SizedBox(
-                                height: 800,
+                                height: value.translatedDescription
+                                            .calculateLines(
+                                              context,
+                                              width: screenConstraint,
+                                            )
+                                            .toDouble() *
+                                        20 +
+                                    100,
                                 child: TabBarView(
                                   physics: const ClampingScrollPhysics(),
                                   children: [
                                     InstrumentDetailsSummary(
-                                      details: value.description,
+                                      details: value.translatedDescription,
                                     ),
-                                    const InstrumentDetailsType(),
-                                    const InstrumentDetailsGallery(),
+                                    InstrumentDetailsSummary(
+                                      details: value.translatedDescription,
+                                    ),
                                   ],
                                 ),
                               ),
@@ -157,5 +158,18 @@ class _InstrumentDetailsPageState extends ConsumerState<InstrumentDetailsPage> {
         ),
       ),
     );
+  }
+}
+
+extension TextLinesExtension on String {
+  int calculateLines(BuildContext context, {double? width, TextStyle? style}) {
+    final textPainter = TextPainter(
+      text: TextSpan(
+        text: this,
+        style: style ?? DefaultTextStyle.of(context).style,
+      ),
+      textDirection: TextDirection.ltr,
+    )..layout(maxWidth: width ?? MediaQuery.of(context).size.width);
+    return textPainter.computeLineMetrics().length;
   }
 }

@@ -27,9 +27,9 @@ class InstrumentMapper extends ClassMapperBase<Instrument> {
   static String _$description(Instrument v) => v.description;
   static const Field<Instrument, String> _f$description =
       Field('description', _$description);
-  static String _$imageUri(Instrument v) => v.imageUri;
-  static const Field<Instrument, String> _f$imageUri =
-      Field('imageUri', _$imageUri);
+  static String _$imageUrl(Instrument v) => v.imageUrl;
+  static const Field<Instrument, String> _f$imageUrl =
+      Field('imageUrl', _$imageUrl);
   static List<String> _$gallery(Instrument v) => v.gallery;
   static const Field<Instrument, List<String>> _f$gallery =
       Field('gallery', _$gallery);
@@ -48,7 +48,7 @@ class InstrumentMapper extends ClassMapperBase<Instrument> {
     #id: _f$id,
     #name: _f$name,
     #description: _f$description,
-    #imageUri: _f$imageUri,
+    #imageUrl: _f$imageUrl,
     #gallery: _f$gallery,
     #type: _f$type,
     #translatedName: _f$translatedName,
@@ -60,7 +60,7 @@ class InstrumentMapper extends ClassMapperBase<Instrument> {
         id: data.dec(_f$id),
         name: data.dec(_f$name),
         description: data.dec(_f$description),
-        imageUri: data.dec(_f$imageUri),
+        imageUrl: data.dec(_f$imageUrl),
         gallery: data.dec(_f$gallery),
         type: data.dec(_f$type),
         translatedName: data.dec(_f$translatedName),
@@ -125,7 +125,7 @@ abstract class InstrumentCopyWith<$R, $In extends Instrument, $Out>
       {int? id,
       String? name,
       String? description,
-      String? imageUri,
+      String? imageUrl,
       List<String>? gallery,
       String? type,
       String? translatedName,
@@ -150,7 +150,7 @@ class _InstrumentCopyWithImpl<$R, $Out>
           {int? id,
           String? name,
           String? description,
-          String? imageUri,
+          String? imageUrl,
           List<String>? gallery,
           String? type,
           String? translatedName,
@@ -159,7 +159,7 @@ class _InstrumentCopyWithImpl<$R, $Out>
         if (id != null) #id: id,
         if (name != null) #name: name,
         if (description != null) #description: description,
-        if (imageUri != null) #imageUri: imageUri,
+        if (imageUrl != null) #imageUrl: imageUrl,
         if (gallery != null) #gallery: gallery,
         if (type != null) #type: type,
         if (translatedName != null) #translatedName: translatedName,
@@ -171,7 +171,7 @@ class _InstrumentCopyWithImpl<$R, $Out>
       id: data.get(#id, or: $value.id),
       name: data.get(#name, or: $value.name),
       description: data.get(#description, or: $value.description),
-      imageUri: data.get(#imageUri, or: $value.imageUri),
+      imageUrl: data.get(#imageUrl, or: $value.imageUrl),
       gallery: data.get(#gallery, or: $value.gallery),
       type: data.get(#type, or: $value.type),
       translatedName: data.get(#translatedName, or: $value.translatedName),

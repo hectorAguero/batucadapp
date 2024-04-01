@@ -26,7 +26,11 @@ class AppFadeInImage extends StatelessWidget {
       image: DioImage(Uri.parse(image)),
       imageErrorBuilder: (context, error, stackTrace) {
         debugLog('Error loading image: $error');
-        return AppErrorImageBuilder(width: width, height: height, error: error);
+        return AppErrorImageBuilder(
+          height: height,
+          error: error,
+          width: height,
+        );
       },
       fit: fit ?? BoxFit.cover,
       height: height,
@@ -60,8 +64,8 @@ class AppErrorImageBuilder extends StatelessWidget {
           end: Alignment.bottomRight,
         ),
       ),
-      width: width,
       height: height,
+      width: width,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
@@ -69,24 +73,27 @@ class AppErrorImageBuilder extends StatelessWidget {
             Icons.error,
             color: context.colorScheme.onError,
             size: 50,
-          ), // Error icon
+          ),
+          // Error icon
           Text(
             context.loc.errorLoadingImage,
             maxLines: 2,
+            textAlign: TextAlign.center,
             style: TextStyle(
               color: context.colorScheme.onErrorContainer,
-              fontSize: 16,
+              fontSize: 13,
             ),
           ),
-          const SizedBox(
-            height: 4,
-          ), // Space between text and error message
+
+          const SizedBox(height: 4), // Space between text and error message
           Text(
             '$error',
             maxLines: 3,
+            overflow: TextOverflow.ellipsis,
             textAlign: TextAlign.center,
-            style: const TextStyle(
-              fontSize: 12,
+            style: TextStyle(
+              color: context.colorScheme.onError,
+              fontSize: 11,
             ),
           ),
         ],
