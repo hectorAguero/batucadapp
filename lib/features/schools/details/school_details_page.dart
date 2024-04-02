@@ -8,7 +8,7 @@ import 'package:samba_public_app/extensions/intl_extension.dart';
 import 'package:samba_public_app/extensions/theme_of_context_extension.dart';
 import 'package:samba_public_app/features/schools/details/schools_details_providers.dart';
 import 'package:samba_public_app/features/schools/school.dart';
-import 'package:samba_public_app/features/schools/schools_extensions.dart';
+import 'package:samba_public_app/features/schools/school_extensions.dart';
 import 'package:samba_public_app/features/schools/widgets/school_flag.dart';
 
 class SchoolDetailsPage extends ConsumerStatefulWidget {

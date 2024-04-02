@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:samba_public_app/extensions/app_localization_extension.dart';
+import 'package:samba_public_app/theme/theme_data.dart';
 
 extension TextThemeOfContextExtension on BuildContext {
   TextTheme get textTheme => Theme.of(this).textTheme;
@@ -9,6 +10,8 @@ extension TextThemeOfContextExtension on BuildContext {
   bool get brightnessIsLight => brightness == Brightness.light;
 
   ColorScheme get colorScheme => Theme.of(this).colorScheme;
+  AppCustomColors get customColors =>
+      Theme.of(this).extension<AppCustomColors>()!;
 }
 
 extension ThemeModeExtension on ThemeMode {

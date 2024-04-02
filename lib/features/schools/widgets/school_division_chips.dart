@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:samba_public_app/extensions/app_localization_extension.dart';
 import 'package:samba_public_app/extensions/media_query_context_extension.dart';
 import 'package:samba_public_app/extensions/theme_of_context_extension.dart';
-import 'package:samba_public_app/features/schools/schools_extensions.dart';
+import 'package:samba_public_app/features/schools/school_extensions.dart';
 import 'package:samba_public_app/features/schools/schools_tab_providers.dart';
 import 'package:sliver_tools/sliver_tools.dart';
 

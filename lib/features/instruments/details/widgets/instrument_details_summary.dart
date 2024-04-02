@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:samba_public_app/extensions/media_query_context_extension.dart';
 
 class InstrumentDetailsSummary extends StatelessWidget {
   const InstrumentDetailsSummary({
@@ -10,14 +11,20 @@ class InstrumentDetailsSummary extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
-      physics: const NeverScrollableScrollPhysics(),
-
-      /// TODO: Add FittedBox to make the width small
-      child: Text(
-        details,
-      ),
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final padding =
+            (constraints.maxWidth - mediumScreen).clamp(16.0, mediumScreen);
+        return SingleChildScrollView(
+          padding: EdgeInsets.symmetric(vertical: 16, horizontal: padding),
+          physics: const NeverScrollableScrollPhysics(),
+          child: Text(
+            details,
+            style: Theme.of(context).textTheme.bodyLarge,
+            textAlign: TextAlign.justify,
+          ),
+        );
+      },
     );
   }
 }

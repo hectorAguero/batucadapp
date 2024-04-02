@@ -6,7 +6,7 @@ import 'package:samba_public_app/extensions/app_localization_extension.dart';
 import 'package:samba_public_app/extensions/intl_extension.dart';
 import 'package:samba_public_app/features/schools/school.dart';
 import 'package:samba_public_app/features/schools/school_sort.dart';
-import 'package:samba_public_app/features/schools/schools_extensions.dart';
+import 'package:samba_public_app/features/schools/school_extensions.dart';
 import 'package:samba_public_app/features/schools/schools_repo.dart';
 import 'package:samba_public_app/features/schools/widgets/school_card.dart';
 

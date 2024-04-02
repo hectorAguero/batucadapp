@@ -4,7 +4,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:samba_public_app/features/home/home_page.dart';
 import 'package:samba_public_app/features/home/home_page_controller.dart';
 import 'package:samba_public_app/features/instruments/instruments_tab_page.dart';
-import 'package:samba_public_app/features/parades/parades_tab.dart';
+import 'package:samba_public_app/features/parades/parades_tab_page.dart';
 import 'package:samba_public_app/features/schools/schools_tab_page.dart';
 import 'package:samba_public_app/initialization_page.dart';
 
@@ -81,13 +81,13 @@ GoRouter goRouter(GoRouterRef ref) {
           StatefulShellBranch(
             routes: <RouteBase>[
               GoRoute(
-                path: ParadesTab.route.path,
-                builder: (context, state) => ParadesTab.route.builder(
+                path: ParadesTabPage.route.path,
+                builder: (context, state) => ParadesTabPage.route.builder(
                   context,
                   state,
                   primaryScrolls[1], // ParadesTab
                 ),
-                routes: ParadesTab.route.routes,
+                routes: ParadesTabPage.route.routes,
               ),
             ],
           ),

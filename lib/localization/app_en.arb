@@ -70,7 +70,10 @@
 	"schoolLeagueSuperligaFullName": "Superliga das Escolas de Samba do Rio de Janeiro",
 	"schoolLeagueAcas": "acas",
 	"schoolLeagueAcasFullName": "Associação Cultural das Escolas de Samba",
-	"schoolPerformancePlace": "º Place",
+	"schoolPerformancePlace": "Place",
+	"schoolToParade": "to parade",
+	"schoolScore": "Score",
+	"schoolComponents": "Components",
 	"@_SETTINGS_PAGE": {},
 	"settingsTitle": "Settings",
 	"switchTheme": "Switch Theme"

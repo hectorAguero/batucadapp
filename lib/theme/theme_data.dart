@@ -7,7 +7,9 @@ import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 class AppTheme {
   static ThemeData get lightTheme => FlexThemeData.light(
         useMaterial3: true,
-        keyColors: const FlexKeyColors(useSecondary: true),
+        keyColors: const FlexKeyColors(
+          useSecondary: true,
+        ),
         colors: const FlexSchemeColor(
           primary: Color(0xffff00a5),
           secondary: Color(0xff00a859),
@@ -20,7 +22,7 @@ class AppTheme {
         ),
         splashFactory: InkSparkle.splashFactory,
         extensions: [
-          AppColorTextTheme.light(),
+          AppCustomColors.light(),
           const WoltModalSheetThemeData(
             bottomSheetShape: RoundedRectangleBorder(
               borderRadius: BorderRadius.vertical(
@@ -56,7 +58,7 @@ class AppTheme {
         splashFactory: InkSparkle.splashFactory,
         darkIsTrueBlack: trueBlack,
         extensions: [
-          AppColorTextTheme.dark(),
+          AppCustomColors.dark(),
           const WoltModalSheetThemeData(
             bottomSheetShape: RoundedRectangleBorder(
               borderRadius: BorderRadius.vertical(
@@ -100,47 +102,54 @@ class AppTheme {
   }
 }
 
-class AppColorTextTheme extends ThemeExtension<AppColorTextTheme> {
+class AppCustomColors extends ThemeExtension<AppCustomColors> {
   final Color? textColor;
-
   final Color? inverseTextColor;
+  final Color? goldColor;
+  final Color? silverColor;
 
-  AppColorTextTheme({
+  AppCustomColors({
     required this.textColor,
     required this.inverseTextColor,
+    required this.goldColor,
+    required this.silverColor,
   });
 
-  AppColorTextTheme.light()
+  AppCustomColors.light()
       : textColor = const Color(0xff000000),
+        goldColor = const Color(0xffffd700),
+        silverColor = const Color(0xffc0c0c0),
         inverseTextColor = const Color(0xffffffff);
 
-  AppColorTextTheme.dark()
+  AppCustomColors.dark()
       : textColor = const Color(0xffffffff),
+        goldColor = const Color(0xffd4af37),
+        silverColor = const Color(0xffa9a9a9),
         inverseTextColor = const Color(0xff000000);
 
   @override
-  AppColorTextTheme copyWith({
+  AppCustomColors copyWith({
     Color? appTextColor,
     Color? appInverseTextColor,
   }) {
-    return AppColorTextTheme(
+    return AppCustomColors(
       textColor: appTextColor ?? textColor,
       inverseTextColor: appInverseTextColor ?? inverseTextColor,
+      goldColor: goldColor,
+      silverColor: silverColor,
     );
   }
 
   @override
-  AppColorTextTheme lerp(AppColorTextTheme? other, double t) {
-    if (other is! AppColorTextTheme) {
+  AppCustomColors lerp(AppCustomColors? other, double t) {
+    if (other is! AppCustomColors) {
       return this;
     }
-    return AppColorTextTheme(
+    return AppCustomColors(
       textColor: Color.lerp(textColor, other.textColor, t),
       inverseTextColor: Color.lerp(inverseTextColor, other.inverseTextColor, t),
+      goldColor: Color.lerp(goldColor, other.goldColor, t),
+      silverColor: Color.lerp(silverColor, other.silverColor, t),
     );
   }
-}
-
-extension ThemeDataExtension on ThemeData {
-  AppColorTextTheme get colorTheme => extension<AppColorTextTheme>()!;
 }
