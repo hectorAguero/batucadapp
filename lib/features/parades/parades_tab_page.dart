@@ -1,10 +1,10 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:samba_public_app/common_widgets/app_cupertino_sliver_nav_bar.dart';
+import 'package:samba_public_app/common_widgets/app_cupertino_sliver_navigation_bar.dart';
 import 'package:samba_public_app/extensions/app_localization_extension.dart';
+import 'package:samba_public_app/extensions/intl_extension.dart';
 import 'package:samba_public_app/extensions/media_query_context_extension.dart';
 import 'package:samba_public_app/extensions/theme_of_context_extension.dart';
 import 'package:samba_public_app/features/parades/parades_tab_providers.dart';
@@ -49,7 +49,7 @@ class _ParadesTabPageState extends ConsumerState<ParadesTabPage> {
           slivers: [
             SliverCrossAxisConstrained(
               maxCrossAxisExtent: mediumScreen,
-              child: AppCupertinoSliverNavBar(
+              child: AppCupertinoSliverNavigationBar(
                 largeTitle: context.loc.paradesTitle,
               ),
             ),
@@ -67,22 +67,25 @@ class _ParadesTabPageState extends ConsumerState<ParadesTabPage> {
                         height: 64,
                         padding: const EdgeInsets.symmetric(vertical: 16),
                         child: ListView(
+                          padding: const EdgeInsets.symmetric(horizontal: 8),
                           scrollDirection: Axis.horizontal,
                           children: [
                             for (final (index, item)
                                 in (paradesFuture.value!).indexed)
                               Padding(
                                 padding:
-                                    const EdgeInsets.symmetric(horizontal: 8),
+                                    const EdgeInsets.symmetric(horizontal: 4),
                                 child: ChoiceChip(
-                                  label: Text(
-                                    '${item.placing}'
-                                    '${context.loc.schoolPerformancePlace}',
-                                  ),
                                   selected: false,
-                                  onSelected: (value) {
-                                    animateToItem(index);
-                                  },
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 8,
+                                  ),
+                                  onSelected: (_) => animateToItem(index),
+                                  label: Text(
+                                    '${item.placing.ordinal(context)}'
+                                    ' ${context.loc.schoolPerformancePlace}',
+                                    maxLines: 1,
+                                  ),
                                 ),
                               ),
                           ],

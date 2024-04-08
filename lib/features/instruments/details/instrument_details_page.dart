@@ -1,7 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:samba_public_app/common_widgets/app_cupertino_sliver_navigation_bar.dart';
 import 'package:samba_public_app/common_widgets/go_back_button.dart';
 import 'package:samba_public_app/extensions/app_localization_extension.dart';
 import 'package:samba_public_app/extensions/media_query_context_extension.dart';
@@ -38,8 +38,8 @@ class _InstrumentDetailsPageState extends ConsumerState<InstrumentDetailsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final data = ref.watch(instrumentDetailsProvider(widget.id));
-    const imageHeight = 160.0;
+    final value = ref.watch(instrumentDetailsProvider(widget.id));
+    const imageHeight = 80.0;
     const screenConstraint = largeScreen;
     return DefaultTabController(
       length: InstrumentDetailsTab.values.length,
@@ -56,102 +56,95 @@ class _InstrumentDetailsPageState extends ConsumerState<InstrumentDetailsPage> {
                   ),
                   sliver: SliverCrossAxisConstrained(
                     maxCrossAxisExtent: screenConstraint,
-                    child: CupertinoSliverNavigationBar(
+                    child: AppCupertinoSliverNavigationBar(
                       leading: const GoBackButton(),
-                      border: const Border(),
-                      backgroundColor: Colors.transparent,
-                      largeTitle: Text(context.loc.instrumentDetails),
+                      largeTitle: context.loc.instrumentDetails,
                       stretch: true,
+                      transitionBetweenRoutes: false,
                     ),
                   ),
                 ),
               ];
             },
-            body: AnimatedSwitcher(
-              duration: kThemeAnimationDuration,
-              child: switch (data) {
-                AsyncLoading() => const Center(
-                    child: CircularProgressIndicator.adaptive(),
-                  ),
-                AsyncError(:final error) =>
-                  Center(child: Text('Error: $error')),
-                AsyncData(:final value) => Builder(
-                    builder: (context) => CustomScrollView(
-                      slivers: [
-                        SliverOverlapInjector(
-                          handle:
-                              NestedScrollView.sliverOverlapAbsorberHandleFor(
-                            context,
+            body: Builder(
+              builder: (context) {
+                return AnimatedSwitcher(
+                  duration: kThemeAnimationDuration,
+                  child: CustomScrollView(
+                    slivers: [
+                      SliverOverlapInjector(
+                        handle: NestedScrollView.sliverOverlapAbsorberHandleFor(
+                          context,
+                        ),
+                      ),
+                      SliverCrossAxisConstrained(
+                        maxCrossAxisExtent: screenConstraint,
+                        child: SliverToBoxAdapter(
+                          child: InstrumentHeaderImages(
+                            instrument: value,
+                            imageHeight: imageHeight,
                           ),
                         ),
-                        SliverCrossAxisConstrained(
-                          maxCrossAxisExtent: screenConstraint,
-                          child: SliverToBoxAdapter(
-                            child: InstrumentHeaderImages(
-                              instrument: value,
-                              imageHeight: imageHeight,
+                      ),
+                      SliverCrossAxisConstrained(
+                        maxCrossAxisExtent: smallScreen,
+                        child: SliverPadding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 24,
+                          ),
+                          sliver: SliverToBoxAdapter(
+                            child: TabBar(
+                              overlayColor: const WidgetStatePropertyAll(
+                                Colors.transparent,
+                              ),
+                              indicatorSize: TabBarIndicatorSize.tab,
+                              indicatorPadding: const EdgeInsets.symmetric(
+                                horizontal: 4,
+                              ),
+                              tabs: [
+                                Tab(text: context.loc.instrumentDescription),
+                                Tab(text: context.loc.instrumentLearning),
+                              ],
                             ),
                           ),
                         ),
-                        SliverCrossAxisConstrained(
-                          maxCrossAxisExtent: smallScreen,
-                          child: SliverPadding(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 24,
-                            ),
-                            sliver: SliverToBoxAdapter(
-                              child: TabBar(
-                                overlayColor: MaterialStateProperty.all(
-                                  Colors.transparent,
-                                ),
-                                indicatorSize: TabBarIndicatorSize.tab,
-                                indicatorPadding: const EdgeInsets.symmetric(
-                                  horizontal: 4,
-                                ),
-                                tabs: [
-                                  Tab(text: context.loc.instrumentDescription),
-                                  Tab(text: context.loc.instrumentLearning),
+                      ),
+                      SliverCrossAxisConstrained(
+                        maxCrossAxisExtent: screenConstraint,
+                        child: SliverPadding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 16,
+                            vertical: 8,
+                          ),
+                          sliver: SliverToBoxAdapter(
+                            // TODO(hectorAguero): size to avoid overscroll
+                            child: SizedBox(
+                              height: value.translatedDescription
+                                          .calculateLines(
+                                            context,
+                                            width: screenConstraint,
+                                          )
+                                          .toDouble() *
+                                      20 +
+                                  100,
+                              child: TabBarView(
+                                physics: const ClampingScrollPhysics(),
+                                children: [
+                                  InstrumentDetailsSummary(
+                                    details: value.translatedDescription,
+                                  ),
+                                  InstrumentDetailsSummary(
+                                    details: value.translatedDescription,
+                                  ),
                                 ],
                               ),
                             ),
                           ),
                         ),
-                        SliverCrossAxisConstrained(
-                          maxCrossAxisExtent: screenConstraint,
-                          child: SliverPadding(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 16,
-                              vertical: 8,
-                            ),
-                            sliver: SliverToBoxAdapter(
-                              // TODO(hectorAguero): size to avoid overscroll
-                              child: SizedBox(
-                                height: value.translatedDescription
-                                            .calculateLines(
-                                              context,
-                                              width: screenConstraint,
-                                            )
-                                            .toDouble() *
-                                        20 +
-                                    100,
-                                child: TabBarView(
-                                  physics: const ClampingScrollPhysics(),
-                                  children: [
-                                    InstrumentDetailsSummary(
-                                      details: value.translatedDescription,
-                                    ),
-                                    InstrumentDetailsSummary(
-                                      details: value.translatedDescription,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
+                );
               },
             ),
           ),

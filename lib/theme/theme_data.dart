@@ -19,6 +19,7 @@ class AppTheme {
         subThemesData: const FlexSubThemesData(
           tooltipSchemeColor: SchemeColor.inverseSurface,
           adaptiveSplash: FlexAdaptive.appleWeb(),
+          chipSchemeColor: SchemeColor.surface,
         ),
         splashFactory: InkSparkle.splashFactory,
         extensions: [
@@ -52,6 +53,8 @@ class AppTheme {
         ),
         subThemesData: const FlexSubThemesData(
           tooltipSchemeColor: SchemeColor.inverseSurface,
+          adaptiveSplash: FlexAdaptive.appleWeb(),
+          chipSchemeColor: SchemeColor.surfaceTint,
         ),
         surface: CupertinoColors.systemBackground.darkColor,
         background: CupertinoColors.systemGroupedBackground.darkColor,

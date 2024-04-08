@@ -5,8 +5,8 @@ import 'package:samba_public_app/extensions/media_query_context_extension.dart';
 import 'package:samba_public_app/extensions/theme_of_context_extension.dart';
 import 'package:samba_public_app/features/schools/details/show_details.dart';
 import 'package:samba_public_app/features/schools/school.dart';
-import 'package:samba_public_app/features/schools/school_sort.dart';
 import 'package:samba_public_app/features/schools/school_extensions.dart';
+import 'package:samba_public_app/features/schools/school_sort.dart';
 import 'package:samba_public_app/features/schools/schools_tab_providers.dart';
 import 'package:samba_public_app/features/schools/widgets/school_flag.dart';
 

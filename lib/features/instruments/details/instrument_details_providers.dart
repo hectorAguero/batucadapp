@@ -7,7 +7,7 @@ part 'instrument_details_providers.g.dart';
 @riverpod
 class InstrumentDetails extends _$InstrumentDetails {
   @override
-  FutureOr<Instrument> build(int id) async {
+  Instrument build(int id) {
     final instrument = ref
         .watch(instrumentsTabProvider)
         .value

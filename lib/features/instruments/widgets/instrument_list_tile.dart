@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:samba_public_app/common_widgets/app_fade_in_image.dart';
 import 'package:samba_public_app/extensions/theme_of_context_extension.dart';
 

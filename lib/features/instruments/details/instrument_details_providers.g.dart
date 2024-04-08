@@ -6,7 +6,7 @@ part of 'instrument_details_providers.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$instrumentDetailsHash() => r'45b7ad8f93db64b131b600b7971b0384359de70b';
+String _$instrumentDetailsHash() => r'8cd61b14528469a50013bae24788ac4938ee68b7';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -30,10 +30,10 @@ class _SystemHash {
 }
 
 abstract class _$InstrumentDetails
-    extends BuildlessAutoDisposeAsyncNotifier<Instrument> {
+    extends BuildlessAutoDisposeNotifier<Instrument> {
   late final int id;
 
-  FutureOr<Instrument> build(
+  Instrument build(
     int id,
   );
 }
@@ -103,8 +103,8 @@ class _$InstrumentDetailsFamilyOverride implements FamilyOverride {
 }
 
 /// See also [InstrumentDetails].
-class InstrumentDetailsProvider extends AutoDisposeAsyncNotifierProviderImpl<
-    InstrumentDetails, Instrument> {
+class InstrumentDetailsProvider
+    extends AutoDisposeNotifierProviderImpl<InstrumentDetails, Instrument> {
   /// See also [InstrumentDetails].
   InstrumentDetailsProvider(
     int id,
@@ -135,7 +135,7 @@ class InstrumentDetailsProvider extends AutoDisposeAsyncNotifierProviderImpl<
   final int id;
 
   @override
-  FutureOr<Instrument> runNotifierBuild(
+  Instrument runNotifierBuild(
     covariant InstrumentDetails notifier,
   ) {
     return notifier.build(
@@ -165,7 +165,7 @@ class InstrumentDetailsProvider extends AutoDisposeAsyncNotifierProviderImpl<
   }
 
   @override
-  AutoDisposeAsyncNotifierProviderElement<InstrumentDetails, Instrument>
+  AutoDisposeNotifierProviderElement<InstrumentDetails, Instrument>
       createElement() {
     return _InstrumentDetailsProviderElement(this);
   }
@@ -198,14 +198,14 @@ class InstrumentDetailsProvider extends AutoDisposeAsyncNotifierProviderImpl<
   }
 }
 
-mixin InstrumentDetailsRef on AutoDisposeAsyncNotifierProviderRef<Instrument> {
+mixin InstrumentDetailsRef on AutoDisposeNotifierProviderRef<Instrument> {
   /// The parameter `id` of this provider.
   int get id;
 }
 
 class _InstrumentDetailsProviderElement
-    extends AutoDisposeAsyncNotifierProviderElement<InstrumentDetails,
-        Instrument> with InstrumentDetailsRef {
+    extends AutoDisposeNotifierProviderElement<InstrumentDetails, Instrument>
+    with InstrumentDetailsRef {
   _InstrumentDetailsProviderElement(super.provider);
 
   @override

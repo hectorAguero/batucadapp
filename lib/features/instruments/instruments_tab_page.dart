@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:go_router/go_router.dart';
-import 'package:samba_public_app/common_widgets/app_cupertino_sliver_nav_bar.dart';
+import 'package:samba_public_app/common_widgets/app_cupertino_sliver_navigation_bar.dart';
 import 'package:samba_public_app/extensions/app_localization_extension.dart';
 import 'package:samba_public_app/extensions/media_query_context_extension.dart';
 import 'package:samba_public_app/features/instruments/details/instrument_details_page.dart';
@@ -37,8 +37,9 @@ class InstrumentsTabPage extends ConsumerWidget {
               maxCrossAxisExtent: maxCrossAxisExtent,
               child: SliverMainAxisGroup(
                 slivers: [
-                  AppCupertinoSliverNavBar(
+                  AppCupertinoSliverNavigationBar(
                     largeTitle: context.loc.instrumentsTitle,
+                    transitionBetweenRoutes: false,
                   ),
                   const SliverPadding(padding: EdgeInsets.only(top: 8)),
                   SliverAnimatedSwitcher(
@@ -63,18 +64,18 @@ class InstrumentsTabPage extends ConsumerWidget {
                             maxCrossAxisExtent: InstrumentListTile.cardMaxWidth,
                             itemCount: value.length,
                             itemBuilder: (context, index) {
-                              final mockInstrument = value[index];
+                              final instrument = value[index];
                               return InstrumentListTile(
-                                title: mockInstrument.name,
-                                subtitle: mockInstrument.description,
+                                title: instrument.name,
+                                subtitle: instrument.description,
                                 index: index,
                                 onTap: () {
                                   context.go(
                                     '${InstrumentsTabPage.route.path}/${InstrumentDetailsPage.route.path}',
-                                    extra: {'id': mockInstrument.id},
+                                    extra: {'id': instrument.id},
                                   );
                                 },
-                                imageUrl: mockInstrument.imageUrl,
+                                imageUrl: instrument.imageUrl,
                               );
                             },
                           ),
