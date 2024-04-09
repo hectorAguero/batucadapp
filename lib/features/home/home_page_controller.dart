@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:samba_public_app/extensions/app_localization_extension.dart';
-import 'package:samba_public_app/features/instruments/instruments_tab_page.dart';
-import 'package:samba_public_app/features/parades/parades_tab_page.dart';
-import 'package:samba_public_app/features/schools/schools_tab_page.dart';
+import '../../extensions/app_localization_extension.dart';
+import '../instruments/instruments_tab_page.dart';
+import '../parades/parades_tab_page.dart';
+import '../schools/schools_tab_page.dart';
 
 part 'home_page_controller.g.dart';
 

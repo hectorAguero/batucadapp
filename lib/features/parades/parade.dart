@@ -1,5 +1,9 @@
+import 'dart:collection';
+
 import 'package:dart_mappable/dart_mappable.dart';
-import 'package:samba_public_app/features/schools/school.dart';
+
+import '../../utils/unmodifiable_list.dart';
+import '../schools/school.dart';
 
 part 'parade.mapper.dart';
 
@@ -36,7 +40,7 @@ class Parade with ParadeMappable {
   final ParadeId id;
   final String carnivalName;
   final String enredo;
-  final List<String> carnavalescos;
+  final UnmodifiableList<String> carnavalescos;
   final String division;
   final SchoolId schoolId;
   final SchoolDivision divisionNumber;
@@ -54,7 +58,7 @@ class Parade with ParadeMappable {
   final String translatedCarnivalName;
   final String translatedEnredo;
   final String translatedDivision;
-  final List<String> translatedCarnavalescos;
+  final UnmodifiableList<String> translatedCarnavalescos;
   final School? school;
 
   static const fromMap = ParadeMapper.fromMap;

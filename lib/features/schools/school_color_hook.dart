@@ -1,5 +1,6 @@
 import 'package:dart_mappable/dart_mappable.dart';
 import 'package:flutter/material.dart';
+import '../../utils/unmodifiable_list.dart';
 
 class ColorHook extends MappingHook {
   const ColorHook();
@@ -7,12 +8,11 @@ class ColorHook extends MappingHook {
   @override
   Object? beforeDecode(Object? value) {
     if (value is List) {
-      final colorsNames = List<String>.from(value);
-      return [
-        for (final String color in colorsNames) _getColor(color),
-      ];
+      return UnmodifiableList([
+        for (final color in value) _getColor(color as String),
+      ]);
     }
-    return <Color>[];
+    return value;
   }
 
   Color _getColor(Object color) => switch (color.toString().toLowerCase()) {

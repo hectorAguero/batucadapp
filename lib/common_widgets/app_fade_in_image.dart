@@ -1,9 +1,10 @@
 import 'package:dio_image_provider/dio_image_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:samba_public_app/extensions/app_localization_extension.dart';
-import 'package:samba_public_app/extensions/theme_of_context_extension.dart';
-import 'package:samba_public_app/utils/main_logger.dart';
 import 'package:transparent_image/transparent_image.dart';
+
+import '../extensions/app_localization_extension.dart';
+import '../extensions/theme_of_context_extension.dart';
+import '../utils/main_logger.dart';
 
 class AppFadeInImage extends StatelessWidget {
   const AppFadeInImage(

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:samba_public_app/extensions/app_localization_extension.dart';
+import '../extensions/app_localization_extension.dart';
 
 enum Language {
   en,

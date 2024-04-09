@@ -1,22 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:samba_public_app/features/home/home_page.dart';
-import 'package:samba_public_app/features/home/home_page_controller.dart';
-import 'package:samba_public_app/features/instruments/instruments_tab_page.dart';
-import 'package:samba_public_app/features/parades/parades_tab_page.dart';
-import 'package:samba_public_app/features/schools/schools_tab_page.dart';
-import 'package:samba_public_app/initialization_page.dart';
+import '../features/home/home_page.dart';
+import '../features/home/home_page_controller.dart';
+import '../features/instruments/instruments_tab_page.dart';
+import '../features/parades/parades_tab_page.dart';
+import '../features/schools/schools_tab_page.dart';
+import '../initialization_page.dart';
+import '../utils/unmodifiable_list.dart';
 
 part 'router.g.dart';
 
+/// Required by StatefulShellRoute in GoRouter
 final _rootNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'root');
 
 @riverpod
 GoRouter goRouter(GoRouterRef ref) {
-  final primaryScrolls = List.generate(
-    TabDestination.values.length,
-    (_) => ScrollController(),
+  final primaryScrolls = UnmodifiableList(
+    [for (final _ in TabDestination.values) ScrollController()],
   );
   final initProvider = ref.watch(initializationProvider);
   final router = GoRouter(

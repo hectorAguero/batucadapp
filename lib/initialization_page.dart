@@ -1,28 +1,46 @@
+import 'package:dart_mappable/dart_mappable.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_image_provider/dio_image_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:samba_public_app/core/get_native_adapter.dart'
+import 'core/get_native_adapter.dart'
     if (dart.library.js_interop) 'package:samba_public_app/core/get_native_adapter_web.dart';
-import 'package:samba_public_app/core/shared_preferences_provider.dart';
-import 'package:samba_public_app/extensions/app_localization_extension.dart';
-import 'package:samba_public_app/extensions/media_query_context_extension.dart';
-import 'package:samba_public_app/features/home/widgets/adaptive_navigation_rail.dart';
-import 'package:samba_public_app/theme/theme_provider.dart';
+import 'core/shared_preferences_provider.dart';
+import 'extensions/app_localization_extension.dart';
+import 'extensions/media_query_context_extension.dart';
+import 'features/home/widgets/adaptive_navigation_rail.dart';
+import 'theme/theme_provider.dart';
+import 'utils/unmodifiable_list.dart';
 
 part 'initialization_page.g.dart';
 
 @Riverpod(keepAlive: true)
 Future<void> initialization(InitializationRef ref) async {
+  initializeMappers();
   final imageDio = Dio()..httpClientAdapter = getNativeAdapter();
   DioImage.defaultDio = imageDio;
+
   ref.onDispose(() {
     ref.invalidate(sharedPreferencesProvider);
   });
 
   await ref.watch(sharedPreferencesProvider.future);
+}
+
+void initializeMappers() {
+  // This makes all mappers work with immutable collections
+  MapperContainer.globals.useAll([
+    // mapper for immutable lists
+    SerializableMapper<UnmodifiableList<dynamic>, Object>.arg1(
+      decode: <T>(json, fromJsonT) =>
+          UnmodifiableList<T>((json as Iterable).map(fromJsonT)),
+      encode: (UnmodifiableList<dynamic> value) =>
+          (Object? Function(dynamic) toJsonT) => value.map(toJsonT).toList(),
+      type: <E>(f) => f<UnmodifiableList<E>>(),
+    ),
+  ]);
 }
 
 /// Widget class to manage asynchronous app initialization

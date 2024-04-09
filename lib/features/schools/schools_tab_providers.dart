@@ -1,14 +1,16 @@
 import 'package:country_picker/country_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:samba_public_app/core/shared_preferences_provider.dart';
-import 'package:samba_public_app/extensions/app_localization_extension.dart';
-import 'package:samba_public_app/extensions/intl_extension.dart';
-import 'package:samba_public_app/features/schools/school.dart';
-import 'package:samba_public_app/features/schools/school_extensions.dart';
-import 'package:samba_public_app/features/schools/school_sort.dart';
-import 'package:samba_public_app/features/schools/schools_repo.dart';
-import 'package:samba_public_app/features/schools/widgets/school_card.dart';
+
+import '../../core/shared_preferences_provider.dart';
+import '../../extensions/app_localization_extension.dart';
+import '../../extensions/intl_extension.dart';
+import '../../utils/unmodifiable_list.dart';
+import 'school.dart';
+import 'school_extensions.dart';
+import 'school_sort.dart';
+import 'schools_repo.dart';
+import 'widgets/school_card.dart';
 
 part 'schools_tab_providers.g.dart';
 
@@ -51,34 +53,42 @@ class SchoolDivisions extends _$SchoolDivisions {
 @riverpod
 class Schools extends _$Schools {
   @override
-  FutureOr<List<School>> build() async {
+  FutureOr<UnmodifiableList<School>> build() async {
     final schools = await ref.watch(schoolsRepoProvider).getSchools();
     final prefs = ref.watch(sharedPreferencesProvider).value!;
     final favoriteSchools = prefs.getStringList('favoriteSchools') ?? [];
-    return [
+    return UnmodifiableList([
       for (final school in schools)
         if (favoriteSchools.contains('${school.id}'))
           school.copyWith(isFavorite: true)
         else
           school,
-    ];
+    ]);
   }
 
   Future<void> toggleFavorite(SchoolId id) async {
     final prefs = ref.watch(sharedPreferencesProvider).value!;
-    final favoriteSchools = prefs.getStringList('favoriteSchools') ?? [];
-    final schools = [...state.value!];
+    var favoriteSchools =
+        UnmodifiableList(prefs.getStringList('favoriteSchools') ?? <String>[]);
+    var schools = UnmodifiableList([...state.value!]);
     final index = schools.indexWhere((school) => school.id == id);
 
     if (index == -1) return;
 
-    schools[index] = schools[index].copyWith(
-      isFavorite: !schools[index].isFavorite,
-    );
+    schools = UnmodifiableList([
+      ...schools.sublist(0, index),
+      schools[index].copyWith(isFavorite: !schools[index].isFavorite),
+      ...schools.sublist(index + 1),
+    ]);
+
     if (schools[index].isFavorite) {
-      favoriteSchools.add('${schools[index].id}');
+      favoriteSchools =
+          UnmodifiableList([...favoriteSchools, '${schools[index].id}']);
     } else {
-      favoriteSchools.remove('${schools[index].id}');
+      favoriteSchools = UnmodifiableList([
+        for (final schoolId in favoriteSchools)
+          if (schoolId != '${schools[index].id}') schoolId,
+      ]);
     }
     await prefs.setStringList('favoriteSchools', favoriteSchools);
     state = AsyncData(schools);
@@ -131,14 +141,15 @@ class IsFavoriteSchools extends _$IsFavoriteSchools {
   }
 }
 
-final filteredSchoolsProvider = Provider.autoDispose<List<School>>((ref) {
+final filteredSchoolsProvider =
+    Provider.autoDispose<UnmodifiableList<School>>((ref) {
   final filter = ref.watch(schoolDivisionsProvider);
   final search = ref.watch(searchSchoolProvider);
   final schools = ref.watch(schoolsProvider);
   final sort = ref.watch(selectedSchoolSortProvider);
   final isNotFavorite = !ref.watch(isFavoriteSchoolsProvider);
 
-  if (schools.value == null) return const [];
+  if (schools.value == null) return UnmodifiableList(const []);
 
   final filteredSchools = schools.value!
       .where(
@@ -150,7 +161,7 @@ final filteredSchoolsProvider = Provider.autoDispose<List<School>>((ref) {
       .toList()
     ..sort(sort.sortSwitch);
 
-  return filteredSchools;
+  return UnmodifiableList(filteredSchools);
 });
 
 /// A provider which exposes the [School] displayed by a [SchoolCard].

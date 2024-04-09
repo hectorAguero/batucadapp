@@ -154,14 +154,14 @@ class SchoolMapper extends ClassMapperBase<School> {
   static String _$godmotherSchool(School v) => v.godmotherSchool;
   static const Field<School, String> _f$godmotherSchool =
       Field('godmotherSchool', _$godmotherSchool);
-  static List<String> _$colorNames(School v) => v.colorNames;
-  static const Field<School, List<String>> _f$colorNames =
+  static UnmodifiableListView<String> _$colorNames(School v) => v.colorNames;
+  static const Field<School, UnmodifiableListView<String>> _f$colorNames =
       Field('colorNames', _$colorNames, key: 'colors');
-  static List<Color> _$colors(School v) => v.colors;
-  static const Field<School, List<Color>> _f$colors =
+  static UnmodifiableListView<Color> _$colors(School v) => v.colors;
+  static const Field<School, UnmodifiableListView<Color>> _f$colors =
       Field('colors', _$colors, hook: ColorHook());
-  static List<String> _$symbols(School v) => v.symbols;
-  static const Field<School, List<String>> _f$symbols =
+  static UnmodifiableListView<String> _$symbols(School v) => v.symbols;
+  static const Field<School, UnmodifiableListView<String>> _f$symbols =
       Field('symbols', _$symbols);
   static SchoolLeague _$league(School v) => v.league;
   static const Field<School, SchoolLeague> _f$league =
@@ -184,14 +184,16 @@ class SchoolMapper extends ClassMapperBase<School> {
   static int _$lastPosition(School v) => v.lastPosition;
   static const Field<School, int> _f$lastPosition =
       Field('lastPosition', _$lastPosition);
-  static List<String> _$translatedColorNames(School v) =>
+  static UnmodifiableListView<String> _$translatedColorNames(School v) =>
       v.translatedColorNames;
-  static const Field<School, List<String>> _f$translatedColorNames = Field(
-      'translatedColorNames', _$translatedColorNames,
-      key: 'translatedColors');
-  static List<String> _$translatedSymbols(School v) => v.translatedSymbols;
-  static const Field<School, List<String>> _f$translatedSymbols =
-      Field('translatedSymbols', _$translatedSymbols);
+  static const Field<School, UnmodifiableListView<String>>
+      _f$translatedColorNames = Field(
+          'translatedColorNames', _$translatedColorNames,
+          key: 'translatedColors');
+  static UnmodifiableListView<String> _$translatedSymbols(School v) =>
+      v.translatedSymbols;
+  static const Field<School, UnmodifiableListView<String>>
+      _f$translatedSymbols = Field('translatedSymbols', _$translatedSymbols);
   static String _$translatedGodmotherSchool(School v) =>
       v.translatedGodmotherSchool;
   static const Field<School, String> _f$translatedGodmotherSchool =
@@ -305,13 +307,6 @@ extension SchoolValueCopy<$R, $Out> on ObjectCopyWith<$R, School, $Out> {
 
 abstract class SchoolCopyWith<$R, $In extends School, $Out>
     implements ClassCopyWith<$R, $In, $Out> {
-  ListCopyWith<$R, String, ObjectCopyWith<$R, String, String>> get colorNames;
-  ListCopyWith<$R, Color, ObjectCopyWith<$R, Color, Color>> get colors;
-  ListCopyWith<$R, String, ObjectCopyWith<$R, String, String>> get symbols;
-  ListCopyWith<$R, String, ObjectCopyWith<$R, String, String>>
-      get translatedColorNames;
-  ListCopyWith<$R, String, ObjectCopyWith<$R, String, String>>
-      get translatedSymbols;
   $R call(
       {int? id,
       String? name,
@@ -319,9 +314,9 @@ abstract class SchoolCopyWith<$R, $In extends School, $Out>
       String? imageUrl,
       DateTime? foundationDate,
       String? godmotherSchool,
-      List<String>? colorNames,
-      List<Color>? colors,
-      List<String>? symbols,
+      UnmodifiableListView<String>? colorNames,
+      UnmodifiableListView<Color>? colors,
+      UnmodifiableListView<String>? symbols,
       SchoolLeague? league,
       SchoolDivision? currentDivision,
       int? divisionNumber,
@@ -329,8 +324,8 @@ abstract class SchoolCopyWith<$R, $In extends School, $Out>
       String? country,
       String? leagueLocation,
       int? lastPosition,
-      List<String>? translatedColorNames,
-      List<String>? translatedSymbols,
+      UnmodifiableListView<String>? translatedColorNames,
+      UnmodifiableListView<String>? translatedSymbols,
       String? translatedGodmotherSchool,
       String? translatedLeagueLocation,
       String? translatedCountry,
@@ -345,30 +340,6 @@ class _SchoolCopyWithImpl<$R, $Out> extends ClassCopyWithBase<$R, School, $Out>
   @override
   late final ClassMapperBase<School> $mapper = SchoolMapper.ensureInitialized();
   @override
-  ListCopyWith<$R, String, ObjectCopyWith<$R, String, String>> get colorNames =>
-      ListCopyWith($value.colorNames, (v, t) => ObjectCopyWith(v, $identity, t),
-          (v) => call(colorNames: v));
-  @override
-  ListCopyWith<$R, Color, ObjectCopyWith<$R, Color, Color>> get colors =>
-      ListCopyWith($value.colors, (v, t) => ObjectCopyWith(v, $identity, t),
-          (v) => call(colors: v));
-  @override
-  ListCopyWith<$R, String, ObjectCopyWith<$R, String, String>> get symbols =>
-      ListCopyWith($value.symbols, (v, t) => ObjectCopyWith(v, $identity, t),
-          (v) => call(symbols: v));
-  @override
-  ListCopyWith<$R, String, ObjectCopyWith<$R, String, String>>
-      get translatedColorNames => ListCopyWith(
-          $value.translatedColorNames,
-          (v, t) => ObjectCopyWith(v, $identity, t),
-          (v) => call(translatedColorNames: v));
-  @override
-  ListCopyWith<$R, String, ObjectCopyWith<$R, String, String>>
-      get translatedSymbols => ListCopyWith(
-          $value.translatedSymbols,
-          (v, t) => ObjectCopyWith(v, $identity, t),
-          (v) => call(translatedSymbols: v));
-  @override
   $R call(
           {int? id,
           String? name,
@@ -376,9 +347,9 @@ class _SchoolCopyWithImpl<$R, $Out> extends ClassCopyWithBase<$R, School, $Out>
           String? imageUrl,
           DateTime? foundationDate,
           String? godmotherSchool,
-          List<String>? colorNames,
-          List<Color>? colors,
-          List<String>? symbols,
+          UnmodifiableListView<String>? colorNames,
+          UnmodifiableListView<Color>? colors,
+          UnmodifiableListView<String>? symbols,
           SchoolLeague? league,
           SchoolDivision? currentDivision,
           int? divisionNumber,
@@ -386,8 +357,8 @@ class _SchoolCopyWithImpl<$R, $Out> extends ClassCopyWithBase<$R, School, $Out>
           String? country,
           String? leagueLocation,
           int? lastPosition,
-          List<String>? translatedColorNames,
-          List<String>? translatedSymbols,
+          UnmodifiableListView<String>? translatedColorNames,
+          UnmodifiableListView<String>? translatedSymbols,
           String? translatedGodmotherSchool,
           String? translatedLeagueLocation,
           String? translatedCountry,

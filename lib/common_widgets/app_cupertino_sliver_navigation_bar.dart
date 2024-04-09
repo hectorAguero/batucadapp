@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:samba_public_app/extensions/is_ios_or_macos_platform_extension.dart';
-import 'package:samba_public_app/extensions/media_query_context_extension.dart';
-import 'package:samba_public_app/features/home/widgets/settings_modal_sheet.dart';
+import '../extensions/is_ios_or_macos_platform_extension.dart';
+import '../extensions/media_query_context_extension.dart';
+import '../features/home/widgets/settings_modal_sheet.dart';
 
 class AppCupertinoSliverNavigationBar extends StatelessWidget {
   const AppCupertinoSliverNavigationBar({
@@ -58,8 +58,8 @@ class _HeroTag {
 
   // Let the Hero tag be described in tree dumps.
   @override
-  String toString() =>
-      'Default Hero tag for Cupertino navigation bars with navigator $navigator';
+  String toString() => 'Default Hero tag for Cupertino'
+      ' navigation bars with navigator $navigator';
 
   @override
   bool operator ==(Object other) {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:samba_public_app/extensions/app_localization_extension.dart';
-import 'package:samba_public_app/features/schools/school.dart';
+import '../../extensions/app_localization_extension.dart';
+import 'school.dart';
 
 enum SchoolSort {
   // ranking,

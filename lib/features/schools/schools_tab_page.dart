@@ -3,19 +3,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:pull_down_button/pull_down_button.dart';
-import 'package:samba_public_app/common_widgets/app_cupertino_button.dart';
-import 'package:samba_public_app/common_widgets/app_cupertino_sliver_navigation_bar.dart';
-import 'package:samba_public_app/extensions/app_localization_extension.dart';
-import 'package:samba_public_app/extensions/hardcoded_extension.dart';
-import 'package:samba_public_app/extensions/media_query_context_extension.dart';
-import 'package:samba_public_app/extensions/theme_of_context_extension.dart';
-import 'package:samba_public_app/features/home/widgets/adaptive_navigation_rail.dart';
-import 'package:samba_public_app/features/schools/school_sort.dart';
-import 'package:samba_public_app/features/schools/schools_tab_providers.dart';
-import 'package:samba_public_app/features/schools/widgets/school_card.dart';
-import 'package:samba_public_app/features/schools/widgets/school_division_chips.dart';
-import 'package:samba_public_app/router/go_route_scroll_tab.dart';
 import 'package:sliver_tools/sliver_tools.dart';
+
+import '../../common_widgets/app_cupertino_button.dart';
+import '../../common_widgets/app_cupertino_sliver_navigation_bar.dart';
+import '../../extensions/app_localization_extension.dart';
+import '../../extensions/hardcoded_extension.dart';
+import '../../extensions/media_query_context_extension.dart';
+import '../../extensions/theme_of_context_extension.dart';
+import '../../router/go_route_scroll_tab.dart';
+import '../home/widgets/adaptive_navigation_rail.dart';
+import 'school_sort.dart';
+import 'schools_tab_providers.dart';
+import 'widgets/school_card.dart';
+import 'widgets/school_division_chips.dart';
 
 class SchoolsTabPage extends StatefulWidget {
   const SchoolsTabPage({super.key});
@@ -73,7 +74,7 @@ class SchoolsTabNavBar extends StatelessWidget {
         leading: PullDownButton(
           menuOffset: context.querySize.currentRailWidth,
           itemBuilder: (context) => [
-            // TODO(hectorAguero): Get from the current schools API UPDATE
+            // TODO(hectorAguero): Should get this from the API
             PullDownMenuItem.selectable(
               title: '🇧🇷 Rio de Janeiro'.hardcoded,
               selected: true,

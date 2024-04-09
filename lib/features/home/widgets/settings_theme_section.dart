@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:samba_public_app/extensions/app_localization_extension.dart';
-import 'package:samba_public_app/extensions/theme_of_context_extension.dart';
-import 'package:samba_public_app/theme/theme_provider.dart';
+import '../../../extensions/app_localization_extension.dart';
+import '../../../extensions/theme_of_context_extension.dart';
+import '../../../theme/theme_provider.dart';
 
 class SettingsThemeSection extends ConsumerWidget {
   const SettingsThemeSection({super.key});

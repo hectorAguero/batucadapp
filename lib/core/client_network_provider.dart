@@ -1,9 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:samba_public_app/core/get_native_adapter.dart'
+
+import '../localization/language.dart';
+import '../localization/language_app_provider.dart';
+import 'get_native_adapter.dart'
     if (dart.library.js_interop) 'get_native_adapter_web.dart';
-import 'package:samba_public_app/localization/language.dart';
-import 'package:samba_public_app/localization/language_app_provider.dart';
 
 part 'client_network_provider.g.dart';
 

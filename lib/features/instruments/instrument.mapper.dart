@@ -30,8 +30,8 @@ class InstrumentMapper extends ClassMapperBase<Instrument> {
   static String _$imageUrl(Instrument v) => v.imageUrl;
   static const Field<Instrument, String> _f$imageUrl =
       Field('imageUrl', _$imageUrl);
-  static List<String> _$gallery(Instrument v) => v.gallery;
-  static const Field<Instrument, List<String>> _f$gallery =
+  static UnmodifiableListView<String> _$gallery(Instrument v) => v.gallery;
+  static const Field<Instrument, UnmodifiableListView<String>> _f$gallery =
       Field('gallery', _$gallery);
   static String _$type(Instrument v) => v.type;
   static const Field<Instrument, String> _f$type = Field('type', _$type);
@@ -118,13 +118,12 @@ extension InstrumentValueCopy<$R, $Out>
 
 abstract class InstrumentCopyWith<$R, $In extends Instrument, $Out>
     implements ClassCopyWith<$R, $In, $Out> {
-  ListCopyWith<$R, String, ObjectCopyWith<$R, String, String>> get gallery;
   $R call(
       {int? id,
       String? name,
       String? description,
       String? imageUrl,
-      List<String>? gallery,
+      UnmodifiableListView<String>? gallery,
       String? type,
       String? translatedName,
       String? translatedDescription});
@@ -140,16 +139,12 @@ class _InstrumentCopyWithImpl<$R, $Out>
   late final ClassMapperBase<Instrument> $mapper =
       InstrumentMapper.ensureInitialized();
   @override
-  ListCopyWith<$R, String, ObjectCopyWith<$R, String, String>> get gallery =>
-      ListCopyWith($value.gallery, (v, t) => ObjectCopyWith(v, $identity, t),
-          (v) => call(gallery: v));
-  @override
   $R call(
           {int? id,
           String? name,
           String? description,
           String? imageUrl,
-          List<String>? gallery,
+          UnmodifiableListView<String>? gallery,
           String? type,
           String? translatedName,
           String? translatedDescription}) =>

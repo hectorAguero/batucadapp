@@ -1,16 +1,16 @@
 import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 // ignore:depend_on_referenced_packages
 import 'package:flutter_web_plugins/url_strategy.dart';
-import 'package:samba_public_app/extensions/app_localization_extension.dart';
-import 'package:samba_public_app/localization/language.dart';
-import 'package:samba_public_app/localization/language_app_provider.dart';
-import 'package:samba_public_app/router/router.dart';
-import 'package:samba_public_app/theme/theme_data.dart';
-import 'package:samba_public_app/theme/theme_provider.dart';
+import 'extensions/app_localization_extension.dart';
+import 'l10n/app_localizations.dart';
+import 'localization/language.dart';
+import 'localization/language_app_provider.dart';
+import 'router/router.dart';
+import 'theme/theme_data.dart';
+import 'theme/theme_provider.dart';
 
 void main() {
   usePathUrlStrategy();

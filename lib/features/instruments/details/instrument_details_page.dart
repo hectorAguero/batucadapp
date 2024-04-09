@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:samba_public_app/common_widgets/app_cupertino_sliver_navigation_bar.dart';
-import 'package:samba_public_app/common_widgets/go_back_button.dart';
-import 'package:samba_public_app/extensions/app_localization_extension.dart';
-import 'package:samba_public_app/extensions/media_query_context_extension.dart';
-import 'package:samba_public_app/features/instruments/details/instrument_details_providers.dart';
-import 'package:samba_public_app/features/instruments/details/widgets/instrument_details_summary.dart';
-import 'package:samba_public_app/features/instruments/details/widgets/instrument_header_images.dart';
 import 'package:sliver_tools/sliver_tools.dart';
+
+import '../../../common_widgets/app_cupertino_sliver_navigation_bar.dart';
+import '../../../common_widgets/go_back_button.dart';
+import '../../../extensions/app_localization_extension.dart';
+import '../../../extensions/media_query_context_extension.dart';
+import 'instrument_details_providers.dart';
+import 'widgets/instrument_details_summary.dart';
+import 'widgets/instrument_header_images.dart';
 
 typedef InstrumentId = int;
 
@@ -117,7 +118,7 @@ class _InstrumentDetailsPageState extends ConsumerState<InstrumentDetailsPage> {
                             vertical: 8,
                           ),
                           sliver: SliverToBoxAdapter(
-                            // TODO(hectorAguero): size to avoid overscroll
+                            // TODO(hectorAguero): hardcoded to avoid overscroll
                             child: SizedBox(
                               height: value.translatedDescription
                                           .calculateLines(

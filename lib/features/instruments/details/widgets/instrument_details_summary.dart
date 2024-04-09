@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:samba_public_app/extensions/media_query_context_extension.dart';
+import '../../../../extensions/media_query_context_extension.dart';
 
 class InstrumentDetailsSummary extends StatelessWidget {
   const InstrumentDetailsSummary({

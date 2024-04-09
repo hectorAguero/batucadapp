@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:samba_public_app/extensions/app_localization_extension.dart';
-import 'package:samba_public_app/theme/theme_data.dart';
+
+import '../theme/theme_data.dart';
+import 'app_localization_extension.dart';
 
 extension TextThemeOfContextExtension on BuildContext {
   TextTheme get textTheme => Theme.of(this).textTheme;

@@ -1,7 +1,9 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:samba_public_app/core/client_network_provider.dart';
-import 'package:samba_public_app/features/instruments/details/instrument_details_page.dart';
-import 'package:samba_public_app/features/instruments/instrument.dart';
+
+import '../../core/client_network_provider.dart';
+import '../../utils/unmodifiable_list.dart';
+import 'details/instrument_details_page.dart';
+import 'instrument.dart';
 
 part 'instruments_repo.g.dart';
 
@@ -11,7 +13,7 @@ InstrumentsRepo instrumentsRepo(InstrumentsRepoRef ref) {
 }
 
 abstract class InstrumentsRepo {
-  Future<List<Instrument>> getInstruments();
+  Future<UnmodifiableList<Instrument>> getInstruments();
 
   Future<Instrument> getDetails(InstrumentId id);
 }
@@ -22,14 +24,14 @@ class InstrumentRepoImpls implements InstrumentsRepo {
   final InstrumentsRepoRef ref;
 
   @override
-  Future<List<Instrument>> getInstruments() async {
+  Future<UnmodifiableList<Instrument>> getInstruments() async {
     final response = await ref
         .watch(clientNetworkProvider)
-        .get<List<dynamic>>('/instruments');
+        .get<Iterable<dynamic>>('/instruments');
     final data = response.data!.cast<Map<String, dynamic>>();
-    return [
+    return UnmodifiableList([
       for (final item in data) Instrument.fromMap(item),
-    ];
+    ]);
   }
 
   @override

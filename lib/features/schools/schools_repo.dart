@@ -1,11 +1,10 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:samba_public_app/core/client_network_provider.dart';
-import 'package:samba_public_app/features/schools/school.dart';
+
+import '../../core/client_network_provider.dart';
+import '../../utils/unmodifiable_list.dart';
+import 'school.dart';
 
 part 'schools_repo.g.dart';
-
-typedef ListDynamic = List<dynamic>;
-typedef ListMap = List<Map<String, dynamic>>;
 
 @riverpod
 SchoolsRepo schoolsRepo(SchoolsRepoRef ref) {
@@ -13,7 +12,7 @@ SchoolsRepo schoolsRepo(SchoolsRepoRef ref) {
 }
 
 abstract class SchoolsRepo {
-  Future<List<School>> getSchools();
+  Future<UnmodifiableList<School>> getSchools();
 }
 
 class SchoolsRepoImpls implements SchoolsRepo {
@@ -22,13 +21,14 @@ class SchoolsRepoImpls implements SchoolsRepo {
   final SchoolsRepoRef ref;
 
   @override
-  Future<List<School>> getSchools() async {
-    final response =
-        await ref.watch(clientNetworkProvider).get<List<dynamic>>('/schools');
+  Future<UnmodifiableList<School>> getSchools() async {
+    final response = await ref
+        .watch(clientNetworkProvider)
+        .get<Iterable<dynamic>>('/schools');
     final data = response.data!.cast<Map<String, dynamic>>();
-    return [
+    return UnmodifiableList([
       for (final item in data) School.fromMap(item),
-    ];
+    ]);
   }
 }
 
@@ -38,9 +38,9 @@ class MockSchoolsRepo implements SchoolsRepo {
   final SchoolsRepoRef ref;
 
   @override
-  Future<List<School>> getSchools() async {
+  Future<UnmodifiableList<School>> getSchools() async {
     await Future<void>.delayed(const Duration(seconds: 1));
-    return [
+    return UnmodifiableList([
       SchoolMapper.fromMap(
         {
           'id': 3,
@@ -135,6 +135,6 @@ class MockSchoolsRepo implements SchoolsRepo {
         'current_division': 'Serie Oro',
         'division_number': 2,
       }),
-    ];
+    ]);
   }
 }

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:samba_public_app/extensions/media_query_context_extension.dart';
-import 'package:samba_public_app/extensions/theme_of_context_extension.dart';
-import 'package:samba_public_app/features/home/home_page_controller.dart';
-import 'package:samba_public_app/features/home/widgets/adaptive_navigation_rail_footer.dart';
+
+import '../../../extensions/media_query_context_extension.dart';
+import '../../../extensions/theme_of_context_extension.dart';
+import '../../../utils/unmodifiable_list.dart';
+import '../home_page_controller.dart';
+import 'adaptive_navigation_rail_footer.dart';
 
 class AdaptiveNavigationRail extends StatelessWidget {
   const AdaptiveNavigationRail({
@@ -12,7 +14,7 @@ class AdaptiveNavigationRail extends StatelessWidget {
     super.key,
   });
 
-  final List<TabDestination> destinations;
+  final UnmodifiableList<TabDestination> destinations;
   final int selectedIndex;
   final ValueChanged<int> onDestinationSelected;
 

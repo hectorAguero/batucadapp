@@ -1,6 +1,6 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:samba_public_app/features/schools/school.dart';
-import 'package:samba_public_app/features/schools/schools_tab_providers.dart';
+import '../school.dart';
+import '../schools_tab_providers.dart';
 
 part 'schools_details_providers.g.dart';
 

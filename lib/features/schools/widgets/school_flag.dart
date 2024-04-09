@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:samba_public_app/common_widgets/app_fade_in_image.dart';
-import 'package:samba_public_app/features/schools/school.dart';
-import 'package:samba_public_app/features/schools/schools_tab_providers.dart';
+import '../../../common_widgets/app_fade_in_image.dart';
+import '../school.dart';
+import '../schools_tab_providers.dart';
 
 class SchoolFlag extends ConsumerWidget {
   const SchoolFlag({

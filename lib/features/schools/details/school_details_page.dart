@@ -2,14 +2,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:samba_public_app/common_widgets/app_page_indicator.dart';
-import 'package:samba_public_app/extensions/app_localization_extension.dart';
-import 'package:samba_public_app/extensions/intl_extension.dart';
-import 'package:samba_public_app/extensions/theme_of_context_extension.dart';
-import 'package:samba_public_app/features/schools/details/schools_details_providers.dart';
-import 'package:samba_public_app/features/schools/school.dart';
-import 'package:samba_public_app/features/schools/school_extensions.dart';
-import 'package:samba_public_app/features/schools/widgets/school_flag.dart';
+
+import '../../../common_widgets/app_page_indicator.dart';
+import '../../../extensions/app_localization_extension.dart';
+import '../../../extensions/intl_extension.dart';
+import '../../../extensions/theme_of_context_extension.dart';
+import '../school.dart';
+import '../school_extensions.dart';
+import '../widgets/school_flag.dart';
+import 'schools_details_providers.dart';
 
 class SchoolDetailsPage extends ConsumerStatefulWidget {
   const SchoolDetailsPage({
@@ -216,8 +217,8 @@ class _SchoolDetailsTextState extends State<SchoolDetailsText> {
             SchoolTextTile(
               icon: CupertinoIcons.flag,
               title: '',
-              content:
-                  '${widget.school.translatedCountry}, ${widget.school.translatedLeagueLocation}',
+              content: '${widget.school.translatedCountry},'
+                  ' ${widget.school.translatedLeagueLocation}',
             ),
             const SizedBox(height: 8),
           ],

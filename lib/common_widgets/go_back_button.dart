@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:samba_public_app/extensions/is_ios_or_macos_platform_extension.dart';
-import 'package:samba_public_app/extensions/theme_of_context_extension.dart';
+import '../extensions/is_ios_or_macos_platform_extension.dart';
+import '../extensions/theme_of_context_extension.dart';
 
 class GoBackButton extends StatelessWidget {
   const GoBackButton({super.key});

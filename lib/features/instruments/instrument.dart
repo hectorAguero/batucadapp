@@ -1,10 +1,14 @@
+import 'dart:collection';
+
 import 'package:dart_mappable/dart_mappable.dart';
+
+import '../../utils/unmodifiable_list.dart';
 
 part 'instrument.mapper.dart';
 
 @MappableClass()
 class Instrument with InstrumentMappable {
-  const Instrument({
+  Instrument({
     required this.id,
     required this.name,
     required this.description,
@@ -20,7 +24,7 @@ class Instrument with InstrumentMappable {
   final String type;
   final String description;
   final String imageUrl;
-  final List<String> gallery;
+  final UnmodifiableList<String> gallery;
   final String translatedName;
   final String translatedDescription;
 

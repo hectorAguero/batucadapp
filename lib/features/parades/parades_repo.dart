@@ -1,6 +1,8 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:samba_public_app/core/client_network_provider.dart';
-import 'package:samba_public_app/features/parades/parade.dart';
+
+import '../../core/client_network_provider.dart';
+import '../../utils/unmodifiable_list.dart';
+import 'parade.dart';
 
 part 'parades_repo.g.dart';
 
@@ -10,7 +12,7 @@ ParadesRepo paradesRepo(ParadesRepoRef ref) {
 }
 
 abstract class ParadesRepo {
-  Future<List<Parade>> getParades();
+  Future<UnmodifiableList<Parade>> getParades();
 
   Future<Parade> getParade(int id);
 }
@@ -21,14 +23,16 @@ class ParadesRepoImpl implements ParadesRepo {
   final ParadesRepoRef ref;
 
   @override
-  Future<List<Parade>> getParades({ParadeQueryParams? queryParams}) async {
-    final response =
-        await ref.watch(clientNetworkProvider).get<List<dynamic>>('/parades');
-
+  Future<UnmodifiableList<Parade>> getParades({
+    ParadeQueryParams? queryParams,
+  }) async {
+    final response = await ref
+        .watch(clientNetworkProvider)
+        .get<Iterable<dynamic>>('/parades');
     final data = response.data!.cast<Map<String, dynamic>>();
-    return [
+    return UnmodifiableList([
       for (final item in data) Parade.fromMap(item),
-    ];
+    ]);
   }
 
   @override

@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
-import 'package:samba_public_app/extensions/app_localization_extension.dart';
+import 'app_localization_extension.dart';
 
 extension IntlExtension on DateTime {
   String intlShort(BuildContext context) {

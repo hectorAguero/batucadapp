@@ -1,10 +1,12 @@
 import 'package:dio_image_provider/dio_image_provider.dart';
 import 'package:easy_image_viewer/easy_image_viewer.dart';
 import 'package:flutter/material.dart';
-import 'package:samba_public_app/common_widgets/app_fade_in_image.dart';
-import 'package:samba_public_app/extensions/media_query_context_extension.dart';
-import 'package:samba_public_app/extensions/theme_of_context_extension.dart';
-import 'package:samba_public_app/features/instruments/instrument.dart';
+
+import '../../../../common_widgets/app_fade_in_image.dart';
+import '../../../../extensions/media_query_context_extension.dart';
+import '../../../../extensions/theme_of_context_extension.dart';
+import '../../../../utils/unmodifiable_list.dart';
+import '../../instrument.dart';
 
 class InstrumentHeaderImages extends StatelessWidget {
   const InstrumentHeaderImages({
@@ -38,10 +40,10 @@ class InstrumentHeaderImages extends StatelessWidget {
                         child: InkWell(
                           onTap: () => showImage(
                             context,
-                            [
+                            UnmodifiableList([
                               ...instrument.gallery.take(3),
                               instrument.imageUrl,
-                            ],
+                            ]),
                             initialIndex: i,
                           ),
                           borderRadius: const BorderRadius.all(
@@ -74,7 +76,9 @@ class InstrumentHeaderImages extends StatelessWidget {
                   child: InkWell(
                     onTap: () => showImage(
                       context,
-                      [...instrument.gallery.take(3), instrument.imageUrl],
+                      UnmodifiableList(
+                        [...instrument.gallery.take(3), instrument.imageUrl],
+                      ),
                       initialIndex: 3,
                     ),
                     borderRadius: const BorderRadius.all(
@@ -169,7 +173,7 @@ class InstrumentHeaderImages extends StatelessWidget {
 
   void showImage(
     BuildContext context,
-    List<String> images, {
+    UnmodifiableList<String> images, {
     int? initialIndex,
   }) {
     final multiImageProvider = MultiImageProvider(

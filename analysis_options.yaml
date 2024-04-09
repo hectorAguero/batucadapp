@@ -24,9 +24,11 @@ linter:
     public_member_api_docs: false
     use_setters_to_change_properties: false
     one_member_abstracts: false
-    # prefer_single_quotes: true  # Uncomment to enable the `prefer_single_quotes` rule
-# Additional information about this file can be found at
-# https://dart.dev/guides/language/analysis-options
+    always_use_package_imports: false
+    prefer_relative_imports: true
+
 analyzer:
   plugins:
     - custom_lint
+  exclude:
+    - 'lib/l10n/*.dart'

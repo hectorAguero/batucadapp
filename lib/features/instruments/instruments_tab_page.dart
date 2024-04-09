@@ -2,14 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:go_router/go_router.dart';
-import 'package:samba_public_app/common_widgets/app_cupertino_sliver_navigation_bar.dart';
-import 'package:samba_public_app/extensions/app_localization_extension.dart';
-import 'package:samba_public_app/extensions/media_query_context_extension.dart';
-import 'package:samba_public_app/features/instruments/details/instrument_details_page.dart';
-import 'package:samba_public_app/features/instruments/instruments_tab_providers.dart';
-import 'package:samba_public_app/features/instruments/widgets/instrument_list_tile.dart';
-import 'package:samba_public_app/router/go_route_scroll_tab.dart';
 import 'package:sliver_tools/sliver_tools.dart';
+
+import '../../common_widgets/app_cupertino_sliver_navigation_bar.dart';
+import '../../extensions/app_localization_extension.dart';
+import '../../extensions/media_query_context_extension.dart';
+import '../../router/go_route_scroll_tab.dart';
+import '../../utils/unmodifiable_list.dart';
+import 'details/instrument_details_page.dart';
+import 'instruments_tab_providers.dart';
+import 'widgets/instrument_list_tile.dart';
 
 class InstrumentsTabPage extends ConsumerWidget {
   const InstrumentsTabPage({super.key});
@@ -20,9 +22,9 @@ class InstrumentsTabPage extends ConsumerWidget {
       controller: controller,
       child: const InstrumentsTabPage(),
     ),
-    routes: [
+    routes: UnmodifiableList([
       InstrumentDetailsPage.route,
-    ],
+    ]),
   );
 
   @override

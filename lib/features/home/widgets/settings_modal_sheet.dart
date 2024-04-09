@@ -1,12 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:samba_public_app/extensions/app_localization_extension.dart';
-import 'package:samba_public_app/extensions/theme_of_context_extension.dart';
-import 'package:samba_public_app/features/home/widgets/settings_theme_section.dart';
-import 'package:samba_public_app/localization/language.dart';
-import 'package:samba_public_app/localization/language_app_provider.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
+
+import '../../../extensions/app_localization_extension.dart';
+import '../../../extensions/theme_of_context_extension.dart';
+import '../../../localization/language.dart';
+import '../../../localization/language_app_provider.dart';
+import 'settings_theme_section.dart';
 
 void showSettingModalSheet(
   BuildContext context, {

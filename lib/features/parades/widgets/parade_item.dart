@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:samba_public_app/extensions/app_localization_extension.dart';
-import 'package:samba_public_app/extensions/intl_extension.dart';
-import 'package:samba_public_app/extensions/media_query_context_extension.dart';
-import 'package:samba_public_app/extensions/theme_of_context_extension.dart';
-import 'package:samba_public_app/features/parades/parade.dart';
-import 'package:samba_public_app/features/parades/parade_extension.dart';
-import 'package:samba_public_app/features/parades/parades_tab_providers.dart';
-import 'package:samba_public_app/features/schools/school.dart';
-import 'package:samba_public_app/features/schools/school_extensions.dart';
+
+import '../../../extensions/app_localization_extension.dart';
+import '../../../extensions/intl_extension.dart';
+import '../../../extensions/media_query_context_extension.dart';
+import '../../../extensions/theme_of_context_extension.dart';
+import '../../schools/school.dart';
+import '../../schools/school_extensions.dart';
+import '../parade.dart';
+import '../parade_extension.dart';
+import '../parades_tab_providers.dart';
 
 class ParadeItem extends ConsumerWidget {
   const ParadeItem({super.key});

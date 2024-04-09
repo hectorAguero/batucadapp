@@ -22,12 +22,12 @@ final schoolDivisionsProvider = AutoDisposeNotifierProvider<SchoolDivisions,
 );
 
 typedef _$SchoolDivisions = AutoDisposeNotifier<Map<SchoolDivision, bool>>;
-String _$schoolsHash() => r'48c4145c07d8e7bdba2adc1a48facebbb154579b';
+String _$schoolsHash() => r'2a591be35bdefd9885ad27d3c117f2dcb01b9678';
 
 /// See also [Schools].
 @ProviderFor(Schools)
-final schoolsProvider =
-    AutoDisposeAsyncNotifierProvider<Schools, List<School>>.internal(
+final schoolsProvider = AutoDisposeAsyncNotifierProvider<Schools,
+    UnmodifiableList<School>>.internal(
   Schools.new,
   name: r'schoolsProvider',
   debugGetCreateSourceHash:
@@ -36,7 +36,7 @@ final schoolsProvider =
   allTransitiveDependencies: null,
 );
 
-typedef _$Schools = AutoDisposeAsyncNotifier<List<School>>;
+typedef _$Schools = AutoDisposeAsyncNotifier<UnmodifiableList<School>>;
 String _$searchSchoolHash() => r'd85db3c9f9b14546084048cf1169bc7f1f8ab2e3';
 
 /// See also [SearchSchool].

@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
-import 'package:samba_public_app/features/schools/details/school_details_page.dart';
-import 'package:samba_public_app/features/schools/school.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
+
+import '../school.dart';
+import 'school_details_page.dart';
 
 void showSchoolDetails(BuildContext context, School school) {
   WoltModalSheet.show<dynamic>(

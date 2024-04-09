@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:samba_public_app/features/home/widgets/adaptive_navigation_rail.dart';
+import '../features/home/widgets/adaptive_navigation_rail.dart';
 
 const double smallScreen = 600;
 const double smallHeight = 600;

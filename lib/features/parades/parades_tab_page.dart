@@ -2,16 +2,17 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:samba_public_app/common_widgets/app_cupertino_sliver_navigation_bar.dart';
-import 'package:samba_public_app/extensions/app_localization_extension.dart';
-import 'package:samba_public_app/extensions/intl_extension.dart';
-import 'package:samba_public_app/extensions/media_query_context_extension.dart';
-import 'package:samba_public_app/extensions/theme_of_context_extension.dart';
-import 'package:samba_public_app/features/parades/parades_tab_providers.dart';
-import 'package:samba_public_app/features/parades/widgets/parade_item.dart';
-import 'package:samba_public_app/router/go_route_scroll_tab.dart';
 import 'package:sliver_tools/sliver_tools.dart';
 import 'package:super_sliver_list/super_sliver_list.dart';
+
+import '../../common_widgets/app_cupertino_sliver_navigation_bar.dart';
+import '../../extensions/app_localization_extension.dart';
+import '../../extensions/intl_extension.dart';
+import '../../extensions/media_query_context_extension.dart';
+import '../../extensions/theme_of_context_extension.dart';
+import '../../router/go_route_scroll_tab.dart';
+import 'parades_tab_providers.dart';
+import 'widgets/parade_item.dart';
 
 class ParadesTabPage extends ConsumerStatefulWidget {
   const ParadesTabPage({super.key});
