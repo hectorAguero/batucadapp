@@ -1,4 +1,4 @@
-import 'package:dio_image_provider/dio_image_provider.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_image_viewer/easy_image_viewer.dart';
 import 'package:flutter/material.dart';
 
@@ -178,7 +178,7 @@ class InstrumentHeaderImages extends StatelessWidget {
   }) {
     final multiImageProvider = MultiImageProvider(
       [
-        for (final image in images) DioImage(Uri.parse(image)),
+        for (final image in images) CachedNetworkImageProvider(image),
       ],
       initialIndex: initialIndex ?? 0,
     );

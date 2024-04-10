@@ -212,10 +212,10 @@ class AppLocalizationsJa extends AppLocalizations {
   String get noMoreSchools => 'これ以上エスコーラエスコーラはありません 😔';
 
   @override
-  String get noFilteresSchoolsFound => 'フィルタされたエスコーラは見つかりませんでした 😣';
+  String get noFilteredSchools => 'フィルタされたエスコーラは見つかりませんでした 😣';
 
   @override
-  String get noFavoritesSchools => 'お気に入りのエスコーラはありません 🥺';
+  String get noFavoriteSchools => 'お気に入りのエスコーラはありません 🥺';
 
   @override
   String get noSchoolsFound => 'エスコーラは見つかりませんでした 😢';

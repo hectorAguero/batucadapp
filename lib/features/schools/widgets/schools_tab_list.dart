@@ -47,9 +47,9 @@ class SchoolsTabList extends ConsumerWidget {
                       duration: kThemeAnimationDuration,
                       child: filteredSchools.isEmpty
                           ? const SchoolsEmptyList()
-                          : SliverAlignedGrid.extent(
+                          : SliverMasonryGrid.extent(
                               maxCrossAxisExtent: SchoolCard.cardMaxWidth,
-                              itemCount: filteredSchools.length,
+                              childCount: filteredSchools.length,
                               itemBuilder: (context, index) {
                                 final school = filteredSchools[index];
                                 return Column(
@@ -104,7 +104,7 @@ class SchoolsEmptyList extends ConsumerWidget {
                 const SizedBox(height: 8),
                 if (ref.watch(favoriteSchoolsProvider).isEmpty)
                   Text(
-                    context.loc.noFavoritesSchools,
+                    context.loc.noFavoriteSchools,
                     style: context.textTheme.titleMedium!.copyWith(
                       color: context.colorScheme.onSurfaceVariant,
                     ),
@@ -112,7 +112,7 @@ class SchoolsEmptyList extends ConsumerWidget {
                   )
                 else
                   Text(
-                    context.loc.noFilteresSchoolsFound,
+                    context.loc.noFilteredSchools,
                     style: context.textTheme.titleMedium!.copyWith(
                       color: context.colorScheme.onSurfaceVariant,
                     ),

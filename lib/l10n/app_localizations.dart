@@ -511,17 +511,17 @@ abstract class AppLocalizations {
   /// **'There\'s no more schools 😔'**
   String get noMoreSchools;
 
-  /// No description provided for @noFilteresSchoolsFound.
+  /// No description provided for @noFilteredSchools.
   ///
   /// In en, this message translates to:
   /// **'No schools found with these filters 😣'**
-  String get noFilteresSchoolsFound;
+  String get noFilteredSchools;
 
-  /// No description provided for @noFavoritesSchools.
+  /// No description provided for @noFavoriteSchools.
   ///
   /// In en, this message translates to:
   /// **'No favorite schools 🥺'**
-  String get noFavoritesSchools;
+  String get noFavoriteSchools;
 
   /// No description provided for @noSchoolsFound.
   ///

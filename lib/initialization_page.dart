@@ -1,12 +1,9 @@
 import 'package:dart_mappable/dart_mappable.dart';
-import 'package:dio/dio.dart';
-import 'package:dio_image_provider/dio_image_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'core/get_native_adapter.dart'
-    if (dart.library.js_interop) 'package:samba_public_app/core/get_native_adapter_web.dart';
+
 import 'core/shared_preferences_provider.dart';
 import 'extensions/app_localization_extension.dart';
 import 'extensions/media_query_context_extension.dart';
@@ -19,8 +16,6 @@ part 'initialization_page.g.dart';
 @Riverpod(keepAlive: true)
 Future<void> initialization(InitializationRef ref) async {
   MapperContainer.globals.use(UnmodifiableListViewMapper());
-  final imageDio = Dio()..httpClientAdapter = getNativeAdapter();
-  DioImage.defaultDio = imageDio..options.validateStatus = (status) => true;
 
   ref.onDispose(() {
     ref.invalidate(sharedPreferencesProvider);

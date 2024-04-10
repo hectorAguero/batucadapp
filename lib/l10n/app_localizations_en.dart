@@ -212,10 +212,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get noMoreSchools => 'There\'s no more schools 😔';
 
   @override
-  String get noFilteresSchoolsFound => 'No schools found with these filters 😣';
+  String get noFilteredSchools => 'No schools found with these filters 😣';
 
   @override
-  String get noFavoritesSchools => 'No favorite schools 🥺';
+  String get noFavoriteSchools => 'No favorite schools 🥺';
 
   @override
   String get noSchoolsFound => 'No schools found 😢';

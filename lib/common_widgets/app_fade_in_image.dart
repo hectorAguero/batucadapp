@@ -1,4 +1,5 @@
-import 'package:dio_image_provider/dio_image_provider.dart';
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:transparent_image/transparent_image.dart';
 
@@ -24,12 +25,15 @@ class AppFadeInImage extends StatelessWidget {
   Widget build(BuildContext context) {
     return FadeInImage(
       placeholder: MemoryImage(kTransparentImage),
-      image: DioImage(Uri.parse(image)),
+      image: CachedNetworkImageProvider(image),
       imageErrorBuilder: (context, error, stackTrace) {
         viewLog.info('Error loading image:', error, stackTrace);
         return AppErrorImageBuilder(
           height: height,
-          error: error,
+          textColor: context.colorScheme.onErrorContainer,
+          backgroundColor: context.colorScheme.errorContainer,
+          error: error.toString(),
+          errorType: context.loc.errorLoadingImage,
           width: height,
         );
       },
@@ -45,59 +49,57 @@ class AppErrorImageBuilder extends StatelessWidget {
     required this.width,
     required this.height,
     required this.error,
+    required this.errorType,
+    required this.backgroundColor,
+    required this.textColor,
     super.key,
   });
 
   final double? width;
   final double? height;
-  final Object error;
+  final String error;
+  final String errorType;
+  final Color backgroundColor;
+  final Color textColor;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [
-            context.colorScheme.error,
-            context.colorScheme.errorContainer,
+    return ColoredBox(
+      color: backgroundColor,
+      child: SizedBox(
+        height: height,
+        width: width,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Icon(
+              Icons.error,
+              color: textColor,
+              size: 50,
+            ),
+            // Error icon
+            Text(
+              errorType,
+              maxLines: 2,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: textColor,
+                fontSize: 13,
+              ),
+            ),
+            const SizedBox(height: 4), // Space between text and error message
+            Text(
+              error,
+              maxLines: 3,
+              overflow: TextOverflow.ellipsis,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: textColor,
+                fontSize: 11,
+              ),
+            ),
           ],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
         ),
-      ),
-      height: height,
-      width: width,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Icon(
-            Icons.error,
-            color: context.colorScheme.onError,
-            size: 50,
-          ),
-          // Error icon
-          Text(
-            context.loc.errorLoadingImage,
-            maxLines: 2,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: context.colorScheme.onErrorContainer,
-              fontSize: 13,
-            ),
-          ),
-
-          const SizedBox(height: 4), // Space between text and error message
-          Text(
-            '$error',
-            maxLines: 3,
-            overflow: TextOverflow.ellipsis,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: context.colorScheme.onError,
-              fontSize: 11,
-            ),
-          ),
-        ],
       ),
     );
   }
