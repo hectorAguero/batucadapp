@@ -6,12 +6,12 @@ part of 'schools_tab_providers.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$schoolsHash() => r'6cd2e21401e3e7d302caa2fcc52f87c1e4ff135d';
+String _$schoolsHash() => r'ff02f47059899363ddae4971198c6cd512b47564';
 
 /// See also [Schools].
 @ProviderFor(Schools)
-final schoolsProvider =
-    AutoDisposeAsyncNotifierProvider<Schools, List<School>>.internal(
+final schoolsProvider = AutoDisposeAsyncNotifierProvider<Schools,
+    UnmodifiableListView<School>>.internal(
   Schools.new,
   name: r'schoolsProvider',
   debugGetCreateSourceHash:
@@ -20,13 +20,13 @@ final schoolsProvider =
   allTransitiveDependencies: null,
 );
 
-typedef _$Schools = AutoDisposeAsyncNotifier<List<School>>;
-String _$favoriteSchoolsHash() => r'f003884370854f60456cbbba3aca2fdcf93d03c9';
+typedef _$Schools = AutoDisposeAsyncNotifier<UnmodifiableListView<School>>;
+String _$favoriteSchoolsHash() => r'8fdbf5a857b734ed24d2b019b2a2df863937b7a4';
 
 /// See also [FavoriteSchools].
 @ProviderFor(FavoriteSchools)
-final favoriteSchoolsProvider =
-    AutoDisposeNotifierProvider<FavoriteSchools, List<String>>.internal(
+final favoriteSchoolsProvider = AutoDisposeNotifierProvider<FavoriteSchools,
+    UnmodifiableListView<String>>.internal(
   FavoriteSchools.new,
   name: r'favoriteSchoolsProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -36,7 +36,7 @@ final favoriteSchoolsProvider =
   allTransitiveDependencies: null,
 );
 
-typedef _$FavoriteSchools = AutoDisposeNotifier<List<String>>;
+typedef _$FavoriteSchools = AutoDisposeNotifier<UnmodifiableListView<String>>;
 String _$schoolDivisionsHash() => r'790ca8cc34132ada189c3bdfaa8f3e68046700f0';
 
 /// See also [SchoolDivisions].

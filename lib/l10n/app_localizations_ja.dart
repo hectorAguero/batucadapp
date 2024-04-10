@@ -221,6 +221,15 @@ class AppLocalizationsJa extends AppLocalizations {
   String get noSchoolsFound => 'エスコーラは見つかりませんでした 😢';
 
   @override
+  String get schoolDivisionEnredoBloco1 => 'エンレードブロコ１';
+
+  @override
+  String get schoolDivisionEnredoBloco2 => 'エンレードブロコ２';
+
+  @override
+  String get schoolDivisionStreetBloco => 'ストリートブロコ';
+
+  @override
   String get settingsTitle => '設定';
 
   @override

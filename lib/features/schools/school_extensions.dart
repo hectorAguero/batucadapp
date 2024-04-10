@@ -6,15 +6,6 @@ import '../../extensions/app_localization_extension.dart';
 import '../../extensions/string_extension.dart';
 import 'school.dart';
 
-extension SchoolLeagueExtension on SchoolLeague {
-  String fullName(BuildContext context) => switch (this) {
-        (SchoolLeague.liesa) => context.loc.schoolLeagueLiesaFullName,
-        (SchoolLeague.ligarj) => context.loc.schoolLeagueLigarjFullName,
-        (SchoolLeague.superliga) => context.loc.schoolLeagueSuperligaFullName,
-        (SchoolLeague.acas) => context.loc.schoolLeagueAcasFullName,
-      };
-}
-
 extension SchoolDivisionExtension on SchoolDivision {
   String fullName(BuildContext context) => switch (this) {
         (SchoolDivision.especial) => context.loc.schoolDivisionSpecialFullName,
@@ -24,6 +15,11 @@ extension SchoolDivisionExtension on SchoolDivision {
         (SchoolDivision.avaliacao) =>
           context.loc.schoolDivisionEvaluationFullName,
         (SchoolDivision.mirins) => context.loc.schoolDivisionChildrenFullName,
+        (SchoolDivision.blocosDeEnredo1) =>
+          context.loc.schoolDivisionEnredoBloco1,
+        (SchoolDivision.blocosDeEnredo2) =>
+          context.loc.schoolDivisionEnredoBloco2,
+        (SchoolDivision.blocosDeRua) => context.loc.schoolDivisionStreetBloco,
       };
 
   String shortName(BuildContext context) => switch (this) {
@@ -33,6 +29,11 @@ extension SchoolDivisionExtension on SchoolDivision {
         (SchoolDivision.bronze) => context.loc.schoolDivisionBronze,
         (SchoolDivision.avaliacao) => context.loc.schoolDivisionEvaluation,
         (SchoolDivision.mirins) => context.loc.schoolDivisionChildren,
+        (SchoolDivision.blocosDeEnredo1) =>
+          context.loc.schoolDivisionEnredoBloco1,
+        (SchoolDivision.blocosDeEnredo2) =>
+          context.loc.schoolDivisionEnredoBloco2,
+        (SchoolDivision.blocosDeRua) => context.loc.schoolDivisionStreetBloco,
       };
 }
 
@@ -49,7 +50,7 @@ extension SearchLogicSchoolExtension on School {
       return true;
     }
 
-    if (colorNames.join(' ').removeAccents.contains(search)) {
+    if (colorsCode.join(' ').removeAccents.contains(search)) {
       return true;
     }
 

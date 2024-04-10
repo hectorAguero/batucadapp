@@ -21,21 +21,14 @@ void showSchoolDetails(BuildContext context, School school) {
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                     colors: [
-                      CupertinoDynamicColor.resolve(
-                        CupertinoColors.systemGrey5,
-                        context,
-                      ),
-                      if (school.colors.isNotEmpty)
-                        school.colors.first.withOpacity(0.5)
-                      else
-                        CupertinoDynamicColor.resolve(
-                          CupertinoColors.systemGrey5,
-                          context,
-                        ),
-                      if (school.colors.length > 1)
-                        school.colors[1].withOpacity(0.5),
-                      if (school.colors.length > 2)
-                        school.colors[2].withOpacity(0.5),
+                      if (school.colors.isEmpty)
+                        for (final _ in Iterable<int>.generate(2))
+                          CupertinoDynamicColor.resolve(
+                            CupertinoColors.systemGrey5,
+                            context,
+                          ),
+                      for (final color in school.colorsCode)
+                        color.withOpacity(0.5),
                     ],
                   ),
                 ),

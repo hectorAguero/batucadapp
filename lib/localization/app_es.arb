@@ -80,6 +80,9 @@
 	"noFilteresSchoolsFound": "No hay escuelas con estos filtros 😣",
 	"noFavoritesSchools": "No hay escuelas favoritas 🥺",
 	"noSchoolsFound": "No encontramos escuelas 😢",
+	"schoolDivisionEnredoBloco1": "Blocos de Enredo 1",
+	"schoolDivisionEnredoBloco2": "Blocos de Enredo 2",
+	"schoolDivisionStreetBloco": "Blocos de Calle",
 	"@_SETTINGS_PAGE": {},
 	"settingsTitle": "Configuración",
 	"switchTheme": "Cambiar Tema"

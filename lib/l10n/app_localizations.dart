@@ -529,6 +529,24 @@ abstract class AppLocalizations {
   /// **'No schools found 😢'**
   String get noSchoolsFound;
 
+  /// No description provided for @schoolDivisionEnredoBloco1.
+  ///
+  /// In en, this message translates to:
+  /// **'Enredo Blocos 1'**
+  String get schoolDivisionEnredoBloco1;
+
+  /// No description provided for @schoolDivisionEnredoBloco2.
+  ///
+  /// In en, this message translates to:
+  /// **'Enredo Blocos 2'**
+  String get schoolDivisionEnredoBloco2;
+
+  /// No description provided for @schoolDivisionStreetBloco.
+  ///
+  /// In en, this message translates to:
+  /// **'Street Blocos'**
+  String get schoolDivisionStreetBloco;
+
   /// No description provided for @settingsTitle.
   ///
   /// In en, this message translates to:

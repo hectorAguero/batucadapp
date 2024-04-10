@@ -6,7 +6,6 @@ import '../../core/shared_preferences_provider.dart';
 import '../../utils/main_logger.dart';
 import 'school.dart';
 import 'school_extensions.dart';
-import 'school_sort.dart';
 import 'schools_repo.dart';
 import 'widgets/school_card.dart';
 
@@ -18,33 +17,39 @@ class Schools extends _$Schools {
 
   @override
   FutureOr<UnmodifiableListView<School>> build() async {
-    return _getSchools();
+    final sort = ref.read(selectedSchoolSortProvider);
+    return _getSchools(sort: sort);
   }
 
   Future<bool?> fetchNextPage({int pageSize = _pageSize}) async {
     try {
+      final sort = ref.read(selectedSchoolSortProvider);
       final schools = await _getSchools(
         page: state.value!.length ~/ pageSize + 1,
         pageSize: pageSize,
+        sort: sort,
       );
       if (schools.isNotEmpty) {
         state = AsyncData(UnmodifiableListView([...state.value!, ...schools]));
         return true;
       }
+      ref.read(schoolsTabReachedLimitProvider.notifier).setReachedLimit();
       return false;
     } catch (e, st) {
-      viewLog.fine('Failed to fetch next page', e, st);
+      viewLog.warning('Failed to fetch next page $e', e, st);
       return null;
     }
   }
 
   Future<UnmodifiableListView<School>> _getSchools({
+    required SchoolSort sort,
     int page = 1,
     int pageSize = _pageSize,
   }) async {
     final schools = await ref.watch(schoolsRepoProvider).getSchools(
           page: page,
           pageSize: pageSize,
+          sort: sort.name.toLowerCase(),
         );
     if (schools.isEmpty) {
       ref.read(schoolsTabReachedLimitProvider.notifier).setReachedLimit();
@@ -148,20 +153,16 @@ final filteredSchoolsProvider =
   final search = ref.watch(searchSchoolProvider);
   final schools = ref.watch(schoolsProvider);
   final favoritesIds = ref.watch(favoriteSchoolsProvider);
-  final sort = ref.watch(selectedSchoolSortProvider);
   final onlyFavorites = ref.watch(showOnlyFavoriteSchoolsProvider);
 
   if (schools.value == null) return UnmodifiableListView([]);
 
-  final filteredSchools = schools.value!
-      .where(
-        (school) =>
-            (filter[school.currentDivision] ?? false) &&
-            school.searchLogic(search) &&
-            (!onlyFavorites || favoritesIds.contains('${school.id}')),
-      )
-      .toList()
-    ..sort(sort.sortSwitch);
+  final filteredSchools = schools.value!.where(
+    (school) =>
+        (filter[school.currentDivision] ?? false) &&
+        school.searchLogic(search) &&
+        (!onlyFavorites || favoritesIds.contains('${school.id}')),
+  );
 
   return UnmodifiableListView(filteredSchools);
 });

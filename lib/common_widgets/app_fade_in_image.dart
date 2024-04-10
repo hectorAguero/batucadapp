@@ -26,7 +26,7 @@ class AppFadeInImage extends StatelessWidget {
       placeholder: MemoryImage(kTransparentImage),
       image: DioImage(Uri.parse(image)),
       imageErrorBuilder: (context, error, stackTrace) {
-        viewLog.fine('Error loading image: $error');
+        viewLog.info('Error loading image:', error, stackTrace);
         return AppErrorImageBuilder(
           height: height,
           error: error,

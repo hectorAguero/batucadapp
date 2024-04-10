@@ -8,7 +8,7 @@ import '../../../extensions/app_localization_extension.dart';
 import '../../../extensions/media_query_context_extension.dart';
 import '../../../extensions/theme_of_context_extension.dart';
 import '../../home/widgets/adaptive_navigation_rail.dart';
-import '../school_sort.dart';
+import '../school.dart';
 import '../schools_tab_providers.dart';
 
 class SchoolsTabSearchHeader extends ConsumerWidget {

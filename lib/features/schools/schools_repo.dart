@@ -15,6 +15,7 @@ abstract class SchoolsRepo {
   Future<UnmodifiableList<School>> getSchools({
     required int page,
     required int pageSize,
+    required String sort,
   });
 }
 
@@ -27,11 +28,12 @@ class SchoolsRepoImpls implements SchoolsRepo {
   Future<UnmodifiableList<School>> getSchools({
     required int page,
     required int pageSize,
+    required String sort,
   }) async {
     final networkClient = ref.watch(clientNetworkProvider);
     final response = await networkClient.get<Iterable<dynamic>>(
       '/schools',
-      queryParameters: {'page': page, 'pageSize': pageSize},
+      queryParameters: {'page': page, 'pagesize': pageSize},
     );
     final data = response.data!.cast<Map<String, dynamic>>();
     return UnmodifiableList([
@@ -48,7 +50,8 @@ class MockSchoolsRepo implements SchoolsRepo {
   @override
   Future<UnmodifiableList<School>> getSchools({
     required int page,
-    int pageSize = 10,
+    required int pageSize,
+    required String sort,
   }) async {
     await Future<void>.delayed(const Duration(seconds: 1));
     return UnmodifiableList([

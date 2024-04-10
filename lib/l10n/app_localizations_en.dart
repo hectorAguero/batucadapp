@@ -221,6 +221,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get noSchoolsFound => 'No schools found 😢';
 
   @override
+  String get schoolDivisionEnredoBloco1 => 'Enredo Blocos 1';
+
+  @override
+  String get schoolDivisionEnredoBloco2 => 'Enredo Blocos 2';
+
+  @override
+  String get schoolDivisionStreetBloco => 'Street Blocos';
+
+  @override
   String get settingsTitle => 'Settings';
 
   @override

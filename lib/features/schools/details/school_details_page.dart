@@ -153,17 +153,17 @@ class _SchoolDetailsTextState extends State<SchoolDetailsText> {
                     width: (16 * widget.school.colors.length) + 16.0,
                     height: 32,
                     child: Tooltip(
-                      message: widget.school.colorNames.join(', '),
+                      message: widget.school.colors.join(', '),
                       child: Stack(
                         children: [
-                          for (final (index, color)
-                              in widget.school.colors.indexed)
+                          for (final (index, colorCode)
+                              in widget.school.colorsCode.indexed)
                             Container(
                               height: 32,
                               width: 32,
                               margin: EdgeInsets.only(left: index * 16.0),
                               decoration: BoxDecoration(
-                                color: color,
+                                color: colorCode,
                                 shape: BoxShape.circle,
                                 boxShadow: const [
                                   BoxShadow(
@@ -186,11 +186,12 @@ class _SchoolDetailsTextState extends State<SchoolDetailsText> {
               title: '${context.loc.schoolSymbols}: ',
               content: widget.school.translatedSymbols.join(', '),
             ),
-            SchoolTextTile(
-              icon: Icons.date_range_outlined,
-              title: '${context.loc.schoolFoundation}: ',
-              content: widget.school.foundationDate.intlShort(context),
-            ),
+            if (widget.school.foundationDate != null)
+              SchoolTextTile(
+                icon: Icons.date_range_outlined,
+                title: '${context.loc.schoolFoundation}: ',
+                content: widget.school.foundationDate!.intlShort(context),
+              ),
             if (widget.school.godmotherSchool.isNotEmpty)
               SchoolTextTile(
                 icon: Icons.school_outlined,
@@ -200,8 +201,7 @@ class _SchoolDetailsTextState extends State<SchoolDetailsText> {
             SchoolTextTile(
               icon: Icons.star_border_outlined,
               title: '${context.loc.schoolLeague}: ',
-              content: widget.school.league.name.toUpperCase(),
-              contentTooltip: widget.school.league.fullName(context),
+              content: widget.school.carnivalCategory.name.toUpperCase(),
             ),
             SchoolTextTile(
               icon: Icons.sports_soccer_outlined,

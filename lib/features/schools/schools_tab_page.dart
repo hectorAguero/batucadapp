@@ -54,11 +54,15 @@ class _SchoolsTabState extends ConsumerState<SchoolsTabPage> {
         _debouncer.run(() {
           ref.read(schoolsProvider.notifier).fetchNextPage().then((value) {
             if (value == null) {
-            } else if (value) {
-              widget.controller.animateTo(
-                pixels + 40,
-                duration: const Duration(milliseconds: 300),
-                curve: Curves.easeInOut,
+            } else if (value && widget.controller.hasClients) {
+              widget.controller.jumpTo(pixels);
+              Future.delayed(
+                const Duration(milliseconds: 50),
+                () => widget.controller.animateTo(
+                  pixels + 64 + 40,
+                  duration: const Duration(milliseconds: 250),
+                  curve: Curves.easeInOut,
+                ),
               );
             } else {
               context.showSnackBarText(context.loc.noMoreSchools);
@@ -112,7 +116,11 @@ class _SchoolsTabState extends ConsumerState<SchoolsTabPage> {
                               : const Center(
                                   child: Padding(
                                     padding: EdgeInsets.all(16),
-                                    child: CircularProgressIndicator.adaptive(),
+                                    child: SizedBox(
+                                      height: 16,
+                                      child:
+                                          CircularProgressIndicator.adaptive(),
+                                    ),
                                   ),
                                 ),
                         ),

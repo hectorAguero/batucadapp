@@ -12,35 +12,21 @@ import 'extensions/app_localization_extension.dart';
 import 'extensions/media_query_context_extension.dart';
 import 'features/home/widgets/adaptive_navigation_rail.dart';
 import 'theme/theme_provider.dart';
-import 'utils/unmodifiable_list.dart';
+import 'utils/unmodifiable_list_mapper.dart';
 
 part 'initialization_page.g.dart';
 
 @Riverpod(keepAlive: true)
 Future<void> initialization(InitializationRef ref) async {
-  initializeMappers();
+  MapperContainer.globals.use(UnmodifiableListViewMapper());
   final imageDio = Dio()..httpClientAdapter = getNativeAdapter();
-  DioImage.defaultDio = imageDio;
+  DioImage.defaultDio = imageDio..options.validateStatus = (status) => true;
 
   ref.onDispose(() {
     ref.invalidate(sharedPreferencesProvider);
   });
 
   await ref.watch(sharedPreferencesProvider.future);
-}
-
-void initializeMappers() {
-  // This makes all mappers work with immutable collections
-  MapperContainer.globals.useAll([
-    // mapper for immutable lists
-    SerializableMapper<UnmodifiableList<dynamic>, Object>.arg1(
-      decode: <T>(json, fromJsonT) =>
-          UnmodifiableList<T>((json as Iterable).map(fromJsonT)),
-      encode: (UnmodifiableList<dynamic> value) =>
-          (Object? Function(dynamic) toJsonT) => value.map(toJsonT).toList(),
-      type: <E>(f) => f<UnmodifiableList<E>>(),
-    ),
-  ]);
 }
 
 /// Widget class to manage asynchronous app initialization

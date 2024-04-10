@@ -80,6 +80,9 @@
 	"noFilteresSchoolsFound": "フィルタされたエスコーラは見つかりませんでした 😣",
 	"noFavoritesSchools": "お気に入りのエスコーラはありません 🥺",
 	"noSchoolsFound": "エスコーラは見つかりませんでした 😢",
+	"schoolDivisionEnredoBloco1": "エンレードブロコ１",
+	"schoolDivisionEnredoBloco2": "エンレードブロコ２",
+	"schoolDivisionStreetBloco": "ストリートブロコ",
 	"@_SETTINGS_PAGE": {},
 	"settingsTitle": "設定",
 	"switchTheme": "テーマの切り替え"

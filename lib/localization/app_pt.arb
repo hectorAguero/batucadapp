@@ -77,6 +77,12 @@
 	"schoolScore": "Pontuação",
 	"schoolComponents": "Componentes",
 	"noMoreSchools": "Não há mais escolas 😔",
+	"noFilteredSchools": "Nenhuma escola encontrada 😣",
+	"noFavoriteSchools": "Nenhuma escola favorita 🥺",
+	"noSchoolsFound": "Nenhuma escola encontrada 😢",
+	"schoolDivisionEnredoBloco1": "Blocos de Enredo 1",
+	"schoolDivisionEnredoBloco2": "Blocos de Enredo 2",
+	"schoolDivisionStreetBloco": "Blocos de Rua",
 	"@_SETTINGS_PAGE": {},
 	"settingsTitle": "Configurações",
 	"switchTheme": "Alternar Tema"

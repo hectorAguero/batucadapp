@@ -10,7 +10,6 @@ import '../../../extensions/theme_of_context_extension.dart';
 import '../details/show_details.dart';
 import '../school.dart';
 import '../school_extensions.dart';
-import '../school_sort.dart';
 import '../schools_tab_providers.dart';
 import 'school_flag.dart';
 
@@ -57,21 +56,13 @@ class _SchoolCardState extends ConsumerState<SchoolCard> {
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
                 colors: [
-                  CupertinoDynamicColor.resolve(
-                    CupertinoColors.systemGrey5,
-                    context,
-                  ),
-                  if (school.colors.isNotEmpty)
-                    school.colors.first.withOpacity(0.5)
-                  else
-                    CupertinoDynamicColor.resolve(
-                      CupertinoColors.systemGrey5,
-                      context,
-                    ),
-                  if (school.colors.length > 1)
-                    school.colors[1].withOpacity(0.5),
-                  if (school.colors.length > 2)
-                    school.colors[2].withOpacity(0.5),
+                  if (school.colors.isEmpty)
+                    for (final _ in Iterable<int>.generate(2))
+                      CupertinoDynamicColor.resolve(
+                        CupertinoColors.systemGrey5,
+                        context,
+                      ),
+                  for (final color in school.colorsCode) color.withOpacity(0.5),
                 ],
               ),
             ),
@@ -229,6 +220,8 @@ extension SelectedSchoolSortExtension on SchoolSort {
               ' ${context.loc.schoolPerformancePlace.capitalize}',
         (SchoolSort.location) =>
           CountryLocalizations.of(context)!.countryName(countryCode: 'BR')!,
-        _ => school.foundationDate.intlShort(context)
+        _ => school.foundationDate != null
+            ? school.foundationDate!.intlShort(context)
+            : '',
       };
 }

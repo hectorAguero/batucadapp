@@ -218,7 +218,16 @@ class AppLocalizationsPt extends AppLocalizations {
   String get noFavoritesSchools => 'No favorite schools 🥺';
 
   @override
-  String get noSchoolsFound => 'No schools found 😢';
+  String get noSchoolsFound => 'Nenhuma escola encontrada 😢';
+
+  @override
+  String get schoolDivisionEnredoBloco1 => 'Blocos de Enredo 1';
+
+  @override
+  String get schoolDivisionEnredoBloco2 => 'Blocos de Enredo 2';
+
+  @override
+  String get schoolDivisionStreetBloco => 'Blocos de Rua';
 
   @override
   String get settingsTitle => 'Configurações';

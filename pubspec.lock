@@ -305,14 +305,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.3.1"
-  fast_immutable_collections:
-    dependency: "direct main"
-    description:
-      name: fast_immutable_collections
-      sha256: "38fbc50df5b219dcfb83ebbc3275ec09872530ca1153858fc56fceadb310d037"
-      url: "https://pub.dev"
-    source: hosted
-    version: "10.2.2"
   fetch_api:
     dependency: transitive
     description:

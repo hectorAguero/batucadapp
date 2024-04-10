@@ -6,57 +6,57 @@
 
 part of 'school.dart';
 
-class SchoolLeagueMapper extends EnumMapper<SchoolLeague> {
-  SchoolLeagueMapper._();
+class SchoolCategoryMapper extends EnumMapper<SchoolCategory> {
+  SchoolCategoryMapper._();
 
-  static SchoolLeagueMapper? _instance;
-  static SchoolLeagueMapper ensureInitialized() {
+  static SchoolCategoryMapper? _instance;
+  static SchoolCategoryMapper ensureInitialized() {
     if (_instance == null) {
-      MapperContainer.globals.use(_instance = SchoolLeagueMapper._());
+      MapperContainer.globals.use(_instance = SchoolCategoryMapper._());
     }
     return _instance!;
   }
 
-  static SchoolLeague fromValue(dynamic value) {
+  static SchoolCategory fromValue(dynamic value) {
     ensureInitialized();
     return MapperContainer.globals.fromValue(value);
   }
 
   @override
-  SchoolLeague decode(dynamic value) {
+  SchoolCategory decode(dynamic value) {
     switch (value) {
-      case 'LIESA':
-        return SchoolLeague.liesa;
-      case 'LIGARJ':
-        return SchoolLeague.ligarj;
-      case 'SUPERLIGA':
-        return SchoolLeague.superliga;
-      case 'ACAS':
-        return SchoolLeague.acas;
+      case 'Escolas de samba':
+        return SchoolCategory.escolasDeSamba;
+      case 'Escolas mirins':
+        return SchoolCategory.escolasMirins;
+      case 'Blocos de enredo':
+        return SchoolCategory.blocoDeEnredo;
+      case 'Blocos de Rua':
+        return SchoolCategory.blocoDeRua;
       default:
         throw MapperException.unknownEnumValue(value);
     }
   }
 
   @override
-  dynamic encode(SchoolLeague self) {
+  dynamic encode(SchoolCategory self) {
     switch (self) {
-      case SchoolLeague.liesa:
-        return 'LIESA';
-      case SchoolLeague.ligarj:
-        return 'LIGARJ';
-      case SchoolLeague.superliga:
-        return 'SUPERLIGA';
-      case SchoolLeague.acas:
-        return 'ACAS';
+      case SchoolCategory.escolasDeSamba:
+        return 'Escolas de samba';
+      case SchoolCategory.escolasMirins:
+        return 'Escolas mirins';
+      case SchoolCategory.blocoDeEnredo:
+        return 'Blocos de enredo';
+      case SchoolCategory.blocoDeRua:
+        return 'Blocos de Rua';
     }
   }
 }
 
-extension SchoolLeagueMapperExtension on SchoolLeague {
-  String toValue() {
-    SchoolLeagueMapper.ensureInitialized();
-    return MapperContainer.globals.toValue<SchoolLeague>(this) as String;
+extension SchoolCategoryMapperExtension on SchoolCategory {
+  dynamic toValue() {
+    SchoolCategoryMapper.ensureInitialized();
+    return MapperContainer.globals.toValue<SchoolCategory>(this);
   }
 }
 
@@ -91,6 +91,12 @@ class SchoolDivisionMapper extends EnumMapper<SchoolDivision> {
         return SchoolDivision.avaliacao;
       case 6:
         return SchoolDivision.mirins;
+      case 7:
+        return SchoolDivision.blocosDeEnredo1;
+      case 8:
+        return SchoolDivision.blocosDeEnredo2;
+      case 9:
+        return SchoolDivision.blocosDeRua;
       default:
         throw MapperException.unknownEnumValue(value);
     }
@@ -111,6 +117,12 @@ class SchoolDivisionMapper extends EnumMapper<SchoolDivision> {
         return 5;
       case SchoolDivision.mirins:
         return 6;
+      case SchoolDivision.blocosDeEnredo1:
+        return 7;
+      case SchoolDivision.blocosDeEnredo2:
+        return 8;
+      case SchoolDivision.blocosDeRua:
+        return 9;
     }
   }
 }
@@ -129,7 +141,7 @@ class SchoolMapper extends ClassMapperBase<School> {
   static SchoolMapper ensureInitialized() {
     if (_instance == null) {
       MapperContainer.globals.use(_instance = SchoolMapper._());
-      SchoolLeagueMapper.ensureInitialized();
+      SchoolCategoryMapper.ensureInitialized();
       SchoolDivisionMapper.ensureInitialized();
     }
     return _instance!;
@@ -148,30 +160,33 @@ class SchoolMapper extends ClassMapperBase<School> {
   static String _$imageUrl(School v) => v.imageUrl;
   static const Field<School, String> _f$imageUrl =
       Field('imageUrl', _$imageUrl);
-  static DateTime _$foundationDate(School v) => v.foundationDate;
+  static DateTime? _$foundationDate(School v) => v.foundationDate;
   static const Field<School, DateTime> _f$foundationDate =
       Field('foundationDate', _$foundationDate, hook: DateTimeHook());
   static String _$godmotherSchool(School v) => v.godmotherSchool;
   static const Field<School, String> _f$godmotherSchool =
       Field('godmotherSchool', _$godmotherSchool);
-  static UnmodifiableListView<String> _$colorNames(School v) => v.colorNames;
-  static const Field<School, UnmodifiableListView<String>> _f$colorNames =
-      Field('colorNames', _$colorNames, key: 'colors');
-  static UnmodifiableListView<Color> _$colors(School v) => v.colors;
-  static const Field<School, UnmodifiableListView<Color>> _f$colors =
-      Field('colors', _$colors, hook: ColorHook());
+  static UnmodifiableListView<String> _$colors(School v) => v.colors;
+  static const Field<School, UnmodifiableListView<String>> _f$colors =
+      Field('colors', _$colors);
+  static UnmodifiableListView<Color> _$colorsCode(School v) => v.colorsCode;
+  static const Field<School, UnmodifiableListView<Color>> _f$colorsCode =
+      Field('colorsCode', _$colorsCode, key: 'colors', hook: ColorHook());
   static UnmodifiableListView<String> _$symbols(School v) => v.symbols;
   static const Field<School, UnmodifiableListView<String>> _f$symbols =
       Field('symbols', _$symbols);
-  static SchoolLeague _$league(School v) => v.league;
-  static const Field<School, SchoolLeague> _f$league =
-      Field('league', _$league);
+  static SchoolCategory _$carnivalCategory(School v) => v.carnivalCategory;
+  static const Field<School, SchoolCategory> _f$carnivalCategory =
+      Field('carnivalCategory', _$carnivalCategory);
   static SchoolDivision _$currentDivision(School v) => v.currentDivision;
   static const Field<School, SchoolDivision> _f$currentDivision =
       Field('currentDivision', _$currentDivision, key: 'divisionNumber');
   static int _$divisionNumber(School v) => v.divisionNumber;
   static const Field<School, int> _f$divisionNumber =
       Field('divisionNumber', _$divisionNumber);
+  static int? _$subdivisionNumber(School v) => v.subdivisionNumber;
+  static const Field<School, int> _f$subdivisionNumber =
+      Field('subdivisionNumber', _$subdivisionNumber);
   static int _$firstDivisionChampionships(School v) =>
       v.firstDivisionChampionships;
   static const Field<School, int> _f$firstDivisionChampionships =
@@ -184,12 +199,10 @@ class SchoolMapper extends ClassMapperBase<School> {
   static int _$lastPosition(School v) => v.lastPosition;
   static const Field<School, int> _f$lastPosition =
       Field('lastPosition', _$lastPosition);
-  static UnmodifiableListView<String> _$translatedColorNames(School v) =>
-      v.translatedColorNames;
-  static const Field<School, UnmodifiableListView<String>>
-      _f$translatedColorNames = Field(
-          'translatedColorNames', _$translatedColorNames,
-          key: 'translatedColors');
+  static UnmodifiableListView<String> _$translatedColors(School v) =>
+      v.translatedColors;
+  static const Field<School, UnmodifiableListView<String>> _f$translatedColors =
+      Field('translatedColors', _$translatedColors);
   static UnmodifiableListView<String> _$translatedSymbols(School v) =>
       v.translatedSymbols;
   static const Field<School, UnmodifiableListView<String>>
@@ -214,17 +227,18 @@ class SchoolMapper extends ClassMapperBase<School> {
     #imageUrl: _f$imageUrl,
     #foundationDate: _f$foundationDate,
     #godmotherSchool: _f$godmotherSchool,
-    #colorNames: _f$colorNames,
     #colors: _f$colors,
+    #colorsCode: _f$colorsCode,
     #symbols: _f$symbols,
-    #league: _f$league,
+    #carnivalCategory: _f$carnivalCategory,
     #currentDivision: _f$currentDivision,
     #divisionNumber: _f$divisionNumber,
+    #subdivisionNumber: _f$subdivisionNumber,
     #firstDivisionChampionships: _f$firstDivisionChampionships,
     #country: _f$country,
     #leagueLocation: _f$leagueLocation,
     #lastPosition: _f$lastPosition,
-    #translatedColorNames: _f$translatedColorNames,
+    #translatedColors: _f$translatedColors,
     #translatedSymbols: _f$translatedSymbols,
     #translatedGodmotherSchool: _f$translatedGodmotherSchool,
     #translatedLeagueLocation: _f$translatedLeagueLocation,
@@ -239,17 +253,18 @@ class SchoolMapper extends ClassMapperBase<School> {
         imageUrl: data.dec(_f$imageUrl),
         foundationDate: data.dec(_f$foundationDate),
         godmotherSchool: data.dec(_f$godmotherSchool),
-        colorNames: data.dec(_f$colorNames),
         colors: data.dec(_f$colors),
+        colorsCode: data.dec(_f$colorsCode),
         symbols: data.dec(_f$symbols),
-        league: data.dec(_f$league),
+        carnivalCategory: data.dec(_f$carnivalCategory),
         currentDivision: data.dec(_f$currentDivision),
         divisionNumber: data.dec(_f$divisionNumber),
+        subdivisionNumber: data.dec(_f$subdivisionNumber),
         firstDivisionChampionships: data.dec(_f$firstDivisionChampionships),
         country: data.dec(_f$country),
         leagueLocation: data.dec(_f$leagueLocation),
         lastPosition: data.dec(_f$lastPosition),
-        translatedColorNames: data.dec(_f$translatedColorNames),
+        translatedColors: data.dec(_f$translatedColors),
         translatedSymbols: data.dec(_f$translatedSymbols),
         translatedGodmotherSchool: data.dec(_f$translatedGodmotherSchool),
         translatedLeagueLocation: data.dec(_f$translatedLeagueLocation),
@@ -309,17 +324,18 @@ abstract class SchoolCopyWith<$R, $In extends School, $Out>
       String? imageUrl,
       DateTime? foundationDate,
       String? godmotherSchool,
-      UnmodifiableListView<String>? colorNames,
-      UnmodifiableListView<Color>? colors,
+      UnmodifiableListView<String>? colors,
+      UnmodifiableListView<Color>? colorsCode,
       UnmodifiableListView<String>? symbols,
-      SchoolLeague? league,
+      SchoolCategory? carnivalCategory,
       SchoolDivision? currentDivision,
       int? divisionNumber,
+      int? subdivisionNumber,
       int? firstDivisionChampionships,
       String? country,
       String? leagueLocation,
       int? lastPosition,
-      UnmodifiableListView<String>? translatedColorNames,
+      UnmodifiableListView<String>? translatedColors,
       UnmodifiableListView<String>? translatedSymbols,
       String? translatedGodmotherSchool,
       String? translatedLeagueLocation,
@@ -339,19 +355,20 @@ class _SchoolCopyWithImpl<$R, $Out> extends ClassCopyWithBase<$R, School, $Out>
           String? name,
           String? translatedName,
           String? imageUrl,
-          DateTime? foundationDate,
+          Object? foundationDate = $none,
           String? godmotherSchool,
-          UnmodifiableListView<String>? colorNames,
-          UnmodifiableListView<Color>? colors,
+          UnmodifiableListView<String>? colors,
+          UnmodifiableListView<Color>? colorsCode,
           UnmodifiableListView<String>? symbols,
-          SchoolLeague? league,
+          SchoolCategory? carnivalCategory,
           SchoolDivision? currentDivision,
           int? divisionNumber,
+          Object? subdivisionNumber = $none,
           int? firstDivisionChampionships,
           String? country,
           String? leagueLocation,
           int? lastPosition,
-          UnmodifiableListView<String>? translatedColorNames,
+          UnmodifiableListView<String>? translatedColors,
           UnmodifiableListView<String>? translatedSymbols,
           String? translatedGodmotherSchool,
           String? translatedLeagueLocation,
@@ -361,21 +378,21 @@ class _SchoolCopyWithImpl<$R, $Out> extends ClassCopyWithBase<$R, School, $Out>
         if (name != null) #name: name,
         if (translatedName != null) #translatedName: translatedName,
         if (imageUrl != null) #imageUrl: imageUrl,
-        if (foundationDate != null) #foundationDate: foundationDate,
+        if (foundationDate != $none) #foundationDate: foundationDate,
         if (godmotherSchool != null) #godmotherSchool: godmotherSchool,
-        if (colorNames != null) #colorNames: colorNames,
         if (colors != null) #colors: colors,
+        if (colorsCode != null) #colorsCode: colorsCode,
         if (symbols != null) #symbols: symbols,
-        if (league != null) #league: league,
+        if (carnivalCategory != null) #carnivalCategory: carnivalCategory,
         if (currentDivision != null) #currentDivision: currentDivision,
         if (divisionNumber != null) #divisionNumber: divisionNumber,
+        if (subdivisionNumber != $none) #subdivisionNumber: subdivisionNumber,
         if (firstDivisionChampionships != null)
           #firstDivisionChampionships: firstDivisionChampionships,
         if (country != null) #country: country,
         if (leagueLocation != null) #leagueLocation: leagueLocation,
         if (lastPosition != null) #lastPosition: lastPosition,
-        if (translatedColorNames != null)
-          #translatedColorNames: translatedColorNames,
+        if (translatedColors != null) #translatedColors: translatedColors,
         if (translatedSymbols != null) #translatedSymbols: translatedSymbols,
         if (translatedGodmotherSchool != null)
           #translatedGodmotherSchool: translatedGodmotherSchool,
@@ -391,19 +408,22 @@ class _SchoolCopyWithImpl<$R, $Out> extends ClassCopyWithBase<$R, School, $Out>
       imageUrl: data.get(#imageUrl, or: $value.imageUrl),
       foundationDate: data.get(#foundationDate, or: $value.foundationDate),
       godmotherSchool: data.get(#godmotherSchool, or: $value.godmotherSchool),
-      colorNames: data.get(#colorNames, or: $value.colorNames),
       colors: data.get(#colors, or: $value.colors),
+      colorsCode: data.get(#colorsCode, or: $value.colorsCode),
       symbols: data.get(#symbols, or: $value.symbols),
-      league: data.get(#league, or: $value.league),
+      carnivalCategory:
+          data.get(#carnivalCategory, or: $value.carnivalCategory),
       currentDivision: data.get(#currentDivision, or: $value.currentDivision),
       divisionNumber: data.get(#divisionNumber, or: $value.divisionNumber),
+      subdivisionNumber:
+          data.get(#subdivisionNumber, or: $value.subdivisionNumber),
       firstDivisionChampionships: data.get(#firstDivisionChampionships,
           or: $value.firstDivisionChampionships),
       country: data.get(#country, or: $value.country),
       leagueLocation: data.get(#leagueLocation, or: $value.leagueLocation),
       lastPosition: data.get(#lastPosition, or: $value.lastPosition),
-      translatedColorNames:
-          data.get(#translatedColorNames, or: $value.translatedColorNames),
+      translatedColors:
+          data.get(#translatedColors, or: $value.translatedColors),
       translatedSymbols:
           data.get(#translatedSymbols, or: $value.translatedSymbols),
       translatedGodmotherSchool: data.get(#translatedGodmotherSchool,
