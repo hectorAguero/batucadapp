@@ -6,7 +6,7 @@ part of 'initialization_page.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$initializationHash() => r'0adc607b465cb4c1f4ceace74890ced0f445131f';
+String _$initializationHash() => r'b3dc243811b046c0ccf26bf6fb56bf7f7f43ca99';
 
 /// See also [initialization].
 @ProviderFor(initialization)

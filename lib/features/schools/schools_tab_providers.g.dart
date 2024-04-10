@@ -6,7 +6,7 @@ part of 'schools_tab_providers.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$schoolsHash() => r'ff02f47059899363ddae4971198c6cd512b47564';
+String _$schoolsHash() => r'd2103b89f8f0208f32f3b427018958a7d1979e10';
 
 /// See also [Schools].
 @ProviderFor(Schools)
@@ -53,7 +53,7 @@ final schoolDivisionsProvider = AutoDisposeNotifierProvider<SchoolDivisions,
 );
 
 typedef _$SchoolDivisions = AutoDisposeNotifier<Map<SchoolDivision, bool>>;
-String _$searchSchoolHash() => r'310d82c631ee6cf916fcd231fde0787ea4a321ac';
+String _$searchSchoolHash() => r'b5c2f70e9737d14650719e760ad76baee47286eb';
 
 /// See also [SearchSchool].
 @ProviderFor(SearchSchool)

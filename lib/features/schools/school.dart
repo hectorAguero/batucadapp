@@ -79,8 +79,7 @@ enum SchoolCategory {
   escolasMirins,
   @MappableValue('Blocos de enredo')
   blocoDeEnredo,
-  // TODO(hectorAguero): Fix the typo en the API
-  @MappableValue('Blocos de Rua')
+  @MappableValue('Blocos de rua')
   blocoDeRua,
 }
 

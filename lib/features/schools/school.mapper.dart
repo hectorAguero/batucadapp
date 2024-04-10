@@ -31,7 +31,7 @@ class SchoolCategoryMapper extends EnumMapper<SchoolCategory> {
         return SchoolCategory.escolasMirins;
       case 'Blocos de enredo':
         return SchoolCategory.blocoDeEnredo;
-      case 'Blocos de Rua':
+      case 'Blocos de rua':
         return SchoolCategory.blocoDeRua;
       default:
         throw MapperException.unknownEnumValue(value);
@@ -48,7 +48,7 @@ class SchoolCategoryMapper extends EnumMapper<SchoolCategory> {
       case SchoolCategory.blocoDeEnredo:
         return 'Blocos de enredo';
       case SchoolCategory.blocoDeRua:
-        return 'Blocos de Rua';
+        return 'Blocos de rua';
     }
   }
 }
