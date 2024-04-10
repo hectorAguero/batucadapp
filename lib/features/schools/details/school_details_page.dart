@@ -126,8 +126,8 @@ class _SchoolDetailsTextState extends State<SchoolDetailsText> {
   Widget build(BuildContext context) {
     return AnimatedSwitcher(
       duration: kThemeAnimationDuration,
-      key: ValueKey(widget.showOriginal),
       child: Padding(
+        key: ValueKey(widget.showOriginal),
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

@@ -17,6 +17,12 @@ class AppLocalizationsJa extends AppLocalizations {
   String get errorLoadingImage => '画像を読み込めませんでした';
 
   @override
+  String get search => '検索';
+
+  @override
+  String get resetFilters => 'フィルタをリセット';
+
+  @override
   String get language => '言語';
 
   @override
@@ -176,19 +182,19 @@ class AppLocalizationsJa extends AppLocalizations {
   String get schoolLeagueLigarj => 'リーガRJ';
 
   @override
-  String get schoolLeagueLigarjFullName => 'リオ・デ・ジャネイロのサンバ学校のリーグ';
+  String get schoolLeagueLigarjFullName => 'リオ・デ・ジャネイロのサンバエスコーラのリーグ';
 
   @override
   String get schoolLeagueSuperliga => 'スーパーリーガ';
 
   @override
-  String get schoolLeagueSuperligaFullName => 'リオ・デ・ジャネイロのサンバ学校のスーパーリーガ';
+  String get schoolLeagueSuperligaFullName => 'リオ・デ・ジャネイロのサンバエスコーラのスーパーリーガ';
 
   @override
   String get schoolLeagueAcas => 'アカス';
 
   @override
-  String get schoolLeagueAcasFullName => 'サンバ学校の文化協会';
+  String get schoolLeagueAcasFullName => 'サンバエスコーラの文化協会';
 
   @override
   String get schoolPerformancePlace => '位';
@@ -201,6 +207,18 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get schoolComponents => 'コンポーネント';
+
+  @override
+  String get noMoreSchools => 'これ以上エスコーラエスコーラはありません 😔';
+
+  @override
+  String get noFilteresSchoolsFound => 'フィルタされたエスコーラは見つかりませんでした 😣';
+
+  @override
+  String get noFavoritesSchools => 'お気に入りのエスコーラはありません 🥺';
+
+  @override
+  String get noSchoolsFound => 'エスコーラは見つかりませんでした 😢';
 
   @override
   String get settingsTitle => '設定';

@@ -56,7 +56,6 @@ class InitializationPage extends ConsumerWidget {
     ref.watch(appThemeModeProvider);
     return AnimatedSwitcher(
       duration: const Duration(milliseconds: 300),
-      key: ValueKey(initProvider.isLoading),
       child: switch (initProvider) {
         AsyncData() => onLoaded(context),
         AsyncLoading() => const AppStartupLoadingWidget(),

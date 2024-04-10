@@ -48,11 +48,13 @@ class InstrumentsTabPage extends ConsumerWidget {
                     duration: const Duration(milliseconds: 300),
                     child: switch (instruments) {
                       AsyncLoading() => const SliverFillRemaining(
+                          key: ValueKey('loading'),
                           child: Center(
                             child: CircularProgressIndicator.adaptive(),
                           ),
                         ),
                       AsyncError(:final error) => SliverFillRemaining(
+                          key: const ValueKey('error'),
                           child: Center(
                             child: Text(
                               error.toString(),

@@ -56,7 +56,6 @@ class School with SchoolMappable {
     required this.translatedGodmotherSchool,
     required this.translatedLeagueLocation,
     required this.translatedCountry,
-    this.isFavorite = false,
   });
 
   final SchoolId id;
@@ -74,7 +73,6 @@ class School with SchoolMappable {
   @MappableField(key: 'divisionNumber')
   final SchoolDivision currentDivision;
   final int divisionNumber;
-  final bool isFavorite;
   final int firstDivisionChampionships;
   final String country;
   final String leagueLocation;

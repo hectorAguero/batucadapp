@@ -17,6 +17,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get errorLoadingImage => 'Failed to load data';
 
   @override
+  String get search => 'Search';
+
+  @override
+  String get resetFilters => 'Reset Filters';
+
+  @override
   String get language => 'Language';
 
   @override
@@ -201,6 +207,18 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get schoolComponents => 'Components';
+
+  @override
+  String get noMoreSchools => 'There\'s no more schools 😔';
+
+  @override
+  String get noFilteresSchoolsFound => 'No schools found with these filters 😣';
+
+  @override
+  String get noFavoritesSchools => 'No favorite schools 🥺';
+
+  @override
+  String get noSchoolsFound => 'No schools found 😢';
 
   @override
   String get settingsTitle => 'Settings';

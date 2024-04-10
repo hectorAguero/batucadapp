@@ -7,8 +7,7 @@ enum SchoolSort {
   lastPerformance,
   name,
   location,
-  foundationDate,
-  favorite,
+  foundationDate
 }
 
 extension SchoolSortExtension on SchoolSort {
@@ -23,7 +22,6 @@ extension SchoolSortExtension on SchoolSort {
           first.leagueLocation.compareTo(second.leagueLocation),
         (SchoolSort.foundationDate) =>
           first.foundationDate.compareTo(second.foundationDate),
-        (SchoolSort.favorite) => first.isFavorite ? -1 : 1,
       };
 
   String fullName(BuildContext context) => switch (this) {
@@ -32,6 +30,5 @@ extension SchoolSortExtension on SchoolSort {
         (SchoolSort.lastPerformance) => context.loc.schoolSortByLastPerformance,
         (SchoolSort.location) => context.loc.schoolSortByLocation,
         (SchoolSort.foundationDate) => context.loc.schoolFoundationDate,
-        (SchoolSort.favorite) => context.loc.shoolSortByFavorite,
       };
 }

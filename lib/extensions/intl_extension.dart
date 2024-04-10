@@ -34,7 +34,7 @@ extension IntlExtension on DateTime {
 }
 
 extension OrdinalExtension on int {
-  String ordinal(BuildContext context) {
+  String intlOrdinal(BuildContext context) {
     if (context.loc.localeName == 'en') {
       return switch (this % 10) {
         1 => '${this}st',

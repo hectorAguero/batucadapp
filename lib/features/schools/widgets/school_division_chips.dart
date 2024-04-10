@@ -36,16 +36,16 @@ class SchoolDivisionChips extends ConsumerWidget {
                   padding: const EdgeInsets.only(right: 4, left: 8),
                   child: ChoiceChip(
                     showCheckmark: false,
-                    avatar: !ref.watch(isFavoriteSchoolsProvider)
+                    avatar: !ref.watch(showOnlyFavoriteSchoolsProvider)
                         ? const Icon(CupertinoIcons.heart)
                         : const Icon(CupertinoIcons.heart_fill),
-                    selected: ref.watch(isFavoriteSchoolsProvider),
+                    selected: ref.watch(showOnlyFavoriteSchoolsProvider),
                     label: Text(context.loc.schoolFavorites),
                     selectedColor: context.colorScheme.primaryContainer,
                     onSelected: (value) {
                       ref
-                          .read(isFavoriteSchoolsProvider.notifier)
-                          .toggleFavorite();
+                          .read(showOnlyFavoriteSchoolsProvider.notifier)
+                          .toggleShowFavorites();
                     },
                   ),
                 ),

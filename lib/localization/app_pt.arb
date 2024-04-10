@@ -8,6 +8,8 @@
 	"error": "Erro",
 	"errorMessage": "Ocorreu um erro",
 	"errorLoadingImage": "Erro ao carregar a imagem",
+	"search": "Pesquisar",
+	"resetFilters": "Limpar Filtros",
 	"language": "Idioma",
 	"portuguese": "Português",
 	"english": "Inglês",
@@ -74,6 +76,7 @@
 	"schoolToParade": "a desfilar",
 	"schoolScore": "Pontuação",
 	"schoolComponents": "Componentes",
+	"noMoreSchools": "Não há mais escolas 😔",
 	"@_SETTINGS_PAGE": {},
 	"settingsTitle": "Configurações",
 	"switchTheme": "Alternar Tema"

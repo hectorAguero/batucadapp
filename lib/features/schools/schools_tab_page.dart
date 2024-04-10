@@ -1,232 +1,130 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:pull_down_button/pull_down_button.dart';
-import 'package:sliver_tools/sliver_tools.dart';
 
-import '../../common_widgets/app_cupertino_button.dart';
-import '../../common_widgets/app_cupertino_sliver_navigation_bar.dart';
 import '../../extensions/app_localization_extension.dart';
-import '../../extensions/hardcoded_extension.dart';
-import '../../extensions/media_query_context_extension.dart';
-import '../../extensions/theme_of_context_extension.dart';
+import '../../extensions/context_snackbar.dart';
 import '../../router/go_route_scroll_tab.dart';
-import '../home/widgets/adaptive_navigation_rail.dart';
-import 'school_sort.dart';
+import '../../utils/debouncer.dart';
 import 'schools_tab_providers.dart';
-import 'widgets/school_card.dart';
 import 'widgets/school_division_chips.dart';
+import 'widgets/schools_tab_list.dart';
+import 'widgets/schools_tab_navbar.dart';
+import 'widgets/schools_tab_search_header.dart';
 
-class SchoolsTabPage extends StatefulWidget {
-  const SchoolsTabPage({super.key});
+class SchoolsTabPage extends ConsumerStatefulWidget {
+  const SchoolsTabPage({required this.controller, super.key});
+  final ScrollController controller;
 
   static final route = GoRouteScrollTab(
     path: '/schools',
     builder: (context, state, controller) => PrimaryScrollController(
       controller: controller,
-      child: const SchoolsTabPage(),
+      child: SchoolsTabPage(controller: controller),
     ),
   );
 
   @override
-  State<SchoolsTabPage> createState() => _SchoolsTabState();
+  ConsumerState<SchoolsTabPage> createState() => _SchoolsTabState();
 }
 
-class _SchoolsTabState extends State<SchoolsTabPage> {
+class _SchoolsTabState extends ConsumerState<SchoolsTabPage> {
+  final _debouncer = Debouncer(delay: const Duration(milliseconds: 300));
+  @override
+  void initState() {
+    widget.controller.addListener(_loadMoreListener);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _debouncer.dispose();
+    widget.controller.removeListener(_loadMoreListener);
+    super.dispose();
+  }
+
+  void _loadMoreListener() {
+    if (widget.controller.position.pixels ==
+        widget.controller.position.maxScrollExtent) {
+      if (ref.read(filteredSchoolsProvider).length !=
+          ref.read(schoolsProvider).value?.length) {
+        return;
+      }
+      if (!ref.read(schoolsTabReachedLimitProvider)) {
+        final pixels = widget.controller.position.pixels;
+        _debouncer.run(() {
+          ref.read(schoolsProvider.notifier).fetchNextPage().then((value) {
+            if (value == null) {
+            } else if (value) {
+              widget.controller.animateTo(
+                pixels + 40,
+                duration: const Duration(milliseconds: 300),
+                curve: Curves.easeInOut,
+              );
+            } else {
+              context.showSnackBarText(context.loc.noMoreSchools);
+            }
+          });
+        });
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return SelectionArea(
-      child: Scaffold(
-        body: CustomScrollView(
-          controller: PrimaryScrollController.of(context),
-          slivers: <Widget>[
-            const SchoolsTabNavBar(),
-            const SchoolsTabSearchHeader(),
-            Consumer(
-              child: const SliverToBoxAdapter(child: SizedBox.shrink()),
-              builder: (context, ref, child) {
-                if (ref.watch(schoolDivisionsProvider).length > 1) {
-                  return const SchoolDivisionChips();
+    return Builder(
+      builder: (context) {
+        return SelectionArea(
+          child: Scaffold(
+            body: GestureDetector(
+              onTap: () {
+                if (FocusScope.of(context).hasFocus) {
+                  FocusScope.of(context).unfocus();
                 }
-                return child!;
               },
-            ),
-            const SchoolsTabList(),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class SchoolsTabNavBar extends StatelessWidget {
-  const SchoolsTabNavBar({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return SliverCrossAxisConstrained(
-      maxCrossAxisExtent: largeScreen,
-      child: AppCupertinoSliverNavigationBar(
-        largeTitle: context.loc.schoolsTitle,
-        leading: PullDownButton(
-          menuOffset: context.querySize.currentRailWidth,
-          itemBuilder: (context) => [
-            // TODO(hectorAguero): Should get this from the API
-            PullDownMenuItem.selectable(
-              title: '🇧🇷 Rio de Janeiro'.hardcoded,
-              selected: true,
-              onTap: () {},
-            ),
-          ],
-          buttonBuilder: (context, showMenu) => AppCupertinoButton(
-            onPressed: showMenu,
-            padding: EdgeInsets.zero,
-            child: const Icon(CupertinoIcons.ellipsis_circle),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class SchoolsTabSearchHeader extends ConsumerWidget {
-  const SchoolsTabSearchHeader({super.key});
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return SliverSafeArea(
-      top: false,
-      bottom: false,
-      sliver: SliverCrossAxisConstrained(
-        maxCrossAxisExtent: largeScreen,
-        child: SliverPadding(
-          padding: const EdgeInsets.only(top: 12, left: 16, right: 16),
-          sliver: SliverCrossAxisGroup(
-            slivers: [
-              SliverToBoxAdapter(
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: CupertinoSearchTextField(
-                        onChanged: (value) => ref
-                            .read(searchSchoolProvider.notifier)
-                            .setSearch(value),
-                      ),
-                    ),
-                    AppCupertinoButton(
-                      onPressed: () {
-                        showPullDownMenu(
-                          context: context,
-                          position: Rect.fromLTWH(
-                            context.querySize.width > largeScreen
-                                ? largeScreen +
-                                    AdaptiveNavigationRail.largeRailWidth
-                                : context.querySize.width,
-                            100,
-                            -48,
-                            48,
-                          ),
-                          items: [
-                            PullDownMenuTitle(
-                              title: Text(context.loc.schoolSortBy),
-                              titleStyle: context.textTheme.labelLarge,
-                            ),
-                            for (final sort in SchoolSort.values)
-                              PullDownMenuItem.selectable(
-                                onTap: () {
-                                  ref
-                                      .read(selectedSchoolSortProvider.notifier)
-                                      .setSort(sort);
-                                },
-                                selected: sort ==
-                                    ref.watch(selectedSchoolSortProvider),
-                                title: sort.fullName(context),
-                              ),
-                          ],
-                        );
-                      },
-                      padding: const EdgeInsets.symmetric(horizontal: 8),
-                      child: Container(
-                        padding: const EdgeInsets.all(4),
-                        decoration: const BoxDecoration(
-                          shape: BoxShape.circle,
-                        ),
-                        child: const Icon(
-                          CupertinoIcons.line_horizontal_3_decrease,
-                          size: 20,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class SchoolsTabList extends ConsumerWidget {
-  const SchoolsTabList({super.key});
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final future = ref.watch(schoolsProvider);
-    return SliverSafeArea(
-      top: false,
-      sliver: SliverAnimatedSwitcher(
-        duration: kThemeAnimationDuration,
-        child: switch (future) {
-          AsyncError(:final error) => SliverFillRemaining(
-              child: Center(
-                child: Text(
-                  error.toString(),
-                  style: context.textTheme.titleLarge,
-                ),
-              ),
-            ),
-          AsyncLoading() => const SliverFillRemaining(
-              child: Center(
-                child: CircularProgressIndicator.adaptive(),
-              ),
-            ),
-          AsyncData() => Consumer(
-              builder: (context, ref, child) {
-                final filteredSchools = ref.watch(filteredSchoolsProvider);
-                return SliverCrossAxisConstrained(
-                  maxCrossAxisExtent: largeScreen,
-                  child: SliverPadding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 8,
-                    ),
-                    sliver: SliverAlignedGrid.extent(
-                      maxCrossAxisExtent: SchoolCard.cardMaxWidth,
-                      itemCount: filteredSchools.length,
-                      itemBuilder: (context, index) {
-                        final school = filteredSchools[index];
-                        return ProviderScope(
-                          overrides: [
-                            currentSchoolProvider.overrideWithValue(
-                              filteredSchools.firstWhere(
-                                (item) => item.id == school.id,
-                              ),
-                            ),
-                          ],
-                          child: const SchoolCard(),
-                        );
-                      },
-                    ),
+              child: CustomScrollView(
+                slivers: <Widget>[
+                  const SchoolsTabNavBar(),
+                  const SchoolsTabSearchHeader(),
+                  Consumer(
+                    child: const SliverToBoxAdapter(child: SizedBox.shrink()),
+                    builder: (context, ref, child) {
+                      if (ref.watch(schoolDivisionsProvider).length > 1) {
+                        return const SchoolDivisionChips();
+                      }
+                      return child!;
+                    },
                   ),
-                );
-              },
-            )
-        },
-      ),
+                  const SchoolsTabList(),
+                  Consumer(
+                    builder: (context, ref, child) {
+                      final reachedLimit =
+                          ref.watch(schoolsTabReachedLimitProvider);
+                      final isEmpty =
+                          ref.watch(filteredSchoolsProvider).isEmpty;
+                      final isFiltered =
+                          ref.watch(filteredSchoolsProvider).length !=
+                              ref.watch(schoolsProvider).value?.length;
+                      return SliverToBoxAdapter(
+                        child: AnimatedSize(
+                          duration: const Duration(milliseconds: 300),
+                          child: reachedLimit || isEmpty || isFiltered
+                              ? const SizedBox.shrink()
+                              : const Center(
+                                  child: Padding(
+                                    padding: EdgeInsets.all(16),
+                                    child: CircularProgressIndicator.adaptive(),
+                                  ),
+                                ),
+                        ),
+                      );
+                    },
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 }

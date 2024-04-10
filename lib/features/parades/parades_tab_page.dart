@@ -83,7 +83,7 @@ class _ParadesTabPageState extends ConsumerState<ParadesTabPage> {
                                   ),
                                   onSelected: (_) => animateToItem(index),
                                   label: Text(
-                                    '${item.placing.ordinal(context)}'
+                                    '${item.placing.intlOrdinal(context)}'
                                     ' ${context.loc.schoolPerformancePlace}',
                                     maxLines: 1,
                                   ),

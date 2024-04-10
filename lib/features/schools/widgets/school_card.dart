@@ -1,7 +1,11 @@
+import 'package:country_picker/country_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../../extensions/app_localization_extension.dart';
+import '../../../extensions/intl_extension.dart';
 import '../../../extensions/media_query_context_extension.dart';
+import '../../../extensions/string_extension.dart';
 import '../../../extensions/theme_of_context_extension.dart';
 import '../details/show_details.dart';
 import '../school.dart';
@@ -200,11 +204,10 @@ class SchoolInfoCard extends StatelessWidget {
                               text: sort.getSortedValue(school, context),
                             ),
                             if (sort == SchoolSort.location)
-                              TextSpan(
-                                text: ', ${school.leagueLocation}',
-                              ),
+                              TextSpan(text: ', ${school.leagueLocation}'),
                           ],
                         ),
+                        style: const TextStyle(fontWeight: FontWeight.bold),
                         maxLines: 2,
                       ),
                     ),
@@ -217,4 +220,15 @@ class SchoolInfoCard extends StatelessWidget {
       ],
     );
   }
+}
+
+extension SelectedSchoolSortExtension on SchoolSort {
+  String getSortedValue(School school, BuildContext context) => switch (this) {
+        (SchoolSort.lastPerformance) =>
+          '${school.lastPosition.intlOrdinal(context)}'
+              ' ${context.loc.schoolPerformancePlace.capitalize}',
+        (SchoolSort.location) =>
+          CountryLocalizations.of(context)!.countryName(countryCode: 'BR')!,
+        _ => school.foundationDate.intlShort(context)
+      };
 }

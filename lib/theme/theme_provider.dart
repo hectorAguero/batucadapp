@@ -18,7 +18,7 @@ class AppThemeMode extends _$AppThemeMode {
         'system' || (_) => ThemeMode.system,
       };
     } catch (e) {
-      debugLog('$e');
+      viewLog.finest('$e');
       return ThemeMode.system;
     }
   }
@@ -70,7 +70,7 @@ class AppThemeTrueBlack extends _$AppThemeTrueBlack {
               .getBool('true_black') ??
           false;
     } catch (e) {
-      debugLog('$e');
+      viewLog.finest('$e');
       return false;
     }
   }

@@ -121,6 +121,18 @@ abstract class AppLocalizations {
   /// **'Failed to load data'**
   String get errorLoadingImage;
 
+  /// No description provided for @search.
+  ///
+  /// In en, this message translates to:
+  /// **'Search'**
+  String get search;
+
+  /// No description provided for @resetFilters.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset Filters'**
+  String get resetFilters;
+
   /// No description provided for @language.
   ///
   /// In en, this message translates to:
@@ -492,6 +504,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Components'**
   String get schoolComponents;
+
+  /// No description provided for @noMoreSchools.
+  ///
+  /// In en, this message translates to:
+  /// **'There\'s no more schools 😔'**
+  String get noMoreSchools;
+
+  /// No description provided for @noFilteresSchoolsFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No schools found with these filters 😣'**
+  String get noFilteresSchoolsFound;
+
+  /// No description provided for @noFavoritesSchools.
+  ///
+  /// In en, this message translates to:
+  /// **'No favorite schools 🥺'**
+  String get noFavoritesSchools;
+
+  /// No description provided for @noSchoolsFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No schools found 😢'**
+  String get noSchoolsFound;
 
   /// No description provided for @settingsTitle.
   ///

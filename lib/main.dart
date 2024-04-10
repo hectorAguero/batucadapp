@@ -1,9 +1,12 @@
 import 'package:country_picker/country_picker.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 // ignore:depend_on_referenced_packages
 import 'package:flutter_web_plugins/url_strategy.dart';
+import 'package:logging/logging.dart';
+
 import 'extensions/app_localization_extension.dart';
 import 'l10n/app_localizations.dart';
 import 'localization/language.dart';
@@ -11,9 +14,11 @@ import 'localization/language_app_provider.dart';
 import 'router/router.dart';
 import 'theme/theme_data.dart';
 import 'theme/theme_provider.dart';
+import 'utils/main_logger.dart';
 
 void main() {
   usePathUrlStrategy();
+  if (kDebugMode) initAllLogs(Level.FINE);
   runApp(const ProviderScope(child: MainApp()));
 }
 

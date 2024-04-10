@@ -56,23 +56,38 @@ class SchoolFlag extends ConsumerWidget {
         ),
         Consumer(
           builder: (context, ref, child) {
+            final isFavorite = ref.watch(
+              favoriteSchoolsProvider.select((v) => v.contains('${school.id}')),
+            );
             return Align(
               alignment: Alignment.topRight,
               child: CupertinoButton(
                 child: AnimatedSwitcher(
                   duration: kThemeAnimationDuration,
-                  switchInCurve: Curves.elasticIn,
-                  switchOutCurve: Curves.elasticOut,
-                  child: Icon(
-                    school.isFavorite
-                        ? CupertinoIcons.heart_fill
-                        : CupertinoIcons.heart,
-                    color: school.isFavorite ? Colors.redAccent : Colors.white,
-                    size: heartSize,
-                  ),
+                  transitionBuilder: (child, animation) {
+                    return ScaleTransition(
+                      scale: animation,
+                      child: child,
+                    );
+                  },
+                  child: isFavorite
+                      ? Icon(
+                          key: const ValueKey(true),
+                          CupertinoIcons.heart_fill,
+                          color: Colors.redAccent,
+                          size: heartSize,
+                        )
+                      : Icon(
+                          key: const ValueKey(false),
+                          CupertinoIcons.heart,
+                          color: Colors.white,
+                          size: heartSize,
+                        ),
                 ),
                 onPressed: () {
-                  ref.read(schoolsProvider.notifier).toggleFavorite(school.id);
+                  ref
+                      .read(favoriteSchoolsProvider.notifier)
+                      .toggleFavorite(school.id);
                 },
               ),
             );

@@ -191,7 +191,7 @@ class ParadeItem extends ConsumerWidget {
                                     const Spacer(),
                                     const SizedBox(width: 16),
                                     Text(
-                                      '${order.ordinal(context)}'
+                                      '${order.intlOrdinal(context)}'
                                       ' ${context.loc.schoolToParade}',
                                       style: context.textTheme.titleSmall,
                                     ),
@@ -267,7 +267,7 @@ class ParadeItemSideBar extends StatelessWidget {
                         ),
                         children: [
                           TextSpan(
-                            text: parade.placing.ordinal(context),
+                            text: parade.placing.intlOrdinal(context),
                           ),
                           TextSpan(
                             text: ' ${context.loc.schoolPerformancePlace}',

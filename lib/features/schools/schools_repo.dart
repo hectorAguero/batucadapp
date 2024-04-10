@@ -12,7 +12,10 @@ SchoolsRepo schoolsRepo(SchoolsRepoRef ref) {
 }
 
 abstract class SchoolsRepo {
-  Future<UnmodifiableList<School>> getSchools();
+  Future<UnmodifiableList<School>> getSchools({
+    required int page,
+    required int pageSize,
+  });
 }
 
 class SchoolsRepoImpls implements SchoolsRepo {
@@ -21,10 +24,15 @@ class SchoolsRepoImpls implements SchoolsRepo {
   final SchoolsRepoRef ref;
 
   @override
-  Future<UnmodifiableList<School>> getSchools() async {
-    final response = await ref
-        .watch(clientNetworkProvider)
-        .get<Iterable<dynamic>>('/schools');
+  Future<UnmodifiableList<School>> getSchools({
+    required int page,
+    required int pageSize,
+  }) async {
+    final networkClient = ref.watch(clientNetworkProvider);
+    final response = await networkClient.get<Iterable<dynamic>>(
+      '/schools',
+      queryParameters: {'page': page, 'pageSize': pageSize},
+    );
     final data = response.data!.cast<Map<String, dynamic>>();
     return UnmodifiableList([
       for (final item in data) School.fromMap(item),
@@ -38,7 +46,10 @@ class MockSchoolsRepo implements SchoolsRepo {
   final SchoolsRepoRef ref;
 
   @override
-  Future<UnmodifiableList<School>> getSchools() async {
+  Future<UnmodifiableList<School>> getSchools({
+    required int page,
+    int pageSize = 10,
+  }) async {
     await Future<void>.delayed(const Duration(seconds: 1));
     return UnmodifiableList([
       SchoolMapper.fromMap(

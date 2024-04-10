@@ -17,6 +17,12 @@ class AppLocalizationsEs extends AppLocalizations {
   String get errorLoadingImage => 'Error al cargar imagen';
 
   @override
+  String get search => 'Buscar';
+
+  @override
+  String get resetFilters => 'Limpiar Filtros';
+
+  @override
   String get language => 'Idioma';
 
   @override
@@ -201,6 +207,18 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get schoolComponents => 'Componentes';
+
+  @override
+  String get noMoreSchools => 'No hay más escuelas 😔';
+
+  @override
+  String get noFilteresSchoolsFound => 'No hay escuelas con estos filtros 😣';
+
+  @override
+  String get noFavoritesSchools => 'No hay escuelas favoritas 🥺';
+
+  @override
+  String get noSchoolsFound => 'No encontramos escuelas 😢';
 
   @override
   String get settingsTitle => 'Configuración';

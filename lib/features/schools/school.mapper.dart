@@ -205,9 +205,6 @@ class SchoolMapper extends ClassMapperBase<School> {
   static String _$translatedCountry(School v) => v.translatedCountry;
   static const Field<School, String> _f$translatedCountry =
       Field('translatedCountry', _$translatedCountry);
-  static bool _$isFavorite(School v) => v.isFavorite;
-  static const Field<School, bool> _f$isFavorite =
-      Field('isFavorite', _$isFavorite, opt: true, def: false);
 
   @override
   final MappableFields<School> fields = const {
@@ -232,7 +229,6 @@ class SchoolMapper extends ClassMapperBase<School> {
     #translatedGodmotherSchool: _f$translatedGodmotherSchool,
     #translatedLeagueLocation: _f$translatedLeagueLocation,
     #translatedCountry: _f$translatedCountry,
-    #isFavorite: _f$isFavorite,
   };
 
   static School _instantiate(DecodingData data) {
@@ -257,8 +253,7 @@ class SchoolMapper extends ClassMapperBase<School> {
         translatedSymbols: data.dec(_f$translatedSymbols),
         translatedGodmotherSchool: data.dec(_f$translatedGodmotherSchool),
         translatedLeagueLocation: data.dec(_f$translatedLeagueLocation),
-        translatedCountry: data.dec(_f$translatedCountry),
-        isFavorite: data.dec(_f$isFavorite));
+        translatedCountry: data.dec(_f$translatedCountry));
   }
 
   @override
@@ -328,8 +323,7 @@ abstract class SchoolCopyWith<$R, $In extends School, $Out>
       UnmodifiableListView<String>? translatedSymbols,
       String? translatedGodmotherSchool,
       String? translatedLeagueLocation,
-      String? translatedCountry,
-      bool? isFavorite});
+      String? translatedCountry});
   SchoolCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(Then<$Out2, $R2> t);
 }
 
@@ -361,8 +355,7 @@ class _SchoolCopyWithImpl<$R, $Out> extends ClassCopyWithBase<$R, School, $Out>
           UnmodifiableListView<String>? translatedSymbols,
           String? translatedGodmotherSchool,
           String? translatedLeagueLocation,
-          String? translatedCountry,
-          bool? isFavorite}) =>
+          String? translatedCountry}) =>
       $apply(FieldCopyWithData({
         if (id != null) #id: id,
         if (name != null) #name: name,
@@ -388,8 +381,7 @@ class _SchoolCopyWithImpl<$R, $Out> extends ClassCopyWithBase<$R, School, $Out>
           #translatedGodmotherSchool: translatedGodmotherSchool,
         if (translatedLeagueLocation != null)
           #translatedLeagueLocation: translatedLeagueLocation,
-        if (translatedCountry != null) #translatedCountry: translatedCountry,
-        if (isFavorite != null) #isFavorite: isFavorite
+        if (translatedCountry != null) #translatedCountry: translatedCountry
       }));
   @override
   School $make(CopyWithData data) => School(
@@ -419,8 +411,7 @@ class _SchoolCopyWithImpl<$R, $Out> extends ClassCopyWithBase<$R, School, $Out>
       translatedLeagueLocation: data.get(#translatedLeagueLocation,
           or: $value.translatedLeagueLocation),
       translatedCountry:
-          data.get(#translatedCountry, or: $value.translatedCountry),
-      isFavorite: data.get(#isFavorite, or: $value.isFavorite));
+          data.get(#translatedCountry, or: $value.translatedCountry));
 
   @override
   SchoolCopyWith<$R2, School, $Out2> $chain<$R2, $Out2>(Then<$Out2, $R2> t) =>
