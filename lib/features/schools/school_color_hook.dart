@@ -1,5 +1,6 @@
 import 'package:dart_mappable/dart_mappable.dart';
 import 'package:flutter/material.dart';
+import '../../utils/main_logger.dart';
 import '../../utils/unmodifiable_list.dart';
 
 class ColorHook extends MappingHook {
@@ -74,6 +75,11 @@ class ColorHook extends MappingHook {
         ('white' || 'branco' || 'blanco' || 'しろ' || '白' || 'ホワイト') =>
           Colors.white,
         // Add more colors as needed
-        (_) => Colors.white // default case
+        (_) => _defaultColor(color.toString()) // default case
       };
+}
+
+Color _defaultColor(String color) {
+  logParserColor.info('Color not parsed $color');
+  return Colors.white;
 }

@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import '../../../common_widgets/app_page_indicator.dart';
 import '../../../extensions/app_localization_extension.dart';
 import '../../../extensions/intl_extension.dart';
+import '../../../extensions/string_extension.dart';
 import '../../../extensions/theme_of_context_extension.dart';
 import '../school.dart';
 import '../school_extensions.dart';
@@ -45,11 +46,15 @@ class _SchoolDetailsPageState extends ConsumerState<SchoolDetailsPage> {
   Widget build(BuildContext context) {
     final school = ref.watch(selectedSchoolProvider(widget.id));
     return InkWell(
-      onLongPress: school.name == school.translatedName
+      onLongPress: school.name == school.translatedName &&
+              school.symbols == school.translatedSymbols
           ? null
           : () {
               showOriginal.value = !showOriginal.value;
             },
+      splashFactory: NoSplash.splashFactory,
+      highlightColor: Colors.transparent,
+      splashColor: Colors.transparent,
       child: Column(
         children: [
           LayoutBuilder(
@@ -98,7 +103,13 @@ class _SchoolDetailsPageState extends ConsumerState<SchoolDetailsPage> {
           ValueListenableBuilder<bool>(
             valueListenable: showOriginal,
             builder: (context, value, child) {
-              return SchoolDetailsText(school: school, showOriginal: value);
+              return SchoolDetailsText(
+                school: school,
+                showOriginal: value,
+                onTranslate: () {
+                  showOriginal.value = !showOriginal.value;
+                },
+              );
             },
           ),
         ],
@@ -111,11 +122,13 @@ class SchoolDetailsText extends StatefulWidget {
   const SchoolDetailsText({
     required this.school,
     required this.showOriginal,
+    required this.onTranslate,
     super.key,
   });
 
   final School school;
   final bool showOriginal;
+  final VoidCallback onTranslate;
 
   @override
   State<SchoolDetailsText> createState() => _SchoolDetailsTextState();
@@ -129,98 +142,166 @@ class _SchoolDetailsTextState extends State<SchoolDetailsText> {
       child: Padding(
         key: ValueKey(widget.showOriginal),
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: Stack(
           children: [
-            Row(
+            Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Flexible(
-                  child: Text(
-                    widget.showOriginal
-                        ? '${widget.school.translatedName}${'\n'}'
-                        : '${widget.school.name}${'\n'}',
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: context.textTheme.headlineMedium!
-                        .copyWith(fontWeight: FontWeight.w600),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 4),
-                  child: SizedBox(
-                    width: (16 * widget.school.colors.length) + 16.0,
-                    height: 32,
-                    child: Tooltip(
-                      message: widget.school.colors.join(', '),
-                      child: Stack(
-                        children: [
-                          for (final (index, colorCode)
-                              in widget.school.colorsCode.indexed)
-                            Container(
-                              height: 32,
-                              width: 32,
-                              margin: EdgeInsets.only(left: index * 16.0),
-                              decoration: BoxDecoration(
-                                color: colorCode,
-                                shape: BoxShape.circle,
-                                boxShadow: const [
-                                  BoxShadow(
-                                    color: Colors.black12,
-                                    blurRadius: 4,
-                                    offset: Offset(0, 2),
-                                  ),
-                                ],
-                              ),
-                            ),
-                        ],
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Flexible(
+                      child: Text(
+                        widget.showOriginal
+                            ? '${widget.school.translatedName}${'\n'}'
+                            : '${widget.school.name}${'\n'}',
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: context.textTheme.headlineMedium!
+                            .copyWith(fontWeight: FontWeight.w600),
                       ),
                     ),
-                  ),
+                    if (widget.school.firstDivisionChampionships > 0)
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 4,
+                          ),
+                          elevation: 0,
+                          disabledBackgroundColor: Colors.transparent,
+                        ),
+                        onPressed: null,
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Stack(
+                              children: <Widget>[
+                                const Positioned(
+                                  left: 1,
+                                  top: 2,
+                                  child: Icon(
+                                    Icons.star_border_outlined,
+                                    size: 32,
+                                    color: Colors.black12,
+                                  ),
+                                ),
+                                Icon(
+                                  Icons.star_border_outlined,
+                                  size: 32,
+                                  color: context.customColors.goldColor,
+                                ),
+                              ],
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 4),
+                              child: Text(
+                                '${widget.school.firstDivisionChampionships}',
+                                style: context.textTheme.bodySmall!.copyWith(
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 18,
+                                  color: context.customColors.goldColor,
+                                  shadows: const [
+                                    Shadow(
+                                      color: Colors.black12,
+                                      blurRadius: 1,
+                                      offset: Offset(0, 2),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                  ],
                 ),
+                SchoolTextTile(
+                  icon: Icons.music_note_outlined,
+                  title: '${context.loc.schoolSymbols}: ',
+                  content: widget.showOriginal
+                      ? widget.school.symbols.join(', ')
+                      : widget.school.translatedSymbols.join(', '),
+                ),
+                if (widget.school.foundationDate != null)
+                  SchoolTextTile(
+                    icon: Icons.date_range_outlined,
+                    title: '${context.loc.schoolFoundation}: ',
+                    content: widget.school.foundationDate!.intlShort(context),
+                  ),
+                if (widget.school.godmotherSchool.isNotEmpty)
+                  SchoolTextTile(
+                    icon: Icons.school_outlined,
+                    title: '${context.loc.schoolGodmother}: ',
+                    content: widget.showOriginal
+                        ? widget.school.godmotherSchool
+                        : widget.school.translatedGodmotherSchool,
+                  ),
+                SchoolTextTile(
+                  icon: Icons.leaderboard_outlined,
+                  title: '${context.loc.schoolDivision}: ',
+                  content: widget.school.currentDivision.fullName(context),
+                ),
+                SchoolTextTile(
+                  icon: Icons.sports_soccer_outlined,
+                  title: '${context.loc.schoolSortByLastPerformance}: ',
+                  content: '${widget.school.lastPosition.intlOrdinal(context)} '
+                      '${context.loc.schoolPerformancePlace.capitalize}',
+                ),
+                SchoolTextTile(
+                  icon: CupertinoIcons.flag,
+                  title: '',
+                  content: widget.showOriginal
+                      ? '${widget.school.country},'
+                          ' ${widget.school.leagueLocation}'
+                      : '${widget.school.translatedCountry},'
+                          ' ${widget.school.translatedLeagueLocation}',
+                ),
+                const SizedBox(height: 8),
               ],
             ),
-            SchoolTextTile(
-              icon: Icons.music_note_outlined,
-              title: '${context.loc.schoolSymbols}: ',
-              content: widget.school.translatedSymbols.join(', '),
-            ),
-            if (widget.school.foundationDate != null)
-              SchoolTextTile(
-                icon: Icons.date_range_outlined,
-                title: '${context.loc.schoolFoundation}: ',
-                content: widget.school.foundationDate!.intlShort(context),
+            if (widget.school.translatedName != widget.school.name ||
+                widget.school.symbols != widget.school.translatedSymbols)
+              Positioned(
+                bottom: 0,
+                right: 0,
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 8),
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        width: 32,
+                        child: Tooltip(
+                          message: widget.school.translatedColors.join(', '),
+                          child: Stack(
+                            alignment: Alignment.bottomRight,
+                            children: [
+                              for (final (index, colorCode)
+                                  in widget.school.colorsCode.indexed)
+                                Container(
+                                  height: 32,
+                                  width: 32,
+                                  margin: EdgeInsets.only(bottom: index * 12.0),
+                                  decoration: BoxDecoration(
+                                    color: colorCode,
+                                    shape: BoxShape.circle,
+                                    boxShadow: const [
+                                      BoxShadow(
+                                        color: Colors.black12,
+                                        blurRadius: 4,
+                                        offset: Offset(0, 2),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ),
-            if (widget.school.godmotherSchool.isNotEmpty)
-              SchoolTextTile(
-                icon: Icons.school_outlined,
-                title: '${context.loc.schoolGodmother}: ',
-                content: widget.school.translatedGodmotherSchool,
-              ),
-            SchoolTextTile(
-              icon: Icons.star_border_outlined,
-              title: '${context.loc.schoolLeague}: ',
-              content: widget.school.carnivalCategory.name.toUpperCase(),
-            ),
-            SchoolTextTile(
-              icon: Icons.sports_soccer_outlined,
-              title: '${context.loc.schoolDivision}: ',
-              content: widget.school.currentDivision.fullName(context),
-            ),
-            SchoolTextTile(
-              icon: Icons.sports_soccer_outlined,
-              title: '${context.loc.schoolSortByLastPerformance}: ',
-              content: '${widget.school.lastPosition}'
-                  '${context.loc.schoolPerformancePlace}',
-            ),
-            SchoolTextTile(
-              icon: CupertinoIcons.flag,
-              title: '',
-              content: '${widget.school.translatedCountry},'
-                  ' ${widget.school.translatedLeagueLocation}',
-            ),
-            const SizedBox(height: 8),
           ],
         ),
       ),

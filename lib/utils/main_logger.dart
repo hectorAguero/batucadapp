@@ -3,6 +3,7 @@ import 'package:logging/logging.dart';
 
 final appInitLog = Logger('app-init');
 final viewLog = Logger('view');
+final logParserColor = Logger('log-parser-color');
 final authLog = Logger('auth');
 final networkLog = Logger('network');
 

@@ -126,7 +126,7 @@ class AppCustomColors extends ThemeExtension<AppCustomColors> {
 
   AppCustomColors.light()
       : textColor = const Color(0xff000000),
-        goldColor = const Color(0xffffd700),
+        goldColor = Colors.yellow[700],
         silverColor = const Color(0xffc0c0c0),
         inverseTextColor = const Color(0xffffffff);
 

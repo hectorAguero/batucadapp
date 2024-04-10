@@ -5,7 +5,6 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../../core/shared_preferences_provider.dart';
 import '../../utils/main_logger.dart';
 import 'school.dart';
-import 'school_extensions.dart';
 import 'schools_repo.dart';
 import 'widgets/school_card.dart';
 
@@ -18,13 +17,13 @@ class Schools extends _$Schools {
   @override
   FutureOr<UnmodifiableListView<School>> build() async {
     final sort = ref.read(selectedSchoolSortProvider);
-    return _getSchools(sort: sort);
+    return getSchools(sort: sort);
   }
 
   Future<bool?> fetchNextPage({int pageSize = _pageSize}) async {
     try {
       final sort = ref.read(selectedSchoolSortProvider);
-      final schools = await _getSchools(
+      final schools = await getSchools(
         page: state.value!.length ~/ pageSize + 1,
         pageSize: pageSize,
         sort: sort,
@@ -41,7 +40,7 @@ class Schools extends _$Schools {
     }
   }
 
-  Future<UnmodifiableListView<School>> _getSchools({
+  Future<UnmodifiableListView<School>> getSchools({
     required SchoolSort sort,
     int page = 1,
     int pageSize = _pageSize,
@@ -121,7 +120,9 @@ class SearchSchool extends _$SearchSchool {
   @override
   String build() => '';
 
-  void setSearch(String value) => state = value.trim().toLowerCase();
+  void setSearch(String value) {
+    state = value.trim().toLowerCase();
+  }
 }
 
 @riverpod
@@ -150,7 +151,6 @@ class ShowOnlyFavoriteSchools extends _$ShowOnlyFavoriteSchools {
 final filteredSchoolsProvider =
     Provider.autoDispose<UnmodifiableListView<School>>((ref) {
   final filter = ref.watch(schoolDivisionsProvider);
-  final search = ref.watch(searchSchoolProvider);
   final schools = ref.watch(schoolsProvider);
   final favoritesIds = ref.watch(favoriteSchoolsProvider);
   final onlyFavorites = ref.watch(showOnlyFavoriteSchoolsProvider);
@@ -160,7 +160,6 @@ final filteredSchoolsProvider =
   final filteredSchools = schools.value!.where(
     (school) =>
         (filter[school.currentDivision] ?? false) &&
-        school.searchLogic(search) &&
         (!onlyFavorites || favoritesIds.contains('${school.id}')),
   );
 
