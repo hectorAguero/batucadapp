@@ -56,14 +56,6 @@ class _SchoolsTabState extends ConsumerState<SchoolsTabPage> {
             if (value == null) {
             } else if (value && widget.controller.hasClients) {
               widget.controller.jumpTo(pixels);
-              Future.delayed(
-                const Duration(milliseconds: 50),
-                () => widget.controller.animateTo(
-                  pixels + 64 + 40,
-                  duration: const Duration(milliseconds: 250),
-                  curve: Curves.easeInOut,
-                ),
-              );
             } else {
               context.showSnackBarText(context.loc.noMoreSchools);
             }
@@ -85,6 +77,7 @@ class _SchoolsTabState extends ConsumerState<SchoolsTabPage> {
               }
             },
             child: CustomScrollView(
+              controller: widget.controller,
               slivers: <Widget>[
                 const SchoolsTabNavBar(),
                 const SchoolsTabSearchHeader(),

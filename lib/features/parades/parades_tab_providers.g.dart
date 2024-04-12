@@ -6,7 +6,7 @@ part of 'parades_tab_providers.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$paradesHash() => r'699a4b945429ce4611cd5cd57d882c853163fbe3';
+String _$paradesHash() => r'6718ee270ea7fcb1e9a77de1894954d36177da6b';
 
 /// See also [Parades].
 @ProviderFor(Parades)

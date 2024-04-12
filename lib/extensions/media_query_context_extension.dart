@@ -22,7 +22,7 @@ extension ScreenSizeExtension on Size {
 
   bool get isNotSmallNorMedium => !isSmallScreen && !isMediumScreen;
 
-  int getAxisCount([int small = 1, int large = 2, int extraLarge = 3]) {
+  int crossAxisCount([int small = 1, int large = 2, int extraLarge = 3]) {
     if (isSmallScreen || isMediumScreen) {
       return small;
     } else if (isLargeScreen) {

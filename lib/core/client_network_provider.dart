@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:dio/dio.dart';
 import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
 import 'package:dio_cache_interceptor_hive_store/dio_cache_interceptor_hive_store.dart';
@@ -22,24 +24,21 @@ class ClientNetwork extends _$ClientNetwork {
   Future<Dio> build() async {
     final language = ref.watch(languageAppProvider).value!.languageCode;
     final cacheDirPath = await _getTemporaryDirectory();
-    final cacheStore = CacheOptions(
-      store: HiveCacheStore(
-        cacheDirPath,
-      ),
+    final cache = CacheOptions(
+      store: HiveCacheStore(cacheDirPath),
       hitCacheOnErrorExcept: [401, 403],
     );
-    final dio = Dio(
-      BaseOptions(
-        baseUrl: Endpoint.basePath.path,
-        connectTimeout: _connectTimeout,
-        receiveTimeout: _receiveTimeout,
-        queryParameters: {
-          'language': language,
-        },
-      ),
-    )
-      ..httpClientAdapter = getNativeAdapter(crotnetHttp2: true)
-      ..interceptors.add(DioCacheInterceptor(options: cacheStore))
+    final options = BaseOptions(
+      baseUrl: Endpoint.basePath.path,
+      connectTimeout: _connectTimeout,
+      receiveTimeout: _receiveTimeout,
+      queryParameters: {
+        'language': language,
+      },
+    );
+    final dio = Dio(options)
+      ..httpClientAdapter = getNativeAdapter(cronetHttp2: true)
+      ..interceptors.add(DioCacheInterceptor(options: cache))
       ..interceptors.add(
         LogInterceptor(
           requestHeader: false,
@@ -48,14 +47,20 @@ class ClientNetwork extends _$ClientNetwork {
         ),
       );
 
-    ref.onDispose(dio.close);
+    ref.onDispose(
+      () {
+        logNetwork.info('Closing dio');
+        dio.close();
+      },
+    );
 
     return dio;
   }
 
   Future<String?> _getTemporaryDirectory() async {
     try {
-      return getTemporaryDirectory().then((value) => value.path);
+      final dir = await getTemporaryDirectory();
+      return dir.path;
     } catch (e) {
       logNetwork.info('Error getting temporary directory: $e');
       return null;

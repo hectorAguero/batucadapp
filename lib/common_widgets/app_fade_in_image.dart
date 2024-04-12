@@ -1,11 +1,18 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:cached_network_image/cached_network_image.dart';
+// ignore: depend_on_referenced_packages
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 import '../extensions/app_localization_extension.dart';
 import '../extensions/theme_of_context_extension.dart';
 import '../utils/main_logger.dart';
+
+typedef ImageErrorWidgetBuilder = Widget Function(
+  BuildContext context,
+  Object error,
+  StackTrace? stackTrace,
+);
 
 class AppFadeInImage extends StatelessWidget {
   const AppFadeInImage(
@@ -13,6 +20,7 @@ class AppFadeInImage extends StatelessWidget {
     this.height,
     this.width,
     this.fit,
+    this.imageErrorBuilder,
     super.key,
   });
 
@@ -20,23 +28,28 @@ class AppFadeInImage extends StatelessWidget {
   final double? height;
   final double? width;
   final BoxFit? fit;
+  final ImageErrorWidgetBuilder? imageErrorBuilder;
 
   @override
   Widget build(BuildContext context) {
     return FadeInImage(
       placeholder: MemoryImage(kTransparentImage),
-      image: CachedNetworkImageProvider(image),
-      imageErrorBuilder: (context, error, stackTrace) {
-        logViews.info('Error loading image:', error, stackTrace);
-        return AppErrorImageBuilder(
-          height: height,
-          textColor: context.colorScheme.onErrorContainer,
-          backgroundColor: context.colorScheme.errorContainer,
-          error: error.toString(),
-          errorType: context.loc.errorLoadingImage,
-          width: height,
-        );
-      },
+      image: ExtendedNetworkImageProvider(
+        image,
+        // imageRenderMethodForWeb: ImageRenderMethodForWeb.HttpGet,
+      ),
+      imageErrorBuilder: imageErrorBuilder ??
+          (context, error, stackTrace) {
+            logViews.info('Error loading image:', error, stackTrace);
+            return AppErrorImageBuilder(
+              height: height,
+              textColor: context.colorScheme.onErrorContainer,
+              backgroundColor: context.colorScheme.errorContainer,
+              error: error.toString(),
+              errorType: context.loc.errorLoadingImage,
+              width: height,
+            );
+          },
       fit: fit ?? BoxFit.cover,
       height: height,
       width: width,
@@ -72,19 +85,24 @@ class AppErrorImageBuilder extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Icon(
-              Icons.error,
-              color: textColor,
-              size: 50,
+            Flexible(
+              child: Icon(
+                Icons.error,
+                color: textColor,
+                size: 50,
+              ),
             ),
             // Error icon
-            Text(
-              errorType,
-              maxLines: 2,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: textColor,
-                fontSize: 13,
+            Flexible(
+              child: Text(
+                errorType,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: textColor,
+                  fontSize: 13,
+                ),
               ),
             ),
             const SizedBox(height: 4), // Space between text and error message

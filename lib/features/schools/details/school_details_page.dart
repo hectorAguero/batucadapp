@@ -175,23 +175,37 @@ class _SchoolDetailsTextState extends State<SchoolDetailsText> {
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Stack(
-                              children: <Widget>[
-                                const Positioned(
-                                  left: 1,
-                                  top: 2,
-                                  child: Icon(
-                                    Icons.star_border_outlined,
-                                    size: 32,
+                            Container(
+                              padding: const EdgeInsets.all(4),
+                              decoration: BoxDecoration(
+                                color: context.colorScheme.surface,
+                                shape: BoxShape.circle,
+                                boxShadow: const [
+                                  BoxShadow(
                                     color: Colors.black12,
+                                    blurRadius: 4,
+                                    offset: Offset(0, 2),
                                   ),
-                                ),
-                                Icon(
-                                  Icons.star_border_outlined,
-                                  size: 32,
-                                  color: context.customColors.goldColor,
-                                ),
-                              ],
+                                ],
+                              ),
+                              child: Stack(
+                                children: <Widget>[
+                                  const Positioned(
+                                    left: 1,
+                                    top: 2,
+                                    child: Icon(
+                                      Icons.star,
+                                      size: 32,
+                                      color: Colors.black26,
+                                    ),
+                                  ),
+                                  Icon(
+                                    Icons.star,
+                                    size: 32,
+                                    color: context.customColors.goldColor,
+                                  ),
+                                ],
+                              ),
                             ),
                             Padding(
                               padding: const EdgeInsets.only(top: 4),

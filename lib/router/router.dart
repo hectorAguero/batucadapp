@@ -39,7 +39,9 @@ GoRouter goRouter(GoRouterRef ref) {
           (tab) => tab.path == state.uri.toString(),
         );
         if (currentIndex != newIndex) {
-          ref.read(selectedHomeTabIndexProvider.notifier).select(newIndex);
+          Future.microtask(() {
+            ref.read(selectedHomeTabIndexProvider.notifier).select(newIndex);
+          });
         } else {
           _checkScrollController(
             primaryScrolls[newIndex],

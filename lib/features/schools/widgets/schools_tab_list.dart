@@ -1,7 +1,7 @@
+import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:sliver_tools/sliver_tools.dart';
 
 import '../../../extensions/app_localization_extension.dart';
@@ -51,24 +51,21 @@ class SchoolsTabList extends ConsumerWidget {
                       duration: kThemeAnimationDuration,
                       child: filteredSchools.isEmpty
                           ? const SchoolsEmptyList()
-                          : SliverMasonryGrid.extent(
-                              maxCrossAxisExtent: SchoolCard.cardMaxWidth,
-                              childCount: filteredSchools.length,
-                              itemBuilder: (context, index) {
+                          : SliverDynamicHeightGridView(
+                              itemCount: filteredSchools.length,
+                              crossAxisCount:
+                                  context.querySize.crossAxisCount(),
+                              builder: (context, index) {
                                 final school = filteredSchools[index];
-                                return Column(
-                                  children: [
-                                    ProviderScope(
-                                      overrides: [
-                                        currentSchoolProvider.overrideWithValue(
-                                          filteredSchools.firstWhere(
-                                            (item) => item.id == school.id,
-                                          ),
-                                        ),
-                                      ],
-                                      child: const SchoolCard(),
+                                return ProviderScope(
+                                  overrides: [
+                                    currentSchoolProvider.overrideWithValue(
+                                      filteredSchools.firstWhere(
+                                        (item) => item.id == school.id,
+                                      ),
                                     ),
                                   ],
+                                  child: const SchoolCard(),
                                 );
                               },
                             ),

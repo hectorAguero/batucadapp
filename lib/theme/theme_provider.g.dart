@@ -6,7 +6,7 @@ part of 'theme_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$appThemeModeHash() => r'911d976ac1c5c470b796c7128690e4fbc550a0a5';
+String _$appThemeModeHash() => r'429f7a40d1df8304a535214708cfb66f66f08773';
 
 /// See also [AppThemeMode].
 @ProviderFor(AppThemeMode)
@@ -20,7 +20,7 @@ final appThemeModeProvider = NotifierProvider<AppThemeMode, ThemeMode>.internal(
 );
 
 typedef _$AppThemeMode = Notifier<ThemeMode>;
-String _$appThemeTrueBlackHash() => r'b3b1a8f45f8f44b6ad34d4142453b4fbb455fc1b';
+String _$appThemeTrueBlackHash() => r'c71eaecafef02c241b4e8c996cde320440828fe2';
 
 /// See also [AppThemeTrueBlack].
 @ProviderFor(AppThemeTrueBlack)

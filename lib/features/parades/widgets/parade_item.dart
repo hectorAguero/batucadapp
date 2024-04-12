@@ -1,10 +1,12 @@
 import 'dart:ui';
 
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../common_widgets/animated_linear_gradient.dart';
 import '../../../common_widgets/app_fade_in_image.dart';
+import '../../../extensions/app_localization_extension.dart';
 import '../../../extensions/theme_of_context_extension.dart';
 import '../../schools/school.dart';
 import '../../schools/school_extensions.dart';
@@ -26,7 +28,7 @@ class ParadeItem extends ConsumerWidget {
       top: false,
       bottom: false,
       child: SizedBox(
-        height: 240,
+        height: 248,
         child: Row(
           children: <Widget>[
             ParadeItemYearLine(
@@ -97,11 +99,16 @@ class ParadeItemContent extends StatelessWidget {
                   width: double.infinity,
                   child: parade.school.imageUrl.isEmpty
                       ? const SizedBox.shrink()
-                      : ImageFiltered(
-                          imageFilter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                          child: AppFadeInImage(
-                            parade.school.imageUrl,
-                            fit: BoxFit.cover,
+                      : Container(
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: NetworkImage(parade.school.imageUrl),
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                          child: BackdropFilter(
+                            filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                            child: const SizedBox(),
                           ),
                         ),
                 ),
