@@ -556,7 +556,7 @@ abstract class AppLocalizations {
   /// No description provided for @switchTheme.
   ///
   /// In en, this message translates to:
-  /// **'Switch Theme'**
+  /// **'Theme'**
   String get switchTheme;
 }
 

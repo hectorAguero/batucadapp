@@ -31,66 +31,65 @@ class InstrumentsTabPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     const maxCrossAxisExtent = largeScreen;
     final instruments = ref.watch(instrumentsTabProvider);
-    return SelectionArea(
-      child: Scaffold(
-        body: CustomScrollView(
-          slivers: [
-            SliverCrossAxisConstrained(
-              maxCrossAxisExtent: maxCrossAxisExtent,
-              child: SliverMainAxisGroup(
-                slivers: [
-                  AppCupertinoSliverNavigationBar(
-                    largeTitle: context.loc.instrumentsTitle,
-                    transitionBetweenRoutes: false,
-                  ),
-                  const SliverPadding(padding: EdgeInsets.only(top: 8)),
-                  SliverAnimatedSwitcher(
-                    duration: const Duration(milliseconds: 300),
-                    child: switch (instruments) {
-                      AsyncLoading() => const SliverFillRemaining(
-                          key: ValueKey('loading'),
-                          child: Center(
-                            child: CircularProgressIndicator.adaptive(),
+    return Scaffold(
+      body: CustomScrollView(
+        slivers: [
+          SliverCrossAxisConstrained(
+            maxCrossAxisExtent: maxCrossAxisExtent,
+            child: SliverMainAxisGroup(
+              slivers: [
+                AppCupertinoSliverNavigationBar(
+                  largeTitle: context.loc.instrumentsTitle,
+                  transitionBetweenRoutes: false,
+                ),
+                const SliverPadding(padding: EdgeInsets.only(top: 8)),
+                SliverAnimatedSwitcher(
+                  duration: const Duration(milliseconds: 300),
+                  child: switch (instruments) {
+                    AsyncLoading() => const SliverFillRemaining(
+                        key: ValueKey('loading'),
+                        child: Center(
+                          child: CircularProgressIndicator.adaptive(),
+                        ),
+                      ),
+                    AsyncError(:final error) => SliverFillRemaining(
+                        key: const ValueKey('error'),
+                        child: Center(
+                          child: Text(
+                            error.toString(),
+                            style: Theme.of(context).textTheme.titleLarge,
                           ),
                         ),
-                      AsyncError(:final error) => SliverFillRemaining(
-                          key: const ValueKey('error'),
-                          child: Center(
-                            child: Text(
-                              error.toString(),
-                              style: Theme.of(context).textTheme.titleLarge,
-                            ),
-                          ),
+                      ),
+                    AsyncData(:final value) => SliverSafeArea(
+                        top: false,
+                        sliver: SliverAlignedGrid.extent(
+                          maxCrossAxisExtent: InstrumentListTile.cardMaxWidth,
+                          itemCount: value.length,
+                          itemBuilder: (context, index) {
+                            final instrument = value[index];
+                            return InstrumentListTile(
+                              title: instrument.translatedName,
+                              originalTitle: instrument.name,
+                              subtitle: instrument.translatedDescription,
+                              index: index,
+                              onTap: () {
+                                context.go(
+                                  '${InstrumentsTabPage.route.path}/${InstrumentDetailsPage.route.path}',
+                                  extra: {'id': instrument.id},
+                                );
+                              },
+                              imageUrl: instrument.imageUrl,
+                            );
+                          },
                         ),
-                      AsyncData(:final value) => SliverSafeArea(
-                          top: false,
-                          sliver: SliverAlignedGrid.extent(
-                            maxCrossAxisExtent: InstrumentListTile.cardMaxWidth,
-                            itemCount: value.length,
-                            itemBuilder: (context, index) {
-                              final instrument = value[index];
-                              return InstrumentListTile(
-                                title: instrument.name,
-                                subtitle: instrument.description,
-                                index: index,
-                                onTap: () {
-                                  context.go(
-                                    '${InstrumentsTabPage.route.path}/${InstrumentDetailsPage.route.path}',
-                                    extra: {'id': instrument.id},
-                                  );
-                                },
-                                imageUrl: instrument.imageUrl,
-                              );
-                            },
-                          ),
-                        ),
-                    },
-                  ),
-                ],
-              ),
+                      ),
+                  },
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

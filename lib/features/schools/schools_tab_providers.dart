@@ -35,7 +35,7 @@ class Schools extends _$Schools {
       ref.read(schoolsTabReachedLimitProvider.notifier).setReachedLimit();
       return false;
     } catch (e, st) {
-      viewLog.warning('Failed to fetch next page $e', e, st);
+      logViews.warning('Failed to fetch next page $e', e, st);
       return null;
     }
   }

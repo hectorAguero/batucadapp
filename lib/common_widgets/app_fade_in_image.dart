@@ -27,7 +27,7 @@ class AppFadeInImage extends StatelessWidget {
       placeholder: MemoryImage(kTransparentImage),
       image: CachedNetworkImageProvider(image),
       imageErrorBuilder: (context, error, stackTrace) {
-        viewLog.info('Error loading image:', error, stackTrace);
+        logViews.info('Error loading image:', error, stackTrace);
         return AppErrorImageBuilder(
           height: height,
           textColor: context.colorScheme.onErrorContainer,

@@ -80,6 +80,6 @@ class ColorHook extends MappingHook {
 }
 
 Color _defaultColor(String color) {
-  logParserColor.info('Color not parsed $color');
+  logColorParse.info('Color not parsed $color');
   return Colors.white;
 }

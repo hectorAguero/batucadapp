@@ -7,6 +7,7 @@ typedef ImageUrl = String;
 class InstrumentListTile extends StatefulWidget {
   const InstrumentListTile({
     required this.title,
+    required this.originalTitle,
     required this.subtitle,
     required this.onTap,
     required this.imageUrl,
@@ -15,6 +16,7 @@ class InstrumentListTile extends StatefulWidget {
   });
 
   final String title;
+  final String originalTitle;
   final String subtitle;
   final VoidCallback onTap;
   final ImageUrl imageUrl;
@@ -69,8 +71,27 @@ class _InstrumentListTileState extends State<InstrumentListTile> {
                   children: [
                     Padding(
                       padding: const EdgeInsets.only(bottom: 8),
-                      child: Text(
-                        widget.title,
+                      child: Text.rich(
+                        TextSpan(
+                          children: [
+                            TextSpan(
+                              text: widget.title,
+                              style: Theme.of(context).textTheme.headlineSmall,
+                            ),
+                            if (widget.title != widget.originalTitle)
+                              TextSpan(
+                                text: ' ${widget.originalTitle}',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleLarge!
+                                    .copyWith(
+                                      color:
+                                          context.colorScheme.onSurfaceVariant,
+                                    ),
+                              ),
+                          ],
+                          style: Theme.of(context).textTheme.headlineSmall,
+                        ),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style:

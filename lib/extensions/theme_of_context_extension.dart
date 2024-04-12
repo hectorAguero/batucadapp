@@ -13,14 +13,6 @@ extension TextThemeOfContextExtension on BuildContext {
   ColorScheme get colorScheme => Theme.of(this).colorScheme;
   AppCustomColors get customColors =>
       Theme.of(this).extension<AppCustomColors>()!;
-
-  Color medalColor(int placing) {
-    return switch (placing) {
-      1 => customColors.goldColor!,
-      2 => customColors.silverColor!,
-      _ => colorScheme.secondaryContainer,
-    };
-  }
 }
 
 extension ThemeModeExtension on ThemeMode {

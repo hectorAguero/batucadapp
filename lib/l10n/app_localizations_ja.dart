@@ -233,5 +233,5 @@ class AppLocalizationsJa extends AppLocalizations {
   String get settingsTitle => '設定';
 
   @override
-  String get switchTheme => 'テーマの切り替え';
+  String get switchTheme => 'テーマ';
 }

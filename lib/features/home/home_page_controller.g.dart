@@ -7,7 +7,7 @@ part of 'home_page_controller.dart';
 // **************************************************************************
 
 String _$selectedHomeTabIndexHash() =>
-    r'0b43f8676f6eeca514a6e72c6b53bd41aaa57470';
+    r'a00302d874b0b2f90c6cc2bf3322956012f442ad';
 
 /// See also [SelectedHomeTabIndex].
 @ProviderFor(SelectedHomeTabIndex)

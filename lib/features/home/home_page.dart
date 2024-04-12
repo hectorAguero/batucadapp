@@ -16,42 +16,40 @@ class HomePage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final size = MediaQuery.sizeOf(context);
-    return SelectionArea(
-      child: Scaffold(
-        body: size.isSmallScreen
-            ? navigationShell
-            : Row(
-                children: [
-                  AdaptiveNavigationRail(
-                    destinations: UnmodifiableList(TabDestination.values),
-                    selectedIndex: navigationShell.currentIndex,
-                    onDestinationSelected: (index) {
-                      navigationShell.goBranch(
-                        index,
-                        initialLocation: index == navigationShell.currentIndex,
-                      );
-                    },
-                  ),
-                  const VerticalDivider(
-                    width: 1,
-                    thickness: 1,
-                  ),
-                  Expanded(child: navigationShell),
-                ],
-              ),
-        bottomNavigationBar: size.isSmallScreen
-            ? AdaptiveNavigationBar(
-                tabDestinations: UnmodifiableList(TabDestination.values),
-                onDestinationSelected: (index) {
-                  navigationShell.goBranch(
-                    index,
-                    initialLocation: index == navigationShell.currentIndex,
-                  );
-                },
-                selectedIndex: navigationShell.currentIndex,
-              )
-            : null,
-      ),
+    return Scaffold(
+      body: size.isSmallScreen
+          ? navigationShell
+          : Row(
+              children: [
+                AdaptiveNavigationRail(
+                  destinations: UnmodifiableList(TabDestination.values),
+                  selectedIndex: navigationShell.currentIndex,
+                  onDestinationSelected: (index) {
+                    navigationShell.goBranch(
+                      index,
+                      initialLocation: index == navigationShell.currentIndex,
+                    );
+                  },
+                ),
+                const VerticalDivider(
+                  width: 1,
+                  thickness: 1,
+                ),
+                Expanded(child: navigationShell),
+              ],
+            ),
+      bottomNavigationBar: size.isSmallScreen
+          ? AdaptiveNavigationBar(
+              tabDestinations: UnmodifiableList(TabDestination.values),
+              onDestinationSelected: (index) {
+                navigationShell.goBranch(
+                  index,
+                  initialLocation: index == navigationShell.currentIndex,
+                );
+              },
+              selectedIndex: navigationShell.currentIndex,
+            )
+          : null,
     );
   }
 }

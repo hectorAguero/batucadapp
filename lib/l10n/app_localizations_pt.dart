@@ -71,7 +71,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get instrumentsTitle => 'Instrumentos';
 
   @override
-  String get instrumentDetails => 'Detalhes dos Instrumentos';
+  String get instrumentDetails => 'Detalhes do Instrumento';
 
   @override
   String get instrumentDescription => 'Descrição';
@@ -233,5 +233,5 @@ class AppLocalizationsPt extends AppLocalizations {
   String get settingsTitle => 'Configurações';
 
   @override
-  String get switchTheme => 'Alternar Tema';
+  String get switchTheme => 'Tema';
 }

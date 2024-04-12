@@ -31,8 +31,8 @@ class SchoolsRepoImpls implements SchoolsRepo {
     required String sort,
   }) async {
     final networkClient = ref.watch(clientNetworkProvider);
-    final response = await networkClient.get<Iterable<dynamic>>(
-      '/schools',
+    final response = await networkClient.value!.get<Iterable<dynamic>>(
+      Endpoint.schools.path,
       queryParameters: {'page': page, 'pagesize': pageSize},
     );
     final data = response.data!.cast<Map<String, dynamic>>();

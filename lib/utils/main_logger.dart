@@ -1,16 +1,22 @@
 // ignore_for_file: avoid_print
 import 'package:logging/logging.dart';
 
-final appInitLog = Logger('app-init');
-final viewLog = Logger('view');
-final logParserColor = Logger('log-parser-color');
-final authLog = Logger('auth');
-final networkLog = Logger('network');
+final logInitialization = Logger('app-init');
+final logViews = Logger('view');
+final logColorParse = Logger('log-parser-color');
+final logAuth = Logger('auth');
+final logNetwork = Logger('network');
 
 /// Send log output from all loggers,
 /// at or above the given [level], to the terminal.
 void initAllLogs(Level level) {
-  initLoggers(level, {Logger.root});
+  initLoggers(level, {
+    logInitialization,
+    logViews,
+    logColorParse,
+    logAuth,
+    logNetwork,
+  });
 }
 
 /// Send output from the given [loggers],

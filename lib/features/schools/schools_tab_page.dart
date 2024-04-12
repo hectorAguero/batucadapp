@@ -77,58 +77,54 @@ class _SchoolsTabState extends ConsumerState<SchoolsTabPage> {
   Widget build(BuildContext context) {
     return Builder(
       builder: (context) {
-        return SelectionArea(
-          child: Scaffold(
-            body: GestureDetector(
-              onTap: () {
-                if (FocusScope.of(context).hasFocus) {
-                  FocusScope.of(context).unfocus();
-                }
-              },
-              child: CustomScrollView(
-                slivers: <Widget>[
-                  const SchoolsTabNavBar(),
-                  const SchoolsTabSearchHeader(),
-                  Consumer(
-                    child: const SliverToBoxAdapter(child: SizedBox.shrink()),
-                    builder: (context, ref, child) {
-                      if (ref.watch(schoolDivisionsProvider).length > 1) {
-                        return const SchoolDivisionChips();
-                      }
-                      return child!;
-                    },
-                  ),
-                  const SchoolsTabList(),
-                  Consumer(
-                    builder: (context, ref, child) {
-                      final reachedLimit =
-                          ref.watch(schoolsTabReachedLimitProvider);
-                      final isEmpty =
-                          ref.watch(filteredSchoolsProvider).isEmpty;
-                      final isFiltered =
-                          ref.watch(filteredSchoolsProvider).length !=
-                              ref.watch(schoolsProvider).value?.length;
-                      return SliverToBoxAdapter(
-                        child: AnimatedSize(
-                          duration: const Duration(milliseconds: 300),
-                          child: reachedLimit || isEmpty || isFiltered
-                              ? const SizedBox.shrink()
-                              : const Center(
-                                  child: Padding(
-                                    padding: EdgeInsets.all(16),
-                                    child: SizedBox(
-                                      height: 16,
-                                      child:
-                                          CircularProgressIndicator.adaptive(),
-                                    ),
+        return Scaffold(
+          body: GestureDetector(
+            onTap: () {
+              if (FocusScope.of(context).hasFocus) {
+                FocusScope.of(context).unfocus();
+              }
+            },
+            child: CustomScrollView(
+              slivers: <Widget>[
+                const SchoolsTabNavBar(),
+                const SchoolsTabSearchHeader(),
+                Consumer(
+                  child: const SliverToBoxAdapter(child: SizedBox.shrink()),
+                  builder: (context, ref, child) {
+                    if (ref.watch(schoolDivisionsProvider).length > 1) {
+                      return const SchoolDivisionChips();
+                    }
+                    return child!;
+                  },
+                ),
+                const SchoolsTabList(),
+                Consumer(
+                  builder: (context, ref, child) {
+                    final reachedLimit =
+                        ref.watch(schoolsTabReachedLimitProvider);
+                    final isEmpty = ref.watch(filteredSchoolsProvider).isEmpty;
+                    final isFiltered =
+                        ref.watch(filteredSchoolsProvider).length !=
+                            ref.watch(schoolsProvider).value?.length;
+                    return SliverToBoxAdapter(
+                      child: AnimatedSize(
+                        duration: const Duration(milliseconds: 300),
+                        child: reachedLimit || isEmpty || isFiltered
+                            ? const SizedBox.shrink()
+                            : const Center(
+                                child: Padding(
+                                  padding: EdgeInsets.all(16),
+                                  child: SizedBox(
+                                    height: 16,
+                                    child: CircularProgressIndicator.adaptive(),
                                   ),
                                 ),
-                        ),
-                      );
-                    },
-                  ),
-                ],
-              ),
+                              ),
+                      ),
+                    );
+                  },
+                ),
+              ],
             ),
           ),
         );

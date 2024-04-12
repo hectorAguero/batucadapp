@@ -1,16 +1,44 @@
-# samba_public_app
+# Samba Sample App
 
-A new Flutter project.
+I make a sample app to use good practices in a Flutter project, trying to make a
+clean code and a good architecture.
 
-## Getting Started
+The project uses Riverpod as a state managment. making a good sample to take
+code for future projects.
 
-This project is a starting point for a Flutter application.
+Using an [API](https://github.com/hectorAguero/samba-public-api) created by me
+with the data of multiples sites about the Samba Schools in Brazil 🇧🇷
 
-A few resources to get you started if this is your first Flutter project:
+# Photos
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+| Photo 1                | Photo 2                | Photo 3                |
+| ---------------------- | ---------------------- | ---------------------- |
+| ![Photo 1](docs/1.png) | ![Photo 2](docs/2.png) | ![Photo 3](docs/3.png) |
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+# Features
+
+- [x] Cupertino and Material Design adaptive UI
+- [x] API Calls with Dio with Natives Client
+- [x] Riverpod for State Managment
+- [x] Localization with in-app language change
+- [x] Navigator 2.0 with GoRouter and StatefulShellBranch
+- [x] Linting with very_good_analysis
+- [x] Inmutability with DartMappable
+- [x] Custom Theme with FlexThemeData and Theme Extensions
+- [x] Offload initialization of the main method
+- [x] Personalized Widgets with helper extensions
+- [x] Pagination and TextSearch to the API
+
+# To do
+
+- [ ] Deploy in Web
+- [ ] Testing
+- [ ] Make deploy automatic
+- [ ] Make design adaptive for material3
+- [ ] Search in the 3 tabs
+- [ ] Load Favorites by separate at the start
+- [ ] Update Parades Design
+- [ ] Fix some schools image names
+- [ ] Add Instruments photos
+- [ ] Add Instruments learning text
+- [ ] Store data in cache for offline use

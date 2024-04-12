@@ -44,107 +44,104 @@ class _InstrumentDetailsPageState extends ConsumerState<InstrumentDetailsPage> {
     const screenConstraint = largeScreen;
     return DefaultTabController(
       length: InstrumentDetailsTab.values.length,
-      child: SelectionArea(
-        child: Scaffold(
-          body: NestedScrollView(
-            controller: _controller,
-            headerSliverBuilder:
-                (BuildContext context, bool innerBoxIsScrolled) {
-              return <Widget>[
-                SliverOverlapAbsorber(
-                  handle: NestedScrollView.sliverOverlapAbsorberHandleFor(
-                    context,
-                  ),
-                  sliver: SliverCrossAxisConstrained(
-                    maxCrossAxisExtent: screenConstraint,
-                    child: AppCupertinoSliverNavigationBar(
-                      leading: const GoBackButton(),
-                      largeTitle: context.loc.instrumentDetails,
-                      stretch: true,
-                      transitionBetweenRoutes: false,
-                    ),
+      child: Scaffold(
+        body: NestedScrollView(
+          controller: _controller,
+          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+            return <Widget>[
+              SliverOverlapAbsorber(
+                handle: NestedScrollView.sliverOverlapAbsorberHandleFor(
+                  context,
+                ),
+                sliver: SliverCrossAxisConstrained(
+                  maxCrossAxisExtent: screenConstraint,
+                  child: AppCupertinoSliverNavigationBar(
+                    leading: const GoBackButton(),
+                    largeTitle: context.loc.instrumentDetails,
+                    stretch: true,
+                    transitionBetweenRoutes: false,
                   ),
                 ),
-              ];
-            },
-            body: Builder(
-              builder: (context) {
-                return CustomScrollView(
-                  slivers: [
-                    SliverOverlapInjector(
-                      handle: NestedScrollView.sliverOverlapAbsorberHandleFor(
-                        context,
+              ),
+            ];
+          },
+          body: Builder(
+            builder: (context) {
+              return CustomScrollView(
+                slivers: [
+                  SliverOverlapInjector(
+                    handle: NestedScrollView.sliverOverlapAbsorberHandleFor(
+                      context,
+                    ),
+                  ),
+                  SliverCrossAxisConstrained(
+                    maxCrossAxisExtent: screenConstraint,
+                    child: SliverToBoxAdapter(
+                      child: InstrumentHeaderImages(
+                        instrument: value,
+                        imageHeight: imageHeight,
                       ),
                     ),
-                    SliverCrossAxisConstrained(
-                      maxCrossAxisExtent: screenConstraint,
-                      child: SliverToBoxAdapter(
-                        child: InstrumentHeaderImages(
-                          instrument: value,
-                          imageHeight: imageHeight,
+                  ),
+                  SliverCrossAxisConstrained(
+                    maxCrossAxisExtent: smallScreen,
+                    child: SliverPadding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 24,
+                      ),
+                      sliver: SliverToBoxAdapter(
+                        child: TabBar(
+                          overlayColor: const WidgetStatePropertyAll(
+                            Colors.transparent,
+                          ),
+                          indicatorSize: TabBarIndicatorSize.tab,
+                          indicatorPadding: const EdgeInsets.symmetric(
+                            horizontal: 4,
+                          ),
+                          tabs: [
+                            Tab(text: context.loc.instrumentDescription),
+                            Tab(text: context.loc.instrumentLearning),
+                          ],
                         ),
                       ),
                     ),
-                    SliverCrossAxisConstrained(
-                      maxCrossAxisExtent: smallScreen,
-                      child: SliverPadding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 24,
-                        ),
-                        sliver: SliverToBoxAdapter(
-                          child: TabBar(
-                            overlayColor: const WidgetStatePropertyAll(
-                              Colors.transparent,
-                            ),
-                            indicatorSize: TabBarIndicatorSize.tab,
-                            indicatorPadding: const EdgeInsets.symmetric(
-                              horizontal: 4,
-                            ),
-                            tabs: [
-                              Tab(text: context.loc.instrumentDescription),
-                              Tab(text: context.loc.instrumentLearning),
+                  ),
+                  SliverCrossAxisConstrained(
+                    maxCrossAxisExtent: screenConstraint,
+                    child: SliverPadding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 8,
+                      ),
+                      sliver: SliverToBoxAdapter(
+                        // TODO(hectorAguero): hardcoded to avoid overscroll
+                        child: SizedBox(
+                          height: value.translatedDescription
+                                      .calculateLines(
+                                        context,
+                                        width: screenConstraint,
+                                      )
+                                      .toDouble() *
+                                  20 +
+                              100,
+                          child: TabBarView(
+                            physics: const ClampingScrollPhysics(),
+                            children: [
+                              InstrumentDetailsSummary(
+                                details: value.translatedDescription,
+                              ),
+                              InstrumentDetailsSummary(
+                                details: value.translatedDescription,
+                              ),
                             ],
                           ),
                         ),
                       ),
                     ),
-                    SliverCrossAxisConstrained(
-                      maxCrossAxisExtent: screenConstraint,
-                      child: SliverPadding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 16,
-                          vertical: 8,
-                        ),
-                        sliver: SliverToBoxAdapter(
-                          // TODO(hectorAguero): hardcoded to avoid overscroll
-                          child: SizedBox(
-                            height: value.translatedDescription
-                                        .calculateLines(
-                                          context,
-                                          width: screenConstraint,
-                                        )
-                                        .toDouble() *
-                                    20 +
-                                100,
-                            child: TabBarView(
-                              physics: const ClampingScrollPhysics(),
-                              children: [
-                                InstrumentDetailsSummary(
-                                  details: value.translatedDescription,
-                                ),
-                                InstrumentDetailsSummary(
-                                  details: value.translatedDescription,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                );
-              },
-            ),
+                  ),
+                ],
+              );
+            },
           ),
         ),
       ),

@@ -24,9 +24,13 @@ class SchoolsTabList extends ConsumerWidget {
           AsyncError(:final error) => SliverFillRemaining(
               key: const ValueKey('error'),
               child: Center(
-                child: Text(
-                  error.toString(),
-                  style: context.textTheme.titleLarge,
+                child: Column(
+                  children: [
+                    Text(
+                      error.toString(),
+                      style: context.textTheme.titleLarge,
+                    ),
+                  ],
                 ),
               ),
             ),

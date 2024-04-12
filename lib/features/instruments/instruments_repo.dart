@@ -27,7 +27,8 @@ class InstrumentRepoImpls implements InstrumentsRepo {
   Future<UnmodifiableList<Instrument>> getInstruments() async {
     final response = await ref
         .watch(clientNetworkProvider)
-        .get<Iterable<dynamic>>('/instruments');
+        .value!
+        .get<Iterable<dynamic>>(Endpoint.instruments.path);
     final data = response.data!.cast<Map<String, dynamic>>();
     return UnmodifiableList([
       for (final item in data) Instrument.fromMap(item),
@@ -36,9 +37,10 @@ class InstrumentRepoImpls implements InstrumentsRepo {
 
   @override
   Future<Instrument> getDetails(InstrumentId id) async {
-    final response = await ref
-        .watch(clientNetworkProvider)
-        .get<Map<String, dynamic>>('/schools/$id');
+    final response =
+        await ref.watch(clientNetworkProvider).value!.get<Map<String, dynamic>>(
+              '${Endpoint.instruments.pathId}/$id',
+            );
     return Instrument.fromMap(response.data!);
   }
 }

@@ -116,24 +116,28 @@ class AppCustomColors extends ThemeExtension<AppCustomColors> {
   final Color? inverseTextColor;
   final Color? goldColor;
   final Color? silverColor;
+  final Color? bronzeColor;
 
   AppCustomColors({
     required this.textColor,
     required this.inverseTextColor,
     required this.goldColor,
     required this.silverColor,
+    required this.bronzeColor,
   });
 
   AppCustomColors.light()
       : textColor = const Color(0xff000000),
-        goldColor = Colors.yellow[700],
+        goldColor = const Color(0xFFFBC02D),
         silverColor = const Color(0xffc0c0c0),
+        bronzeColor = const Color(0xffcd7f32),
         inverseTextColor = const Color(0xffffffff);
 
   AppCustomColors.dark()
       : textColor = const Color(0xffffffff),
         goldColor = const Color(0xffd4af37),
         silverColor = const Color(0xffa9a9a9),
+        bronzeColor = const Color(0xff8b4513),
         inverseTextColor = const Color(0xff000000);
 
   @override
@@ -146,6 +150,7 @@ class AppCustomColors extends ThemeExtension<AppCustomColors> {
       inverseTextColor: appInverseTextColor ?? inverseTextColor,
       goldColor: goldColor,
       silverColor: silverColor,
+      bronzeColor: bronzeColor,
     );
   }
 
@@ -159,6 +164,7 @@ class AppCustomColors extends ThemeExtension<AppCustomColors> {
       inverseTextColor: Color.lerp(inverseTextColor, other.inverseTextColor, t),
       goldColor: Color.lerp(goldColor, other.goldColor, t),
       silverColor: Color.lerp(silverColor, other.silverColor, t),
+      bronzeColor: Color.lerp(bronzeColor, other.bronzeColor, t),
     );
   }
 }

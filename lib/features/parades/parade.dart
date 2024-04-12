@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:collection';
 
 import 'package:dart_mappable/dart_mappable.dart';
@@ -13,12 +14,14 @@ typedef ParadeId = int;
 class Parade with ParadeMappable {
   Parade({
     required this.id,
+    required this.schoolId,
+    required this.carnivalId,
     required this.carnivalName,
     required this.enredo,
     required this.carnavalescos,
     required this.division,
-    required this.schoolId,
     required this.divisionNumber,
+    required this.subdivisionNumber,
     required this.paradeYear,
     required this.date,
     required this.championParade,
@@ -28,8 +31,12 @@ class Parade with ParadeMappable {
     required this.numberOfTripods,
     required this.placing,
     required this.relegated,
+    required this.promoted,
+    required this.champion,
     required this.performanceOrder,
+    required this.performanceDay,
     required this.points,
+    required this.details,
     required this.translatedCarnivalName,
     required this.translatedEnredo,
     required this.translatedDivision,
@@ -38,12 +45,14 @@ class Parade with ParadeMappable {
   });
 
   final ParadeId id;
+  final SchoolId schoolId;
+  final int carnivalId;
   final String carnivalName;
   final String enredo;
   final UnmodifiableList<String> carnavalescos;
   final String division;
-  final SchoolId schoolId;
   final SchoolDivision divisionNumber;
+  final int? subdivisionNumber;
   final int paradeYear;
   final DateTime date;
   final DateTime? championParade;
@@ -51,26 +60,32 @@ class Parade with ParadeMappable {
   final int numberOfWings;
   final int numberOfFloats;
   final int numberOfTripods;
+  final int performanceDay;
   final int placing;
   final bool relegated;
+  final bool promoted;
+  final bool champion;
   final int performanceOrder;
   final double points;
+  final String details;
   final String translatedCarnivalName;
   final String translatedEnredo;
   final String translatedDivision;
   final UnmodifiableList<String> translatedCarnavalescos;
-  final School? school;
+  final School school;
 
   static const fromMap = ParadeMapper.fromMap;
   static const fromJson = ParadeMapper.fromJson;
 }
 
-class ParadeQueryParams {
+@MappableClass()
+class ParadeQueryParams with ParadeQueryParamsMappable {
   ParadeQueryParams({
     this.language,
     this.filter,
     this.sort,
     this.sortOrder,
+    this.search,
     this.page,
     this.pageSize,
   });
@@ -79,6 +94,7 @@ class ParadeQueryParams {
   final String? filter;
   final String? sort;
   final String? sortOrder;
+  final String? search;
   final int? page;
   final int? pageSize;
 }

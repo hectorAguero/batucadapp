@@ -28,7 +28,7 @@
 	"@_HOME_PAGE": {},
 	"@_INSTRUMENTS_PAGE": {},
 	"instrumentsTitle": "Instrumentos",
-	"instrumentDetails": "Detalhes dos Instrumentos",
+	"instrumentDetails": "Detalhes do Instrumento",
 	"instrumentDescription": "Descrição",
 	"instrumentLearning": "Aprendizado",
 	"instrumentGallery": "Galeria",
@@ -85,5 +85,5 @@
 	"schoolDivisionStreetBloco": "Blocos de Rua",
 	"@_SETTINGS_PAGE": {},
 	"settingsTitle": "Configurações",
-	"switchTheme": "Alternar Tema"
+	"switchTheme": "Tema"
 }
