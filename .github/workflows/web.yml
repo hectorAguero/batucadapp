@@ -31,7 +31,7 @@ jobs:
         run: |
           git config --global user.name "github-actions"
           git config --global user.email "github-actions@github.com"
-          git add -f build/web/
+          git --work-tree build/web add --all
           git commit -m "Deploy to GitHub Pages"
           git push origin HEAD:gh-pages --force
         shell: bash
