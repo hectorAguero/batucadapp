@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../extensions/is_ios_or_macos_platform_extension.dart';
 import '../extensions/media_query_context_extension.dart';
+import '../extensions/theme_of_context_extension.dart';
 import '../features/home/widgets/settings_modal_sheet.dart';
 
 class AppCupertinoSliverNavigationBar extends StatelessWidget {
@@ -9,25 +10,19 @@ class AppCupertinoSliverNavigationBar extends StatelessWidget {
     required this.largeTitle,
     this.leading,
     this.stretch,
-    this.heroTag = const _HeroTag(null),
     this.transitionBetweenRoutes = true,
-    this.border = const Border(),
-    this.backgroundColor = Colors.transparent,
     super.key,
   });
 
   final String largeTitle;
   final Widget? leading;
   final bool? stretch;
-  final Border border;
-  final Color backgroundColor;
-  final Object heroTag;
   final bool transitionBetweenRoutes;
 
   @override
   Widget build(BuildContext context) {
     return CupertinoSliverNavigationBar(
-      backgroundColor: backgroundColor,
+      backgroundColor: Colors.transparent,
       largeTitle: Text(
         largeTitle,
         maxLines: 1,
@@ -35,9 +30,12 @@ class AppCupertinoSliverNavigationBar extends StatelessWidget {
       brightness: Theme.of(context).brightness,
       stretch: stretch ?? false,
       leading: leading,
-      heroTag: heroTag,
       transitionBetweenRoutes: transitionBetweenRoutes,
-      border: border,
+      border: Border(
+        bottom: BorderSide(
+          color: context.customColors.inverseTextColor!.withOpacity(0.1),
+        ),
+      ),
       trailing: context.querySize.isSmallScreen
           ? CupertinoButton(
               padding: EdgeInsets.zero,
@@ -51,30 +49,4 @@ class AppCupertinoSliverNavigationBar extends StatelessWidget {
           : null,
     );
   }
-}
-
-@immutable
-class _HeroTag {
-  const _HeroTag(this.navigator);
-
-  final NavigatorState? navigator;
-
-  // Let the Hero tag be described in tree dumps.
-  @override
-  String toString() => 'Default Hero tag for Cupertino'
-      ' navigation bars with navigator $navigator';
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-    if (other.runtimeType != runtimeType) {
-      return false;
-    }
-    return other is _HeroTag && other.navigator == navigator;
-  }
-
-  @override
-  int get hashCode => identityHashCode(navigator);
 }

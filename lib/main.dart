@@ -1,26 +1,20 @@
 import 'package:country_picker/country_picker.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 // ignore:depend_on_referenced_packages
 import 'package:flutter_web_plugins/url_strategy.dart';
-import 'package:logging/logging.dart';
 
 import 'extensions/app_localization_extension.dart';
-import 'extensions/hardcoded_extension.dart';
 import 'l10n/app_localizations.dart';
 import 'localization/language.dart';
 import 'localization/language_app_provider.dart';
-import 'router/router.dart';
+import 'router/go_router.dart';
 import 'theme/theme_data.dart';
 import 'theme/theme_provider.dart';
-import 'utils/main_logger.dart';
 
 void main() {
   usePathUrlStrategy();
-  registerErrorHandlers();
-  if (kDebugMode) initAllLogs(Level.FINE);
   runApp(const ProviderScope(child: MainApp()));
 }
 
@@ -59,27 +53,4 @@ class _MainAppState extends ConsumerState<MainApp> {
       locale: language?.locale,
     );
   }
-}
-
-void registerErrorHandlers() {
-  // * Show some error UI if any uncaught exception happens
-  FlutterError.onError = (FlutterErrorDetails details) {
-    FlutterError.presentError(details);
-    debugPrint(details.toString());
-  };
-  // * Handle errors from the underlying platform/OS
-  PlatformDispatcher.instance.onError = (Object error, StackTrace stack) {
-    debugPrint(error.toString());
-    return true;
-  };
-  // * Show some error UI when any widget in the app fails to build
-  ErrorWidget.builder = (FlutterErrorDetails details) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.red,
-        title: Text('An error occurred'.hardcoded),
-      ),
-      body: Center(child: Text(details.toString())),
-    );
-  };
 }

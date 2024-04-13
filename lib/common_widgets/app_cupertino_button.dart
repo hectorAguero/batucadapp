@@ -7,6 +7,7 @@ class AppCupertinoButton extends StatelessWidget {
     required this.child,
     required this.onPressed,
     this.color,
+    this.disabledColor,
     this.padding,
     this.minSize,
     super.key,
@@ -17,10 +18,12 @@ class AppCupertinoButton extends StatelessWidget {
   final EdgeInsetsGeometry? padding;
   final double? minSize;
   final Color? color;
+  final Color? disabledColor;
 
   @override
   Widget build(BuildContext context) {
     return CupertinoButton(
+      disabledColor: disabledColor ?? CupertinoColors.quaternarySystemFill,
       onPressed: onPressed,
       padding: padding ?? EdgeInsets.zero,
       minSize: minSize ?? 0,

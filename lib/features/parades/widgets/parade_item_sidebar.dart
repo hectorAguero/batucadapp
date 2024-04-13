@@ -71,8 +71,8 @@ class ParadeItemSideBar extends StatelessWidget {
                         children: [
                           if (parade.placing > 0)
                             TextSpan(
-                              text:
-                                  '${parade.placing.intlOrdinal(context)} ${context.loc.schoolPerformancePlace}',
+                              text: '${parade.placing.intlOrdinal(context)}'
+                                  ' ${context.loc.schoolPerformancePlace}',
                             ),
                         ],
                       ),

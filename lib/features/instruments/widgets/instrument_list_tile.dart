@@ -76,7 +76,13 @@ class _InstrumentListTileState extends State<InstrumentListTile> {
                           children: [
                             TextSpan(
                               text: widget.title,
-                              style: Theme.of(context).textTheme.headlineSmall,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headlineSmall!
+                                  .copyWith(
+                                    fontWeight: FontWeight.bold,
+                                    color: context.colorScheme.onSurfaceVariant,
+                                  ),
                             ),
                             if (widget.title != widget.originalTitle)
                               TextSpan(
@@ -112,24 +118,17 @@ class _InstrumentListTileState extends State<InstrumentListTile> {
                         ),
                         const SizedBox(width: 16),
                         Flexible(
-                          child: Column(
-                            children: [
-                              Hero(
-                                tag: widget.imageUrl,
-                                child: ClipRRect(
-                                  borderRadius: const BorderRadius.all(
-                                    Radius.circular(12),
-                                  ),
-                                  child: AspectRatio(
-                                    aspectRatio: 8 / 9,
-                                    child: AppFadeInImage(
-                                      widget.imageUrl,
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                ),
+                          child: ClipRRect(
+                            borderRadius: const BorderRadius.all(
+                              Radius.circular(8),
+                            ),
+                            child: AspectRatio(
+                              aspectRatio: 8 / 9,
+                              child: AppFadeInImage(
+                                widget.imageUrl,
+                                fit: BoxFit.cover,
                               ),
-                            ],
+                            ),
                           ),
                         ),
                       ],

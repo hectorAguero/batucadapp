@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../extensions/media_query_context_extension.dart';
 import '../../../extensions/theme_of_context_extension.dart';
-import '../../../utils/unmodifiable_list.dart';
+import '../../../utils/immutable_list.dart';
 import '../home_page_controller.dart';
 import 'adaptive_navigation_rail_footer.dart';
 
@@ -14,7 +14,7 @@ class AdaptiveNavigationRail extends StatelessWidget {
     super.key,
   });
 
-  final UnmodifiableList<TabDestination> destinations;
+  final ImmutableList<HomeTab> destinations;
   final int selectedIndex;
   final ValueChanged<int> onDestinationSelected;
 

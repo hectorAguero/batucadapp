@@ -30,8 +30,8 @@ class InstrumentMapper extends ClassMapperBase<Instrument> {
   static String _$imageUrl(Instrument v) => v.imageUrl;
   static const Field<Instrument, String> _f$imageUrl =
       Field('imageUrl', _$imageUrl);
-  static UnmodifiableListView<String> _$gallery(Instrument v) => v.gallery;
-  static const Field<Instrument, UnmodifiableListView<String>> _f$gallery =
+  static IList<String> _$gallery(Instrument v) => v.gallery;
+  static const Field<Instrument, IList<String>> _f$gallery =
       Field('gallery', _$gallery);
   static String _$type(Instrument v) => v.type;
   static const Field<Instrument, String> _f$type = Field('type', _$type);
@@ -123,7 +123,7 @@ abstract class InstrumentCopyWith<$R, $In extends Instrument, $Out>
       String? name,
       String? description,
       String? imageUrl,
-      UnmodifiableListView<String>? gallery,
+      IList<String>? gallery,
       String? type,
       String? translatedName,
       String? translatedDescription});
@@ -144,7 +144,7 @@ class _InstrumentCopyWithImpl<$R, $Out>
           String? name,
           String? description,
           String? imageUrl,
-          UnmodifiableListView<String>? gallery,
+          IList<String>? gallery,
           String? type,
           String? translatedName,
           String? translatedDescription}) =>

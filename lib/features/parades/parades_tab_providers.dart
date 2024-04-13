@@ -1,9 +1,7 @@
-import 'dart:collection';
-
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../../utils/immutable_list.dart';
 import '../../utils/main_logger.dart';
-import '../../utils/unmodifiable_list.dart';
 import 'parade.dart';
 import 'parades_repo.dart';
 
@@ -11,10 +9,10 @@ part 'parades_tab_providers.g.dart';
 
 @riverpod
 class Parades extends _$Parades {
-  static const _pageSize = 30;
+  static const _pageSize = 10;
 
   @override
-  FutureOr<UnmodifiableList<Parade>> build() async {
+  FutureOr<ImmutableList<Parade>> build() async {
     return getParades();
   }
 
@@ -25,7 +23,7 @@ class Parades extends _$Parades {
         pageSize: pageSize,
       );
       if (parades.isNotEmpty) {
-        state = AsyncData(UnmodifiableListView([...state.value!, ...parades]));
+        state = AsyncData(ImmutableList([...state.value!, ...parades]));
         return true;
       }
       ref.read(paradesTabReachedLimitProvider.notifier).setReachedLimit();
@@ -36,7 +34,7 @@ class Parades extends _$Parades {
     }
   }
 
-  Future<UnmodifiableListView<Parade>> getParades({
+  Future<ImmutableList<Parade>> getParades({
     int page = 1,
     int pageSize = _pageSize,
   }) async {

@@ -1,7 +1,7 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../core/client_network_provider.dart';
-import '../../utils/unmodifiable_list.dart';
+import '../../utils/immutable_list.dart';
 import 'school.dart';
 
 part 'schools_repo.g.dart';
@@ -12,7 +12,7 @@ SchoolsRepo schoolsRepo(SchoolsRepoRef ref) {
 }
 
 abstract class SchoolsRepo {
-  Future<UnmodifiableList<School>> getSchools({
+  Future<ImmutableList<School>> getSchools({
     required int page,
     required int pageSize,
     required String sort,
@@ -25,7 +25,7 @@ class SchoolsRepoImpls implements SchoolsRepo {
   final SchoolsRepoRef ref;
 
   @override
-  Future<UnmodifiableList<School>> getSchools({
+  Future<ImmutableList<School>> getSchools({
     required int page,
     required int pageSize,
     required String sort,
@@ -36,7 +36,7 @@ class SchoolsRepoImpls implements SchoolsRepo {
       queryParameters: {'page': page, 'pagesize': pageSize},
     );
     final data = response.data!.cast<Map<String, dynamic>>();
-    return UnmodifiableList([
+    return ImmutableList([
       for (final item in data) School.fromMap(item),
     ]);
   }
@@ -48,13 +48,13 @@ class MockSchoolsRepo implements SchoolsRepo {
   final SchoolsRepoRef ref;
 
   @override
-  Future<UnmodifiableList<School>> getSchools({
+  Future<ImmutableList<School>> getSchools({
     required int page,
     required int pageSize,
     required String sort,
   }) async {
     await Future<void>.delayed(const Duration(seconds: 1));
-    return UnmodifiableList([
+    return ImmutableList([
       SchoolMapper.fromMap(
         {
           'id': 3,

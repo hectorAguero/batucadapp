@@ -21,6 +21,8 @@ class AppFadeInImage extends StatelessWidget {
     this.width,
     this.fit,
     this.imageErrorBuilder,
+    this.placeholder,
+    this.fadeInDuration = const Duration(milliseconds: 700),
     super.key,
   });
 
@@ -28,16 +30,17 @@ class AppFadeInImage extends StatelessWidget {
   final double? height;
   final double? width;
   final BoxFit? fit;
+  final ImageProvider<Object>? placeholder;
+  final Duration fadeInDuration;
   final ImageErrorWidgetBuilder? imageErrorBuilder;
 
   @override
   Widget build(BuildContext context) {
     return FadeInImage(
-      placeholder: MemoryImage(kTransparentImage),
-      image: ExtendedNetworkImageProvider(
-        image,
-        // imageRenderMethodForWeb: ImageRenderMethodForWeb.HttpGet,
-      ),
+      fadeInDuration: fadeInDuration,
+      placeholder: placeholder ?? MemoryImage(kTransparentImage),
+      image:
+          ExtendedNetworkImageProvider(image, cache: true, printError: false),
       imageErrorBuilder: imageErrorBuilder ??
           (context, error, stackTrace) {
             logViews.info('Error loading image:', error, stackTrace);
@@ -79,45 +82,30 @@ class AppErrorImageBuilder extends StatelessWidget {
   Widget build(BuildContext context) {
     return ColoredBox(
       color: backgroundColor,
-      child: SizedBox(
-        height: height,
-        width: width,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Flexible(
-              child: Icon(
-                Icons.error,
-                color: textColor,
-                size: 50,
-              ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Text(
+            errorType,
+            overflow: TextOverflow.ellipsis,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: textColor,
+              fontSize: 13,
             ),
-            // Error icon
-            Flexible(
-              child: Text(
-                errorType,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: textColor,
-                  fontSize: 13,
-                ),
-              ),
+          ),
+          const SizedBox(height: 4), // Space between text and error message
+          Text(
+            error,
+            maxLines: 3,
+            overflow: TextOverflow.ellipsis,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: textColor,
+              fontSize: 11,
             ),
-            const SizedBox(height: 4), // Space between text and error message
-            Text(
-              error,
-              maxLines: 3,
-              overflow: TextOverflow.ellipsis,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: textColor,
-                fontSize: 11,
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

@@ -7,23 +7,14 @@ final logColorParse = Logger('log-parser-color');
 final logAuth = Logger('auth');
 final logNetwork = Logger('network');
 
-/// Send log output from all loggers,
-/// at or above the given [level], to the terminal.
-void initAllLogs(Level level) {
-  initLoggers(level, {
-    logInitialization,
-    logViews,
-    logColorParse,
-    logAuth,
-    logNetwork,
-  });
-}
-
 /// Send output from the given [loggers],
 /// at or above the given [level], to the terminal.
 void initLoggers(Level level, Set<Logger> loggers) {
   hierarchicalLoggingEnabled = true;
-
+  if (loggers.isEmpty) {
+    // ignore: parameter_assignments
+    loggers = {logInitialization, logViews, logColorParse, logAuth};
+  }
   for (final logger in loggers) {
     if (!_activeLoggers.contains(logger)) {
       print('Initializing logger: ${logger.name}');
@@ -39,14 +30,6 @@ void initLoggers(Level level, Set<Logger> loggers) {
   }
 }
 
-/// Returns `true` if the given [logger] is currently logging, or
-/// `false` otherwise.
-///
-/// Generally, developers should call loggers, regardless of whether
-/// a given logger is active. However, sometimes you may want to log
-/// information that's costly to compute. In such a case, you can
-/// choose to compute the expensive information only if the given
-/// logger will actually log the information.
 bool isLogActive(Logger logger) {
   return _activeLoggers.contains(logger);
 }

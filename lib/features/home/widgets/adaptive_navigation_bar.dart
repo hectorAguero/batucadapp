@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../../extensions/is_ios_or_macos_platform_extension.dart';
-import '../../../utils/unmodifiable_list.dart';
+import '../../../utils/immutable_list.dart';
 import '../home_page_controller.dart';
 
 /// Shows a widget for cupertino or material.
@@ -14,7 +14,7 @@ class AdaptiveNavigationBar extends StatelessWidget {
     super.key,
   });
 
-  final UnmodifiableList<TabDestination> tabDestinations;
+  final ImmutableList<HomeTab> tabDestinations;
   final ValueChanged<int> onDestinationSelected;
   final int selectedIndex;
 

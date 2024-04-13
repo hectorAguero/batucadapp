@@ -1,8 +1,6 @@
-import 'dart:collection';
-
 import 'package:dart_mappable/dart_mappable.dart';
 
-import '../../utils/unmodifiable_list.dart';
+import '../../utils/immutable_list.dart';
 
 part 'instrument.mapper.dart';
 
@@ -24,7 +22,7 @@ class Instrument with InstrumentMappable {
   final String type;
   final String description;
   final String imageUrl;
-  final UnmodifiableList<String> gallery;
+  final ImmutableList<String> gallery;
   final String translatedName;
   final String translatedDescription;
 

@@ -1,11 +1,11 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_image_viewer/easy_image_viewer.dart';
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../common_widgets/app_fade_in_image.dart';
 import '../../../../extensions/media_query_context_extension.dart';
 import '../../../../extensions/theme_of_context_extension.dart';
-import '../../../../utils/unmodifiable_list.dart';
+import '../../../../utils/immutable_list.dart';
 import '../../instrument.dart';
 
 class InstrumentHeaderImages extends StatelessWidget {
@@ -40,7 +40,7 @@ class InstrumentHeaderImages extends StatelessWidget {
                         child: InkWell(
                           onTap: () => showImage(
                             context,
-                            UnmodifiableList([
+                            ImmutableList([
                               ...instrument.gallery.take(3),
                               instrument.imageUrl,
                             ]),
@@ -73,20 +73,22 @@ class InstrumentHeaderImages extends StatelessWidget {
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.only(bottom: 16),
-                  child: InkWell(
-                    onTap: () => showImage(
-                      context,
-                      UnmodifiableList(
-                        [...instrument.gallery.take(3), instrument.imageUrl],
+                  child: Material(
+                    type: MaterialType.transparency,
+                    child: InkWell(
+                      onTap: () => showImage(
+                        context,
+                        ImmutableList(
+                          [
+                            ...instrument.gallery.take(3),
+                            instrument.imageUrl,
+                          ],
+                        ),
+                        initialIndex: 3,
                       ),
-                      initialIndex: 3,
-                    ),
-                    borderRadius: const BorderRadius.all(
-                      Radius.circular(8),
-                    ),
-                    child: Hero(
-                      flightShuttleBuilder: _flightShuttleBuilder,
-                      tag: instrument.imageUrl,
+                      borderRadius: const BorderRadius.all(
+                        Radius.circular(8),
+                      ),
                       child: ClipRRect(
                         borderRadius: const BorderRadius.all(
                           Radius.circular(8),
@@ -135,50 +137,15 @@ class InstrumentHeaderImages extends StatelessWidget {
     );
   }
 
-  Widget _flightShuttleBuilder(
-    BuildContext flightContext,
-    Animation<double> animation,
-    HeroFlightDirection flightDirection,
-    BuildContext fromHeroContext,
-    BuildContext toHeroContext,
-  ) =>
-      switch (flightDirection) {
-        HeroFlightDirection.push => Material(
-            color: Colors.transparent,
-            child: ScaleTransition(
-              scale: animation.drive(
-                Tween<double>(begin: 0.1, end: 1).chain(
-                  CurveTween(
-                    curve: Curves.fastLinearToSlowEaseIn,
-                  ),
-                ),
-              ),
-              child: toHeroContext.widget,
-            ),
-          ),
-        HeroFlightDirection.pop => Material(
-            color: Colors.transparent,
-            child: ScaleTransition(
-              scale: animation.drive(
-                Tween<double>(begin: 1, end: 0.1).chain(
-                  CurveTween(
-                    curve: Curves.fastLinearToSlowEaseIn,
-                  ),
-                ),
-              ),
-              child: toHeroContext.widget,
-            ),
-          )
-      };
-
   void showImage(
     BuildContext context,
-    UnmodifiableList<String> images, {
+    ImmutableList<String> images, {
     int? initialIndex,
   }) {
     final multiImageProvider = MultiImageProvider(
       [
-        for (final image in images) CachedNetworkImageProvider(image),
+        for (final image in images)
+          ExtendedNetworkImageProvider(image, cache: true),
       ],
       initialIndex: initialIndex ?? 0,
     );

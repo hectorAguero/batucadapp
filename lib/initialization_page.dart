@@ -1,7 +1,8 @@
-import 'package:dart_mappable/dart_mappable.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:logging/logging.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import 'core/shared_preferences_provider.dart';
@@ -9,17 +10,43 @@ import 'extensions/app_localization_extension.dart';
 import 'extensions/media_query_context_extension.dart';
 import 'features/home/widgets/adaptive_navigation_rail.dart';
 import 'theme/theme_provider.dart';
-import 'utils/unmodifiable_list_mapper.dart';
+import 'utils/immutable_list.dart';
+import 'utils/main_logger.dart';
 
 part 'initialization_page.g.dart';
 
 @Riverpod(keepAlive: true)
 Future<void> initialization(InitializationRef ref) async {
-  MapperContainer.globals.use(UnmodifiableListViewMapper());
+  registerErrorHandlers();
+  initializeFICMappers();
+  if (kDebugMode) initLoggers(Level.FINE, {});
   ref.onDispose(() {
     ref.invalidate(sharedPreferencesProvider);
   });
   await ref.watch(sharedPreferencesProvider.future);
+}
+
+void registerErrorHandlers() {
+  // * Show some error UI if any uncaught exception happens
+  FlutterError.onError = (FlutterErrorDetails details) {
+    FlutterError.presentError(details);
+    debugPrint(details.toString());
+  };
+  // * Handle errors from the underlying platform/OS
+  PlatformDispatcher.instance.onError = (Object error, StackTrace stack) {
+    debugPrint(error.toString());
+    return true;
+  };
+  // * Show some error UI when any widget in the app fails to build
+  ErrorWidget.builder = (FlutterErrorDetails details) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.red,
+        title: const Text('An error occurred'),
+      ),
+      body: Center(child: Text(details.toString())),
+    );
+  };
 }
 
 /// Widget class to manage asynchronous app initialization
@@ -27,7 +54,7 @@ class InitializationPage extends ConsumerWidget {
   const InitializationPage({required this.onLoaded, super.key});
   final WidgetBuilder onLoaded;
 
-  static const routePath = '/startup';
+  static const path = '/startup';
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

@@ -1,7 +1,7 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../core/client_network_provider.dart';
-import '../../utils/unmodifiable_list.dart';
+import '../../utils/immutable_list.dart';
 import 'parade.dart';
 
 part 'parades_repo.g.dart';
@@ -12,7 +12,7 @@ ParadesRepo paradesRepo(ParadesRepoRef ref) {
 }
 
 abstract class ParadesRepo {
-  Future<UnmodifiableList<Parade>> getParades({
+  Future<ImmutableList<Parade>> getParades({
     ParadeQueryParams? queryParams,
   });
 
@@ -25,7 +25,7 @@ class ParadesRepoImpl implements ParadesRepo {
   final ParadesRepoRef ref;
 
   @override
-  Future<UnmodifiableList<Parade>> getParades({
+  Future<ImmutableList<Parade>> getParades({
     ParadeQueryParams? queryParams,
   }) async {
     final response =
@@ -37,7 +37,7 @@ class ParadesRepoImpl implements ParadesRepo {
       },
     );
     final data = response.data!.cast<Map<String, dynamic>>();
-    return UnmodifiableList([
+    return ImmutableList([
       for (final item in data) Parade.fromMap(item),
     ]);
   }

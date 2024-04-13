@@ -5,73 +5,50 @@ import 'package:super_sliver_list/super_sliver_list.dart';
 
 import '../../common_widgets/app_cupertino_sliver_navigation_bar.dart';
 import '../../extensions/app_localization_extension.dart';
-import '../../extensions/context_snackbar.dart';
 import '../../extensions/media_query_context_extension.dart';
 import '../../extensions/theme_of_context_extension.dart';
-import '../../router/go_route_scroll_tab.dart';
 import '../../utils/debouncer.dart';
+import '../home/home_page_controller.dart';
 import 'parades_tab_providers.dart';
 import 'widgets/parade_item.dart';
 
 class ParadesTabPage extends ConsumerStatefulWidget {
-  const ParadesTabPage({required this.controller, super.key});
-  final ScrollController controller;
+  const ParadesTabPage({super.key});
 
-  static final route = GoRouteScrollTab(
-    path: '/parades',
-    builder: (context, state, controller) => PrimaryScrollController(
-      controller: controller,
-      child: ParadesTabPage(
-        controller: controller,
-      ),
-    ),
-  );
+  static const tab = HomeTab.parades;
+  static const path = '/parades';
 
   @override
   ConsumerState<ParadesTabPage> createState() => _ParadesTabPageState();
 }
 
 class _ParadesTabPageState extends ConsumerState<ParadesTabPage> {
+  final _debouncer = Debouncer(defaultDelay);
   final _listController = ListController();
-  final _debouncer = Debouncer(delay: const Duration(milliseconds: 300));
+  ScrollController? controller;
 
   @override
   void initState() {
-    widget.controller.addListener(_loadMoreListener);
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      controller = PrimaryScrollController.of(context);
+      controller?.addListener(_loadMoreListener);
+    });
   }
 
   @override
   void dispose() {
     _debouncer.dispose();
     _listController.dispose();
-    widget.controller.removeListener(_loadMoreListener);
+    controller?.removeListener(_loadMoreListener);
     super.dispose();
   }
 
   void _loadMoreListener() {
-    if (widget.controller.position.pixels ==
-        widget.controller.position.maxScrollExtent) {
+    final position = controller!.position;
+    if (position.pixels == position.maxScrollExtent) {
       if (!ref.read(paradesTabReachedLimitProvider)) {
-        final pixels = widget.controller.position.pixels;
-        _debouncer.run(() {
-          ref.read(paradesProvider.notifier).fetchNextPage().then((value) {
-            if (value == null) {
-            } else if (value && widget.controller.hasClients) {
-              widget.controller.jumpTo(pixels);
-              Future.delayed(
-                const Duration(milliseconds: 50),
-                () => widget.controller.animateTo(
-                  pixels + 64 + 40,
-                  duration: const Duration(milliseconds: 250),
-                  curve: Curves.easeInOut,
-                ),
-              );
-            } else {
-              context.showSnackBarText(context.loc.noMoreSchools);
-            }
-          });
-        });
+        _debouncer.run(ref.read(paradesProvider.notifier).fetchNextPage);
       }
     }
   }
@@ -83,7 +60,7 @@ class _ParadesTabPageState extends ConsumerState<ParadesTabPage> {
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.miniCenterTop,
       body: CustomScrollView(
-        controller: widget.controller,
+        controller: controller,
         slivers: [
           SliverCrossAxisConstrained(
             maxCrossAxisExtent: mediumScreen,
@@ -155,7 +132,7 @@ class _ParadesTabPageState extends ConsumerState<ParadesTabPage> {
   void animateToItem(int index) {
     _listController.animateToItem(
       index: index,
-      scrollController: widget.controller,
+      scrollController: controller!,
       alignment: 0.5,
       // You can provide duration and curve depending on the estimated
       // distance between currentPosition and the target item position.

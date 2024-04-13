@@ -1,7 +1,7 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../core/client_network_provider.dart';
-import '../../utils/unmodifiable_list.dart';
+import '../../utils/immutable_list.dart';
 import 'details/instrument_details_page.dart';
 import 'instrument.dart';
 
@@ -13,7 +13,7 @@ InstrumentsRepo instrumentsRepo(InstrumentsRepoRef ref) {
 }
 
 abstract class InstrumentsRepo {
-  Future<UnmodifiableList<Instrument>> getInstruments();
+  Future<ImmutableList<Instrument>> getInstruments();
 
   Future<Instrument> getDetails(InstrumentId id);
 }
@@ -24,13 +24,13 @@ class InstrumentRepoImpls implements InstrumentsRepo {
   final InstrumentsRepoRef ref;
 
   @override
-  Future<UnmodifiableList<Instrument>> getInstruments() async {
+  Future<ImmutableList<Instrument>> getInstruments() async {
     final response = await ref
         .watch(clientNetworkProvider)
         .value!
         .get<Iterable<dynamic>>(Endpoint.instruments.path);
     final data = response.data!.cast<Map<String, dynamic>>();
-    return UnmodifiableList([
+    return ImmutableList([
       for (final item in data) Instrument.fromMap(item),
     ]);
   }

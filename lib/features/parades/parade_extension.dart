@@ -50,7 +50,7 @@ extension ParadeExtension on Parade {
         context.colorScheme.secondary,
       (placing: _, relegated: true, promoted: _, champion: _) =>
         context.colorScheme.errorContainer,
-      _ => context.colorScheme.secondaryContainer,
+      _ => context.colorScheme.primaryContainer,
     };
   }
 
@@ -61,7 +61,7 @@ extension ParadeExtension on Parade {
       (placing: 3 || 4 || 5 || 6, relegated: _) =>
         context.colorScheme.tertiaryContainer,
       (placing: _, relegated: true) => context.colorScheme.errorContainer,
-      _ => context.colorScheme.secondaryContainer,
+      _ => context.colorScheme.primaryContainer,
     };
   }
 }

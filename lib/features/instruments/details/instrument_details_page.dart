@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 import 'package:sliver_tools/sliver_tools.dart';
 
 import '../../../common_widgets/app_cupertino_sliver_navigation_bar.dart';
@@ -19,15 +18,7 @@ class InstrumentDetailsPage extends ConsumerStatefulWidget {
   const InstrumentDetailsPage({required this.id, super.key});
 
   final InstrumentId id;
-
-  static GoRoute route = GoRoute(
-    path: 'details/:id',
-    builder: (context, state) {
-      final pathParams = state.extra! as Map<String, dynamic>;
-      final id = pathParams['id'] as int;
-      return InstrumentDetailsPage(id: id);
-    },
-  );
+  static const path = 'details/:id';
 
   @override
   ConsumerState<InstrumentDetailsPage> createState() =>
@@ -59,7 +50,6 @@ class _InstrumentDetailsPageState extends ConsumerState<InstrumentDetailsPage> {
                     leading: const GoBackButton(),
                     largeTitle: context.loc.instrumentDetails,
                     stretch: true,
-                    transitionBetweenRoutes: false,
                   ),
                 ),
               ),

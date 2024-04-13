@@ -1,9 +1,6 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'dart:collection';
-
 import 'package:dart_mappable/dart_mappable.dart';
 
-import '../../utils/unmodifiable_list.dart';
+import '../../utils/immutable_list.dart';
 import '../schools/school.dart';
 
 part 'parade.mapper.dart';
@@ -49,7 +46,7 @@ class Parade with ParadeMappable {
   final int carnivalId;
   final String carnivalName;
   final String enredo;
-  final UnmodifiableList<String> carnavalescos;
+  final ImmutableList<String> carnavalescos;
   final String division;
   final SchoolDivision divisionNumber;
   final int? subdivisionNumber;
@@ -71,7 +68,7 @@ class Parade with ParadeMappable {
   final String translatedCarnivalName;
   final String translatedEnredo;
   final String translatedDivision;
-  final UnmodifiableList<String> translatedCarnavalescos;
+  final ImmutableList<String> translatedCarnavalescos;
   final School school;
 
   static const fromMap = ParadeMapper.fromMap;

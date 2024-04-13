@@ -34,9 +34,8 @@ class ParadeMapper extends ClassMapperBase<Parade> {
       Field('carnivalName', _$carnivalName);
   static String _$enredo(Parade v) => v.enredo;
   static const Field<Parade, String> _f$enredo = Field('enredo', _$enredo);
-  static UnmodifiableListView<String> _$carnavalescos(Parade v) =>
-      v.carnavalescos;
-  static const Field<Parade, UnmodifiableListView<String>> _f$carnavalescos =
+  static IList<String> _$carnavalescos(Parade v) => v.carnavalescos;
+  static const Field<Parade, IList<String>> _f$carnavalescos =
       Field('carnavalescos', _$carnavalescos);
   static String _$division(Parade v) => v.division;
   static const Field<Parade, String> _f$division =
@@ -95,10 +94,9 @@ class ParadeMapper extends ClassMapperBase<Parade> {
   static String _$translatedDivision(Parade v) => v.translatedDivision;
   static const Field<Parade, String> _f$translatedDivision =
       Field('translatedDivision', _$translatedDivision);
-  static UnmodifiableListView<String> _$translatedCarnavalescos(Parade v) =>
+  static IList<String> _$translatedCarnavalescos(Parade v) =>
       v.translatedCarnavalescos;
-  static const Field<Parade, UnmodifiableListView<String>>
-      _f$translatedCarnavalescos =
+  static const Field<Parade, IList<String>> _f$translatedCarnavalescos =
       Field('translatedCarnavalescos', _$translatedCarnavalescos);
   static School _$school(Parade v) => v.school;
   static const Field<Parade, School> _f$school = Field('school', _$school);
@@ -222,7 +220,7 @@ abstract class ParadeCopyWith<$R, $In extends Parade, $Out>
       int? carnivalId,
       String? carnivalName,
       String? enredo,
-      UnmodifiableListView<String>? carnavalescos,
+      IList<String>? carnavalescos,
       String? division,
       SchoolDivision? divisionNumber,
       int? subdivisionNumber,
@@ -244,7 +242,7 @@ abstract class ParadeCopyWith<$R, $In extends Parade, $Out>
       String? translatedCarnivalName,
       String? translatedEnredo,
       String? translatedDivision,
-      UnmodifiableListView<String>? translatedCarnavalescos,
+      IList<String>? translatedCarnavalescos,
       School? school});
   ParadeCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(Then<$Out2, $R2> t);
 }
@@ -265,7 +263,7 @@ class _ParadeCopyWithImpl<$R, $Out> extends ClassCopyWithBase<$R, Parade, $Out>
           int? carnivalId,
           String? carnivalName,
           String? enredo,
-          UnmodifiableListView<String>? carnavalescos,
+          IList<String>? carnavalescos,
           String? division,
           SchoolDivision? divisionNumber,
           Object? subdivisionNumber = $none,
@@ -287,7 +285,7 @@ class _ParadeCopyWithImpl<$R, $Out> extends ClassCopyWithBase<$R, Parade, $Out>
           String? translatedCarnivalName,
           String? translatedEnredo,
           String? translatedDivision,
-          UnmodifiableListView<String>? translatedCarnavalescos,
+          IList<String>? translatedCarnavalescos,
           School? school}) =>
       $apply(FieldCopyWithData({
         if (id != null) #id: id,

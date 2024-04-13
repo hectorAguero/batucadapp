@@ -8,39 +8,42 @@ import '../schools/schools_tab_page.dart';
 part 'home_page_controller.g.dart';
 
 @Riverpod(keepAlive: true)
-class SelectedHomeTabIndex extends _$SelectedHomeTabIndex {
+class CurrentTab extends _$CurrentTab {
   @override
-  int build() => 0;
 
-  void select(int index) => state = index;
+  ///Change for a pattern or record of hometab and boolean is is top
+  // HomeTab build() => HomeTab.instruments;
+  ({HomeTab tab, bool topRoute}) build() =>
+      (tab: HomeTab.instruments, topRoute: false);
+
+  void set(HomeTab tab, {bool top = false}) =>
+      state = (tab: tab, topRoute: top);
 }
 
-enum TabDestination {
-  instruments,
-  parades,
-  schools;
+enum HomeTab { instruments, parades, schools }
 
+extension HomeTabExtension on HomeTab {
   String get path => switch (this) {
-        TabDestination.instruments => InstrumentsTabPage.route.path,
-        TabDestination.parades => ParadesTabPage.route.path,
-        TabDestination.schools => SchoolsTabPage.route.path,
+        HomeTab.instruments => InstrumentsTabPage.path,
+        HomeTab.parades => ParadesTabPage.path,
+        HomeTab.schools => SchoolsTabPage.path,
       };
 
   String label(BuildContext context) => switch (this) {
-        TabDestination.instruments => context.loc.instrumentsTitle,
-        TabDestination.parades => context.loc.paradesTitle,
-        TabDestination.schools => context.loc.schoolsTitle
+        HomeTab.instruments => context.loc.instrumentsTitle,
+        HomeTab.parades => context.loc.paradesTitle,
+        HomeTab.schools => context.loc.schoolsTitle
       };
 
   IconData get icon => switch (this) {
-        TabDestination.instruments => Icons.music_note,
-        TabDestination.parades => Icons.flag,
-        TabDestination.schools => Icons.school
+        HomeTab.instruments => Icons.music_note,
+        HomeTab.parades => Icons.flag,
+        HomeTab.schools => Icons.school
       };
 
   IconData get selectedIcon => switch (this) {
-        TabDestination.instruments => Icons.music_note_outlined,
-        TabDestination.parades => Icons.flag_outlined,
-        TabDestination.schools => Icons.school_outlined
+        HomeTab.instruments => Icons.music_note_outlined,
+        HomeTab.parades => Icons.flag_outlined,
+        HomeTab.schools => Icons.school_outlined
       };
 }

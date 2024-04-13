@@ -10,8 +10,8 @@ import '../../../extensions/theme_of_context_extension.dart';
 import '../schools_tab_providers.dart';
 import 'school_card.dart';
 
-class SchoolsTabList extends ConsumerWidget {
-  const SchoolsTabList({super.key});
+class SchoolsTabBody extends ConsumerWidget {
+  const SchoolsTabBody({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -21,23 +21,6 @@ class SchoolsTabList extends ConsumerWidget {
       sliver: SliverAnimatedSwitcher(
         duration: kThemeAnimationDuration,
         child: switch (future) {
-          AsyncError(:final error) => SliverFillRemaining(
-              key: const ValueKey('error'),
-              child: Center(
-                child: Column(
-                  children: [
-                    Text(
-                      error.toString(),
-                      style: context.textTheme.titleLarge,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          AsyncLoading() => const SliverFillRemaining(
-              key: ValueKey('loading'),
-              child: Center(child: CircularProgressIndicator.adaptive()),
-            ),
           AsyncData() => Consumer(
               builder: (context, ref, child) {
                 final filteredSchools = ref.watch(filteredSchoolsProvider);
@@ -73,7 +56,24 @@ class SchoolsTabList extends ConsumerWidget {
                   ),
                 );
               },
-            )
+            ),
+          AsyncError(:final error) => SliverFillRemaining(
+              key: const ValueKey('error'),
+              child: Center(
+                child: Column(
+                  children: [
+                    Text(
+                      error.toString(),
+                      style: context.textTheme.titleLarge,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          AsyncLoading() => const SliverFillRemaining(
+              key: ValueKey('loading'),
+              child: Center(child: CircularProgressIndicator.adaptive()),
+            ),
         },
       ),
     );

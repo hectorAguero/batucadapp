@@ -7,25 +7,15 @@ import 'package:sliver_tools/sliver_tools.dart';
 import '../../common_widgets/app_cupertino_sliver_navigation_bar.dart';
 import '../../extensions/app_localization_extension.dart';
 import '../../extensions/media_query_context_extension.dart';
-import '../../router/go_route_scroll_tab.dart';
-import '../../utils/unmodifiable_list.dart';
-import 'details/instrument_details_page.dart';
+import '../home/home_page_controller.dart';
 import 'instruments_tab_providers.dart';
 import 'widgets/instrument_list_tile.dart';
 
 class InstrumentsTabPage extends ConsumerWidget {
   const InstrumentsTabPage({super.key});
 
-  static final route = GoRouteScrollTab(
-    path: '/instruments',
-    builder: (context, state, controller) => PrimaryScrollController(
-      controller: controller,
-      child: const InstrumentsTabPage(),
-    ),
-    routes: UnmodifiableList([
-      InstrumentDetailsPage.route,
-    ]),
-  );
+  static const tab = HomeTab.instruments;
+  static const path = '/instruments';
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -40,7 +30,6 @@ class InstrumentsTabPage extends ConsumerWidget {
               slivers: [
                 AppCupertinoSliverNavigationBar(
                   largeTitle: context.loc.instrumentsTitle,
-                  transitionBetweenRoutes: false,
                 ),
                 const SliverPadding(padding: EdgeInsets.only(top: 8)),
                 SliverAnimatedSwitcher(
@@ -75,8 +64,7 @@ class InstrumentsTabPage extends ConsumerWidget {
                               index: index,
                               onTap: () {
                                 context.go(
-                                  '${InstrumentsTabPage.route.path}/${InstrumentDetailsPage.route.path}',
-                                  extra: {'id': instrument.id},
+                                  '$path/details/${instrument.id}',
                                 );
                               },
                               imageUrl: instrument.imageUrl,

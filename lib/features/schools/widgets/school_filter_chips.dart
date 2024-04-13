@@ -9,8 +9,8 @@ import '../../../extensions/theme_of_context_extension.dart';
 import '../school_extensions.dart';
 import '../schools_tab_providers.dart';
 
-class SchoolDivisionChips extends ConsumerWidget {
-  const SchoolDivisionChips({
+class SchoolFilterChips extends ConsumerWidget {
+  const SchoolFilterChips({
     this.margin = const EdgeInsets.symmetric(horizontal: 8),
     super.key,
   });

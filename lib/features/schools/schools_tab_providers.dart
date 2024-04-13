@@ -1,8 +1,7 @@
-import 'dart:collection';
-
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../core/shared_preferences_provider.dart';
+import '../../utils/immutable_list.dart';
 import '../../utils/main_logger.dart';
 import 'school.dart';
 import 'schools_repo.dart';
@@ -15,7 +14,7 @@ class Schools extends _$Schools {
   static const _pageSize = 10;
 
   @override
-  FutureOr<UnmodifiableListView<School>> build() async {
+  FutureOr<ImmutableList<School>> build() async {
     final sort = ref.read(selectedSchoolSortProvider);
     return getSchools(sort: sort);
   }
@@ -29,10 +28,10 @@ class Schools extends _$Schools {
         sort: sort,
       );
       if (schools.isNotEmpty) {
-        state = AsyncData(UnmodifiableListView([...state.value!, ...schools]));
+        state = AsyncData(ImmutableList([...state.value!, ...schools]));
         return true;
       }
-      ref.read(schoolsTabReachedLimitProvider.notifier).setReachedLimit();
+      ref.read(schoolReachedMaxProvider.notifier).reached();
       return false;
     } catch (e, st) {
       logViews.warning('Failed to fetch next page $e', e, st);
@@ -40,7 +39,7 @@ class Schools extends _$Schools {
     }
   }
 
-  Future<UnmodifiableListView<School>> getSchools({
+  Future<ImmutableList<School>> getSchools({
     required SchoolSort sort,
     int page = 1,
     int pageSize = _pageSize,
@@ -51,7 +50,7 @@ class Schools extends _$Schools {
           sort: sort.name.toLowerCase(),
         );
     if (schools.isEmpty) {
-      ref.read(schoolsTabReachedLimitProvider.notifier).setReachedLimit();
+      ref.read(schoolReachedMaxProvider.notifier).reached();
       return schools;
     }
     return schools;
@@ -61,9 +60,9 @@ class Schools extends _$Schools {
 @riverpod
 class FavoriteSchools extends _$FavoriteSchools {
   @override
-  UnmodifiableListView<String> build() {
+  ImmutableList<String> build() {
     final prefs = ref.watch(sharedPreferencesProvider).value!;
-    return UnmodifiableListView(prefs.getStringList('favoriteSchools') ?? []);
+    return ImmutableList(prefs.getStringList('favoriteSchools') ?? []);
   }
 
   void toggleFavorite(SchoolId id) {
@@ -75,7 +74,7 @@ class FavoriteSchools extends _$FavoriteSchools {
       favoriteSchools.add('$id');
     }
     prefs.setStringList('favoriteSchools', favoriteSchools);
-    state = UnmodifiableListView(favoriteSchools);
+    state = ImmutableList(favoriteSchools);
   }
 
   bool isFavorite(SchoolId id) {
@@ -149,39 +148,31 @@ class ShowOnlyFavoriteSchools extends _$ShowOnlyFavoriteSchools {
 }
 
 final filteredSchoolsProvider =
-    Provider.autoDispose<UnmodifiableListView<School>>((ref) {
+    Provider.autoDispose<ImmutableList<School>>((ref) {
   final filter = ref.watch(schoolDivisionsProvider);
   final schools = ref.watch(schoolsProvider);
   final favoritesIds = ref.watch(favoriteSchoolsProvider);
   final onlyFavorites = ref.watch(showOnlyFavoriteSchoolsProvider);
-
-  if (schools.value == null) return UnmodifiableListView([]);
-
-  final filteredSchools = schools.value!.where(
-    (school) =>
-        (filter[school.currentDivision] ?? false) &&
-        (!onlyFavorites || favoritesIds.contains('${school.id}')),
-  );
-
-  return UnmodifiableListView(filteredSchools);
+  if (schools.value == null) return ImmutableList(const []);
+  return ImmutableList([
+    for (final school in schools.value!)
+      if (filter[school.currentDivision]! &&
+          (!onlyFavorites || favoritesIds.contains('$school.id')))
+        school,
+  ]);
 });
 
 @riverpod
-class SchoolsTabReachedLimit extends _$SchoolsTabReachedLimit {
+class SchoolReachedMax extends _$SchoolReachedMax {
   @override
   bool build() => false;
-
-  void setReachedLimit() => state = true;
-
-  void resetReachedLimit() => state = false;
+  void reached() => state = true;
+  void reset() => state = false;
 }
 
-/// A provider which exposes the [School] displayed by a [SchoolCard].
-///
 /// By retrieving the [School] through a provider instead of through its
 /// constructor, this allows [SchoolCard] to be instantiated using the `const`
 /// keyword.
-///
 /// This ensures that when we add/remove/edit schools, only what the
 /// impacted widgets rebuilds, instead of the entire list of items.
 final currentSchoolProvider =

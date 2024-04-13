@@ -22,7 +22,7 @@ class SchoolsTabNavBar extends StatelessWidget {
         leading: PullDownButton(
           menuOffset: context.querySize.currentRailWidth,
           itemBuilder: (context) => [
-            // TODO(hectorAguero): Should get this from the API
+            // TODO(hectorAguero): Should get this from the Data
             PullDownMenuItem.selectable(
               title: '🇧🇷 Rio de Janeiro'.hardcoded,
               selected: true,

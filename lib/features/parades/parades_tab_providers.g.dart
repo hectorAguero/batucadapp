@@ -6,12 +6,12 @@ part of 'parades_tab_providers.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$paradesHash() => r'6718ee270ea7fcb1e9a77de1894954d36177da6b';
+String _$paradesHash() => r'c49a4e922bbd7721ea995b6fd49483dbffd81cea';
 
 /// See also [Parades].
 @ProviderFor(Parades)
-final paradesProvider = AutoDisposeAsyncNotifierProvider<Parades,
-    UnmodifiableList<Parade>>.internal(
+final paradesProvider =
+    AutoDisposeAsyncNotifierProvider<Parades, ImmutableList<Parade>>.internal(
   Parades.new,
   name: r'paradesProvider',
   debugGetCreateSourceHash:
@@ -20,7 +20,7 @@ final paradesProvider = AutoDisposeAsyncNotifierProvider<Parades,
   allTransitiveDependencies: null,
 );
 
-typedef _$Parades = AutoDisposeAsyncNotifier<UnmodifiableList<Parade>>;
+typedef _$Parades = AutoDisposeAsyncNotifier<ImmutableList<Parade>>;
 String _$paradesTabReachedLimitHash() =>
     r'e24c9ae9f3318555dd548f146cde6bc7ff0fb670';
 

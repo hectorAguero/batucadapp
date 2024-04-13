@@ -6,12 +6,12 @@ part of 'schools_tab_providers.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$schoolsHash() => r'a8392f124eea25dbb0126fb24b47d30061726ae8';
+String _$schoolsHash() => r'2424d66d8ed5b534fdb62653ebf98eaa9229b4c5';
 
 /// See also [Schools].
 @ProviderFor(Schools)
-final schoolsProvider = AutoDisposeAsyncNotifierProvider<Schools,
-    UnmodifiableListView<School>>.internal(
+final schoolsProvider =
+    AutoDisposeAsyncNotifierProvider<Schools, ImmutableList<School>>.internal(
   Schools.new,
   name: r'schoolsProvider',
   debugGetCreateSourceHash:
@@ -20,13 +20,13 @@ final schoolsProvider = AutoDisposeAsyncNotifierProvider<Schools,
   allTransitiveDependencies: null,
 );
 
-typedef _$Schools = AutoDisposeAsyncNotifier<UnmodifiableListView<School>>;
-String _$favoriteSchoolsHash() => r'8fdbf5a857b734ed24d2b019b2a2df863937b7a4';
+typedef _$Schools = AutoDisposeAsyncNotifier<ImmutableList<School>>;
+String _$favoriteSchoolsHash() => r'2734a25c2df1d78c93a6853617a63d8f0d28f1a3';
 
 /// See also [FavoriteSchools].
 @ProviderFor(FavoriteSchools)
 final favoriteSchoolsProvider = AutoDisposeNotifierProvider<FavoriteSchools,
-    UnmodifiableListView<String>>.internal(
+    ImmutableList<String>>.internal(
   FavoriteSchools.new,
   name: r'favoriteSchoolsProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -36,7 +36,7 @@ final favoriteSchoolsProvider = AutoDisposeNotifierProvider<FavoriteSchools,
   allTransitiveDependencies: null,
 );
 
-typedef _$FavoriteSchools = AutoDisposeNotifier<UnmodifiableListView<String>>;
+typedef _$FavoriteSchools = AutoDisposeNotifier<ImmutableList<String>>;
 String _$schoolDivisionsHash() => r'790ca8cc34132ada189c3bdfaa8f3e68046700f0';
 
 /// See also [SchoolDivisions].
@@ -102,22 +102,21 @@ final showOnlyFavoriteSchoolsProvider =
 );
 
 typedef _$ShowOnlyFavoriteSchools = AutoDisposeNotifier<bool>;
-String _$schoolsTabReachedLimitHash() =>
-    r'a59f253dfd36fa285e5f1e0157f51181e9169206';
+String _$schoolReachedMaxHash() => r'40829c21f39aa3352ab246f1521c44c426153a0c';
 
-/// See also [SchoolsTabReachedLimit].
-@ProviderFor(SchoolsTabReachedLimit)
-final schoolsTabReachedLimitProvider =
-    AutoDisposeNotifierProvider<SchoolsTabReachedLimit, bool>.internal(
-  SchoolsTabReachedLimit.new,
-  name: r'schoolsTabReachedLimitProvider',
+/// See also [SchoolReachedMax].
+@ProviderFor(SchoolReachedMax)
+final schoolReachedMaxProvider =
+    AutoDisposeNotifierProvider<SchoolReachedMax, bool>.internal(
+  SchoolReachedMax.new,
+  name: r'schoolReachedMaxProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$schoolsTabReachedLimitHash,
+      : _$schoolReachedMaxHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$SchoolsTabReachedLimit = AutoDisposeNotifier<bool>;
+typedef _$SchoolReachedMax = AutoDisposeNotifier<bool>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, inference_failure_on_uninitialized_variable, inference_failure_on_function_return_type, inference_failure_on_untyped_parameter, deprecated_member_use_from_same_package

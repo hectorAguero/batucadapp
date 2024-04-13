@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import '../utils/unmodifiable_list.dart';
 
-class GoRouteScrollTab {
-  GoRouteScrollTab({
+class RouteHomeTab {
+  RouteHomeTab({
     required this.path,
     required this.builder,
-    //UnmodifiableList routes = = const <RouteBase>[], // Because this doesnt work
-    UnmodifiableList<RouteBase>? routes,
-  }) : routes = UnmodifiableList(routes ?? []);
+    this.routes = const [],
+  });
 
   final String path;
   final Widget Function(BuildContext, GoRouterState, ScrollController) builder;
-  final UnmodifiableList<RouteBase> routes;
+  final List<RouteBase> routes;
 
   String addPathParameters(Map<String, String> parameters) {
     var newPath = path;

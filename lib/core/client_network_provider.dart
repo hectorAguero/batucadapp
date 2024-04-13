@@ -44,6 +44,7 @@ class ClientNetwork extends _$ClientNetwork {
           requestHeader: false,
           responseHeader: false,
           request: false,
+          logPrint: logNetwork.info,
         ),
       );
 

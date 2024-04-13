@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../extensions/media_query_context_extension.dart';
-import '../../utils/unmodifiable_list.dart';
+import '../../utils/immutable_list.dart';
 import 'home_page_controller.dart';
 import 'widgets/adaptive_navigation_bar.dart';
 import 'widgets/adaptive_navigation_rail.dart';
@@ -22,34 +22,28 @@ class HomePage extends ConsumerWidget {
           : Row(
               children: [
                 AdaptiveNavigationRail(
-                  destinations: UnmodifiableList(TabDestination.values),
+                  destinations: ImmutableList(HomeTab.values),
                   selectedIndex: navigationShell.currentIndex,
-                  onDestinationSelected: (index) {
-                    navigationShell.goBranch(
-                      index,
-                      initialLocation: index == navigationShell.currentIndex,
-                    );
-                  },
+                  onDestinationSelected: onDestinationSelected,
                 ),
-                const VerticalDivider(
-                  width: 1,
-                  thickness: 1,
-                ),
+                const VerticalDivider(width: 1, thickness: 1),
                 Expanded(child: navigationShell),
               ],
             ),
-      bottomNavigationBar: size.isSmallScreen
-          ? AdaptiveNavigationBar(
-              tabDestinations: UnmodifiableList(TabDestination.values),
-              onDestinationSelected: (index) {
-                navigationShell.goBranch(
-                  index,
-                  initialLocation: index == navigationShell.currentIndex,
-                );
-              },
+      bottomNavigationBar: !size.isSmallScreen
+          ? null
+          : AdaptiveNavigationBar(
+              tabDestinations: ImmutableList(HomeTab.values),
               selectedIndex: navigationShell.currentIndex,
-            )
-          : null,
+              onDestinationSelected: onDestinationSelected,
+            ),
+    );
+  }
+
+  void onDestinationSelected(int index) {
+    navigationShell.goBranch(
+      index,
+      initialLocation: index == navigationShell.currentIndex,
     );
   }
 }

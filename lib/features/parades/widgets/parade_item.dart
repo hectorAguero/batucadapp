@@ -1,12 +1,10 @@
 import 'dart:ui';
 
-import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../common_widgets/animated_linear_gradient.dart';
 import '../../../common_widgets/app_fade_in_image.dart';
-import '../../../extensions/app_localization_extension.dart';
 import '../../../extensions/theme_of_context_extension.dart';
 import '../../schools/school.dart';
 import '../../schools/school_extensions.dart';
@@ -38,12 +36,19 @@ class ParadeItem extends ConsumerWidget {
                   : null,
             ),
             Expanded(
-              child: SizedBox(
-                height: double.infinity,
-                child: Card(
-                  surfaceTintColor: medalColor,
-                  margin:
-                      const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+              child: Card(
+                clipBehavior: Clip.antiAlias,
+                margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                child: Container(
+                  height: double.infinity,
+                  decoration: BoxDecoration(
+                    gradient: RadialGradient(
+                      colors: [
+                        medalColor.withOpacity(0.25),
+                        medalColor.withOpacity(0.4),
+                      ],
+                    ),
+                  ),
                   child: Row(
                     children: [
                       ParadeItemSideBar(
@@ -99,16 +104,14 @@ class ParadeItemContent extends StatelessWidget {
                   width: double.infinity,
                   child: parade.school.imageUrl.isEmpty
                       ? const SizedBox.shrink()
-                      : Container(
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: NetworkImage(parade.school.imageUrl),
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                          child: BackdropFilter(
-                            filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                            child: const SizedBox(),
+                      : ImageFiltered(
+                          imageFilter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
+                          child: AppFadeInImage(
+                            parade.school.imageUrl,
+                            fadeInDuration: const Duration(milliseconds: 300),
+                            imageErrorBuilder: (context, error, stackTrace) {
+                              return const SizedBox();
+                            },
                           ),
                         ),
                 ),
@@ -262,15 +265,11 @@ class ParadeItemTextContentDetails extends StatelessWidget {
                 children: [
                   TextSpan(
                     text: 'Carnavalescos: ',
-                    style: context.textTheme.labelMedium!.copyWith(
-                      fontWeight: FontWeight.w500,
-                    ),
+                    style: context.textTheme.labelMedium,
                   ),
                   TextSpan(
                     text: parade.translatedCarnavalescos.join(', '),
-                    style: context.textTheme.labelMedium!.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: context.textTheme.labelMedium,
                   ),
                 ],
               ),
@@ -289,15 +288,13 @@ class ParadeItemTextContentDetails extends StatelessWidget {
                   TextSpan(
                     text: 'Components: ',
                     style: context.textTheme.labelSmall!.copyWith(
-                      fontWeight: FontWeight.w300,
-                      color: context.colorScheme.onSurfaceVariant,
+                      fontWeight: FontWeight.w400,
                     ),
                   ),
                   TextSpan(
                     text: parade.components.toString(),
                     style: context.textTheme.labelSmall!.copyWith(
-                      fontWeight: FontWeight.w300,
-                      color: context.colorScheme.onSurfaceVariant,
+                      fontWeight: FontWeight.w400,
                     ),
                   ),
                   TextSpan(
@@ -329,7 +326,6 @@ class ParadeItemTextContentDetails extends StatelessWidget {
                     ],
                     style: context.textTheme.labelSmall!.copyWith(
                       fontWeight: FontWeight.w300,
-                      color: context.colorScheme.onSurfaceVariant,
                       fontStyle: FontStyle.italic,
                     ),
                   ),

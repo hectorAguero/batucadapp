@@ -1,127 +1,95 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import '../../extensions/app_localization_extension.dart';
-import '../../extensions/context_snackbar.dart';
-import '../../router/go_route_scroll_tab.dart';
 import '../../utils/debouncer.dart';
+import '../home/home_page_controller.dart';
 import 'schools_tab_providers.dart';
-import 'widgets/school_division_chips.dart';
-import 'widgets/schools_tab_list.dart';
+import 'widgets/school_filter_chips.dart';
+import 'widgets/schools_tab_body.dart';
 import 'widgets/schools_tab_navbar.dart';
 import 'widgets/schools_tab_search_header.dart';
 
 class SchoolsTabPage extends ConsumerStatefulWidget {
-  const SchoolsTabPage({required this.controller, super.key});
-  final ScrollController controller;
+  const SchoolsTabPage({super.key});
 
-  static final route = GoRouteScrollTab(
-    path: '/schools',
-    builder: (context, state, controller) => PrimaryScrollController(
-      controller: controller,
-      child: SchoolsTabPage(controller: controller),
-    ),
-  );
+  static const tab = HomeTab.schools;
+  static const path = '/schools';
 
   @override
   ConsumerState<SchoolsTabPage> createState() => _SchoolsTabState();
 }
 
 class _SchoolsTabState extends ConsumerState<SchoolsTabPage> {
-  final _debouncer = Debouncer(delay: const Duration(milliseconds: 300));
+  final _debouncer = Debouncer(defaultDelay);
+  ScrollController? controller;
+
   @override
   void initState() {
-    widget.controller.addListener(_loadMoreListener);
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      controller = PrimaryScrollController.of(context);
+      controller?.addListener(_loadMoreListener);
+    });
   }
 
   @override
   void dispose() {
     _debouncer.dispose();
-    widget.controller.removeListener(_loadMoreListener);
+    controller?.removeListener(_loadMoreListener);
     super.dispose();
   }
 
   void _loadMoreListener() {
-    if (widget.controller.position.pixels ==
-        widget.controller.position.maxScrollExtent) {
-      if (ref.read(filteredSchoolsProvider).length !=
-          ref.read(schoolsProvider).value?.length) {
-        return;
-      }
-      if (!ref.read(schoolsTabReachedLimitProvider)) {
-        final pixels = widget.controller.position.pixels;
-        _debouncer.run(() {
-          ref.read(schoolsProvider.notifier).fetchNextPage().then((value) {
-            if (value == null) {
-            } else if (value && widget.controller.hasClients) {
-              widget.controller.jumpTo(pixels);
-            } else {
-              context.showSnackBarText(context.loc.noMoreSchools);
-            }
-          });
-        });
+    final position = controller!.position;
+    if (position.pixels == position.maxScrollExtent) {
+      if (!ref.read(schoolReachedMaxProvider)) {
+        _debouncer.run(ref.read(schoolsProvider.notifier).fetchNextPage);
       }
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Builder(
-      builder: (context) {
-        return Scaffold(
-          body: GestureDetector(
-            onTap: () {
-              if (FocusScope.of(context).hasFocus) {
-                FocusScope.of(context).unfocus();
-              }
-            },
-            child: CustomScrollView(
-              controller: widget.controller,
-              slivers: <Widget>[
-                const SchoolsTabNavBar(),
-                const SchoolsTabSearchHeader(),
-                Consumer(
-                  child: const SliverToBoxAdapter(child: SizedBox.shrink()),
-                  builder: (context, ref, child) {
-                    if (ref.watch(schoolDivisionsProvider).length > 1) {
-                      return const SchoolDivisionChips();
-                    }
-                    return child!;
-                  },
+    final focus = FocusScope.of(context);
+    return Scaffold(
+      body: GestureDetector(
+        onTap: () => focus.hasFocus ? focus.unfocus() : null,
+        child: CustomScrollView(
+          controller: controller,
+          slivers: const <Widget>[
+            SchoolsTabNavBar(),
+            SchoolsTabSearchHeader(),
+            SchoolFilterChips(),
+            SchoolsTabBody(),
+            SchoolsTabLoadMoreIndicator(),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class SchoolsTabLoadMoreIndicator extends ConsumerWidget {
+  const SchoolsTabLoadMoreIndicator({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final reachedLimit = ref.watch(schoolReachedMaxProvider);
+    final isEmpty = ref.watch(filteredSchoolsProvider).isEmpty;
+    final isFiltered = ref.watch(filteredSchoolsProvider).length !=
+        ref.watch(schoolsProvider).value?.length;
+    return SliverToBoxAdapter(
+      child: AnimatedSize(
+        duration: const Duration(milliseconds: 300),
+        child: reachedLimit || isEmpty || isFiltered
+            ? const SizedBox.shrink()
+            : const Padding(
+                padding: EdgeInsets.all(16),
+                child: SizedBox(
+                  height: 16,
+                  child: CircularProgressIndicator.adaptive(),
                 ),
-                const SchoolsTabList(),
-                Consumer(
-                  builder: (context, ref, child) {
-                    final reachedLimit =
-                        ref.watch(schoolsTabReachedLimitProvider);
-                    final isEmpty = ref.watch(filteredSchoolsProvider).isEmpty;
-                    final isFiltered =
-                        ref.watch(filteredSchoolsProvider).length !=
-                            ref.watch(schoolsProvider).value?.length;
-                    return SliverToBoxAdapter(
-                      child: AnimatedSize(
-                        duration: const Duration(milliseconds: 300),
-                        child: reachedLimit || isEmpty || isFiltered
-                            ? const SizedBox.shrink()
-                            : const Center(
-                                child: Padding(
-                                  padding: EdgeInsets.all(16),
-                                  child: SizedBox(
-                                    height: 16,
-                                    child: CircularProgressIndicator.adaptive(),
-                                  ),
-                                ),
-                              ),
-                      ),
-                    );
-                  },
-                ),
-              ],
-            ),
-          ),
-        );
-      },
+              ),
+      ),
     );
   }
 }
