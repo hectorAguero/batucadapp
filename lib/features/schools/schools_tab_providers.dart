@@ -15,17 +15,14 @@ class Schools extends _$Schools {
 
   @override
   FutureOr<ImmutableList<School>> build() async {
-    final sort = ref.read(selectedSchoolSortProvider);
-    return getSchools(sort: sort);
+    return getSchools();
   }
 
   Future<bool?> fetchNextPage({int pageSize = _pageSize}) async {
     try {
-      final sort = ref.read(selectedSchoolSortProvider);
       final schools = await getSchools(
         page: state.value!.length ~/ pageSize + 1,
         pageSize: pageSize,
-        sort: sort,
       );
       if (schools.isNotEmpty) {
         state = AsyncData(ImmutableList([...state.value!, ...schools]));
@@ -39,17 +36,25 @@ class Schools extends _$Schools {
     }
   }
 
+  Future<void> searchSchools() async {
+    ref.read(schoolReachedMaxProvider.notifier).reset();
+    final schools = await getSchools();
+    state = AsyncData(schools);
+  }
+
   Future<ImmutableList<School>> getSchools({
-    required SchoolSort sort,
     int page = 1,
     int pageSize = _pageSize,
   }) async {
+    final sort = ref.read(selectedSchoolSortProvider);
+    final search = ref.read(searchedSchoolProvider);
     final schools = await ref.watch(schoolsRepoProvider).getSchools(
           page: page,
           pageSize: pageSize,
           sort: sort.name.toLowerCase(),
+          search: search,
         );
-    if (schools.isEmpty) {
+    if (schools.isEmpty || schools.length < pageSize) {
       ref.read(schoolReachedMaxProvider.notifier).reached();
       return schools;
     }
@@ -115,12 +120,17 @@ class SchoolDivisions extends _$SchoolDivisions {
 }
 
 @riverpod
-class SearchSchool extends _$SearchSchool {
+class SearchedSchool extends _$SearchedSchool {
   @override
-  String build() => '';
+  String build() {
+    return '';
+  }
 
-  void setSearch(String value) {
-    state = value.trim().toLowerCase();
+  void setSearch(String search) {
+    if (state != search.trim()) {
+      state = search.trim();
+      ref.read(schoolsProvider.notifier).searchSchools();
+    }
   }
 }
 

@@ -23,27 +23,25 @@ class SchoolsTabBody extends ConsumerWidget {
         child: switch (future) {
           AsyncData() => Consumer(
               builder: (context, ref, child) {
-                final filteredSchools = ref.watch(filteredSchoolsProvider);
+                final schools = ref.watch(filteredSchoolsProvider);
                 return SliverCrossAxisConstrained(
                   maxCrossAxisExtent: largeScreen,
                   child: SliverPadding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 8,
-                    ),
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
                     sliver: SliverAnimatedSwitcher(
                       duration: kThemeAnimationDuration,
-                      child: filteredSchools.isEmpty
+                      child: schools.isEmpty
                           ? const SchoolsEmptyList()
                           : SliverDynamicHeightGridView(
-                              itemCount: filteredSchools.length,
+                              itemCount: schools.length,
                               crossAxisCount:
                                   context.querySize.crossAxisCount(),
                               builder: (context, index) {
-                                final school = filteredSchools[index];
+                                final school = schools[index];
                                 return ProviderScope(
                                   overrides: [
                                     currentSchoolProvider.overrideWithValue(
-                                      filteredSchools.firstWhere(
+                                      schools.firstWhere(
                                         (item) => item.id == school.id,
                                       ),
                                     ),

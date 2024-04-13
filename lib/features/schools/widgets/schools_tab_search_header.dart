@@ -11,11 +11,28 @@ import '../../home/widgets/adaptive_navigation_rail.dart';
 import '../school.dart';
 import '../schools_tab_providers.dart';
 
-class SchoolsTabSearchHeader extends ConsumerWidget {
+class SchoolsTabSearchHeader extends ConsumerStatefulWidget {
   const SchoolsTabSearchHeader({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<SchoolsTabSearchHeader> createState() =>
+      _SchoolsTabSearchHeaderState();
+}
+
+class _SchoolsTabSearchHeaderState
+    extends ConsumerState<SchoolsTabSearchHeader> {
+  late final controller = TextEditingController();
+
+  @override
+  void dispose() {
+    super.dispose();
+    controller.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // Watch to not dispose the provider
+    ref.watch(searchedSchoolProvider);
     return SliverSafeArea(
       top: false,
       bottom: false,
@@ -31,9 +48,16 @@ class SchoolsTabSearchHeader extends ConsumerWidget {
                     Expanded(
                       child: CupertinoSearchTextField(
                         placeholder: context.loc.search,
-                        onChanged: (value) => ref
-                            .read(searchSchoolProvider.notifier)
+                        controller: controller,
+                        onSubmitted: (value) => ref
+                            .read(searchedSchoolProvider.notifier)
                             .setSearch(value),
+                        onSuffixTap: () {
+                          controller.clear();
+                          ref
+                              .read(searchedSchoolProvider.notifier)
+                              .setSearch('');
+                        },
                       ),
                     ),
                     AppCupertinoButton(

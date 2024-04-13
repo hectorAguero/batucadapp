@@ -1,9 +1,11 @@
 import 'package:country_picker/country_picker.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 // ignore:depend_on_referenced_packages
 import 'package:flutter_web_plugins/url_strategy.dart';
+import 'package:safe_area_insets/safe_area_insets.dart';
 
 import 'extensions/app_localization_extension.dart';
 import 'l10n/app_localizations.dart';
@@ -42,6 +44,10 @@ class _MainAppState extends ConsumerState<MainApp> {
       darkTheme: AppTheme.darkTheme(trueBlack: isTrueBlack),
       themeMode: themeMode,
       themeAnimationStyle: AnimationStyle.noAnimation,
+      builder: (context, child) {
+        child ??= const SizedBox();
+        return kIsWeb ? WebSafeAreaInsets(child: child) : child;
+      },
       localizationsDelegates: const [
         CountryLocalizations.delegate,
         AppLocalizations.delegate,

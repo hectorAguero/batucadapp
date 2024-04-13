@@ -6,7 +6,7 @@ part of 'schools_tab_providers.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$schoolsHash() => r'2424d66d8ed5b534fdb62653ebf98eaa9229b4c5';
+String _$schoolsHash() => r'e12ffc302be33a1b36ca478230ec446528e969ca';
 
 /// See also [Schools].
 @ProviderFor(Schools)
@@ -53,21 +53,22 @@ final schoolDivisionsProvider = AutoDisposeNotifierProvider<SchoolDivisions,
 );
 
 typedef _$SchoolDivisions = AutoDisposeNotifier<Map<SchoolDivision, bool>>;
-String _$searchSchoolHash() => r'b5c2f70e9737d14650719e760ad76baee47286eb';
+String _$searchedSchoolHash() => r'892b70063c17605607db413c3ffabd975d2897be';
 
-/// See also [SearchSchool].
-@ProviderFor(SearchSchool)
-final searchSchoolProvider =
-    AutoDisposeNotifierProvider<SearchSchool, String>.internal(
-  SearchSchool.new,
-  name: r'searchSchoolProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$searchSchoolHash,
+/// See also [SearchedSchool].
+@ProviderFor(SearchedSchool)
+final searchedSchoolProvider =
+    AutoDisposeNotifierProvider<SearchedSchool, String>.internal(
+  SearchedSchool.new,
+  name: r'searchedSchoolProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$searchedSchoolHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$SearchSchool = AutoDisposeNotifier<String>;
+typedef _$SearchedSchool = AutoDisposeNotifier<String>;
 String _$selectedSchoolSortHash() =>
     r'86e1946a159f33cff5fb8ebc460ef8327a9f6a4c';
 

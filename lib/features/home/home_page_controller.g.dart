@@ -6,7 +6,7 @@ part of 'home_page_controller.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$currentTabHash() => r'3b764284e29c61b70dd83e50417da0bbec65599f';
+String _$currentTabHash() => r'2442f2e51bdc146b1b868464167636c0b2f2e3fa';
 
 /// See also [CurrentTab].
 @ProviderFor(CurrentTab)
