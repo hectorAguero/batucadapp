@@ -25,7 +25,7 @@ jobs:
         run: flutter pub get
 
       - name: Build web
-        run: flutter build web
+        run: flutter build web --base-href /samba_public_app/
 
       - name: Commit changes
         run: |
