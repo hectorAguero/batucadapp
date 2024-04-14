@@ -14,14 +14,15 @@ import 'settings_modal_sheet.dart';
 class AdaptiveNavigationRailFooter extends ConsumerWidget {
   const AdaptiveNavigationRailFooter({super.key});
 
+  static const heightFull = 162.0;
+  static const heightCollapsed = 54.0;
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final locale = WidgetsBinding.instance.platformDispatcher.locale;
     final size = MediaQuery.sizeOf(context);
     final themeMode = ref.watch(appThemeModeProvider);
     final trueBlack = ref.watch(appThemeTrueBlackProvider);
-    final platformLanguage =
-        WidgetsBinding.instance.platformDispatcher.locale.languageCode;
-
     if (size.height < smallHeight) {
       return Column(
         mainAxisAlignment: MainAxisAlignment.end,
@@ -37,10 +38,7 @@ class AdaptiveNavigationRailFooter extends ConsumerWidget {
                       context.loc.settingsTitle,
                       style: context.textTheme.titleMedium,
                     )
-                  : const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 8),
-                      child: Icon(CupertinoIcons.settings),
-                    ),
+                  : const Icon(CupertinoIcons.settings),
               leading: size.isLargeScreen || size.isExtraLargeScreen
                   ? Icon(themeMode.icon)
                   : null,
@@ -57,7 +55,7 @@ class AdaptiveNavigationRailFooter extends ConsumerWidget {
           itemBuilder: (context) => [
             for (final language in Language.values)
               PullDownMenuItem.selectable(
-                icon: language.languageCode == platformLanguage
+                icon: language.languageCode == locale.languageCode
                     ? CupertinoIcons.device_phone_portrait
                     : null,
                 title: language.name(context),
@@ -67,7 +65,7 @@ class AdaptiveNavigationRailFooter extends ConsumerWidget {
                   ref.read(languageAppProvider.notifier).setLanguage(
                         language,
                         isSameAsPlatform:
-                            language.languageCode == platformLanguage,
+                            language.languageCode == locale.languageCode,
                       );
                 },
               ),

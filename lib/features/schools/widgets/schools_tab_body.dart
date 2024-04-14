@@ -5,6 +5,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sliver_tools/sliver_tools.dart';
 
 import '../../../extensions/app_localization_extension.dart';
+import '../../../extensions/js_bottom_padding_extension.dart'
+    if (dart.library.js_interop) '../../../extensions/js_bottom_padding_extension_web.dart';
 import '../../../extensions/media_query_context_extension.dart';
 import '../../../extensions/theme_of_context_extension.dart';
 import '../schools_tab_providers.dart';
@@ -27,7 +29,10 @@ class SchoolsTabBody extends ConsumerWidget {
                 return SliverCrossAxisConstrained(
                   maxCrossAxisExtent: largeScreen,
                   child: SliverPadding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    padding: EdgeInsets.only(
+                      left: 16,
+                      right: 16 + rightInset(),
+                    ),
                     sliver: SliverAnimatedSwitcher(
                       duration: kThemeAnimationDuration,
                       child: schools.isEmpty

@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../../../common_widgets/web_padding.dart';
 import '../../../extensions/is_ios_or_macos_platform_extension.dart';
+import '../../../extensions/theme_of_context_extension.dart';
 import '../../../utils/immutable_list.dart';
 import '../home_page_controller.dart';
 
@@ -23,33 +25,44 @@ class AdaptiveNavigationBar extends StatelessWidget {
     if (kIsCupertino) {
       return AnimatedTheme(
         data: Theme.of(context),
-        child: CupertinoTabBar(
-          onTap: onDestinationSelected,
-          currentIndex: selectedIndex,
-          backgroundColor:
-              Theme.of(context).bottomNavigationBarTheme.backgroundColor,
-          items: [
-            for (final destination in tabDestinations)
-              BottomNavigationBarItem(
-                icon: Icon(destination.icon),
-                activeIcon: Icon(destination.selectedIcon),
-                label: destination.label(context),
-              ),
-          ],
+        child: WebPadding.only(
+          color: Theme.of(context).bottomNavigationBarTheme.backgroundColor,
+          bottom: true,
+          child: CupertinoTabBar(
+            onTap: onDestinationSelected,
+            currentIndex: selectedIndex,
+            backgroundColor:
+                Theme.of(context).bottomNavigationBarTheme.backgroundColor,
+            items: [
+              for (final destination in tabDestinations)
+                BottomNavigationBarItem(
+                  icon: Icon(destination.icon),
+                  activeIcon: Icon(destination.selectedIcon),
+                  label: destination.label(context),
+                ),
+            ],
+          ),
         ),
       );
     }
-    return NavigationBar(
-      selectedIndex: selectedIndex,
-      onDestinationSelected: onDestinationSelected,
-      destinations: <Widget>[
-        for (final destination in tabDestinations)
-          NavigationDestination(
-            icon: Icon(destination.icon),
-            selectedIcon: Icon(destination.selectedIcon),
-            label: destination.label(context),
-          ),
-      ],
+    return WebPadding.only(
+      color: context.colorScheme.primaryContainer,
+      bottom: true,
+      child: NavigationBar(
+        height: kBottomNavigationBarHeight,
+        backgroundColor: context.colorScheme.primaryContainer,
+        surfaceTintColor: Colors.transparent,
+        selectedIndex: selectedIndex,
+        onDestinationSelected: onDestinationSelected,
+        destinations: <Widget>[
+          for (final destination in tabDestinations)
+            NavigationDestination(
+              icon: Icon(destination.icon),
+              selectedIcon: Icon(destination.selectedIcon),
+              label: destination.label(context),
+            ),
+        ],
+      ),
     );
   }
 }

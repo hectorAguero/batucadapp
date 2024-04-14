@@ -56,7 +56,7 @@ class AppTheme {
         ),
         subThemesData: const FlexSubThemesData(
           tooltipSchemeColor: SchemeColor.inverseSurface,
-          adaptiveSplash: FlexAdaptive.appleWeb(),
+          adaptiveSplash: FlexAdaptive.apple(),
           chipSchemeColor: SchemeColor.surfaceTint,
           snackBarBackgroundSchemeColor: SchemeColor.inversePrimary,
           snackBarRadius: 8,

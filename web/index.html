@@ -2,6 +2,14 @@
 <html>
 
 <head>
+  <style>
+    :root {
+      --sat: env(safe-area-inset-top);
+      --sar: env(safe-area-inset-right);
+      --sab: env(safe-area-inset-bottom);
+      --sal: env(safe-area-inset-left);
+    }
+  </style>
   <!--
     If you are serving your web app in a path other than the root, change the
     href value below to reflect the base path you are serving from.
@@ -32,10 +40,6 @@
 
   <title>samba_public_app</title>
   <link rel="manifest" href="manifest.json">
-  <!-- Prevent flickering during loading. -->
-  <meta name="viewport"
-    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-
 
   <script>
     // The value below is injected by flutter build, do not touch.
@@ -47,6 +51,7 @@
 
 <body>
   <script>
+
     window.addEventListener('load', function (ev) {
       // Download main.dart.js
       _flutter.loader.loadEntrypoint({
@@ -55,11 +60,28 @@
         },
         onEntrypointLoaded: function (engineInitializer) {
           engineInitializer.initializeEngine().then(function (appRunner) {
-            appRunner.runApp();
+            appRunner.runApp().then((_) => {
+              document.querySelector('meta[name="viewport"]').setAttribute('content', "width=device-width, initial-scale=1.0, viewport-fit=cover");
+            })
           });
         }
       });
     });
+    function topInset() {
+      parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--sat"));
+    }
+
+    function rightInset() {
+      return parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--sar"));
+    }
+
+    function bottomInset() {
+      return parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--sab"));
+    }
+
+    function leftInset() {
+      return parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--sal"));
+    }
   </script>
 </body>
 

@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../common_widgets/web_padding.dart';
 import '../../extensions/media_query_context_extension.dart';
+import '../../extensions/theme_of_context_extension.dart';
 import '../../utils/immutable_list.dart';
 import 'home_page_controller.dart';
 import 'widgets/adaptive_navigation_bar.dart';
@@ -17,18 +19,25 @@ class HomePage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final size = MediaQuery.sizeOf(context);
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: size.isSmallScreen
           ? navigationShell
-          : Row(
-              children: [
-                AdaptiveNavigationRail(
-                  destinations: ImmutableList(HomeTab.values),
-                  selectedIndex: navigationShell.currentIndex,
-                  onDestinationSelected: onDestinationSelected,
-                ),
-                const VerticalDivider(width: 1, thickness: 1),
-                Expanded(child: navigationShell),
-              ],
+          : WebPadding.only(
+              left: true,
+              color: context.colorScheme.surface,
+              child: Row(
+                children: [
+                  AdaptiveNavigationRail(
+                    destinations: ImmutableList(HomeTab.values),
+                    selectedIndex: navigationShell.currentIndex,
+                    onDestinationSelected: onDestinationSelected,
+                  ),
+                  const VerticalDivider(width: 1, thickness: 1),
+                  Expanded(
+                    child: navigationShell,
+                  ),
+                ],
+              ),
             ),
       bottomNavigationBar: !size.isSmallScreen
           ? null

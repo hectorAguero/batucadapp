@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:sliver_tools/sliver_tools.dart';
 
 import '../../common_widgets/app_cupertino_sliver_navigation_bar.dart';
+import '../../common_widgets/web_padding.dart';
 import '../../extensions/app_localization_extension.dart';
 import '../../extensions/media_query_context_extension.dart';
 import '../home/home_page_controller.dart';
@@ -50,26 +51,29 @@ class InstrumentsTabPage extends ConsumerWidget {
                           ),
                         ),
                       ),
-                    AsyncData(:final value) => SliverSafeArea(
-                        top: false,
-                        sliver: SliverAlignedGrid.extent(
-                          maxCrossAxisExtent: InstrumentListTile.cardMaxWidth,
-                          itemCount: value.length,
-                          itemBuilder: (context, index) {
-                            final instrument = value[index];
-                            return InstrumentListTile(
-                              title: instrument.translatedName,
-                              originalTitle: instrument.name,
-                              subtitle: instrument.translatedDescription,
-                              index: index,
-                              onTap: () {
-                                context.go(
-                                  '$path/details/${instrument.id}',
-                                );
-                              },
-                              imageUrl: instrument.imageUrl,
-                            );
-                          },
+                    AsyncData(:final value) => WebPaddingSliver.only(
+                        right: true,
+                        sliver: SliverSafeArea(
+                          top: false,
+                          sliver: SliverAlignedGrid.extent(
+                            maxCrossAxisExtent: InstrumentListTile.cardMaxWidth,
+                            itemCount: value.length,
+                            itemBuilder: (context, index) {
+                              final instrument = value[index];
+                              return InstrumentListTile(
+                                title: instrument.translatedName,
+                                originalTitle: instrument.name,
+                                subtitle: instrument.translatedDescription,
+                                index: index,
+                                onTap: () {
+                                  context.go(
+                                    '$path/details/${instrument.id}',
+                                  );
+                                },
+                                imageUrl: instrument.imageUrl,
+                              );
+                            },
+                          ),
                         ),
                       ),
                   },
