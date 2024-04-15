@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -19,7 +20,6 @@ class HomePage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final size = MediaQuery.sizeOf(context);
     return Scaffold(
-      resizeToAvoidBottomInset: false,
       body: size.isSmallScreen
           ? navigationShell
           : WebPadding.only(
@@ -41,10 +41,23 @@ class HomePage extends ConsumerWidget {
             ),
       bottomNavigationBar: !size.isSmallScreen
           ? null
-          : AdaptiveNavigationBar(
-              tabDestinations: ImmutableList(HomeTab.values),
-              selectedIndex: navigationShell.currentIndex,
-              onDestinationSelected: onDestinationSelected,
+          : Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Divider(
+                  height: 1,
+                  thickness: 1,
+                  color: CupertinoDynamicColor.resolve(
+                    CupertinoColors.opaqueSeparator,
+                    context,
+                  ),
+                ),
+                AdaptiveNavigationBar(
+                  tabDestinations: ImmutableList(HomeTab.values),
+                  selectedIndex: navigationShell.currentIndex,
+                  onDestinationSelected: onDestinationSelected,
+                ),
+              ],
             ),
     );
   }

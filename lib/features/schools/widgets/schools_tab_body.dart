@@ -17,12 +17,12 @@ class SchoolsTabBody extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final future = ref.watch(schoolsProvider);
+    final schoolsFuture = ref.watch(schoolsProvider);
     return SliverSafeArea(
       top: false,
       sliver: SliverAnimatedSwitcher(
         duration: kThemeAnimationDuration,
-        child: switch (future) {
+        child: switch (schoolsFuture) {
           AsyncData() => Consumer(
               builder: (context, ref, child) {
                 final schools = ref.watch(filteredSchoolsProvider);

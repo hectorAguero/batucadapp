@@ -20,80 +20,79 @@ class SchoolFilterChips extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final selectedDivisions = ref.watch(schoolDivisionsProvider);
-    return SliverSafeArea(
-      top: false,
-      bottom: false,
-      sliver: SliverCrossAxisConstrained(
-        maxCrossAxisExtent: largeScreen,
-        child: SliverToBoxAdapter(
-          child: SizedBox(
-            height: 64,
-            child: ListView(
-              padding: margin,
-              scrollDirection: Axis.horizontal,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(right: 4, left: 8),
-                  child: ChoiceChip(
-                    showCheckmark: false,
-                    avatar: !ref.watch(showOnlyFavoriteSchoolsProvider)
-                        ? const Icon(CupertinoIcons.heart)
-                        : const Icon(CupertinoIcons.heart_fill),
-                    selected: ref.watch(showOnlyFavoriteSchoolsProvider),
-                    label: Text(context.loc.schoolFavorites),
-                    selectedColor: context.colorScheme.primaryContainer,
-                    onSelected: (value) {
-                      ref
-                          .read(showOnlyFavoriteSchoolsProvider.notifier)
-                          .toggleShowFavorites();
-                    },
-                  ),
+    final padding = MediaQuery.paddingOf(context);
+    return SliverCrossAxisConstrained(
+      maxCrossAxisExtent: largeScreen,
+      child: SliverToBoxAdapter(
+        child: SizedBox(
+          height: 64,
+          child: ListView(
+            padding: EdgeInsets.only(
+              left: padding.left + margin.left,
+              right: padding.right + margin.right,
+            ),
+            scrollDirection: Axis.horizontal,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(right: 4, left: 8),
+                child: ChoiceChip(
+                  showCheckmark: false,
+                  avatar: !ref.watch(showOnlyFavoriteSchoolsProvider)
+                      ? const Icon(CupertinoIcons.heart)
+                      : const Icon(CupertinoIcons.heart_fill),
+                  selected: ref.watch(showOnlyFavoriteSchoolsProvider),
+                  label: Text(context.loc.schoolFavorites),
+                  selectedColor: context.colorScheme.primaryContainer,
+                  onSelected: (value) {
+                    ref
+                        .read(showOnlyFavoriteSchoolsProvider.notifier)
+                        .toggleShowFavorites();
+                  },
                 ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 4),
+                child: FilterChip(
+                  showCheckmark: false,
+                  selected:
+                      selectedDivisions.values.every((element) => element),
+                  label: Text(context.loc.all),
+                  onSelected: (value) {
+                    final notifier = ref.read(schoolDivisionsProvider.notifier);
+                    if (value) {
+                      notifier.selectAll();
+                    } else {
+                      notifier.removeAll();
+                    }
+                  },
+                ),
+              ),
+              for (final (division, isActive)
+                  in selectedDivisions.entries.map((e) => (e.key, e.value)))
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 4),
-                  child: FilterChip(
-                    showCheckmark: false,
-                    selected:
-                        selectedDivisions.values.every((element) => element),
-                    label: Text(context.loc.all),
-                    onSelected: (value) {
-                      final notifier =
-                          ref.read(schoolDivisionsProvider.notifier);
-                      if (value) {
-                        notifier.selectAll();
-                      } else {
-                        notifier.removeAll();
-                      }
+                  child: GestureDetector(
+                    onLongPress: () {
+                      ref.read(schoolDivisionsProvider.notifier)
+                        ..removeAll()
+                        ..selectDivision(division);
                     },
-                  ),
-                ),
-                for (final (division, isActive)
-                    in selectedDivisions.entries.map((e) => (e.key, e.value)))
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 4),
-                    child: GestureDetector(
-                      onLongPress: () {
-                        ref.read(schoolDivisionsProvider.notifier)
-                          ..removeAll()
-                          ..selectDivision(division);
+                    child: FilterChip(
+                      selected: isActive,
+                      label: Text(division.fullName(context)),
+                      onSelected: (value) {
+                        final notifier =
+                            ref.read(schoolDivisionsProvider.notifier);
+                        if (value) {
+                          notifier.selectDivision(division);
+                        } else {
+                          notifier.removeDivision(division);
+                        }
                       },
-                      child: FilterChip(
-                        selected: isActive,
-                        label: Text(division.fullName(context)),
-                        onSelected: (value) {
-                          final notifier =
-                              ref.read(schoolDivisionsProvider.notifier);
-                          if (value) {
-                            notifier.selectDivision(division);
-                          } else {
-                            notifier.removeDivision(division);
-                          }
-                        },
-                      ),
                     ),
                   ),
-              ],
-            ),
+                ),
+            ],
           ),
         ),
       ),

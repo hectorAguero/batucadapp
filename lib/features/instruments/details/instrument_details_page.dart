@@ -108,9 +108,10 @@ class _InstrumentDetailsPageState extends ConsumerState<InstrumentDetailsPage> {
                     sliver: SliverCrossAxisConstrained(
                       maxCrossAxisExtent: screenConstraint,
                       child: SliverPadding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 16,
-                          vertical: 8,
+                        padding: EdgeInsets.only(
+                          left: MediaQuery.paddingOf(context).left + 8,
+                          right: MediaQuery.paddingOf(context).right + 8,
+                          top: 8,
                         ),
                         sliver: SliverToBoxAdapter(
                           // TODO(hectorAguero): hardcoded to avoid overscroll
@@ -122,7 +123,7 @@ class _InstrumentDetailsPageState extends ConsumerState<InstrumentDetailsPage> {
                                         )
                                         .toDouble() *
                                     20 +
-                                100,
+                                200,
                             child: TabBarView(
                               physics: const ClampingScrollPhysics(),
                               children: [

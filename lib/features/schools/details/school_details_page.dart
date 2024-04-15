@@ -209,7 +209,7 @@ class _SchoolDetailsTextState extends State<SchoolDetailsText> {
                                 fontSize: 24,
                                 shadows: const [
                                   Shadow(
-                                    color: Colors.black12,
+                                    color: Colors.black26,
                                     blurRadius: 1,
                                     offset: Offset(0, 2),
                                   ),

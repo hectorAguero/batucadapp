@@ -15,12 +15,11 @@ import 'school_flag.dart';
 
 class SchoolCard extends ConsumerStatefulWidget {
   const SchoolCard({
-    this.margin = const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+    this.margin,
     super.key,
   });
 
-  final EdgeInsets margin;
-
+  final EdgeInsets? margin;
   static const double cardMaxWidth = 400;
 
   @override
@@ -34,7 +33,7 @@ class _SchoolCardState extends ConsumerState<SchoolCard> {
   Widget build(BuildContext context) {
     final school = ref.watch(currentSchoolProvider);
     return Padding(
-      padding: widget.margin,
+      padding: widget.margin ?? const EdgeInsets.only(bottom: 4),
       child: Card(
         elevation: 2,
         shape: RoundedRectangleBorder(

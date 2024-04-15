@@ -21,17 +21,21 @@ class SchoolFlag extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final isFavorite = ref.watch(
+      favoriteSchoolsProvider.select((v) => v.contains('${school.id}')),
+    );
     return Stack(
       children: [
         ClipRRect(
           borderRadius: borderRadius,
           child: ShaderMask(
+            blendMode: BlendMode.dstOut,
             shaderCallback: (bounds) {
               return const LinearGradient(
                 begin: Alignment.topRight,
                 end: Alignment.bottomLeft,
                 colors: [
-                  Colors.black26,
+                  Colors.black54,
                   Colors.transparent,
                 ],
               ).createShader(
@@ -44,7 +48,6 @@ class SchoolFlag extends ConsumerWidget {
                 ),
               );
             },
-            blendMode: BlendMode.srcOver,
             child: AspectRatio(
               aspectRatio: 3 / 2,
               child: AppFadeInImage(
@@ -54,44 +57,37 @@ class SchoolFlag extends ConsumerWidget {
             ),
           ),
         ),
-        Consumer(
-          builder: (context, ref, child) {
-            final isFavorite = ref.watch(
-              favoriteSchoolsProvider.select((v) => v.contains('${school.id}')),
-            );
-            return Align(
-              alignment: Alignment.topRight,
-              child: CupertinoButton(
-                child: AnimatedSwitcher(
-                  duration: kThemeAnimationDuration,
-                  transitionBuilder: (child, animation) {
-                    return ScaleTransition(
-                      scale: animation,
-                      child: child,
-                    );
-                  },
-                  child: isFavorite
-                      ? Icon(
-                          key: const ValueKey(true),
-                          CupertinoIcons.heart_fill,
-                          color: Colors.redAccent,
-                          size: heartSize,
-                        )
-                      : Icon(
-                          key: const ValueKey(false),
-                          CupertinoIcons.heart,
-                          color: Colors.white,
-                          size: heartSize,
-                        ),
-                ),
-                onPressed: () {
-                  ref
-                      .read(favoriteSchoolsProvider.notifier)
-                      .toggleFavorite(school.id);
-                },
-              ),
-            );
-          },
+        Align(
+          alignment: Alignment.topRight,
+          child: CupertinoButton(
+            child: AnimatedSwitcher(
+              duration: kThemeAnimationDuration,
+              transitionBuilder: (child, animation) {
+                return ScaleTransition(
+                  scale: animation,
+                  child: child,
+                );
+              },
+              child: isFavorite
+                  ? Icon(
+                      key: const ValueKey(true),
+                      CupertinoIcons.heart_fill,
+                      color: Colors.redAccent,
+                      size: heartSize,
+                    )
+                  : Icon(
+                      key: const ValueKey(false),
+                      CupertinoIcons.heart,
+                      color: Colors.white,
+                      size: heartSize,
+                    ),
+            ),
+            onPressed: () {
+              ref
+                  .read(favoriteSchoolsProvider.notifier)
+                  .toggleFavorite(school.id);
+            },
+          ),
         ),
         if (leading != null)
           Align(
