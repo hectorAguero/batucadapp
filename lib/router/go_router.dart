@@ -2,7 +2,6 @@ import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 import '../features/home/home_page.dart';
 import '../features/home/home_page_controller.dart';
 import '../features/instruments/details/instrument_details_page.dart';
@@ -130,8 +129,11 @@ GoRouter goRouter(GoRouterRef ref) {
                       return Future.value(true);
                     },
                     pageBuilder: (context, state) {
-                      final id = int.parse(state.pathParameters['id']!);
-                      return SchoolDetailsPage.getWoltModal(id);
+                      return SheetPage(
+                        child: SchoolDetailsPage(
+                          id: int.parse(state.pathParameters['id']!),
+                        ),
+                      );
                     },
                   ),
                 ],
@@ -156,28 +158,19 @@ void _scrollTabToTheTop(ScrollController controller) {
 
 class SheetPage extends Page<void> {
   const SheetPage({
-    required this.pageIndexNotifier,
-    required this.pageListBuilderNotifier,
+    required this.child,
   }) : super(key: const ValueKey('SheetPage'));
 
-  final ValueNotifier<int> pageIndexNotifier;
-  final ValueNotifier<WoltModalSheetPageListBuilder> pageListBuilderNotifier;
+  final Widget child;
 
   static const String routeName = 'Modal Sheet';
 
   @override
   Route<void> createRoute(BuildContext context) {
-    return WoltModalSheetRoute<void>(
-      pageIndexNotifier: pageIndexNotifier,
-      pageListBuilderNotifier: pageListBuilderNotifier,
-      useSafeArea: false,
-      onModalDismissedWithDrag: () {
-        context.pop();
-      },
-      onModalDismissedWithBarrierTap: () {
-        context.pop();
-      },
-      routeSettings: this,
+    return ModalBottomSheetRoute<void>(
+      settings: this,
+      builder: (context) => child,
+      isScrollControlled: true,
     );
   }
 

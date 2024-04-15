@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
 import '../../../common_widgets/app_cupertino_button.dart';
 import '../../../extensions/app_localization_extension.dart';
@@ -15,64 +14,53 @@ void showSettingModalSheet(
   EdgeInsets padding = const EdgeInsets.only(top: 24),
   bool showAsDialog = true,
 }) {
-  WoltModalSheet.show<void>(
+  showModalBottomSheet<void>(
     context: context,
+    useSafeArea: true,
+    useRootNavigator: true,
     showDragHandle: false,
-    pageListBuilder: (context) {
-      return [
-        SliverWoltModalSheetPage(
-          surfaceTintColor: Colors.transparent,
-          backgroundColor: Colors.transparent,
-          hasTopBarLayer: false,
-          mainContentSlivers: [
-            Builder(
-              builder: (context) {
-                return SliverAppBar(
-                  automaticallyImplyLeading: false,
-                  elevation: 0,
-                  title: Text(context.loc.settingsTitle),
-                  titleTextStyle: context.textTheme.titleLarge!.copyWith(
-                    fontWeight: FontWeight.bold,
+    isScrollControlled: true,
+    builder: (context) => SingleChildScrollView(
+      padding: const EdgeInsets.only(bottom: 32),
+      controller: PrimaryScrollController.of(context),
+      physics: const ClampingScrollPhysics(),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          AppBar(
+            automaticallyImplyLeading: false,
+            elevation: 0,
+            title: Text(context.loc.settingsTitle),
+            titleTextStyle: context.textTheme.titleLarge!.copyWith(
+              fontWeight: FontWeight.bold,
+            ),
+            backgroundColor:
+                CupertinoColors.systemGroupedBackground.resolveFrom(context),
+            actions: [
+              if (showAsDialog)
+                Padding(
+                  padding: const EdgeInsets.only(right: 16),
+                  child: AppCupertinoButton(
+                    onPressed: () => Navigator.of(context).pop(),
+                    color: CupertinoDynamicColor.resolve(
+                      CupertinoColors.lightBackgroundGray,
+                      context,
+                    ),
+                    padding: const EdgeInsets.all(4),
+                    child: const Icon(
+                      CupertinoIcons.xmark,
+                      size: 16,
+                      color: CupertinoColors.label,
+                    ),
                   ),
-                  backgroundColor: CupertinoColors.systemGroupedBackground
-                      .resolveFrom(context),
-                  actions: [
-                    if (showAsDialog)
-                      Padding(
-                        padding: const EdgeInsets.only(right: 16),
-                        child: AppCupertinoButton(
-                          onPressed: () => Navigator.of(context).pop(),
-                          color: CupertinoDynamicColor.resolve(
-                            CupertinoColors.lightBackgroundGray,
-                            context,
-                          ),
-                          padding: const EdgeInsets.all(4),
-                          child: const Icon(
-                            CupertinoIcons.xmark,
-                            size: 16,
-                            color: CupertinoColors.label,
-                          ),
-                        ),
-                      ),
-                  ],
-                );
-              },
-            ),
-            SliverToBoxAdapter(
-              child: Padding(
-                padding: showAsDialog ? EdgeInsets.zero : padding,
-                child: const Column(
-                  children: [
-                    SettingsThemeSection(),
-                    SettingsLanguageSection(),
-                  ],
                 ),
-              ),
-            ),
-          ],
-        ),
-      ];
-    },
+            ],
+          ),
+          const SettingsThemeSection(),
+          const SettingsLanguageSection(),
+        ],
+      ),
+    ),
   );
 }
 

@@ -40,7 +40,7 @@ class ParadeItem extends ConsumerWidget {
                 clipBehavior: Clip.antiAlias,
                 margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
                 child: InkWell(
-                  onTap: () {
+                  onLongPress: () {
                     ref.read(paradeShowOriginalProvider.notifier).toggle();
                   },
                   child: Container(

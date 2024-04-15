@@ -162,5 +162,3 @@ extension TextLinesExtension on String {
     return textPainter.computeLineMetrics().length;
   }
 }
-
-typedef WidgetStatePropertyAll<T> = MaterialStatePropertyAll<T>;

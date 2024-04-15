@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
 import '../../../common_widgets/app_cupertino_button.dart';
 import '../../../common_widgets/app_page_indicator.dart';
@@ -9,7 +8,6 @@ import '../../../extensions/app_localization_extension.dart';
 import '../../../extensions/intl_extension.dart';
 import '../../../extensions/string_extension.dart';
 import '../../../extensions/theme_of_context_extension.dart';
-import '../../../router/go_router.dart';
 import '../school.dart';
 import '../school_extensions.dart';
 import '../widgets/school_flag.dart';
@@ -24,23 +22,6 @@ class SchoolDetailsPage extends ConsumerStatefulWidget {
   final int id;
   static const path = ':id';
 
-  static SheetPage getWoltModal(int id) {
-    return SheetPage(
-      pageIndexNotifier: ValueNotifier(0),
-      pageListBuilderNotifier: ValueNotifier(
-        (context) => [
-          SliverWoltModalSheetPage(
-            hasTopBarLayer: false,
-            isTopBarLayerAlwaysVisible: false,
-            mainContentSlivers: [
-              SliverToBoxAdapter(child: SchoolDetailsPage(id: id)),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-
   @override
   ConsumerState<SchoolDetailsPage> createState() => _SchoolDetailsPageState();
 }
@@ -54,96 +35,105 @@ class _SchoolDetailsPageState extends ConsumerState<SchoolDetailsPage> {
   @override
   Widget build(BuildContext context) {
     final school = ref.watch(selectedSchoolProvider(widget.id));
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [
-            if (school.colors.isEmpty)
-              for (final _ in Iterable<int>.generate(2))
-                CupertinoDynamicColor.resolve(
-                  CupertinoColors.systemGrey5,
-                  context,
-                ),
-            for (final color in school.colorsCode) color.withOpacity(0.5),
-          ],
-        ),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.only(top: 12),
-        child: InkWell(
-          onLongPress: school.name == school.translatedName &&
-                  school.symbols == school.translatedSymbols
-              ? null
-              : () {
-                  showOriginal.value = !showOriginal.value;
-                },
-          splashFactory: NoSplash.splashFactory,
-          highlightColor: Colors.transparent,
-          splashColor: Colors.transparent,
-          child: Column(
-            children: [
-              LayoutBuilder(
-                builder: (context, constraints) => ConstrainedBox(
-                  constraints: BoxConstraints(
-                    maxHeight: ((constraints.maxWidth - 20) / 3) * 2,
-                  ),
-                  child: ClipRRect(
-                    borderRadius: const BorderRadius.all(Radius.circular(16)),
-                    child: Stack(
-                      children: [
-                        PageView.builder(
-                          clipBehavior: Clip.antiAlias,
-                          itemCount: imageCount,
-                          onPageChanged: (value) => currentImage.value = value,
-                          itemBuilder: (context, index) {
-                            return Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 12),
-                              child: Card(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(16),
-                                ),
-                                elevation: 4,
-                                child: SchoolFlag(
-                                  heartSize: 32,
-                                  school: school,
-                                ),
-                              ),
-                            );
-                          },
-                        ),
-                        ValueListenableBuilder<int>(
-                          valueListenable: currentImage,
-                          builder: (context, index, child) {
-                            return AppPageIndicator(
-                              pageCount: imageCount,
-                              currentPage: index,
-                            );
-                          },
-                        ),
-                      ],
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        DecoratedBox(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [
+                if (school.colors.isEmpty)
+                  for (final _ in Iterable<int>.generate(2))
+                    CupertinoDynamicColor.resolve(
+                      CupertinoColors.systemGrey5,
+                      context,
                     ),
-                  ),
-                ),
-              ),
-              ValueListenableBuilder<bool>(
-                valueListenable: showOriginal,
-                builder: (context, value, child) {
-                  return SchoolDetailsText(
-                    school: school,
-                    showOriginal: value,
-                    onTranslate: () {
+                for (final color in school.colorsCode) color.withOpacity(0.5),
+              ],
+            ),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.only(top: 12),
+            child: InkWell(
+              onLongPress: school.name == school.translatedName &&
+                      school.symbols == school.translatedSymbols
+                  ? null
+                  : () {
                       showOriginal.value = !showOriginal.value;
                     },
-                  );
-                },
+              focusColor: Colors.transparent,
+              highlightColor: Colors.transparent,
+              splashColor: Colors.transparent,
+              hoverColor: Colors.transparent,
+              child: Column(
+                children: [
+                  LayoutBuilder(
+                    builder: (context, constraints) => ConstrainedBox(
+                      constraints: BoxConstraints(
+                        maxHeight: ((constraints.maxWidth - 20) / 3) * 2,
+                      ),
+                      child: ClipRRect(
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(16)),
+                        child: Stack(
+                          children: [
+                            PageView.builder(
+                              clipBehavior: Clip.antiAlias,
+                              itemCount: imageCount,
+                              onPageChanged: (value) =>
+                                  currentImage.value = value,
+                              itemBuilder: (context, index) {
+                                return Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 12,
+                                  ),
+                                  child: Card(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(16),
+                                    ),
+                                    elevation: 4,
+                                    child: SchoolFlag(
+                                      heartSize: 32,
+                                      school: school,
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
+                            ValueListenableBuilder<int>(
+                              valueListenable: currentImage,
+                              builder: (context, index, child) {
+                                return AppPageIndicator(
+                                  pageCount: imageCount,
+                                  currentPage: index,
+                                );
+                              },
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  ValueListenableBuilder<bool>(
+                    valueListenable: showOriginal,
+                    builder: (context, value, child) {
+                      return SchoolDetailsText(
+                        school: school,
+                        showOriginal: value,
+                        onTranslate: () {
+                          showOriginal.value = !showOriginal.value;
+                        },
+                      );
+                    },
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
         ),
-      ),
+      ],
     );
   }
 }

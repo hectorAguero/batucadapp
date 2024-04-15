@@ -2,7 +2,6 @@
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
 class AppTheme {
   static ThemeData get lightTheme => FlexThemeData.light(
@@ -23,23 +22,12 @@ class AppTheme {
           snackBarBackgroundSchemeColor: SchemeColor.inversePrimary,
           snackBarRadius: 8,
           snackBarElevation: 2,
+          bottomSheetRadius: 16,
+          bottomSheetModalBackgroundColor: SchemeColor.background,
         ),
         splashFactory: InkSparkle.splashFactory,
         extensions: [
           AppCustomColors.light(),
-          const WoltModalSheetThemeData(
-            bottomSheetShape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.vertical(
-                top: Radius.circular(28),
-              ),
-            ),
-            mainContentScrollPhysics: ClampingScrollPhysics(),
-            dialogShape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(
-                Radius.circular(28),
-              ),
-            ),
-          ),
         ],
       ).copyWith(
         cupertinoOverrideTheme: getCupertinoTheme(Brightness.light),
@@ -61,27 +49,14 @@ class AppTheme {
           snackBarBackgroundSchemeColor: SchemeColor.inversePrimary,
           snackBarRadius: 8,
           snackBarElevation: 2,
+          bottomSheetRadius: 16,
+          bottomSheetModalBackgroundColor: SchemeColor.background,
         ),
         surface: CupertinoColors.systemBackground.darkColor,
         background: CupertinoColors.systemGroupedBackground.darkColor,
         splashFactory: InkSparkle.splashFactory,
         darkIsTrueBlack: trueBlack,
-        extensions: [
-          AppCustomColors.dark(),
-          const WoltModalSheetThemeData(
-            bottomSheetShape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.vertical(
-                top: Radius.circular(28),
-              ),
-            ),
-            mainContentScrollPhysics: ClampingScrollPhysics(),
-            dialogShape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(
-                Radius.circular(28),
-              ),
-            ),
-          ),
-        ],
+        extensions: [AppCustomColors.dark()],
       ).copyWith(
         cupertinoOverrideTheme: getCupertinoTheme(Brightness.dark),
       );
