@@ -27,7 +27,7 @@ window.addEventListener("load", (_) => {
 	_flutter.loader.load({
 		config: {
 			// Use the local CanvasKit bundle instead of the CDN to reduce test flakiness.
-			canvasKitBaseUrl: "/canvaskit/",
+			canvasKitBaseUrl: '/samba_public_app/canvaskit/',
 		},
 		onEntrypointLoaded: (engineInitializer) => {
 			engineInitializer.initializeEngine().then((appRunner) => {
