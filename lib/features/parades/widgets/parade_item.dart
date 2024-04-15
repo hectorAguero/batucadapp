@@ -39,26 +39,31 @@ class ParadeItem extends ConsumerWidget {
               child: Card(
                 clipBehavior: Clip.antiAlias,
                 margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-                child: Container(
-                  height: double.infinity,
-                  decoration: BoxDecoration(
-                    gradient: RadialGradient(
-                      colors: [
-                        medalColor.withOpacity(0.25),
-                        medalColor.withOpacity(0.4),
+                child: InkWell(
+                  onTap: () {
+                    ref.read(paradeShowOriginalProvider.notifier).toggle();
+                  },
+                  child: Container(
+                    height: double.infinity,
+                    decoration: BoxDecoration(
+                      gradient: RadialGradient(
+                        colors: [
+                          medalColor.withOpacity(0.25),
+                          medalColor.withOpacity(0.4),
+                        ],
+                      ),
+                    ),
+                    child: Row(
+                      children: [
+                        ParadeItemSideBar(
+                          placing: parade.placing,
+                          parade: parade,
+                        ),
+                        Expanded(
+                          child: ParadeItemContent(parade: parade),
+                        ),
                       ],
                     ),
-                  ),
-                  child: Row(
-                    children: [
-                      ParadeItemSideBar(
-                        placing: parade.placing,
-                        parade: parade,
-                      ),
-                      Expanded(
-                        child: ParadeItemContent(parade: parade),
-                      ),
-                    ],
                   ),
                 ),
               ),
@@ -177,7 +182,7 @@ class ParadeItemBadge extends StatelessWidget {
   }
 }
 
-class ParadeItemTextContentHeader extends StatelessWidget {
+class ParadeItemTextContentHeader extends ConsumerWidget {
   const ParadeItemTextContentHeader({
     required this.padding,
     required this.parade,
@@ -188,7 +193,8 @@ class ParadeItemTextContentHeader extends StatelessWidget {
   final EdgeInsets padding;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final showOriginal = ref.watch(paradeShowOriginalProvider);
     return Padding(
       padding: padding,
       child: Column(
@@ -201,7 +207,9 @@ class ParadeItemTextContentHeader extends StatelessWidget {
               children: [
                 Flexible(
                   child: Text(
-                    '${parade.school.translatedName}\n',
+                    showOriginal
+                        ? '${parade.school.name}\n'
+                        : '${parade.school.translatedName}\n',
                     maxLines: 2,
                     style: context.textTheme.labelSmall!.copyWith(
                       color: context.colorScheme.onSurfaceVariant,
@@ -226,7 +234,9 @@ class ParadeItemTextContentHeader extends StatelessWidget {
           ),
           Text(
             parade.translatedEnredo.isNotEmpty
-                ? parade.translatedEnredo
+                ? showOriginal
+                    ? parade.enredo
+                    : parade.translatedEnredo
                 : parade.details,
             style: context.textTheme.titleSmall!.copyWith(
               fontWeight: FontWeight.w700,
@@ -242,7 +252,7 @@ class ParadeItemTextContentHeader extends StatelessWidget {
   }
 }
 
-class ParadeItemTextContentDetails extends StatelessWidget {
+class ParadeItemTextContentDetails extends ConsumerWidget {
   const ParadeItemTextContentDetails({
     required this.padding,
     required this.parade,
@@ -253,7 +263,8 @@ class ParadeItemTextContentDetails extends StatelessWidget {
   final EdgeInsets padding;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final showOriginal = ref.watch(paradeShowOriginalProvider);
     return Padding(
       padding: padding,
       child: Column(
@@ -268,7 +279,9 @@ class ParadeItemTextContentDetails extends StatelessWidget {
                     style: context.textTheme.labelMedium,
                   ),
                   TextSpan(
-                    text: parade.translatedCarnavalescos.join(', '),
+                    text: showOriginal
+                        ? parade.carnavalescos.join(', ')
+                        : parade.translatedCarnavalescos.join(', '),
                     style: context.textTheme.labelMedium,
                   ),
                 ],

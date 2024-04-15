@@ -65,3 +65,11 @@ class ParadesTabReachedLimit extends _$ParadesTabReachedLimit {
 final currentParadeProvider = Provider<Parade>((ref) {
   throw UnimplementedError();
 });
+
+@riverpod
+class ParadeShowOriginal extends _$ParadeShowOriginal {
+  @override
+  bool build() => true;
+
+  void toggle() => state = !state;
+}
