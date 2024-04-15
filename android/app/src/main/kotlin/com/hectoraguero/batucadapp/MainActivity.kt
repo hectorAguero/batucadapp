@@ -1,4 +1,4 @@
-package com.example.samba_public_app
+package com.hectoraguero.batucadapp
 
 import io.flutter.embedding.android.FlutterActivity
 

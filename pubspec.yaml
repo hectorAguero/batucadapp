@@ -1,4 +1,4 @@
-name: samba_public_app
+name: batucadapp
 description: 'Samba Public App'
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
