@@ -60,9 +60,7 @@ class _SchoolDetailsPageState extends ConsumerState<SchoolDetailsPage> {
               onLongPress: school.name == school.translatedName &&
                       school.symbols == school.translatedSymbols
                   ? null
-                  : () {
-                      showOriginal.value = !showOriginal.value;
-                    },
+                  : () => showOriginal.value = !showOriginal.value,
               focusColor: Colors.transparent,
               highlightColor: Colors.transparent,
               splashColor: Colors.transparent,
@@ -229,13 +227,14 @@ class _SchoolDetailsTextState extends State<SchoolDetailsText> {
                       ),
                   ],
                 ),
-                SchoolTextTile(
-                  icon: Icons.music_note_outlined,
-                  title: '${context.loc.schoolSymbols}: ',
-                  content: widget.showOriginal
-                      ? widget.school.symbols.join(', ')
-                      : widget.school.translatedSymbols.join(', '),
-                ),
+                if (widget.school.symbols.isNotEmpty)
+                  SchoolTextTile(
+                    icon: Icons.music_note_outlined,
+                    title: '${context.loc.schoolSymbols}: ',
+                    content: widget.showOriginal
+                        ? widget.school.symbols.join(', ')
+                        : widget.school.translatedSymbols.join(', '),
+                  ),
                 if (widget.school.foundationDate != null)
                   SchoolTextTile(
                     icon: Icons.date_range_outlined,

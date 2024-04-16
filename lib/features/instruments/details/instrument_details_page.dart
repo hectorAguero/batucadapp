@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sliver_tools/sliver_tools.dart';
 
+import '../../../common_widgets/app_back_button.dart';
 import '../../../common_widgets/app_cupertino_sliver_navigation_bar.dart';
-import '../../../common_widgets/go_back_button.dart';
-import '../../../common_widgets/web_padding.dart';
+import '../../../common_widgets/app_web_padding.dart';
 import '../../../extensions/app_localization_extension.dart';
 import '../../../extensions/media_query_context_extension.dart';
 import 'instrument_details_providers.dart';
@@ -48,7 +48,7 @@ class _InstrumentDetailsPageState extends ConsumerState<InstrumentDetailsPage> {
                 sliver: SliverCrossAxisConstrained(
                   maxCrossAxisExtent: screenConstraint,
                   child: AppCupertinoSliverNavigationBar(
-                    leading: const GoBackButton(),
+                    leading: const AppBackButton(),
                     largeTitle: context.loc.instrumentDetails,
                     stretch: true,
                   ),

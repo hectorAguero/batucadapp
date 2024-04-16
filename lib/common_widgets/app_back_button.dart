@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import '../extensions/is_ios_or_macos_platform_extension.dart';
 import '../extensions/theme_of_context_extension.dart';
 
-class GoBackButton extends StatelessWidget {
-  const GoBackButton({super.key});
+class AppBackButton extends StatelessWidget {
+  const AppBackButton({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -97,9 +97,9 @@ class _ParadesTabPageState extends ConsumerState<ParadesTabPage> {
                           currentParadeProvider.overrideWithValue(value[index]),
                         ],
                         child: Padding(
-                          padding: index == 0
-                              ? const EdgeInsets.only(top: 24)
-                              : EdgeInsets.zero,
+                          padding: index != 0
+                              ? EdgeInsets.zero
+                              : const EdgeInsets.only(top: 24),
                           child: const ParadeItem(),
                         ),
                       );

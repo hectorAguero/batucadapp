@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class AnimatedLinearGradient extends StatefulWidget {
-  const AnimatedLinearGradient({
+class AppAnimatedLinearGradient extends StatefulWidget {
+  const AppAnimatedLinearGradient({
     required this.colors,
     required this.child,
     this.begin = Alignment.topLeft,
@@ -16,10 +16,11 @@ class AnimatedLinearGradient extends StatefulWidget {
   final Alignment end;
 
   @override
-  State<AnimatedLinearGradient> createState() => _AnimatedLinearGradientState();
+  State<AppAnimatedLinearGradient> createState() =>
+      _AppAnimatedLinearGradientState();
 }
 
-class _AnimatedLinearGradientState extends State<AnimatedLinearGradient>
+class _AppAnimatedLinearGradientState extends State<AppAnimatedLinearGradient>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;

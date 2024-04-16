@@ -25,8 +25,11 @@ class ClientNetwork extends _$ClientNetwork {
     final language = ref.watch(languageAppProvider).value!.languageCode;
     final cacheDirPath = await _getTemporaryDirectory();
     final cache = CacheOptions(
-      store: HiveCacheStore(cacheDirPath),
-      hitCacheOnErrorExcept: [401, 403],
+      store: BackupCacheStore(
+        primary: MemCacheStore(),
+        secondary: HiveCacheStore(cacheDirPath),
+      ),
+      hitCacheOnErrorExcept: [],
     );
     final options = BaseOptions(
       baseUrl: Endpoint.basePath.path,

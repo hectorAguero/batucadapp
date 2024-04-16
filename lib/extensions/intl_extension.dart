@@ -34,23 +34,19 @@ extension IntlExtension on DateTime {
 }
 
 extension OrdinalExtension on int {
-  String intlOrdinal(BuildContext context) {
-    if (context.loc.localeName == 'en') {
-      return switch (this % 10) {
-        1 => '${this}st',
-        2 => '${this}nd',
-        3 => '${this}rd',
-        _ => '${this}th'
-      };
-    }
-    if (context.loc.localeName == 'ja') {
-      return '第$formatNumberToJapanese';
-      //return '第$this';
-    }
-    if (context.loc.localeName == 'es' || context.loc.localeName == 'pt') {
-      return '$thisº';
-    }
-    return '$this';
+  String intlOrdinal(BuildContext context, {bool spaceAfter = true}) {
+    final ordinal = switch (context.loc.localeName) {
+      ('ja') => '第$formatNumberToJapanese',
+      ('es' || 'pt') => '$thisº',
+      ('en') => switch (this % 10) {
+          1 => '${this}st',
+          2 => '${this}nd',
+          3 => '${this}rd',
+          _ => '${this}th'
+        },
+      (_) => '$this',
+    };
+    return spaceAfter ? '$ordinal ' : ordinal;
   }
 
   String get formatNumberToJapanese {

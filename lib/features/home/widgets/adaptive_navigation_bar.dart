@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../../../common_widgets/web_padding.dart';
+import '../../../common_widgets/app_web_padding.dart';
 import '../../../extensions/is_ios_or_macos_platform_extension.dart';
 import '../../../extensions/theme_of_context_extension.dart';
 import '../../../utils/immutable_list.dart';
@@ -25,7 +25,7 @@ class AdaptiveNavigationBar extends StatelessWidget {
     if (kIsCupertino) {
       return AnimatedTheme(
         data: Theme.of(context),
-        child: WebPadding.only(
+        child: AppWebPadding.only(
           color: Theme.of(context).bottomNavigationBarTheme.backgroundColor,
           bottom: true,
           child: CupertinoTabBar(
@@ -45,7 +45,7 @@ class AdaptiveNavigationBar extends StatelessWidget {
         ),
       );
     }
-    return WebPadding.only(
+    return AppWebPadding.only(
       color: context.colorScheme.primaryContainer,
       bottom: true,
       child: NavigationBar(

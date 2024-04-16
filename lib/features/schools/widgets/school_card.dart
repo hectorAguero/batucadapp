@@ -1,4 +1,3 @@
-import 'package:country_picker/country_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -46,9 +45,7 @@ class _SchoolCardState extends ConsumerState<SchoolCard> {
           },
           onLongPress: school.name == school.translatedName
               ? null
-              : () {
-                  showOriginal.value = !showOriginal.value;
-                },
+              : () => showOriginal.value = !showOriginal.value,
           child: Container(
             decoration: BoxDecoration(
               gradient: LinearGradient(
@@ -213,14 +210,22 @@ class SchoolInfoCard extends StatelessWidget {
 }
 
 extension SelectedSchoolSortExtension on SchoolSort {
-  String getSortedValue(School school, BuildContext context) => switch (this) {
-        (SchoolSort.lastPerformance) =>
-          '${school.lastPosition.intlOrdinal(context)}'
-              ' ${context.loc.schoolPerformancePlace.capitalize}',
-        (SchoolSort.location) =>
-          CountryLocalizations.of(context)!.countryName(countryCode: 'BR')!,
-        _ => school.foundationDate != null
-            ? school.foundationDate!.intlShort(context)
-            : '',
-      };
+  String getSortedValue(School school, BuildContext context) {
+    switch (this) {
+      case SchoolSort.lastPerformance:
+        if (school.lastPosition == 0) {
+          return context.loc.schoolLeagueNotCompetitive;
+        }
+        final position = school.lastPosition.intlOrdinal(context);
+        final perfomance = context.loc.schoolPerformancePlace.capitalize;
+        return '$position$perfomance';
+      case SchoolSort.name:
+      case SchoolSort.foundationDate:
+      case SchoolSort.location:
+        if (school.foundationDate != null) {
+          return school.foundationDate!.intlShort(context);
+        }
+        return '';
+    }
+  }
 }

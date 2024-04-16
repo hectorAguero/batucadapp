@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../common_widgets/animated_linear_gradient.dart';
+import '../../../common_widgets/app_animated_linear_gradient.dart';
 import '../../../extensions/app_localization_extension.dart';
 import '../../../extensions/intl_extension.dart';
 import '../../../extensions/theme_of_context_extension.dart';
@@ -18,7 +18,9 @@ class ParadeItemBottomRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final medalColor = parade.medalColor(context);
-    return AnimatedLinearGradient(
+    final day = parade.performanceDay.intlOrdinal(context);
+    final order = parade.performanceOrder.intlOrdinal(context);
+    return AppAnimatedLinearGradient(
       duration: const Duration(seconds: 10),
       colors: [
         if (parade.school.colorsCode.length > 1)
@@ -34,24 +36,19 @@ class ParadeItemBottomRow extends StatelessWidget {
         child: Row(
           children: [
             Text.rich(
+              maxLines: 2,
               TextSpan(
+                style: context.textTheme.labelMedium,
                 children: [
-                  TextSpan(
-                    text: '${parade.performanceDay.intlOrdinal(context)} Day ',
-                  ),
-                  TextSpan(
-                    text: parade.date.intlTime(context),
-                  ),
+                  TextSpan(text: '$day${context.loc.day} '),
+                  TextSpan(text: parade.date.intlTime(context)),
                 ],
               ),
-              maxLines: 2,
-              style: context.textTheme.labelMedium,
             ),
             const Spacer(),
             const SizedBox(width: 16),
             Text(
-              '${parade.performanceOrder.intlOrdinal(context)}'
-              ' ${context.loc.schoolToParade}',
+              '$order${context.loc.schoolToParade}',
               style: context.textTheme.labelMedium!.copyWith(
                 fontStyle: FontStyle.italic,
               ),

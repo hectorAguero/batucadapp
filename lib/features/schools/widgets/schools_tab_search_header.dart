@@ -4,7 +4,7 @@ import 'package:pull_down_button/pull_down_button.dart';
 import 'package:sliver_tools/sliver_tools.dart';
 
 import '../../../common_widgets/app_cupertino_button.dart';
-import '../../../common_widgets/web_padding.dart';
+import '../../../common_widgets/app_web_padding.dart';
 import '../../../extensions/app_localization_extension.dart';
 import '../../../extensions/media_query_context_extension.dart';
 import '../../../extensions/theme_of_context_extension.dart';

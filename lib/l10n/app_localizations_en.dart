@@ -8,6 +8,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get appTitle => 'SambApp';
 
   @override
+  String get noImage => 'No image';
+
+  @override
   String get error => 'Error';
 
   @override
@@ -84,6 +87,36 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get paradesTitle => 'Parades';
+
+  @override
+  String get day => 'day';
+
+  @override
+  String get days => 'days';
+
+  @override
+  String get carnavalesco => 'Carnavalesco';
+
+  @override
+  String get carnavalescos => 'Carnavalesco';
+
+  @override
+  String get wing => 'Wing';
+
+  @override
+  String get wings => 'Wings';
+
+  @override
+  String get float => 'Float';
+
+  @override
+  String get floats => 'Floats';
+
+  @override
+  String get tripod => 'Tripod';
+
+  @override
+  String get tripods => 'Tripods';
 
   @override
   String get schoolsTitle => 'Schools';
@@ -228,6 +261,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get schoolDivisionStreetBloco => 'Street Blocos';
+
+  @override
+  String get schoolLeagueNotCompetitive => 'Not competitive';
 
   @override
   String get settingsTitle => 'Settings';

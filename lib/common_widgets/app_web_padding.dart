@@ -7,8 +7,8 @@ import '../extensions/js_bottom_padding_extension.dart'
 
 /// Widget that calls the calls to JS to get the insets of web
 /// https://github.com/flutter/flutter/issues/84833#issuecomment-1679737846
-class WebPadding extends StatelessWidget {
-  const WebPadding({
+class AppWebPadding extends StatelessWidget {
+  const AppWebPadding({
     required this.child,
     this.bottom = true,
     this.top = true,
@@ -18,7 +18,7 @@ class WebPadding extends StatelessWidget {
     super.key,
   });
 
-  const WebPadding.only({
+  const AppWebPadding.only({
     required this.child,
     this.bottom = false,
     this.top = false,

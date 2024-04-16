@@ -35,6 +35,7 @@ class ParadeItemSideBar extends StatelessWidget {
         ),
       ),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text.rich(
             TextSpan(
@@ -53,32 +54,26 @@ class ParadeItemSideBar extends StatelessWidget {
             style: const TextStyle(fontSize: 24),
             textAlign: TextAlign.center,
           ),
-          const Spacer(),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8),
-              child: RotatedBox(
-                quarterTurns: 3,
-                child: Text.rich(
+          RotatedBox(
+            quarterTurns: 3,
+            child: Text.rich(
+              maxLines: 1,
+              TextSpan(
+                children: [
                   TextSpan(
+                    style: context.textTheme.headlineSmall!.copyWith(
+                      color: context.colorScheme.onSurface,
+                      fontWeight: FontWeight.w600,
+                    ),
                     children: [
-                      TextSpan(
-                        style: context.textTheme.headlineSmall!.copyWith(
-                          color: context.colorScheme.onSurface,
-                          fontWeight: FontWeight.w600,
+                      if (parade.placing > 0)
+                        TextSpan(
+                          text: '${parade.placing.intlOrdinal(context)}'
+                              ' ${context.loc.schoolPerformancePlace}',
                         ),
-                        children: [
-                          if (parade.placing > 0)
-                            TextSpan(
-                              text: '${parade.placing.intlOrdinal(context)}'
-                                  ' ${context.loc.schoolPerformancePlace}',
-                            ),
-                        ],
-                      ),
                     ],
                   ),
-                ),
+                ],
               ),
             ),
           ),

@@ -237,10 +237,10 @@ packages:
     dependency: "direct main"
     description:
       name: cupertino_icons
-      sha256: d57953e10f9f8327ce64a508a355f0b1ec902193f66288e8cb5070e7c47eeb2d
+      sha256: ba631d1c7f7bef6b729a622b7b752645a2d076dba9976925b8f25725a30e1ee6
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.6"
+    version: "1.0.8"
   custom_lint:
     dependency: "direct dev"
     description:
@@ -365,10 +365,10 @@ packages:
     dependency: transitive
     description:
       name: fetch_api
-      sha256: "77f3be8c9acaa64ed37dd49c21c056da71b78053d31131ca26a273884a753f66"
+      sha256: "6de87206bfc4b40a3084c791df806bb4c8cc0c7e54f06dcd25701466055caa57"
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.0-wasm"
+    version: "2.0.0"
   fetch_client:
     dependency: "direct main"
     description:
@@ -601,10 +601,10 @@ packages:
     dependency: transitive
     description:
       name: js
-      sha256: f2c445dce49627136094980615a031419f7f3eb393237e4ecd97ac15dea343f3
+      sha256: c1b2e9b5ea78c45e1a0788d29606ba27dc5f71f019f32ca5140f61ef071838cf
       url: "https://pub.dev"
     source: hosted
-    version: "0.6.7"
+    version: "0.7.1"
   json_annotation:
     dependency: transitive
     description:

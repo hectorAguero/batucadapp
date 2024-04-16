@@ -41,3 +41,6 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# Until I change the config for dev and release
+web/flutter_bootstrap.js

@@ -5,6 +5,8 @@
 		"description": "The title of the application"
 	},
 	"@_MAIN_APP": {},
+
+	"noImage": "No image",
 	"error": "Error",
 	"errorMessage": "An error occurred",
 	"errorLoadingImage": "Failed to load data",
@@ -34,6 +36,16 @@
 	"instrumentGallery": "Gallery",
 	"@_PARADES_PAGE": {},
 	"paradesTitle": "Parades",
+	"day": "day",
+	"days": "days",
+	"carnavalesco": "Carnavalesco",
+	"carnavalescos": "Carnavalesco",
+	"wing": "Wing",
+	"wings": "Wings",
+	"float": "Float",
+	"floats": "Floats",
+	"tripod": "Tripod",
+	"tripods": "Tripods",
 	"@_SCHOOLS_PAGE": {},
 	"schoolsTitle": "Schools",
 	"schoolFavorites": "Favorites",
@@ -83,6 +95,7 @@
 	"schoolDivisionEnredoBloco1": "Enredo Blocos 1",
 	"schoolDivisionEnredoBloco2": "Enredo Blocos 2",
 	"schoolDivisionStreetBloco": "Street Blocos",
+	"schoolLeagueNotCompetitive": "Not competitive",
 	"@_SETTINGS_PAGE": {},
 	"settingsTitle": "Settings",
 	"switchTheme": "Theme"

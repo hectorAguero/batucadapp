@@ -3,8 +3,9 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../common_widgets/animated_linear_gradient.dart';
+import '../../../common_widgets/app_animated_linear_gradient.dart';
 import '../../../common_widgets/app_fade_in_image.dart';
+import '../../../extensions/app_localization_extension.dart';
 import '../../../extensions/theme_of_context_extension.dart';
 import '../../schools/school.dart';
 import '../../schools/school_extensions.dart';
@@ -160,7 +161,7 @@ class ParadeItemBadge extends StatelessWidget {
         borderRadius: const BorderRadius.only(
           bottomLeft: Radius.circular(16),
         ),
-        child: AnimatedLinearGradient(
+        child: AppAnimatedLinearGradient(
           duration: const Duration(seconds: 2),
           colors: [
             medalColor.withOpacity(0.9),
@@ -275,7 +276,7 @@ class ParadeItemTextContentDetails extends ConsumerWidget {
               TextSpan(
                 children: [
                   TextSpan(
-                    text: 'Carnavalescos: ',
+                    text: '${context.loc.carnavalescos}:',
                     style: context.textTheme.labelMedium,
                   ),
                   TextSpan(
@@ -299,7 +300,7 @@ class ParadeItemTextContentDetails extends ConsumerWidget {
               TextSpan(
                 children: [
                   TextSpan(
-                    text: 'Components: ',
+                    text: '${context.loc.schoolComponents}: ',
                     style: context.textTheme.labelSmall!.copyWith(
                       fontWeight: FontWeight.w400,
                     ),
@@ -312,8 +313,11 @@ class ParadeItemTextContentDetails extends ConsumerWidget {
                   ),
                   TextSpan(
                     children: [
+                      const TextSpan(text: '\n'),
                       TextSpan(
-                        text: parade.numberOfFloats > 0 ? '\nFloats: ' : '',
+                        text: parade.numberOfFloats > 0
+                            ? '${context.loc.floats}: '
+                            : '',
                       ),
                       TextSpan(
                         text: parade.numberOfFloats > 0
@@ -321,7 +325,9 @@ class ParadeItemTextContentDetails extends ConsumerWidget {
                             : '',
                       ),
                       TextSpan(
-                        text: parade.numberOfWings > 0 ? ' - Wings: ' : '',
+                        text: parade.numberOfWings > 0
+                            ? ' - ${context.loc.wings}: '
+                            : '',
                       ),
                       TextSpan(
                         text: parade.numberOfWings > 0
@@ -329,7 +335,9 @@ class ParadeItemTextContentDetails extends ConsumerWidget {
                             : '',
                       ),
                       TextSpan(
-                        text: parade.numberOfTripods > 0 ? ' - Tripods: ' : '',
+                        text: parade.numberOfTripods > 0
+                            ? ' - ${context.loc.tripods}: '
+                            : '',
                       ),
                       TextSpan(
                         text: parade.numberOfTripods > 0

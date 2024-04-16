@@ -5,7 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:sliver_tools/sliver_tools.dart';
 
 import '../../common_widgets/app_cupertino_sliver_navigation_bar.dart';
-import '../../common_widgets/web_padding.dart';
+import '../../common_widgets/app_web_padding.dart';
 import '../../extensions/app_localization_extension.dart';
 import '../../extensions/media_query_context_extension.dart';
 import '../home/home_page_controller.dart';

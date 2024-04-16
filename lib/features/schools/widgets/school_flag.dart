@@ -1,7 +1,10 @@
+import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../common_widgets/app_fade_in_image.dart';
+import '../../../extensions/app_localization_extension.dart';
+import '../../../extensions/theme_of_context_extension.dart';
 import '../school.dart';
 import '../schools_tab_providers.dart';
 
@@ -50,10 +53,12 @@ class SchoolFlag extends ConsumerWidget {
             },
             child: AspectRatio(
               aspectRatio: 3 / 2,
-              child: AppFadeInImage(
-                school.imageUrl,
-                fit: BoxFit.cover,
-              ),
+              child: school.imageUrl.isNotEmpty
+                  ? AppFadeInImage(
+                      school.imageUrl,
+                      fit: BoxFit.cover,
+                    )
+                  : EmptyImage(colors: school.colorsCode),
             ),
           ),
         ),
@@ -95,6 +100,48 @@ class SchoolFlag extends ConsumerWidget {
             child: leading,
           ),
       ],
+    );
+  }
+}
+
+class EmptyImage extends StatelessWidget {
+  const EmptyImage({required this.colors, super.key});
+
+  final IList<Color> colors;
+
+  @override
+  Widget build(BuildContext context) {
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: [
+            if (colors.isEmpty) ...[
+              context.colorScheme.primaryContainer,
+              context.colorScheme.secondaryContainer,
+            ] else
+              ...colors,
+          ],
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+        ),
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(
+            CupertinoIcons.photo,
+            size: 48,
+            color: context.colorScheme.onPrimaryContainer,
+          ),
+          const SizedBox(height: 8),
+          Text(
+            context.loc.noImage,
+            style: context.textTheme.titleLarge!.copyWith(
+              color: context.colorScheme.onPrimaryContainer,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

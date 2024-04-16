@@ -11,11 +11,11 @@ part 'schools_tab_providers.g.dart';
 
 @riverpod
 class Schools extends _$Schools {
-  static const _pageSize = 10;
+  static const _pageSize = 12;
 
   @override
   FutureOr<ImmutableList<School>> build() async {
-    return getSchools();
+    return getSchools(pageSize: _pageSize);
   }
 
   Future<bool?> fetchNextPage({int pageSize = _pageSize}) async {
@@ -38,13 +38,13 @@ class Schools extends _$Schools {
 
   Future<void> searchSchools() async {
     ref.read(schoolReachedMaxProvider.notifier).reset();
-    final schools = await getSchools();
+    final schools = await getSchools(pageSize: _pageSize);
     state = AsyncData(schools);
   }
 
   Future<ImmutableList<School>> getSchools({
+    required int pageSize,
     int page = 1,
-    int pageSize = _pageSize,
   }) async {
     final sort = ref.read(selectedSchoolSortProvider);
     final search = ref.read(searchedSchoolProvider);
@@ -167,7 +167,7 @@ final filteredSchoolsProvider =
   return ImmutableList([
     for (final school in schools.value!)
       if (filter[school.currentDivision]! &&
-          (!onlyFavorites || favoritesIds.contains('$school.id')))
+          (!onlyFavorites || favoritesIds.contains('${school.id}')))
         school,
   ]);
 });

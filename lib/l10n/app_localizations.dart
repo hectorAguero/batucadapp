@@ -103,6 +103,12 @@ abstract class AppLocalizations {
   /// **'SambApp'**
   String get appTitle;
 
+  /// No description provided for @noImage.
+  ///
+  /// In en, this message translates to:
+  /// **'No image'**
+  String get noImage;
+
   /// No description provided for @error.
   ///
   /// In en, this message translates to:
@@ -258,6 +264,66 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Parades'**
   String get paradesTitle;
+
+  /// No description provided for @day.
+  ///
+  /// In en, this message translates to:
+  /// **'day'**
+  String get day;
+
+  /// No description provided for @days.
+  ///
+  /// In en, this message translates to:
+  /// **'days'**
+  String get days;
+
+  /// No description provided for @carnavalesco.
+  ///
+  /// In en, this message translates to:
+  /// **'Carnavalesco'**
+  String get carnavalesco;
+
+  /// No description provided for @carnavalescos.
+  ///
+  /// In en, this message translates to:
+  /// **'Carnavalesco'**
+  String get carnavalescos;
+
+  /// No description provided for @wing.
+  ///
+  /// In en, this message translates to:
+  /// **'Wing'**
+  String get wing;
+
+  /// No description provided for @wings.
+  ///
+  /// In en, this message translates to:
+  /// **'Wings'**
+  String get wings;
+
+  /// No description provided for @float.
+  ///
+  /// In en, this message translates to:
+  /// **'Float'**
+  String get float;
+
+  /// No description provided for @floats.
+  ///
+  /// In en, this message translates to:
+  /// **'Floats'**
+  String get floats;
+
+  /// No description provided for @tripod.
+  ///
+  /// In en, this message translates to:
+  /// **'Tripod'**
+  String get tripod;
+
+  /// No description provided for @tripods.
+  ///
+  /// In en, this message translates to:
+  /// **'Tripods'**
+  String get tripods;
 
   /// No description provided for @schoolsTitle.
   ///
@@ -546,6 +612,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Street Blocos'**
   String get schoolDivisionStreetBloco;
+
+  /// No description provided for @schoolLeagueNotCompetitive.
+  ///
+  /// In en, this message translates to:
+  /// **'Not competitive'**
+  String get schoolLeagueNotCompetitive;
 
   /// No description provided for @settingsTitle.
   ///

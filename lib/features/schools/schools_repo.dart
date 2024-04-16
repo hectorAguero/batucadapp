@@ -37,7 +37,7 @@ class SchoolsRepoImpls implements SchoolsRepo {
       search.isEmpty ? Endpoint.schools.path : Endpoint.schools.pathSearch,
       queryParameters: {
         'page': page,
-        'pagesize': pageSize,
+        'pageSize': pageSize,
         if (search.isNotEmpty) 'search': search,
         // if (sort.isNotEmpty) 'sort': sort,
       },

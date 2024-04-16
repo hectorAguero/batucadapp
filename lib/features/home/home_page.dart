@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../common_widgets/web_padding.dart';
+import '../../common_widgets/app_web_padding.dart';
 import '../../extensions/media_query_context_extension.dart';
 import '../../extensions/theme_of_context_extension.dart';
 import '../../utils/immutable_list.dart';
@@ -22,7 +22,7 @@ class HomePage extends ConsumerWidget {
     return Scaffold(
       body: size.isSmallScreen
           ? navigationShell
-          : WebPadding.only(
+          : AppWebPadding.only(
               left: true,
               color: context.colorScheme.surface,
               child: Row(
