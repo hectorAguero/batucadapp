@@ -34,23 +34,29 @@ class ParadeItemBottomRow extends StatelessWidget {
           horizontal: 8,
         ),
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text.rich(
-              maxLines: 2,
-              TextSpan(
-                style: context.textTheme.labelMedium,
-                children: [
-                  TextSpan(text: '$day${context.loc.day} '),
-                  TextSpan(text: parade.date.intlTime(context)),
-                ],
+            Flexible(
+              child: Text.rich(
+                maxLines: 1,
+                TextSpan(
+                  style: context.textTheme.labelMedium,
+                  children: [
+                    TextSpan(text: '$day${context.loc.day} '),
+                    TextSpan(text: parade.date.intlTime(context)),
+                  ],
+                ),
               ),
             ),
-            const Spacer(),
             const SizedBox(width: 16),
-            Text(
-              '$order${context.loc.schoolToParade}',
-              style: context.textTheme.labelMedium!.copyWith(
-                fontStyle: FontStyle.italic,
+            Flexible(
+              child: Text(
+                '$order${context.loc.schoolToParade}',
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: context.textTheme.labelMedium!.copyWith(
+                  fontStyle: FontStyle.italic,
+                ),
               ),
             ),
           ],

@@ -146,7 +146,7 @@ class ParadeItemBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final medalColor = parade.medalColor(context);
-
+    final divisionName = parade.divisionNumber.shortName(context);
     return DecoratedBox(
       decoration: BoxDecoration(
         borderRadius: const BorderRadius.only(
@@ -170,7 +170,7 @@ class ParadeItemBadge extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.all(8),
             child: Text(
-              parade.divisionNumber.shortName(context),
+              divisionName,
               style: context.textTheme.labelSmall!.copyWith(
                 color: context.colorScheme.onSurface,
                 fontWeight: FontWeight.bold,
@@ -196,6 +196,7 @@ class ParadeItemTextContentHeader extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final showOriginal = ref.watch(paradeShowOriginalProvider);
+    final enredo = showOriginal ? parade.enredo : parade.translatedEnredo;
     return Padding(
       padding: padding,
       child: Column(
@@ -233,12 +234,15 @@ class ParadeItemTextContentHeader extends ConsumerWidget {
               ],
             ),
           ),
-          Text(
-            parade.translatedEnredo.isNotEmpty
-                ? showOriginal
-                    ? parade.enredo
-                    : parade.translatedEnredo
-                : parade.details,
+          Text.rich(
+            TextSpan(
+              children: [
+                if (parade.translatedEnredo.isNotEmpty)
+                  TextSpan(text: enredo)
+                else
+                  TextSpan(text: parade.details),
+              ],
+            ),
             style: context.textTheme.titleSmall!.copyWith(
               fontWeight: FontWeight.w700,
             ),
