@@ -13,7 +13,7 @@ class ParadeItemYearLine extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 32,
+      width: 40,
       height: double.infinity,
       child: Column(
         children: [
