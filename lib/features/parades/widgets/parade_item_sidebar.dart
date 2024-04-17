@@ -35,7 +35,6 @@ class ParadeItemSideBar extends StatelessWidget {
         ),
       ),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text.rich(
             TextSpan(
@@ -54,6 +53,7 @@ class ParadeItemSideBar extends StatelessWidget {
             style: const TextStyle(fontSize: 24),
             textAlign: TextAlign.center,
           ),
+          const Spacer(),
           RotatedBox(
             quarterTurns: 3,
             child: Text.rich(
@@ -77,6 +77,7 @@ class ParadeItemSideBar extends StatelessWidget {
               ),
             ),
           ),
+          const SizedBox(height: 8),
         ],
       ),
     );

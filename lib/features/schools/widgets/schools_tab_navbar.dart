@@ -31,7 +31,6 @@ class SchoolsTabNavBar extends StatelessWidget {
           ],
           buttonBuilder: (context, showMenu) => AppCupertinoButton(
             onPressed: showMenu,
-            padding: EdgeInsets.zero,
             child: const Icon(CupertinoIcons.ellipsis_circle),
           ),
         ),

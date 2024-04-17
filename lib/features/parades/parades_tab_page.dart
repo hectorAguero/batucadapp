@@ -101,9 +101,7 @@ class _ParadesTabPageState extends ConsumerState<ParadesTabPage> {
                             ),
                             const Expanded(
                               child: AppAnimationWrapper(
-                                child: Expanded(
-                                  child: ParadeItem(),
-                                ),
+                                child: ParadeItem(),
                               ),
                             ),
                           ],
