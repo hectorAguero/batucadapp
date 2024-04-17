@@ -4,8 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sliver_tools/sliver_tools.dart';
 
 import '../../../extensions/app_localization_extension.dart';
-import '../../../extensions/media_query_context_extension.dart';
 import '../../../extensions/theme_of_context_extension.dart';
+import '../../../utils/screen_size.dart';
 import '../school_extensions.dart';
 import '../schools_tab_providers.dart';
 
@@ -22,7 +22,7 @@ class SchoolFilterChips extends ConsumerWidget {
     final selectedDivisions = ref.watch(schoolDivisionsProvider);
     final padding = MediaQuery.paddingOf(context);
     return SliverCrossAxisConstrained(
-      maxCrossAxisExtent: largeScreen,
+      maxCrossAxisExtent: ScreenSize.lg.value,
       child: SliverToBoxAdapter(
         child: SizedBox(
           height: 64,

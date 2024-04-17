@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../../extensions/media_query_context_extension.dart';
+import '../../../../utils/screen_size.dart';
 
 class InstrumentDetailsSummary extends StatelessWidget {
   const InstrumentDetailsSummary({
@@ -13,8 +13,8 @@ class InstrumentDetailsSummary extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        final padding =
-            (constraints.maxWidth - mediumScreen).clamp(16.0, mediumScreen);
+        final padding = (constraints.maxWidth - ScreenSize.md.value)
+            .clamp(16.0, ScreenSize.md.value);
         return SingleChildScrollView(
           padding: EdgeInsets.symmetric(vertical: 16, horizontal: padding),
           physics: const NeverScrollableScrollPhysics(),

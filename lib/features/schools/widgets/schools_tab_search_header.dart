@@ -6,8 +6,8 @@ import 'package:sliver_tools/sliver_tools.dart';
 import '../../../common_widgets/app_cupertino_button.dart';
 import '../../../common_widgets/app_web_padding.dart';
 import '../../../extensions/app_localization_extension.dart';
-import '../../../extensions/media_query_context_extension.dart';
 import '../../../extensions/theme_of_context_extension.dart';
+import '../../../utils/screen_size.dart';
 import '../../home/widgets/adaptive_navigation_rail.dart';
 import '../school.dart';
 import '../schools_tab_providers.dart';
@@ -40,7 +40,7 @@ class _SchoolsTabSearchHeaderState
         top: false,
         bottom: false,
         sliver: SliverCrossAxisConstrained(
-          maxCrossAxisExtent: largeScreen,
+          maxCrossAxisExtent: ScreenSize.lg.value,
           child: SliverPadding(
             padding: const EdgeInsets.only(top: 12, left: 16, right: 16),
             sliver: SliverCrossAxisGroup(
@@ -113,12 +113,12 @@ class _SchoolsTabSearchHeaderState
   }
 
   Rect calculateRect(BuildContext context) {
-    if (context.querySize.width > largeScreen) {
-      const left = largeScreen + AdaptiveNavigationRail.largeRailWidth;
+    if (context.screenSize.isLarge) {
+      final left = ScreenSize.lg.value + AdaptiveNavigationRail.largeRailWidth;
 
-      return const Rect.fromLTWH(left, 100, -48, 48);
+      return Rect.fromLTWH(left, 100, -48, 48);
     }
-    final left = context.querySize.width;
+    final left = MediaQuery.sizeOf(context).width - 48;
 
     return Rect.fromLTWH(left, 100, 48, 48);
   }

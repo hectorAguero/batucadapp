@@ -2,11 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+
 import '../../../extensions/app_localization_extension.dart';
 import '../../../extensions/intl_extension.dart';
-import '../../../extensions/media_query_context_extension.dart';
 import '../../../extensions/string_extension.dart';
 import '../../../extensions/theme_of_context_extension.dart';
+import '../../../utils/screen_size.dart';
 import '../school.dart';
 import '../school_extensions.dart';
 import '../schools_tab_providers.dart';
@@ -122,7 +123,7 @@ class SchoolInfoCard extends StatelessWidget {
               child: !showOriginal
                   ? Text(
                       '${school.translatedName}'
-                      '${context.querySize.isNotSmallNorMedium ? '\n' : ' '}',
+                      '${context.screenSize.isLarge ? '\n' : ' '}',
                       maxLines: 2,
                       style: Theme.of(context).textTheme.titleLarge!.copyWith(
                             color: colorScheme.onSurface,
@@ -131,7 +132,7 @@ class SchoolInfoCard extends StatelessWidget {
                     )
                   : Text(
                       '${school.name}'
-                      '${context.querySize.isNotSmallNorMedium ? '\n' : ' '}',
+                      '${!context.screenSize.isLarge ? '\n' : ' '}',
                       maxLines: 2,
                       style: Theme.of(context).textTheme.titleLarge!.copyWith(
                             color: colorScheme.onSurface,

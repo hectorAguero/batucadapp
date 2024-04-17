@@ -7,69 +7,53 @@ import '../../../common_widgets/app_animated_linear_gradient.dart';
 import '../../../common_widgets/app_fade_in_image.dart';
 import '../../../extensions/app_localization_extension.dart';
 import '../../../extensions/theme_of_context_extension.dart';
-import '../../schools/school.dart';
 import '../../schools/school_extensions.dart';
 import '../parade.dart';
 import '../parade_extension.dart';
 import '../parades_tab_providers.dart';
 import 'parade_item_bottom_row.dart';
 import 'parade_item_sidebar.dart';
-import 'parade_item_year_line.dart';
 
 class ParadeItem extends ConsumerWidget {
   const ParadeItem({super.key});
+
+  static const double height = 248;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final parade = ref.watch(currentParadeProvider);
     final medalColor = parade.medalColor(context);
-    return SafeArea(
-      top: false,
-      bottom: false,
-      child: SizedBox(
-        height: 248,
-        child: Row(
-          children: <Widget>[
-            ParadeItemYearLine(
-              year: parade.champion &&
-                      parade.divisionNumber == SchoolDivision.especial
-                  ? parade.paradeYear.toString()
-                  : null,
+    return Card(
+      clipBehavior: Clip.antiAlias,
+      margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+      child: InkWell(
+        onLongPress: () {
+          ref.read(paradeShowOriginalProvider.notifier).toggle();
+        },
+        child: Container(
+          height: double.infinity,
+          decoration: BoxDecoration(
+            gradient: RadialGradient(
+              colors: [
+                medalColor.withOpacity(0.25),
+                medalColor.withOpacity(0.4),
+              ],
             ),
-            Expanded(
-              child: Card(
-                clipBehavior: Clip.antiAlias,
-                margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-                child: InkWell(
-                  onLongPress: () {
-                    ref.read(paradeShowOriginalProvider.notifier).toggle();
-                  },
-                  child: Container(
-                    height: double.infinity,
-                    decoration: BoxDecoration(
-                      gradient: RadialGradient(
-                        colors: [
-                          medalColor.withOpacity(0.25),
-                          medalColor.withOpacity(0.4),
-                        ],
-                      ),
-                    ),
-                    child: Row(
-                      children: [
-                        ParadeItemSideBar(
-                          placing: parade.placing,
-                          parade: parade,
-                        ),
-                        Expanded(
-                          child: ParadeItemContent(parade: parade),
-                        ),
-                      ],
-                    ),
-                  ),
+          ),
+          child: SizedBox(
+            height: height,
+            child: Row(
+              children: [
+                ParadeItemSideBar(
+                  placing: parade.placing,
+                  parade: parade,
                 ),
-              ),
+                Expanded(
+                  child: ParadeItemContent(parade: parade),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );

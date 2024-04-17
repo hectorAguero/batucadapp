@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../../extensions/media_query_context_extension.dart';
 import '../../../extensions/theme_of_context_extension.dart';
 import '../../../utils/immutable_list.dart';
+import '../../../utils/screen_size.dart';
 import '../home_page_controller.dart';
 import 'adaptive_navigation_rail_footer.dart';
 
@@ -23,30 +23,30 @@ class AdaptiveNavigationRail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.sizeOf(context);
-    final footerHeight = size.height <= smallHeight
+    final height = MediaQuery.sizeOf(context).height;
+    final screenSize = context.screenSize;
+    final footerHeight = height <= ScreenSize.smallHeight
         ? AdaptiveNavigationRailFooter.heightCollapsed
         : AdaptiveNavigationRailFooter.heightFull;
-    final isLargeOrExtraLarge = size.isLargeScreen || size.isExtraLargeScreen;
     return ColoredBox(
       color: context.colorScheme.surface,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           SizedBox(
-            height: size.height - footerHeight,
+            height: height - footerHeight,
             child: NavigationRail(
               leading: Padding(
                 padding: const EdgeInsets.all(8),
                 child: Icon(
                   Icons.library_music,
                   color: context.colorScheme.primary,
-                  size: (context.querySize.height * 0.1).clamp(24, 80),
+                  size: (height * 0.1).clamp(24, 80),
                 ),
               ),
               backgroundColor: context.colorScheme.surface,
               onDestinationSelected: onDestinationSelected,
-              extended: size.isLargeScreen || size.isExtraLargeScreen,
+              extended: screenSize.isLarge,
               selectedIndex: selectedIndex,
               indicatorShape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(8)),
@@ -68,7 +68,7 @@ class AdaptiveNavigationRail extends StatelessWidget {
             color: context.colorScheme.surface,
             child: SizedBox(
               height: footerHeight,
-              width: isLargeOrExtraLarge ? largeRailWidth : smallRailWidth,
+              width: screenSize.isLarge ? largeRailWidth : smallRailWidth,
               child: const AdaptiveNavigationRailFooter(),
             ),
           ),

@@ -1,17 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:logging/logging.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import 'core/shared_preferences_provider.dart';
 import 'extensions/app_localization_extension.dart';
-import 'extensions/media_query_context_extension.dart';
 import 'features/home/widgets/adaptive_navigation_rail.dart';
 import 'theme/theme_provider.dart';
 import 'utils/immutable_list.dart';
 import 'utils/main_logger.dart';
+import 'utils/screen_size.dart';
 
 part 'initialization_page.g.dart';
 
@@ -60,6 +61,7 @@ class InitializationPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final initProvider = ref.watch(initializationProvider);
     ref.watch(appThemeModeProvider);
+
     return AnimatedSwitcher(
       duration: const Duration(milliseconds: 300),
       child: switch (initProvider) {
@@ -81,7 +83,7 @@ class AppStartupLoadingWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.sizeOf(context);
+    final screenSize = context.screenSize;
     final padding = MediaQuery.paddingOf(context);
     return Scaffold(
       appBar: AppBar(
@@ -89,15 +91,15 @@ class AppStartupLoadingWidget extends StatelessWidget {
         toolbarHeight:
             kMinInteractiveDimensionCupertino + padding.top.clamp(52, 100),
       ),
-      bottomNavigationBar: size.isSmallScreen
+      bottomNavigationBar: screenSize.isSmall
           ? null
           : const SizedBox(height: kMinInteractiveDimensionCupertino),
-      body: size.isSmallScreen
+      body: screenSize.isSmall
           ? const Center(child: CircularProgressIndicator.adaptive())
           : Row(
               children: [
                 SizedBox(
-                  width: size.isExtraLargeScreen || size.isLargeScreen
+                  width: screenSize.isLarge
                       ? AdaptiveNavigationRail.largeRailWidth
                       : AdaptiveNavigationRail.smallRailWidth,
                 ),

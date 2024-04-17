@@ -150,7 +150,7 @@ void _scrollTabToTheTop(ScrollController controller) {
   if (controller.hasClients) {
     controller.animateTo(
       0,
-      duration: kThemeAnimationDuration,
+      duration: const Duration(milliseconds: 350),
       curve: Curves.easeInOut,
     );
   }

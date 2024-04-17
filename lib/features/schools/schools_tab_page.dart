@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../common_widgets/app_loading_indicator.dart';
 import '../../utils/debouncer.dart';
 import '../home/home_page_controller.dart';
 import 'schools_tab_providers.dart';
@@ -74,22 +75,12 @@ class SchoolsTabLoadMoreIndicator extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final reachedLimit = ref.watch(schoolReachedMaxProvider);
-    final isEmpty = ref.watch(filteredSchoolsProvider).isEmpty;
+    final isNotEmpty = ref.watch(filteredSchoolsProvider).isNotEmpty;
     final isFiltered = ref.watch(filteredSchoolsProvider).length !=
-        ref.watch(schoolsProvider).value?.length;
-    return SliverToBoxAdapter(
-      child: AnimatedSize(
-        duration: const Duration(milliseconds: 300),
-        child: reachedLimit || isEmpty || isFiltered
-            ? const SizedBox.shrink()
-            : const Padding(
-                padding: EdgeInsets.all(16),
-                child: SizedBox(
-                  height: 16,
-                  child: CircularProgressIndicator.adaptive(),
-                ),
-              ),
-      ),
+        ref.watch(schoolsProvider).valueOrNull?.length;
+    return AppLoadingIndicator(
+      showLoading: !reachedLimit && isNotEmpty && !isFiltered,
+      sliver: true,
     );
   }
 }

@@ -1,5 +1,6 @@
 import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 // ignore:depend_on_referenced_packages
@@ -15,6 +16,7 @@ import 'theme/theme_provider.dart';
 
 void main() {
   usePathUrlStrategy();
+
   runApp(const ProviderScope(child: MainApp()));
 }
 
@@ -27,6 +29,17 @@ class MainApp extends ConsumerStatefulWidget {
 }
 
 class _MainAppState extends ConsumerState<MainApp> {
+  @override
+  void initState() {
+    super.initState();
+    SystemChrome.setSystemUIOverlayStyle(
+      const SystemUiOverlayStyle(
+        systemNavigationBarColor: Colors.transparent,
+      ),
+    );
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+  }
+
   @override
   Widget build(BuildContext context) {
     final router = ref.watch(goRouterProvider);

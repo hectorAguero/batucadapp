@@ -3,9 +3,9 @@ import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../common_widgets/app_fade_in_image.dart';
-import '../../../../extensions/media_query_context_extension.dart';
 import '../../../../extensions/theme_of_context_extension.dart';
 import '../../../../utils/immutable_list.dart';
+import '../../../../utils/screen_size.dart';
 import '../../instrument.dart';
 
 class InstrumentHeaderImages extends StatelessWidget {
@@ -21,7 +21,7 @@ class InstrumentHeaderImages extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final imageQuantity = context.querySize.isSmallScreen ? 2 : 3;
+    final imageQuantity = context.screenSize.isSmall ? 2 : 3;
     final largeImageHeight =
         imageHeight * imageQuantity + (imageQuantity - 1) * 16;
     return Padding(

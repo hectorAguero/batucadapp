@@ -25,22 +25,32 @@ class InstrumentRepoImpls implements InstrumentsRepo {
 
   @override
   Future<ImmutableList<Instrument>> getInstruments() async {
-    final response = await ref
-        .watch(clientNetworkProvider)
-        .value!
-        .get<Iterable<dynamic>>(Endpoint.instruments.path);
-    final data = response.data!.cast<Map<String, dynamic>>();
-    return ImmutableList([
-      for (final item in data) Instrument.fromMap(item),
-    ]);
+    try {
+      final response = await ref
+          .watch(clientNetworkProvider)
+          .value!
+          .get<Iterable<dynamic>>(Endpoint.instruments.path);
+      final data = response.data!.cast<Map<String, dynamic>>();
+      return ImmutableList([
+        for (final item in data) Instrument.fromMap(item),
+      ]);
+    } catch (e) {
+      throw AppNetworkError.fromNetworkClientException(e);
+    }
   }
 
   @override
   Future<Instrument> getDetails(InstrumentId id) async {
-    final response =
-        await ref.watch(clientNetworkProvider).value!.get<Map<String, dynamic>>(
-              '${Endpoint.instruments.pathId}/$id',
-            );
-    return Instrument.fromMap(response.data!);
+    try {
+      final response = await ref
+          .watch(clientNetworkProvider)
+          .value!
+          .get<Map<String, dynamic>>(
+            '${Endpoint.instruments.pathId}/$id',
+          );
+      return Instrument.fromMap(response.data!);
+    } catch (e) {
+      throw AppNetworkError.fromNetworkClientException(e);
+    }
   }
 }

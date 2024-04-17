@@ -4,11 +4,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pull_down_button/pull_down_button.dart';
 
 import '../../../extensions/app_localization_extension.dart';
-import '../../../extensions/media_query_context_extension.dart';
 import '../../../extensions/theme_of_context_extension.dart';
 import '../../../localization/language.dart';
 import '../../../localization/language_app_provider.dart';
 import '../../../theme/theme_provider.dart';
+import '../../../utils/screen_size.dart';
 import 'settings_modal_sheet.dart';
 
 class AdaptiveNavigationRailFooter extends ConsumerWidget {
@@ -20,10 +20,10 @@ class AdaptiveNavigationRailFooter extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final locale = WidgetsBinding.instance.platformDispatcher.locale;
-    final size = MediaQuery.sizeOf(context);
+    final screenSize = context.screenSize;
     final themeMode = ref.watch(appThemeModeProvider);
     final trueBlack = ref.watch(appThemeTrueBlackProvider);
-    if (size.height < smallHeight) {
+    if (MediaQuery.sizeOf(context).height < ScreenSize.smallHeight) {
       return Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
@@ -33,15 +33,13 @@ class AdaptiveNavigationRailFooter extends ConsumerWidget {
               padding: const EdgeInsets.symmetric(vertical: 24),
             ),
             child: CupertinoListTile.notched(
-              title: size.isLargeScreen || size.isExtraLargeScreen
+              title: screenSize.isLarge
                   ? Text(
                       context.loc.settingsTitle,
                       style: context.textTheme.titleMedium,
                     )
                   : const Icon(CupertinoIcons.settings),
-              leading: size.isLargeScreen || size.isExtraLargeScreen
-                  ? Icon(themeMode.icon)
-                  : null,
+              leading: screenSize.isLarge ? Icon(themeMode.icon) : null,
             ),
           ),
         ],
@@ -72,13 +70,13 @@ class AdaptiveNavigationRailFooter extends ConsumerWidget {
           ],
           buttonBuilder: (context, showMenu) => CupertinoListTile.notched(
             onTap: showMenu,
-            leading: size.isLargeScreen || size.isExtraLargeScreen
+            leading: screenSize.isLarge
                 ? Icon(
                     CupertinoIcons.flag,
                     color: context.colorScheme.onSurface,
                   )
                 : null,
-            title: size.isMediumScreen
+            title: !screenSize.isLarge
                 ? Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8),
                     child: Icon(
@@ -103,7 +101,7 @@ class AdaptiveNavigationRailFooter extends ConsumerWidget {
                   .toggleTrueBlack(),
           child: CupertinoListTile.notched(
             trailing: IgnorePointer(
-              child: size.isMediumScreen
+              child: screenSize.isMedium
                   ? null
                   : Switch.adaptive(
                       value: trueBlack,
@@ -115,7 +113,7 @@ class AdaptiveNavigationRailFooter extends ConsumerWidget {
                               .toggleTrueBlack(),
                     ),
             ),
-            leading: size.isLargeScreen || size.isExtraLargeScreen
+            leading: screenSize.isLarge
                 ? Icon(
                     CupertinoIcons.moon_stars,
                     color: themeMode.isLight
@@ -123,7 +121,7 @@ class AdaptiveNavigationRailFooter extends ConsumerWidget {
                         : context.colorScheme.onSurface,
                   )
                 : null,
-            title: size.isMediumScreen
+            title: screenSize.isMedium
                 ? Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8),
                     child: Icon(
@@ -146,7 +144,7 @@ class AdaptiveNavigationRailFooter extends ConsumerWidget {
           onTap: () async =>
               ref.read(appThemeModeProvider.notifier).toggleTheme(),
           child: CupertinoListTile.notched(
-            title: size.isLargeScreen || size.isExtraLargeScreen
+            title: screenSize.isLarge
                 ? Text(
                     themeMode.label(context),
                     style: context.textTheme.titleMedium,
@@ -155,9 +153,7 @@ class AdaptiveNavigationRailFooter extends ConsumerWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 8),
                     child: Icon(themeMode.icon),
                   ),
-            leading: size.isLargeScreen || size.isExtraLargeScreen
-                ? Icon(themeMode.icon)
-                : null,
+            leading: screenSize.isLarge ? Icon(themeMode.icon) : null,
           ),
         ),
       ],

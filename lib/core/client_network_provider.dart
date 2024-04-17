@@ -87,3 +87,29 @@ enum Endpoint {
         schools => '/schools',
       };
 }
+
+class AppNetworkError extends Error {
+  AppNetworkError(this.message);
+
+  AppNetworkError.fromNetworkClientException(Object e)
+      : message = messageFromDio(e);
+
+  final String message;
+
+  @override
+  String toString() => message;
+
+  static String messageFromDio(Object e) {
+    if (e is! DioException) return 'Unknown error 🤷';
+    return switch (e.type) {
+      DioExceptionType.badCertificate => 'Bad certificate 📜',
+      DioExceptionType.connectionTimeout => 'Connection timeout ⏰',
+      DioExceptionType.sendTimeout => 'Send timeout ⏰',
+      DioExceptionType.receiveTimeout => 'Receive timeout ⏰',
+      DioExceptionType.badResponse => 'Bad response 🤷',
+      DioExceptionType.cancel => 'Request cancelled 🚫',
+      DioExceptionType.connectionError => 'Connection error 🚫',
+      DioExceptionType.unknown => 'No internet connection 🌎',
+    };
+  }
+}

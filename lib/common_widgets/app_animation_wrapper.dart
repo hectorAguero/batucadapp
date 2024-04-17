@@ -24,9 +24,9 @@ class _AppAnimationWrapperState extends State<AppAnimationWrapper>
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 1),
+      duration: const Duration(milliseconds: 350),
     )..forward();
-    _animation = Tween<double>(begin: 0.5, end: 1).animate(
+    _animation = Tween<double>(begin: 0.6, end: 1).animate(
       CurvedAnimation(
         parent: _controller,
         curve: Curves.easeInOut,

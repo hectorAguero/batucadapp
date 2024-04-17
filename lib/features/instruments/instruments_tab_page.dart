@@ -4,10 +4,11 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sliver_tools/sliver_tools.dart';
 
+import '../../common_widgets/app_async_widget.dart';
 import '../../common_widgets/app_cupertino_sliver_navigation_bar.dart';
 import '../../common_widgets/app_web_padding.dart';
 import '../../extensions/app_localization_extension.dart';
-import '../../extensions/media_query_context_extension.dart';
+import '../../utils/screen_size.dart';
 import '../home/home_page_controller.dart';
 import 'instruments_tab_providers.dart';
 import 'widgets/instrument_list_tile.dart';
@@ -20,13 +21,11 @@ class InstrumentsTabPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    const maxCrossAxisExtent = largeScreen;
-    final instruments = ref.watch(instrumentsTabProvider);
     return Scaffold(
       body: CustomScrollView(
         slivers: [
           SliverCrossAxisConstrained(
-            maxCrossAxisExtent: maxCrossAxisExtent,
+            maxCrossAxisExtent: ScreenSize.lg.value,
             child: SliverMainAxisGroup(
               slivers: [
                 AppCupertinoSliverNavigationBar(
@@ -35,48 +34,35 @@ class InstrumentsTabPage extends ConsumerWidget {
                 const SliverPadding(padding: EdgeInsets.only(top: 8)),
                 SliverAnimatedSwitcher(
                   duration: const Duration(milliseconds: 300),
-                  child: switch (instruments) {
-                    AsyncLoading() => const SliverFillRemaining(
-                        key: ValueKey('loading'),
-                        child: Center(
-                          child: CircularProgressIndicator.adaptive(),
+                  child: AppAsyncSliver(
+                    asyncValue: ref.watch(instrumentsTabProvider),
+                    onErrorRetry: () => ref.invalidate(instrumentsTabProvider),
+                    child: (value) => WebPaddingSliver.only(
+                      right: true,
+                      sliver: SliverSafeArea(
+                        top: false,
+                        sliver: SliverAlignedGrid.extent(
+                          maxCrossAxisExtent: InstrumentListTile.cardMaxWidth,
+                          itemCount: value.length,
+                          itemBuilder: (context, index) {
+                            final instrument = value[index];
+                            return InstrumentListTile(
+                              title: instrument.translatedName,
+                              originalTitle: instrument.name,
+                              subtitle: instrument.translatedDescription,
+                              index: index,
+                              onTap: () {
+                                context.go(
+                                  '$path/details/${instrument.id}',
+                                );
+                              },
+                              imageUrl: instrument.imageUrl,
+                            );
+                          },
                         ),
                       ),
-                    AsyncError(:final error) => SliverFillRemaining(
-                        key: const ValueKey('error'),
-                        child: Center(
-                          child: Text(
-                            error.toString(),
-                            style: Theme.of(context).textTheme.titleLarge,
-                          ),
-                        ),
-                      ),
-                    AsyncData(:final value) => WebPaddingSliver.only(
-                        right: true,
-                        sliver: SliverSafeArea(
-                          top: false,
-                          sliver: SliverAlignedGrid.extent(
-                            maxCrossAxisExtent: InstrumentListTile.cardMaxWidth,
-                            itemCount: value.length,
-                            itemBuilder: (context, index) {
-                              final instrument = value[index];
-                              return InstrumentListTile(
-                                title: instrument.translatedName,
-                                originalTitle: instrument.name,
-                                subtitle: instrument.translatedDescription,
-                                index: index,
-                                onTap: () {
-                                  context.go(
-                                    '$path/details/${instrument.id}',
-                                  );
-                                },
-                                imageUrl: instrument.imageUrl,
-                              );
-                            },
-                          ),
-                        ),
-                      ),
-                  },
+                    ),
+                  ),
                 ),
               ],
             ),

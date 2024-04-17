@@ -1,14 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import '../extensions/is_ios_or_macos_platform_extension.dart';
 
+import '../extensions/is_ios_or_macos_platform_extension.dart';
 import '../extensions/js_bottom_padding_extension.dart'
     if (dart.library.js_interop) '../extensions/js_bottom_padding_extension_web.dart';
-
-import '../extensions/media_query_context_extension.dart';
 import '../extensions/theme_of_context_extension.dart';
 import '../features/home/widgets/settings_modal_sheet.dart';
+import '../utils/screen_size.dart';
 
 class AppCupertinoSliverNavigationBar extends StatelessWidget {
   const AppCupertinoSliverNavigationBar({
@@ -26,6 +25,7 @@ class AppCupertinoSliverNavigationBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenSize = context.screenSize;
     return CupertinoSliverNavigationBar(
       backgroundColor: Colors.transparent,
       largeTitle: Text(
@@ -47,7 +47,7 @@ class AppCupertinoSliverNavigationBar extends StatelessWidget {
               start: 16,
             )
           : const EdgeInsetsDirectional.symmetric(horizontal: 16),
-      trailing: context.querySize.isSmallScreen
+      trailing: screenSize.isSmall
           ? CupertinoButton(
               padding: EdgeInsets.zero,
               borderRadius: BorderRadius.zero,

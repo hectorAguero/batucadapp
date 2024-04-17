@@ -28,26 +28,34 @@ class ParadesRepoImpl implements ParadesRepo {
   Future<ImmutableList<Parade>> getParades({
     ParadeQueryParams? queryParams,
   }) async {
-    final response =
-        await ref.watch(clientNetworkProvider).value!.get<Iterable<dynamic>>(
-      Endpoint.parades.path,
-      queryParameters: {
-        if (queryParams?.page != null) 'page': queryParams!.page,
-        if (queryParams?.pageSize != null) 'pageSize': queryParams!.pageSize,
-      },
-    );
-    final data = response.data!.cast<Map<String, dynamic>>();
-    return ImmutableList([
-      for (final item in data) Parade.fromMap(item),
-    ]);
+    try {
+      final response =
+          await ref.watch(clientNetworkProvider).value!.get<Iterable<dynamic>>(
+        Endpoint.parades.path,
+        queryParameters: {
+          if (queryParams?.page != null) 'page': queryParams!.page,
+          if (queryParams?.pageSize != null) 'pageSize': queryParams!.pageSize,
+        },
+      );
+      final data = response.data!.cast<Map<String, dynamic>>();
+      return ImmutableList([
+        for (final item in data) Parade.fromMap(item),
+      ]);
+    } catch (e) {
+      throw AppNetworkError.fromNetworkClientException(e);
+    }
   }
 
   @override
   Future<Parade> getParade(int id, {ParadeQueryParams? queryParams}) async {
-    final response = await ref
-        .watch(clientNetworkProvider)
-        .value!
-        .get<Map<String, dynamic>>('${Endpoint.parades.pathId}/$id');
-    return Parade.fromMap(response.data!);
+    try {
+      final response = await ref
+          .watch(clientNetworkProvider)
+          .value!
+          .get<Map<String, dynamic>>('${Endpoint.parades.pathId}/$id');
+      return Parade.fromMap(response.data!);
+    } catch (e) {
+      throw AppNetworkError.fromNetworkClientException(e);
+    }
   }
 }

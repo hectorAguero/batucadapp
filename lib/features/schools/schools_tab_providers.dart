@@ -92,7 +92,7 @@ class FavoriteSchools extends _$FavoriteSchools {
 class SchoolDivisions extends _$SchoolDivisions {
   @override
   Map<SchoolDivision, bool> build() {
-    final schools = ref.watch(schoolsProvider).value;
+    final schools = ref.watch(schoolsProvider).valueOrNull;
     final divisions = schools?.map((e) => e.currentDivision).toSet() ?? {};
     return <SchoolDivision, bool>{
       for (final division in divisions) division: true,
@@ -160,12 +160,12 @@ class ShowOnlyFavoriteSchools extends _$ShowOnlyFavoriteSchools {
 final filteredSchoolsProvider =
     Provider.autoDispose<ImmutableList<School>>((ref) {
   final filter = ref.watch(schoolDivisionsProvider);
-  final schools = ref.watch(schoolsProvider);
+  final schools = ref.watch(schoolsProvider).valueOrNull;
   final favoritesIds = ref.watch(favoriteSchoolsProvider);
   final onlyFavorites = ref.watch(showOnlyFavoriteSchoolsProvider);
-  if (schools.value == null) return ImmutableList(const []);
+  if (schools == null) return ImmutableList(const []);
   return ImmutableList([
-    for (final school in schools.value!)
+    for (final school in schools)
       if (filter[school.currentDivision]! &&
           (!onlyFavorites || favoritesIds.contains('${school.id}')))
         school,

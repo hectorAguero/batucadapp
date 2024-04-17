@@ -6,7 +6,7 @@ import '../../../common_widgets/app_cupertino_button.dart';
 import '../../../common_widgets/app_cupertino_sliver_navigation_bar.dart';
 import '../../../extensions/app_localization_extension.dart';
 import '../../../extensions/hardcoded_extension.dart';
-import '../../../extensions/media_query_context_extension.dart';
+import '../../../utils/screen_size.dart';
 
 class SchoolsTabNavBar extends StatelessWidget {
   const SchoolsTabNavBar({
@@ -16,11 +16,11 @@ class SchoolsTabNavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverCrossAxisConstrained(
-      maxCrossAxisExtent: largeScreen,
+      maxCrossAxisExtent: ScreenSize.lg.value,
       child: AppCupertinoSliverNavigationBar(
         largeTitle: context.loc.schoolsTitle,
         leading: PullDownButton(
-          menuOffset: context.querySize.currentRailWidth,
+          // menuOffset: context.screenSize.currentRailWidth,
           itemBuilder: (context) => [
             // TODO(hectorAguero): Should get this from the Data
             PullDownMenuItem.selectable(

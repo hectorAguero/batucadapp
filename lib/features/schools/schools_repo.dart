@@ -32,19 +32,23 @@ class SchoolsRepoImpls implements SchoolsRepo {
     required String sort,
     required String search,
   }) async {
-    final networkClient = ref.watch(clientNetworkProvider).requireValue;
-    final response = await networkClient.get<Iterable<dynamic>>(
-      search.isEmpty ? Endpoint.schools.path : Endpoint.schools.pathSearch,
-      queryParameters: {
-        'page': page,
-        'pageSize': pageSize,
-        if (search.isNotEmpty) 'search': search,
-        // if (sort.isNotEmpty) 'sort': sort,
-      },
-    );
-    final data = response.data!.cast<Map<String, dynamic>>();
-    return ImmutableList([
-      for (final item in data) School.fromMap(item),
-    ]);
+    try {
+      final networkClient = ref.watch(clientNetworkProvider).requireValue;
+      final response = await networkClient.get<Iterable<dynamic>>(
+        search.isEmpty ? Endpoint.schools.path : Endpoint.schools.pathSearch,
+        queryParameters: {
+          'page': page,
+          'pageSize': pageSize,
+          if (search.isNotEmpty) 'search': search,
+          // if (sort.isNotEmpty) 'sort': sort,
+        },
+      );
+      final data = response.data!.cast<Map<String, dynamic>>();
+      return ImmutableList([
+        for (final item in data) School.fromMap(item),
+      ]);
+    } catch (e) {
+      throw AppNetworkError.fromNetworkClientException(e);
+    }
   }
 }

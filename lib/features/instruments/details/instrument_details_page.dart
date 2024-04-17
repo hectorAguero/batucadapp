@@ -6,7 +6,7 @@ import '../../../common_widgets/app_back_button.dart';
 import '../../../common_widgets/app_cupertino_sliver_navigation_bar.dart';
 import '../../../common_widgets/app_web_padding.dart';
 import '../../../extensions/app_localization_extension.dart';
-import '../../../extensions/media_query_context_extension.dart';
+import '../../../utils/screen_size.dart';
 import 'instrument_details_providers.dart';
 import 'widgets/instrument_details_summary.dart';
 import 'widgets/instrument_header_images.dart';
@@ -32,8 +32,8 @@ class _InstrumentDetailsPageState extends ConsumerState<InstrumentDetailsPage> {
   @override
   Widget build(BuildContext context) {
     final value = ref.watch(instrumentDetailsProvider(widget.id));
+    final screenConstraint = ScreenSize.lg.value;
     const imageHeight = 80.0;
-    const screenConstraint = largeScreen;
     return DefaultTabController(
       length: InstrumentDetailsTab.values.length,
       child: Scaffold(
@@ -80,7 +80,7 @@ class _InstrumentDetailsPageState extends ConsumerState<InstrumentDetailsPage> {
                   WebPaddingSliver.only(
                     right: true,
                     sliver: SliverCrossAxisConstrained(
-                      maxCrossAxisExtent: smallScreen,
+                      maxCrossAxisExtent: ScreenSize.md.value,
                       child: SliverPadding(
                         padding: const EdgeInsets.symmetric(
                           horizontal: 24,
