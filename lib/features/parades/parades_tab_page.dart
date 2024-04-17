@@ -70,9 +70,12 @@ class _ParadesTabPageState extends ConsumerState<ParadesTabPage> {
               largeTitle: context.loc.paradesTitle,
             ),
           ),
-          AppAsyncSliver(
+          AppAsyncSliverWidget(
             asyncValue: ref.watch(paradesProvider),
-            onErrorRetry: () => ref.invalidate(paradesProvider),
+            onErrorRetry: () async =>
+                await Future.delayed(const Duration(milliseconds: 500), () {
+              ref.invalidate(paradesProvider);
+            }),
             child: (value) => SliverCrossAxisConstrained(
               maxCrossAxisExtent: ScreenSize.md.value,
               child: SuperSliverList.builder(

@@ -21,7 +21,7 @@ class SchoolsTabBody extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return SliverSafeArea(
       top: false,
-      sliver: AppAsyncSliver(
+      sliver: AppAsyncSliverWidget(
         asyncValue: ref.watch(schoolsProvider),
         onErrorRetry: () => ref.invalidate(schoolsProvider),
         child: (value) => Consumer(

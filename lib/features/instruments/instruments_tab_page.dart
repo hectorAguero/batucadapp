@@ -34,7 +34,7 @@ class InstrumentsTabPage extends ConsumerWidget {
                 const SliverPadding(padding: EdgeInsets.only(top: 8)),
                 SliverAnimatedSwitcher(
                   duration: const Duration(milliseconds: 300),
-                  child: AppAsyncSliver(
+                  child: AppAsyncSliverWidget(
                     asyncValue: ref.watch(instrumentsTabProvider),
                     onErrorRetry: () => ref.invalidate(instrumentsTabProvider),
                     child: (value) => WebPaddingSliver.only(

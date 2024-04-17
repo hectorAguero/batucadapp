@@ -13,7 +13,9 @@ class Parades extends _$Parades {
 
   @override
   FutureOr<ImmutableList<Parade>> build() async {
-    return getParades();
+    final parades = await getParades();
+
+    return parades;
   }
 
   Future<bool?> fetchNextPage({int pageSize = _pageSize}) async {

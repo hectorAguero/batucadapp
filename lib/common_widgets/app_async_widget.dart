@@ -5,6 +5,7 @@ import 'package:sliver_tools/sliver_tools.dart';
 
 import '../extensions/app_localization_extension.dart';
 import 'app_cupertino_button.dart';
+import 'app_infinite_rotation_animation.dart';
 
 class AppAsyncWidget<T> extends StatelessWidget {
   const AppAsyncWidget({
@@ -53,8 +54,8 @@ class AppAsyncWidget<T> extends StatelessWidget {
   }
 }
 
-class AppAsyncSliver<T> extends StatelessWidget {
-  const AppAsyncSliver({
+class AppAsyncSliverWidget<T> extends StatefulWidget {
+  const AppAsyncSliverWidget({
     required this.asyncValue,
     required this.child,
     this.onErrorRetry,
@@ -66,11 +67,30 @@ class AppAsyncSliver<T> extends StatelessWidget {
   final Widget Function(T) child;
 
   @override
+  State<AppAsyncSliverWidget<T>> createState() =>
+      _AppAsyncSliverWidgetState<T>();
+}
+
+class _AppAsyncSliverWidgetState<T> extends State<AppAsyncSliverWidget<T>> {
+  bool isLoading = false;
+
+  @override
   Widget build(BuildContext context) {
+    final isRefreshing = widget.asyncValue.isRefreshing;
     return SliverAnimatedSwitcher(
       duration: kThemeAnimationDuration,
-      child: switch (asyncValue) {
-        AsyncData(:final value) => child(value),
+      child: switch (widget.asyncValue) {
+        AsyncData(:final value) => widget.child(value),
+        AsyncLoading() => const SliverFillRemaining(
+            key: ValueKey('loading'),
+            child: Center(
+              child: SizedBox(
+                width: 32,
+                height: 32,
+                child: CircularProgressIndicator.adaptive(),
+              ),
+            ),
+          ),
         AsyncError(:final error) => SliverFillRemaining(
             key: const ValueKey('error'),
             child: Padding(
@@ -84,13 +104,17 @@ class AppAsyncSliver<T> extends StatelessWidget {
                       style: Theme.of(context).textTheme.titleLarge,
                       textAlign: TextAlign.center,
                     ),
-                    if (onErrorRetry != null)
+                    if (widget.onErrorRetry != null)
                       Padding(
                         padding: const EdgeInsets.only(top: 16),
                         child: AppCupertinoButton.tinted(
                           color: Theme.of(context).colorScheme.primary,
-                          onPressed: onErrorRetry,
-                          icon: const Icon(Icons.refresh),
+                          onPressed:
+                              !isRefreshing && !isLoading ? errorRetry : null,
+                          icon: AppInfiniteRotationAnimation(
+                            isLoading: isRefreshing || isLoading,
+                            child: const Icon(Icons.refresh),
+                          ),
                           child: Text(context.loc.retry),
                         ),
                       ),
@@ -99,17 +123,14 @@ class AppAsyncSliver<T> extends StatelessWidget {
               ),
             ),
           ),
-        AsyncLoading() => const SliverFillRemaining(
-            key: ValueKey('loading'),
-            child: Center(
-              child: SizedBox(
-                width: 32,
-                height: 32,
-                child: CircularProgressIndicator.adaptive(),
-              ),
-            ),
-          ),
       },
     );
+  }
+
+  Future<void> errorRetry() async {
+    setState(() => isLoading = true);
+    widget.onErrorRetry!();
+    await Future<void>.delayed(const Duration(milliseconds: 700));
+    setState(() => isLoading = false);
   }
 }
