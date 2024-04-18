@@ -73,7 +73,7 @@ class _ParadesTabPageState extends ConsumerState<ParadesTabPage> {
           AppAsyncSliverWidget(
             asyncValue: ref.watch(paradesProvider),
             onErrorRetry: () async =>
-                await Future.delayed(const Duration(milliseconds: 500), () {
+                Future.delayed(const Duration(milliseconds: 500), () {
               ref.invalidate(paradesProvider);
             }),
             child: (value) => SliverCrossAxisConstrained(

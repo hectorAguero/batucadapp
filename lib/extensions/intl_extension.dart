@@ -38,11 +38,14 @@ extension OrdinalExtension on int {
     final ordinal = switch (context.loc.localeName) {
       ('ja') => '第$formatNumberToJapanese',
       ('es' || 'pt') => '$thisº',
-      ('en') => switch (this % 10) {
-          1 => '${this}st',
-          2 => '${this}nd',
-          3 => '${this}rd',
-          _ => '${this}th'
+      ('en') => switch (this % 100) {
+          11 || 12 || 13 => '${this}th',
+          _ => switch (this % 10) {
+              1 => '${this}st',
+              2 => '${this}nd',
+              3 => '${this}rd',
+              _ => '${this}th',
+            },
         },
       (_) => '$this',
     };

@@ -35,8 +35,8 @@ class _SchoolDetailsPageState extends ConsumerState<SchoolDetailsPage> {
   @override
   Widget build(BuildContext context) {
     final school = ref.watch(selectedSchoolProvider(widget.id));
-    return Column(
-      mainAxisSize: MainAxisSize.min,
+    return ListView(
+      shrinkWrap: true,
       children: [
         DecoratedBox(
           decoration: BoxDecoration(

@@ -27,7 +27,7 @@ class SettingsThemeSection extends ConsumerWidget {
       children: [
         CupertinoListTile(
           backgroundColor: context.colorScheme.surface,
-          trailing: CupertinoSegmentedControl<ThemeMode>(
+          title: CupertinoSegmentedControl<ThemeMode>(
             padding: EdgeInsets.zero,
             // This represents a currently selected segmented control.
             groupValue: ref.watch(appThemeModeProvider),
@@ -50,7 +50,6 @@ class SettingsThemeSection extends ConsumerWidget {
               ),
             },
           ),
-          title: Text(context.loc.switchTheme),
         ),
         CupertinoListTile(
           backgroundColor: context.colorScheme.surface,

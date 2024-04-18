@@ -63,6 +63,10 @@ class _MainAppState extends ConsumerState<MainApp> {
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
+      builder: (context, child) => MediaQuery.withClampedTextScaling(
+        maxScaleFactor: 2,
+        child: child!,
+      ),
       supportedLocales: AppLocalizations.supportedLocales,
       locale: language?.locale,
     );

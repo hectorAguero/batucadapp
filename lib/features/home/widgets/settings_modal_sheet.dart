@@ -97,7 +97,10 @@ class SettingsLanguageSection extends ConsumerWidget {
                     isSameAsPlatform: language.isSameAsPlatform,
                   );
             },
-            title: Text(language.nativeName),
+            title: Text(
+              language.nativeName,
+              maxLines: 2,
+            ),
             trailing: language.isSameAsPlatform
                 ? const Icon(
                     CupertinoIcons.device_phone_portrait,

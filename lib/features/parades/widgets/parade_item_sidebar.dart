@@ -34,51 +34,56 @@ class ParadeItemSideBar extends StatelessWidget {
           ],
         ),
       ),
-      child: Column(
-        children: [
-          Text.rich(
-            TextSpan(
-              children: [
-                TextSpan(
-                  text: '${parade.getPerformanceIcon}\n',
-                  style: const TextStyle(fontSize: 30),
-                ),
-                if (parade.points > 0)
-                  TextSpan(
-                    text: parade.points.toString(),
-                    style: context.textTheme.labelMedium,
-                  ),
-              ],
-            ),
-            style: const TextStyle(fontSize: 24),
-            textAlign: TextAlign.center,
-          ),
-          const Spacer(),
-          RotatedBox(
-            quarterTurns: 3,
-            child: Text.rich(
-              maxLines: 1,
+      child: MediaQuery.withClampedTextScaling(
+        maxScaleFactor: 1.1,
+        child: Column(
+          children: [
+            Text.rich(
               TextSpan(
                 children: [
                   TextSpan(
-                    style: context.textTheme.headlineSmall!.copyWith(
-                      color: context.colorScheme.onSurface,
-                      fontWeight: FontWeight.w600,
-                    ),
-                    children: [
-                      if (parade.placing > 0)
-                        TextSpan(
-                          text: '${parade.placing.intlOrdinal(context)}'
-                              ' ${context.loc.schoolPerformancePlace}',
-                        ),
-                    ],
+                    text: '${parade.getPerformanceIcon}\n',
+                    style: const TextStyle(fontSize: 30),
                   ),
+                  if (parade.points > 0)
+                    TextSpan(
+                      text: parade.points.toString(),
+                      style: context.textTheme.labelMedium,
+                    ),
                 ],
               ),
+              style: const TextStyle(fontSize: 24),
+              maxLines: 2,
+              textAlign: TextAlign.center,
             ),
-          ),
-          const SizedBox(height: 8),
-        ],
+            Expanded(
+              child: RotatedBox(
+                quarterTurns: 3,
+                child: Text.rich(
+                  maxLines: 1,
+                  TextSpan(
+                    children: [
+                      TextSpan(
+                        style: context.textTheme.headlineSmall!.copyWith(
+                          color: context.colorScheme.onSurface,
+                          fontWeight: FontWeight.w600,
+                        ),
+                        children: [
+                          if (parade.placing > 0)
+                            TextSpan(
+                              text: '${parade.placing.intlOrdinal(context)}'
+                                  ' ${context.loc.schoolPerformancePlace}',
+                            ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 8),
+          ],
+        ),
       ),
     );
   }

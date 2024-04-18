@@ -2,6 +2,7 @@ import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import '../common_widgets/cupertino_sheet.dart';
 import '../features/home/home_page.dart';
 import '../features/home/home_page_controller.dart';
 import '../features/instruments/details/instrument_details_page.dart';
@@ -113,13 +114,22 @@ GoRouter goRouter(GoRouterRef ref) {
             routes: [
               GoRoute(
                 path: SchoolsTabPage.path,
-                builder: (_, __) => PrimaryScrollController(
-                  controller: controllers[SchoolsTabPage.tab.name]!,
-                  child: const SchoolsTabPage(),
-                ),
+                builder: (context, state) {
+                  return PrimaryScrollController(
+                    controller: controllers[SchoolsTabPage.tab.name]!,
+                    child: const SchoolsTabPage(),
+                  );
+                },
                 routes: [
                   GoRoute(
                     path: SchoolDetailsPage.path,
+                    pageBuilder: (context, state) {
+                      return AppCupertinoSheetPage(
+                        child: SchoolDetailsPage(
+                          id: int.parse(state.pathParameters['id']!),
+                        ),
+                      );
+                    },
                     onExit: (context) {
                       Future.microtask(
                         () => ref
@@ -127,13 +137,6 @@ GoRouter goRouter(GoRouterRef ref) {
                             .set(SchoolsTabPage.tab, top: true),
                       );
                       return Future.value(true);
-                    },
-                    pageBuilder: (context, state) {
-                      return SheetPage(
-                        child: SchoolDetailsPage(
-                          id: int.parse(state.pathParameters['id']!),
-                        ),
-                      );
                     },
                   ),
                 ],
