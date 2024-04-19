@@ -1,7 +1,7 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../../utils/app_loggers.dart';
 import '../../utils/immutable_list.dart';
-import '../../utils/main_logger.dart';
 import 'parade.dart';
 import 'parades_repo.dart';
 

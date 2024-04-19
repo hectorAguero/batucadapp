@@ -2,7 +2,7 @@ import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../extensions/theme_of_context_extension.dart';
+import '../core/extensions/theme_of_context_extension.dart';
 
 ///extended CupertinoButton to pass null values in the minimumSize and padding
 

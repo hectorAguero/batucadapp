@@ -5,8 +5,8 @@ import 'package:sliver_tools/sliver_tools.dart';
 
 import '../../../common_widgets/app_cupertino_button.dart';
 import '../../../common_widgets/app_web_padding.dart';
-import '../../../extensions/app_localization_extension.dart';
-import '../../../extensions/theme_of_context_extension.dart';
+import '../../../core/extensions/app_localization_extension.dart';
+import '../../../core/extensions/theme_of_context_extension.dart';
 import '../../../utils/screen_size.dart';
 import '../../home/widgets/adaptive_navigation_rail.dart';
 import '../school.dart';

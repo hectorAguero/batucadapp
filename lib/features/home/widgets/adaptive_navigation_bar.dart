@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../../common_widgets/app_web_padding.dart';
-import '../../../extensions/is_ios_or_macos_platform_extension.dart';
-import '../../../extensions/theme_of_context_extension.dart';
+import '../../../core/extensions/is_ios_or_macos_platform_extension.dart';
+import '../../../core/extensions/theme_of_context_extension.dart';
 import '../../../utils/immutable_list.dart';
 import '../home_page_controller.dart';
 

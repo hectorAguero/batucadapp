@@ -5,8 +5,8 @@ import 'package:sliver_tools/sliver_tools.dart';
 
 import '../../../common_widgets/app_animation_wrapper.dart';
 import '../../../common_widgets/app_async_widget.dart';
-import '../../../extensions/js_bottom_padding_extension.dart'
-    if (dart.library.js_interop) '../../../extensions/js_bottom_padding_extension_web.dart';
+import '../../../core/extensions/js_bottom_padding_extension.dart'
+    if (dart.library.js_interop) '../../../core/extensions/js_bottom_padding_extension_web.dart';
 import '../../../utils/immutable_list.dart';
 import '../../../utils/screen_size.dart';
 import '../school.dart';

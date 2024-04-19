@@ -6,7 +6,7 @@ part of 'schools_tab_providers.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$schoolsHash() => r'086f0ba5dcd4a1dd3d0df75ac87caf1005817b44';
+String _$schoolsHash() => r'4aba4f933e856cc38139fc9d9b77abbb5496fbeb';
 
 /// See also [Schools].
 @ProviderFor(Schools)
@@ -21,7 +21,7 @@ final schoolsProvider =
 );
 
 typedef _$Schools = AutoDisposeAsyncNotifier<ImmutableList<School>>;
-String _$favoriteSchoolsHash() => r'2734a25c2df1d78c93a6853617a63d8f0d28f1a3';
+String _$favoriteSchoolsHash() => r'8acf3025d87137d207d0871badbc5b455f90d8c6';
 
 /// See also [FavoriteSchools].
 @ProviderFor(FavoriteSchools)
@@ -37,7 +37,7 @@ final favoriteSchoolsProvider = AutoDisposeNotifierProvider<FavoriteSchools,
 );
 
 typedef _$FavoriteSchools = AutoDisposeNotifier<ImmutableList<String>>;
-String _$schoolDivisionsHash() => r'790ca8cc34132ada189c3bdfaa8f3e68046700f0';
+String _$schoolDivisionsHash() => r'fd0bd47cb45eff1499fdb954f54778f2b22f4347';
 
 /// See also [SchoolDivisions].
 @ProviderFor(SchoolDivisions)

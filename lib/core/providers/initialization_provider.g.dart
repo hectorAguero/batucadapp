@@ -1,12 +1,12 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'initialization_page.dart';
+part of 'initialization_provider.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$initializationHash() => r'4d1c86ca1ab823a045818e9ecd8f37380d3fbbfe';
+String _$initializationHash() => r'c3e3a01b85067c9aeb106e4564cd04295fd6642a';
 
 /// See also [initialization].
 @ProviderFor(initialization)

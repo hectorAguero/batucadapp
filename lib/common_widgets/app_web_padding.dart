@@ -2,8 +2,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import '../extensions/js_bottom_padding_extension.dart'
-    if (dart.library.js_interop) '../extensions/js_bottom_padding_extension_web.dart';
+import '../core/extensions/js_bottom_padding_extension.dart'
+    if (dart.library.js_interop) '../core/extensions/js_bottom_padding_extension.dart';
 
 /// Widget that calls the calls to JS to get the insets of web
 /// https://github.com/flutter/flutter/issues/84833#issuecomment-1679737846

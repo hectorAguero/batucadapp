@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../extensions/theme_of_context_extension.dart';
+import '../../core/extensions/theme_of_context_extension.dart';
 import '../schools/school.dart';
 import 'parade.dart';
 

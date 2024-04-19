@@ -2,10 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import '../extensions/is_ios_or_macos_platform_extension.dart';
-import '../extensions/js_bottom_padding_extension.dart'
-    if (dart.library.js_interop) '../extensions/js_bottom_padding_extension_web.dart';
-import '../extensions/theme_of_context_extension.dart';
+import '../core/extensions/is_ios_or_macos_platform_extension.dart';
+import '../core/extensions/js_bottom_padding_extension.dart'
+    if (dart.library.js_interop) '../core/extensions/js_bottom_padding_extension_web.dart';
+import '../core/extensions/theme_of_context_extension.dart';
 import '../features/home/widgets/settings_modal_sheet.dart';
 import '../utils/screen_size.dart';
 

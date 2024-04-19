@@ -5,7 +5,7 @@ import 'package:sliver_tools/sliver_tools.dart';
 import '../../../common_widgets/app_back_button.dart';
 import '../../../common_widgets/app_cupertino_sliver_navigation_bar.dart';
 import '../../../common_widgets/app_web_padding.dart';
-import '../../../extensions/app_localization_extension.dart';
+import '../../../core/extensions/app_localization_extension.dart';
 import '../../../utils/screen_size.dart';
 import 'instrument_details_providers.dart';
 import 'widgets/instrument_details_summary.dart';

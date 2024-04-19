@@ -1,7 +1,7 @@
 import 'package:dart_mappable/dart_mappable.dart';
 import 'package:flutter/material.dart';
 
-import '../../extensions/app_localization_extension.dart';
+import '../../core/extensions/app_localization_extension.dart';
 import '../../utils/immutable_list.dart';
 import 'school_color_hook.dart';
 

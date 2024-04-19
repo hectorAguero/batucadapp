@@ -1,6 +1,6 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../../core/client_network_provider.dart';
+import '../../core/providers/client_network_provider.dart';
 import '../../utils/immutable_list.dart';
 import 'school.dart';
 

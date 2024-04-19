@@ -6,13 +6,13 @@ import 'package:dio_cache_interceptor_hive_store/dio_cache_interceptor_hive_stor
 import 'package:path_provider/path_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../localization/language.dart';
-import '../localization/language_app_provider.dart';
-import '../utils/main_logger.dart';
-import 'get_native_adapter.dart'
-    if (dart.library.js_interop) 'get_native_adapter_web.dart';
+import '../../localization/language.dart';
+import '../../localization/language_app_provider.dart';
+import '../../utils/app_loggers.dart';
+import 'client_network/network_client_adapter.dart'
+    if (dart.library.js_interop) 'client_network/network_client_adapter_web.dart';
 
-part 'client_network_provider.g.dart';
+part '../../utils/client_network_provider.g.dart';
 
 const _baseUrlPath = 'https://samba.deno.dev';
 const _connectTimeout = Duration(seconds: 2);

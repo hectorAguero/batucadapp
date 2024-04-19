@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../common_widgets/cupertino_sheet.dart';
+import '../core/providers/initialization_provider.dart';
 import '../features/home/home_page.dart';
 import '../features/home/home_page_controller.dart';
 import '../features/instruments/details/instrument_details_page.dart';
@@ -10,15 +11,15 @@ import '../features/instruments/instruments_tab_page.dart';
 import '../features/parades/parades_tab_page.dart';
 import '../features/schools/details/school_details_page.dart';
 import '../features/schools/schools_tab_page.dart';
-import '../initialization_page.dart';
+import '../initialization.dart';
 
-part 'go_router.g.dart';
+part 'app_router.g.dart';
 
 /// Required by StatefulShellRoute in GoRouter
 final _rootNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'root');
 
 @riverpod
-GoRouter goRouter(GoRouterRef ref) {
+GoRouter appRouter(AppRouterRef ref) {
   final controllers = IMap(
     {for (final tab in HomeTab.values) tab.name: ScrollController()},
   );
@@ -157,26 +158,4 @@ void _scrollTabToTheTop(ScrollController controller) {
       curve: Curves.easeInOut,
     );
   }
-}
-
-class SheetPage extends Page<void> {
-  const SheetPage({
-    required this.child,
-  }) : super(key: const ValueKey('SheetPage'));
-
-  final Widget child;
-
-  static const String routeName = 'Modal Sheet';
-
-  @override
-  Route<void> createRoute(BuildContext context) {
-    return ModalBottomSheetRoute<void>(
-      settings: this,
-      builder: (context) => child,
-      isScrollControlled: true,
-    );
-  }
-
-  @override
-  String get name => routeName;
 }

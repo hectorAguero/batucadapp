@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../common_widgets/app_cupertino_button.dart';
-import '../../../extensions/app_localization_extension.dart';
-import '../../../extensions/theme_of_context_extension.dart';
+import '../../../core/extensions/app_localization_extension.dart';
+import '../../../core/extensions/theme_of_context_extension.dart';
 import '../../../localization/language.dart';
 import '../../../localization/language_app_provider.dart';
 import 'settings_theme_section.dart';

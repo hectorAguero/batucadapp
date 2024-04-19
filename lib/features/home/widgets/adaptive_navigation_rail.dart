@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../extensions/theme_of_context_extension.dart';
+import '../../../core/extensions/theme_of_context_extension.dart';
 import '../../../utils/immutable_list.dart';
 import '../../../utils/screen_size.dart';
 import '../home_page_controller.dart';

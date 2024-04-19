@@ -1,8 +1,8 @@
 import 'package:dart_mappable/dart_mappable.dart';
 import 'package:flutter/material.dart';
 
+import '../../utils/app_loggers.dart';
 import '../../utils/immutable_list.dart';
-import '../../utils/main_logger.dart';
 
 class ColorHook extends MappingHook {
   const ColorHook();

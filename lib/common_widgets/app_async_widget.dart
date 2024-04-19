@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sliver_tools/sliver_tools.dart';
 
-import '../extensions/app_localization_extension.dart';
+import '../core/extensions/app_localization_extension.dart';
 import 'app_cupertino_button.dart';
 import 'app_infinite_rotation_animation.dart';
 

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../common_widgets/app_fade_in_image.dart';
-import '../../../extensions/theme_of_context_extension.dart';
+import '../../../core/extensions/theme_of_context_extension.dart';
 
 typedef ImageUrl = String;
 

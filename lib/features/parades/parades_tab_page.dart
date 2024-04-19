@@ -7,7 +7,7 @@ import '../../common_widgets/app_animation_wrapper.dart';
 import '../../common_widgets/app_async_widget.dart';
 import '../../common_widgets/app_cupertino_sliver_navigation_bar.dart';
 import '../../common_widgets/app_loading_indicator.dart';
-import '../../extensions/app_localization_extension.dart';
+import '../../core/extensions/app_localization_extension.dart';
 import '../../utils/debouncer.dart';
 import '../../utils/screen_size.dart';
 import '../home/home_page_controller.dart';

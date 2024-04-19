@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pull_down_button/pull_down_button.dart';
 
-import '../../../extensions/app_localization_extension.dart';
-import '../../../extensions/theme_of_context_extension.dart';
+import '../../../core/extensions/app_localization_extension.dart';
+import '../../../core/extensions/theme_of_context_extension.dart';
+import '../../../core/theme/theme_provider.dart';
 import '../../../localization/language.dart';
 import '../../../localization/language_app_provider.dart';
-import '../../../theme/theme_provider.dart';
 import '../../../utils/screen_size.dart';
 import 'settings_modal_sheet.dart';
 

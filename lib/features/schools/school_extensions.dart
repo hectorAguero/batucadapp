@@ -2,8 +2,8 @@
 library;
 
 import 'package:flutter/material.dart';
-import '../../extensions/app_localization_extension.dart';
-import '../../extensions/string_extension.dart';
+import '../../core/extensions/app_localization_extension.dart';
+import '../../core/extensions/string_extension.dart';
 import 'school.dart';
 
 extension SchoolDivisionExtension on SchoolDivision {

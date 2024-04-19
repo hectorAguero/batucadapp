@@ -1,8 +1,8 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../../core/shared_preferences_provider.dart';
+import '../../core/providers/prefs_provider.dart';
+import '../../utils/app_loggers.dart';
 import '../../utils/immutable_list.dart';
-import '../../utils/main_logger.dart';
 import 'school.dart';
 import 'schools_repo.dart';
 import 'widgets/school_card.dart';
@@ -66,12 +66,12 @@ class Schools extends _$Schools {
 class FavoriteSchools extends _$FavoriteSchools {
   @override
   ImmutableList<String> build() {
-    final prefs = ref.watch(sharedPreferencesProvider).value!;
+    final prefs = ref.watch(prefsProvider).value!;
     return ImmutableList(prefs.getStringList('favoriteSchools') ?? []);
   }
 
   void toggleFavorite(SchoolId id) {
-    final prefs = ref.watch(sharedPreferencesProvider).value!;
+    final prefs = ref.watch(prefsProvider).value!;
     final favoriteSchools = prefs.getStringList('favoriteSchools') ?? [];
     if (favoriteSchools.contains('$id')) {
       favoriteSchools.remove('$id');

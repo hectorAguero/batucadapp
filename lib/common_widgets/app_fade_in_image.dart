@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:transparent_image/transparent_image.dart';
 
-import '../extensions/app_localization_extension.dart';
-import '../extensions/theme_of_context_extension.dart';
-import '../utils/main_logger.dart';
+import '../core/extensions/app_localization_extension.dart';
+import '../core/extensions/theme_of_context_extension.dart';
+import '../utils/app_loggers.dart';
 
 typedef ImageErrorWidgetBuilder = Widget Function(
   BuildContext context,

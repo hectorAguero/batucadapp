@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../extensions/app_localization_extension.dart';
-import '../../../extensions/intl_extension.dart';
-import '../../../extensions/string_extension.dart';
-import '../../../extensions/theme_of_context_extension.dart';
+import '../../../core/extensions/app_localization_extension.dart';
+import '../../../core/extensions/intl_extension.dart';
+import '../../../core/extensions/string_extension.dart';
+import '../../../core/extensions/theme_of_context_extension.dart';
 import '../../../utils/screen_size.dart';
 import '../school.dart';
 import '../school_extensions.dart';

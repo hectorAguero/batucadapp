@@ -5,8 +5,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../common_widgets/app_animated_linear_gradient.dart';
 import '../../../common_widgets/app_fade_in_image.dart';
-import '../../../extensions/app_localization_extension.dart';
-import '../../../extensions/theme_of_context_extension.dart';
+import '../../../core/extensions/app_localization_extension.dart';
+import '../../../core/extensions/theme_of_context_extension.dart';
 import '../../schools/school_extensions.dart';
 import '../parade.dart';
 import '../parade_extension.dart';

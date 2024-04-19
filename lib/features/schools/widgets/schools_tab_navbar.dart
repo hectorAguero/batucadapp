@@ -4,8 +4,8 @@ import 'package:sliver_tools/sliver_tools.dart';
 
 import '../../../common_widgets/app_cupertino_button.dart';
 import '../../../common_widgets/app_cupertino_sliver_navigation_bar.dart';
-import '../../../extensions/app_localization_extension.dart';
-import '../../../extensions/hardcoded_extension.dart';
+import '../../../core/extensions/app_localization_extension.dart';
+import '../../../core/extensions/hardcoded_extension.dart';
 import '../../../utils/screen_size.dart';
 
 class SchoolsTabNavBar extends StatelessWidget {

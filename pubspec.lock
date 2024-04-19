@@ -677,6 +677,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.5"
+  mocktail:
+    dependency: "direct dev"
+    description:
+      name: mocktail
+      sha256: c4b5007d91ca4f67256e720cb1b6d704e79a510183a12fa551021f652577dce6
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.3"
   native_dio_adapter:
     dependency: "direct main"
     description:
@@ -809,10 +817,10 @@ packages:
     dependency: "direct main"
     description:
       name: pull_down_button
-      sha256: "235b302701ce029fd9e9470975069376a6700935bb47a5f1b3ec8a5efba07e6f"
+      sha256: "48b928203afdeafa4a8be5dc96980523bc8a2ddbd04569f766071a722be22379"
       url: "https://pub.dev"
     source: hosted
-    version: "0.9.3"
+    version: "0.9.4"
   riverpod:
     dependency: transitive
     description:
@@ -1134,10 +1142,10 @@ packages:
     dependency: transitive
     description:
       name: web_socket
-      sha256: "6bbfb36ea811dac44d18511648687d5334cbad736f45880520f34995861d9b11"
+      sha256: "7c57c6d0eb006e64d962d5c832bbe2ae9adbd887829944065f7467cbe13f6d8f"
       url: "https://pub.dev"
     source: hosted
-    version: "0.1.1"
+    version: "0.1.2"
   web_socket_channel:
     dependency: transitive
     description:
