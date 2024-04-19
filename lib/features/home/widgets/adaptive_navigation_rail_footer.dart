@@ -60,11 +60,7 @@ class AdaptiveNavigationRailFooter extends ConsumerWidget {
                 subtitle: language.nativeName,
                 selected: language == ref.watch(languageAppProvider).value,
                 onTap: () {
-                  ref.read(languageAppProvider.notifier).setLanguage(
-                        language,
-                        isSameAsPlatform:
-                            language.languageCode == locale.languageCode,
-                      );
+                  ref.read(languageAppProvider.notifier).setLanguage(language);
                 },
               ),
           ],

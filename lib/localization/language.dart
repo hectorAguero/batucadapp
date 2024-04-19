@@ -45,9 +45,8 @@ extension LanguageExtension on Language {
       };
 
   bool get isSameAsPlatform {
-    final platformLanguage =
-        WidgetsBinding.instance.platformDispatcher.locale.languageCode;
-    return languageCode == platformLanguage;
+    final platformLanguage = WidgetsBinding.instance.platformDispatcher;
+    return languageCode == platformLanguage.locale.languageCode;
   }
 }
 

@@ -12,18 +12,14 @@ class LanguageApp extends _$LanguageApp {
     final prefs = await ref.watch(prefsProvider.future);
     final localeKey = prefs.getString('locale') ??
         WidgetsBinding.instance.platformDispatcher.locale.languageCode;
-    return Language.values.firstWhere(
-      (e) => e.languageCode == localeKey,
-      orElse: () => Language.en,
-    );
+    return Language.values.firstWhere((e) => e.languageCode == localeKey);
   }
 
   Future<void> setLanguage(
-    Language language, {
-    required bool isSameAsPlatform,
-  }) async {
+    Language language,
+  ) async {
     final prefs = ref.read(prefsProvider).value;
-    if (isSameAsPlatform) {
+    if (language.isSameAsPlatform) {
       await prefs!.remove('locale');
     } else {
       await prefs!.setString('locale', language.languageCode);

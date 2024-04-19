@@ -6,17 +6,14 @@ import 'package:dio_cache_interceptor_hive_store/dio_cache_interceptor_hive_stor
 import 'package:path_provider/path_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../../constants.dart';
 import '../../localization/language.dart';
 import '../../localization/language_app_provider.dart';
 import '../../utils/app_loggers.dart';
 import 'client_network/network_client_adapter.dart'
     if (dart.library.js_interop) 'client_network/network_client_adapter_web.dart';
 
-part '../../utils/client_network_provider.g.dart';
-
-const _baseUrlPath = 'https://samba.deno.dev';
-const _connectTimeout = Duration(seconds: 2);
-const _receiveTimeout = Duration(seconds: 3);
+part 'client_network_provider.g.dart';
 
 @Riverpod(keepAlive: true)
 class ClientNetwork extends _$ClientNetwork {
@@ -33,11 +30,9 @@ class ClientNetwork extends _$ClientNetwork {
     );
     final options = BaseOptions(
       baseUrl: Endpoint.basePath.path,
-      connectTimeout: _connectTimeout,
-      receiveTimeout: _receiveTimeout,
-      queryParameters: {
-        'language': language,
-      },
+      connectTimeout: AppConstants.connectTimeout,
+      receiveTimeout: AppConstants.receiveTimeout,
+      queryParameters: {'language': language},
     );
     final dio = Dio(options)
       ..httpClientAdapter = getNativeAdapter(cronetHttp2: true)
@@ -81,7 +76,7 @@ enum Endpoint {
   String get pathId => '$path/';
   String get pathSearch => '$path/search';
   String get path => switch (this) {
-        basePath => _baseUrlPath,
+        basePath => AppConstants.baseUrlPath,
         parades => '/parades',
         instruments => '/instruments',
         schools => '/schools',

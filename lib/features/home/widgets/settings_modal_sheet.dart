@@ -92,10 +92,7 @@ class SettingsLanguageSection extends ConsumerWidget {
               color: context.colorScheme.primary,
             ),
             onTap: () {
-              ref.read(languageAppProvider.notifier).setLanguage(
-                    language,
-                    isSameAsPlatform: language.isSameAsPlatform,
-                  );
+              ref.read(languageAppProvider.notifier).setLanguage(language);
             },
             title: Text(
               language.nativeName,

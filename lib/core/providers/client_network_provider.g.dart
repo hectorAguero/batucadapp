@@ -1,12 +1,12 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of '../core/providers/client_network_provider.dart';
+part of 'client_network_provider.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$clientNetworkHash() => r'e3f371ef67d6880104ff979657ee9463af9d8a01';
+String _$clientNetworkHash() => r'5940f41520ab43d432e0010ff1324a03c92da85c';
 
 /// See also [ClientNetwork].
 @ProviderFor(ClientNetwork)

@@ -5,25 +5,26 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
-import '../../create_container.dart';
 import '../providers/prefs_provider_test.dart';
 
-ProviderContainer setupAppThemeModeProvider(
-  MockSharedPreferences? mockSharedPreferences,
-) {
-  return createContainer(
-    overrides: [
-      if (mockSharedPreferences != null)
-        prefsProvider.overrideWith((_) => mockSharedPreferences),
-      appThemeModeProvider.overrideWith(AppThemeMode.new),
-    ],
-  );
-}
-
 void main() {
+  ProviderContainer makeProviderContainer(
+    MockSharedPreferences? mockSharedPreferences,
+  ) {
+    final container = ProviderContainer(
+      overrides: [
+        if (mockSharedPreferences != null)
+          prefsProvider.overrideWith((_) => mockSharedPreferences),
+        appThemeModeProvider.overrideWith(AppThemeMode.new),
+      ],
+    );
+    addTearDown(container.dispose);
+    return container;
+  }
+
   group('appThemeTrueBlackProvider tests', () {
     test('Return false when SharedPreferences doesnt have a value', () {
-      final container = setupAppThemeModeProvider(null);
+      final container = makeProviderContainer(null);
       final trueBlack = container.read(appThemeTrueBlackProvider);
       expect(trueBlack, false);
     });
@@ -31,7 +32,7 @@ void main() {
     test('Return true when SharedPreferences has a value', () {
       final initialValues = {'true_black': true};
       final mock = MockSharedPreferences.setMockInitialValues(initialValues);
-      final container = setupAppThemeModeProvider(mock);
+      final container = makeProviderContainer(mock);
       final trueBlack = container.read(appThemeTrueBlackProvider);
       expect(trueBlack, true);
     });
@@ -40,7 +41,7 @@ void main() {
       final mock = MockSharedPreferences();
       when(() => mock.setBool('true_black', true))
           .thenAnswer((_) async => true);
-      final container = setupAppThemeModeProvider(mock);
+      final container = makeProviderContainer(mock);
       container.read(appThemeTrueBlackProvider.notifier).toggleTrueBlack();
       verify(() => mock.setBool('true_black', true)).called(1);
       expect(container.read(appThemeTrueBlackProvider), true);
@@ -49,7 +50,8 @@ void main() {
     test('Toggle trueBlack to false', () {
       final values = {'true_black': true};
       final mock = MockSharedPreferences.setMockInitialValues(values);
-      final container = setupAppThemeModeProvider(mock);
+      when(() => mock.remove('true_black')).thenAnswer((_) async => true);
+      final container = makeProviderContainer(mock);
       container.read(appThemeTrueBlackProvider.notifier).toggleTrueBlack();
       expect(container.read(appThemeTrueBlackProvider), false);
     });
@@ -58,13 +60,13 @@ void main() {
   group('Test the build of the appThemeProvider', () {
     test(' ThemeMode.system when SharedPreferences has no value', () async {
       final mockSharedPreferences = MockSharedPreferences();
-      final container = setupAppThemeModeProvider(mockSharedPreferences);
+      final container = makeProviderContainer(mockSharedPreferences);
       final themeMode = container.read(appThemeModeProvider);
       expect(themeMode, ThemeMode.system);
     });
 
     test(' ThemeMode.system when SharedPreferences is not init', () async {
-      final container = setupAppThemeModeProvider(null);
+      final container = makeProviderContainer(null);
       final themeMode = container.read(appThemeModeProvider);
       expect(themeMode, ThemeMode.system);
     });
@@ -73,7 +75,7 @@ void main() {
       final mockSharedPreferences = MockSharedPreferences();
       when(() => mockSharedPreferences.getString('theme_mode'))
           .thenReturn('light');
-      final container = setupAppThemeModeProvider(mockSharedPreferences);
+      final container = makeProviderContainer(mockSharedPreferences);
       final themeMode = container.read(appThemeModeProvider);
       expect(themeMode, ThemeMode.light);
     });
@@ -82,7 +84,7 @@ void main() {
       final mockSharedPreferences = MockSharedPreferences();
       when(() => mockSharedPreferences.getString('theme_mode'))
           .thenReturn('dark');
-      final container = setupAppThemeModeProvider(mockSharedPreferences);
+      final container = makeProviderContainer(mockSharedPreferences);
       final themeMode = container.read(appThemeModeProvider);
       expect(themeMode, ThemeMode.dark);
     });
@@ -93,7 +95,7 @@ void main() {
       final mockSharedPreferences = MockSharedPreferences();
       when(() => mockSharedPreferences.remove('theme_mode'))
           .thenAnswer((_) async => true);
-      final container = setupAppThemeModeProvider(mockSharedPreferences);
+      final container = makeProviderContainer(mockSharedPreferences);
       expect(container.read(appThemeModeProvider), ThemeMode.system);
       container.read(appThemeModeProvider.notifier).setTheme(ThemeMode.system);
       verify(() => mockSharedPreferences.remove('theme_mode')).called(1);
@@ -104,7 +106,7 @@ void main() {
       final mockSharedPreferences = MockSharedPreferences();
       when(() => mockSharedPreferences.setString('theme_mode', 'light'))
           .thenAnswer((_) async => true);
-      final container = setupAppThemeModeProvider(mockSharedPreferences);
+      final container = makeProviderContainer(mockSharedPreferences);
       container.read(appThemeModeProvider.notifier).setTheme(ThemeMode.light);
       verify(() => mockSharedPreferences.setString('theme_mode', 'light'))
           .called(1);
@@ -115,7 +117,7 @@ void main() {
       final mockSharedPreferences = MockSharedPreferences();
       when(() => mockSharedPreferences.setString('theme_mode', 'dark'))
           .thenAnswer((_) async => true);
-      final container = setupAppThemeModeProvider(mockSharedPreferences);
+      final container = makeProviderContainer(mockSharedPreferences);
       container.read(appThemeModeProvider.notifier).setTheme(ThemeMode.dark);
       verify(() => mockSharedPreferences.setString('theme_mode', 'dark'))
           .called(1);
@@ -130,7 +132,7 @@ void main() {
           .thenAnswer((_) async => true);
       when(() => mockSharedPreferences.remove('true_black'))
           .thenAnswer((_) async => true);
-      final container = setupAppThemeModeProvider(mockSharedPreferences);
+      final container = makeProviderContainer(mockSharedPreferences);
       await container.read(appThemeModeProvider.notifier).toggleTheme();
       expect(container.read(appThemeModeProvider), ThemeMode.light);
     });
@@ -141,7 +143,7 @@ void main() {
           MockSharedPreferences.setMockInitialValues(initialValue);
       when(() => mockSharedPreferences.setString('theme_mode', 'dark'))
           .thenAnswer((_) async => true);
-      final container = setupAppThemeModeProvider(mockSharedPreferences);
+      final container = makeProviderContainer(mockSharedPreferences);
       await container.read(appThemeModeProvider.notifier).toggleTheme();
       expect(container.read(appThemeModeProvider), ThemeMode.dark);
     });
@@ -152,7 +154,7 @@ void main() {
           MockSharedPreferences.setMockInitialValues(initialValue);
       when(() => mockSharedPreferences.remove('theme_mode'))
           .thenAnswer((_) async => true);
-      final container = setupAppThemeModeProvider(mockSharedPreferences);
+      final container = makeProviderContainer(mockSharedPreferences);
       await container.read(appThemeModeProvider.notifier).toggleTheme();
       expect(container.read(appThemeModeProvider), ThemeMode.system);
     });
