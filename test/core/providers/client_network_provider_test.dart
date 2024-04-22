@@ -1,7 +1,8 @@
-// ignore_for_file: depend_on_referenced_packages, invalid_use_of_visible_for_overriding_member
+// ignore_for_file: depend_on_referenced_packages
+// ignore_for_file: invalid_use_of_visible_for_overriding_member
 
 import 'package:batucadapp/constants.dart';
-import 'package:batucadapp/core/providers/client_network_provider.dart';
+import 'package:batucadapp/core/providers/client_network.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -21,12 +22,13 @@ class MockClientNetwork extends AsyncNotifier<Dio>
     implements ClientNetwork {}
 
 void main() {
+  const dioOkResponseCode = 200;
   group('ClientNetwork build', () {
     test('Dio is configured with correct base URL and language', () async {
       final baseOptions = BaseOptions(
         baseUrl: Endpoint.basePath.path,
-        connectTimeout: AppConstants.connectTimeout,
-        receiveTimeout: AppConstants.receiveTimeout,
+        connectTimeout: Constants.connectTimeout,
+        receiveTimeout: Constants.receiveTimeout,
         queryParameters: {'language': 'en'},
       );
       final dio = Dio(baseOptions);
@@ -39,7 +41,7 @@ void main() {
       final readDio = await container.read(clientNetworkProvider.future);
       DioAdapter(dio: readDio).onGet(
         Endpoint.basePath.path,
-        (server) => server.reply(200, 'OK'),
+        (server) => server.reply(dioOkResponseCode, 'OK'),
       );
 
       final response = await readDio.get<dynamic>(Endpoint.basePath.path);

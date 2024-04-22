@@ -10,7 +10,7 @@ import '../../../core/extensions/js_bottom_padding_extension.dart'
 import '../../../utils/immutable_list.dart';
 import '../../../utils/screen_size.dart';
 import '../school.dart';
-import '../schools_tab_providers.dart';
+import '../schools_tab_controller.dart';
 import 'school_card.dart';
 import 'schools_empty_list.dart';
 
@@ -22,11 +22,12 @@ class SchoolsTabBody extends ConsumerWidget {
     return SliverSafeArea(
       top: false,
       sliver: AppAsyncSliverWidget(
-        asyncValue: ref.watch(schoolsProvider),
-        onErrorRetry: () => ref.invalidate(schoolsProvider),
+        asyncValue: ref.watch(schoolsTabControllerProvider),
+        onErrorRetry: () => ref.invalidate(schoolsTabControllerProvider),
         child: (value) => Consumer(
           builder: (context, ref, child) {
             final schools = ref.watch(filteredSchoolsProvider);
+
             return SliverCrossAxisConstrained(
               maxCrossAxisExtent: ScreenSize.lg.value,
               child: SliverPadding(
@@ -61,9 +62,10 @@ class SliverSchoolsList extends StatelessWidget {
   Widget build(BuildContext context) {
     return SliverDynamicHeightGridView(
       itemCount: schools.length,
-      crossAxisCount: gridCrossAxisCount(context),
+      crossAxisCount: context.screenSize.defaultCrossAxisCount,
       builder: (context, index) {
         final school = schools[index];
+
         return AppAnimationWrapper(
           child: ProviderScope(
             overrides: [
@@ -74,13 +76,5 @@ class SliverSchoolsList extends StatelessWidget {
         );
       },
     );
-  }
-
-  static int gridCrossAxisCount(BuildContext context) {
-    return switch (context.screenSize) {
-      ScreenSize.xs => 1,
-      ScreenSize.md => 2,
-      ScreenSize.lg => 3
-    };
   }
 }

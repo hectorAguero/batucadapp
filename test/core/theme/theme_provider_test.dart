@@ -1,5 +1,5 @@
-import 'package:batucadapp/core/providers/prefs_provider.dart';
-import 'package:batucadapp/core/theme/theme_provider.dart';
+import 'package:batucadapp/core/providers/prefs.dart';
+import 'package:batucadapp/core/theme/theme_mode_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -15,10 +15,11 @@ void main() {
       overrides: [
         if (mockSharedPreferences != null)
           prefsProvider.overrideWith((_) => mockSharedPreferences),
-        appThemeModeProvider.overrideWith(AppThemeMode.new),
+        themeModeControllerProvider.overrideWith(ThemeModeController.new),
       ],
     );
     addTearDown(container.dispose);
+
     return container;
   }
 
@@ -61,13 +62,13 @@ void main() {
     test(' ThemeMode.system when SharedPreferences has no value', () async {
       final mockSharedPreferences = MockSharedPreferences();
       final container = makeProviderContainer(mockSharedPreferences);
-      final themeMode = container.read(appThemeModeProvider);
+      final themeMode = container.read(themeModeControllerProvider);
       expect(themeMode, ThemeMode.system);
     });
 
     test(' ThemeMode.system when SharedPreferences is not init', () async {
       final container = makeProviderContainer(null);
-      final themeMode = container.read(appThemeModeProvider);
+      final themeMode = container.read(themeModeControllerProvider);
       expect(themeMode, ThemeMode.system);
     });
 
@@ -76,7 +77,7 @@ void main() {
       when(() => mockSharedPreferences.getString('theme_mode'))
           .thenReturn('light');
       final container = makeProviderContainer(mockSharedPreferences);
-      final themeMode = container.read(appThemeModeProvider);
+      final themeMode = container.read(themeModeControllerProvider);
       expect(themeMode, ThemeMode.light);
     });
 
@@ -85,7 +86,7 @@ void main() {
       when(() => mockSharedPreferences.getString('theme_mode'))
           .thenReturn('dark');
       final container = makeProviderContainer(mockSharedPreferences);
-      final themeMode = container.read(appThemeModeProvider);
+      final themeMode = container.read(themeModeControllerProvider);
       expect(themeMode, ThemeMode.dark);
     });
   });
@@ -96,10 +97,12 @@ void main() {
       when(() => mockSharedPreferences.remove('theme_mode'))
           .thenAnswer((_) async => true);
       final container = makeProviderContainer(mockSharedPreferences);
-      expect(container.read(appThemeModeProvider), ThemeMode.system);
-      container.read(appThemeModeProvider.notifier).setTheme(ThemeMode.system);
+      expect(container.read(themeModeControllerProvider), ThemeMode.system);
+      container
+          .read(themeModeControllerProvider.notifier)
+          .setTheme(ThemeMode.system);
       verify(() => mockSharedPreferences.remove('theme_mode')).called(1);
-      expect(container.read(appThemeModeProvider), ThemeMode.system);
+      expect(container.read(themeModeControllerProvider), ThemeMode.system);
     });
 
     test('Set ThemeMode.light', () async {
@@ -107,10 +110,12 @@ void main() {
       when(() => mockSharedPreferences.setString('theme_mode', 'light'))
           .thenAnswer((_) async => true);
       final container = makeProviderContainer(mockSharedPreferences);
-      container.read(appThemeModeProvider.notifier).setTheme(ThemeMode.light);
+      container
+          .read(themeModeControllerProvider.notifier)
+          .setTheme(ThemeMode.light);
       verify(() => mockSharedPreferences.setString('theme_mode', 'light'))
           .called(1);
-      expect(container.read(appThemeModeProvider), ThemeMode.light);
+      expect(container.read(themeModeControllerProvider), ThemeMode.light);
     });
 
     test('Set ThemeMode.dark', () async {
@@ -118,10 +123,12 @@ void main() {
       when(() => mockSharedPreferences.setString('theme_mode', 'dark'))
           .thenAnswer((_) async => true);
       final container = makeProviderContainer(mockSharedPreferences);
-      container.read(appThemeModeProvider.notifier).setTheme(ThemeMode.dark);
+      container
+          .read(themeModeControllerProvider.notifier)
+          .setTheme(ThemeMode.dark);
       verify(() => mockSharedPreferences.setString('theme_mode', 'dark'))
           .called(1);
-      expect(container.read(appThemeModeProvider), ThemeMode.dark);
+      expect(container.read(themeModeControllerProvider), ThemeMode.dark);
     });
   });
 
@@ -133,8 +140,8 @@ void main() {
       when(() => mockSharedPreferences.remove('true_black'))
           .thenAnswer((_) async => true);
       final container = makeProviderContainer(mockSharedPreferences);
-      await container.read(appThemeModeProvider.notifier).toggleTheme();
-      expect(container.read(appThemeModeProvider), ThemeMode.light);
+      await container.read(themeModeControllerProvider.notifier).toggleTheme();
+      expect(container.read(themeModeControllerProvider), ThemeMode.light);
     });
 
     test('Toggle theme from ThemeMode.light', () async {
@@ -144,8 +151,8 @@ void main() {
       when(() => mockSharedPreferences.setString('theme_mode', 'dark'))
           .thenAnswer((_) async => true);
       final container = makeProviderContainer(mockSharedPreferences);
-      await container.read(appThemeModeProvider.notifier).toggleTheme();
-      expect(container.read(appThemeModeProvider), ThemeMode.dark);
+      await container.read(themeModeControllerProvider.notifier).toggleTheme();
+      expect(container.read(themeModeControllerProvider), ThemeMode.dark);
     });
 
     test('Toggle theme from ThemeMode.dark', () async {
@@ -155,8 +162,8 @@ void main() {
       when(() => mockSharedPreferences.remove('theme_mode'))
           .thenAnswer((_) async => true);
       final container = makeProviderContainer(mockSharedPreferences);
-      await container.read(appThemeModeProvider.notifier).toggleTheme();
-      expect(container.read(appThemeModeProvider), ThemeMode.system);
+      await container.read(themeModeControllerProvider.notifier).toggleTheme();
+      expect(container.read(themeModeControllerProvider), ThemeMode.system);
     });
   });
 }

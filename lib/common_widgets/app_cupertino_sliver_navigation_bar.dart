@@ -26,6 +26,7 @@ class AppCupertinoSliverNavigationBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final screenSize = context.screenSize;
+
     return CupertinoSliverNavigationBar(
       backgroundColor: Colors.transparent,
       largeTitle: Text(
@@ -38,7 +39,7 @@ class AppCupertinoSliverNavigationBar extends StatelessWidget {
       transitionBetweenRoutes: transitionBetweenRoutes,
       border: Border(
         bottom: BorderSide(
-          color: context.customColors.inverseTextColor!.withOpacity(0.1),
+          color: context.customInverseTextColor.withOpacity(0.1),
         ),
       ),
       padding: kIsWeb

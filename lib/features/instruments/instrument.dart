@@ -6,17 +6,6 @@ part 'instrument.mapper.dart';
 
 @MappableClass()
 class Instrument with InstrumentMappable {
-  Instrument({
-    required this.id,
-    required this.name,
-    required this.description,
-    required this.imageUrl,
-    required this.gallery,
-    required this.type,
-    required this.translatedName,
-    required this.translatedDescription,
-  });
-
   final int id;
   final String name;
   final String type;
@@ -28,4 +17,15 @@ class Instrument with InstrumentMappable {
 
   static const fromMap = InstrumentMapper.fromMap;
   static const fromJson = InstrumentMapper.fromJson;
+
+  Instrument({
+    required this.id,
+    required this.name,
+    required this.description,
+    required this.imageUrl,
+    required this.gallery,
+    required this.type,
+    required this.translatedName,
+    required this.translatedDescription,
+  });
 }

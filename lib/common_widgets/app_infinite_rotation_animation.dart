@@ -19,14 +19,16 @@ class AppInfiniteRotationAnimation extends StatefulWidget {
 class _AppInfiniteRotationAnimationState
     extends State<AppInfiniteRotationAnimation>
     with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
+  late final _controller = AnimationController(
+    duration: widget.duration,
+    vsync: this,
+  );
 
   @override
-  void initState() {
-    super.initState();
-    _controller = AnimationController(
-      duration: widget.duration,
-      vsync: this,
+  Widget build(BuildContext context) {
+    return RotationTransition(
+      turns: _controller,
+      child: widget.child,
     );
   }
 
@@ -46,13 +48,5 @@ class _AppInfiniteRotationAnimationState
   void dispose() {
     _controller.dispose();
     super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return RotationTransition(
-      turns: _controller,
-      child: widget.child,
-    );
   }
 }

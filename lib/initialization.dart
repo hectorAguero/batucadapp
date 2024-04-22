@@ -3,21 +3,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'core/extensions/app_localization_extension.dart';
-import 'core/providers/initialization_provider.dart';
-import 'core/theme/theme_provider.dart';
+import 'core/providers/initialization.dart';
+import 'core/theme/theme_mode_controller.dart';
 import 'features/home/widgets/adaptive_navigation_rail.dart';
 import 'utils/screen_size.dart';
 
-class InitializationPage extends ConsumerWidget {
-  const InitializationPage({required this.onLoaded, super.key});
+class Initialization extends ConsumerWidget {
+  const Initialization({required this.onLoaded, super.key});
   final WidgetBuilder onLoaded;
 
   static const path = '/startup';
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    ref.watch(appThemeModeProvider);
+    ref.watch(themeModeControllerProvider);
     final initProvider = ref.watch(initializationProvider);
+
     return AnimatedSwitcher(
       duration: const Duration(milliseconds: 300),
       child: switch (initProvider) {
@@ -40,6 +41,7 @@ class AppStartupLoadingWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final screenSize = context.screenSize;
+
     return Scaffold(
       appBar: AppBar(
         elevation: 0,

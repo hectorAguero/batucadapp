@@ -19,6 +19,7 @@ class ParadeItemSideBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final medalColor = parade.medalColor(context);
+
     return Container(
       width: 48,
       height: double.infinity,
@@ -64,7 +65,7 @@ class ParadeItemSideBar extends StatelessWidget {
                   TextSpan(
                     children: [
                       TextSpan(
-                        style: context.textTheme.headlineSmall!.copyWith(
+                        style: context.headlineSmall.copyWith(
                           color: context.colorScheme.onSurface,
                           fontWeight: FontWeight.w600,
                         ),

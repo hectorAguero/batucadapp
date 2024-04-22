@@ -1,4 +1,4 @@
-import 'package:batucadapp/core/providers/prefs_provider.dart';
+import 'package:batucadapp/core/providers/prefs.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
@@ -10,6 +10,7 @@ void main() {
       overrides: [prefsProvider.overrideWith((_) => prefs)],
     );
     addTearDown(container.dispose);
+
     return container;
   }
 
@@ -49,6 +50,7 @@ class MockSharedPreferences extends Mock implements SharedPreferences {
         throw UnimplementedError('Type ${value.runtimeType} not implemented');
       }
     }
+
     return mock;
   }
 }

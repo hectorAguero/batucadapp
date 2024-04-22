@@ -12,7 +12,7 @@ import '../../utils/debouncer.dart';
 import '../../utils/screen_size.dart';
 import '../home/home_page_controller.dart';
 import '../schools/school.dart';
-import 'parades_tab_providers.dart';
+import 'parades_tab_controller.dart';
 import 'widgets/parade_item.dart';
 import 'widgets/parade_item_year_line.dart';
 
@@ -29,30 +29,22 @@ class ParadesTabPage extends ConsumerStatefulWidget {
 class _ParadesTabPageState extends ConsumerState<ParadesTabPage> {
   final _debouncer = Debouncer(defaultDelay);
   final _listController = ListController();
-  ScrollController? controller;
+  late final ScrollController controller = PrimaryScrollController.of(context);
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      controller = PrimaryScrollController.of(context);
-      controller?.addListener(_loadMoreListener);
+      controller.addListener(_loadMoreListener);
     });
   }
 
-  @override
-  void dispose() {
-    _debouncer.dispose();
-    _listController.dispose();
-    controller?.removeListener(_loadMoreListener);
-    super.dispose();
-  }
-
   void _loadMoreListener() {
-    final position = controller!.position;
+    final position = controller.position;
     if (position.pixels == position.maxScrollExtent) {
       if (!ref.read(paradesTabReachedLimitProvider)) {
-        _debouncer.run(ref.read(paradesProvider.notifier).fetchNextPage);
+        _debouncer
+            .run(ref.read(paradesTabControllerProvider.notifier).fetchNextPage);
       }
     }
   }
@@ -71,10 +63,10 @@ class _ParadesTabPageState extends ConsumerState<ParadesTabPage> {
             ),
           ),
           AppAsyncSliverWidget(
-            asyncValue: ref.watch(paradesProvider),
+            asyncValue: ref.watch(paradesTabControllerProvider),
             onErrorRetry: () async =>
                 Future.delayed(const Duration(milliseconds: 500), () {
-              ref.invalidate(paradesProvider);
+              ref.invalidate(paradesTabControllerProvider);
             }),
             child: (value) => SliverCrossAxisConstrained(
               maxCrossAxisExtent: ScreenSize.md.value,
@@ -83,6 +75,7 @@ class _ParadesTabPageState extends ConsumerState<ParadesTabPage> {
                 listController: _listController,
                 itemBuilder: (context, index) {
                   final parade = value[index];
+
                   return ProviderScope(
                     overrides: [
                       currentParadeProvider.overrideWithValue(value[index]),
@@ -125,15 +118,11 @@ class _ParadesTabPageState extends ConsumerState<ParadesTabPage> {
     );
   }
 
-  void animateToItem(int index) {
-    _listController.animateToItem(
-      index: index,
-      scrollController: controller!,
-      alignment: 0.5,
-      // You can provide duration and curve depending on the estimated
-      // distance between currentPosition and the target item position.
-      duration: (estimatedDistance) => const Duration(milliseconds: 250),
-      curve: (estimatedDistance) => Curves.easeInOut,
-    );
+  @override
+  void dispose() {
+    _debouncer.dispose();
+    _listController.dispose();
+    controller.removeListener(_loadMoreListener);
+    super.dispose();
   }
 }

@@ -1,20 +1,21 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../instrument.dart';
-import '../instruments_tab_providers.dart';
+import '../instruments_tab_controller.dart';
 
-part 'instrument_details_providers.g.dart';
+part 'instrument_details_controller.g.dart';
 
 @riverpod
-class InstrumentDetails extends _$InstrumentDetails {
+class InstrumentDetailsController extends _$InstrumentDetailsController {
   @override
   Instrument build(int id) {
     final instrument = ref
-        .watch(instrumentsTabProvider)
+        .watch(instrumentsTabControllerProvider)
         .value
         ?.firstWhere((element) => element.id == id);
     if (instrument == null) {
       throw Exception('Instrument not found');
     }
+
     return instrument;
   }
 }

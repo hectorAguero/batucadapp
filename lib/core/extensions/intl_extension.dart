@@ -27,6 +27,7 @@ extension IntlExtension on DateTime {
         Localizations.localeOf(context).languageCode,
       ).add_Hm().format(this);
     }
+
     return DateFormat.yMMMd(
       Localizations.localeOf(context).languageCode,
     ).add_Hm().format(this);
@@ -49,6 +50,7 @@ extension OrdinalExtension on int {
         },
       (_) => '$this',
     };
+
     return spaceAfter ? '$ordinal ' : ordinal;
   }
 

@@ -79,23 +79,23 @@ class SchoolDivisionMapper extends EnumMapper<SchoolDivision> {
   @override
   SchoolDivision decode(dynamic value) {
     switch (value) {
-      case 1:
+      case _SchoolDivisionConstants.especial:
         return SchoolDivision.especial;
-      case 2:
+      case _SchoolDivisionConstants.ouro:
         return SchoolDivision.ouro;
-      case 3:
+      case _SchoolDivisionConstants.prata:
         return SchoolDivision.prata;
-      case 4:
+      case _SchoolDivisionConstants.bronze:
         return SchoolDivision.bronze;
-      case 5:
+      case _SchoolDivisionConstants.avaliacao:
         return SchoolDivision.avaliacao;
-      case 6:
+      case _SchoolDivisionConstants.mirins:
         return SchoolDivision.mirins;
-      case 7:
+      case _SchoolDivisionConstants.blocosDeEnredo1:
         return SchoolDivision.blocosDeEnredo1;
-      case 8:
+      case _SchoolDivisionConstants.blocosDeEnredo2:
         return SchoolDivision.blocosDeEnredo2;
-      case 9:
+      case _SchoolDivisionConstants.blocosDeRua:
         return SchoolDivision.blocosDeRua;
       default:
         throw MapperException.unknownEnumValue(value);
@@ -106,23 +106,23 @@ class SchoolDivisionMapper extends EnumMapper<SchoolDivision> {
   dynamic encode(SchoolDivision self) {
     switch (self) {
       case SchoolDivision.especial:
-        return 1;
+        return _SchoolDivisionConstants.especial;
       case SchoolDivision.ouro:
-        return 2;
+        return _SchoolDivisionConstants.ouro;
       case SchoolDivision.prata:
-        return 3;
+        return _SchoolDivisionConstants.prata;
       case SchoolDivision.bronze:
-        return 4;
+        return _SchoolDivisionConstants.bronze;
       case SchoolDivision.avaliacao:
-        return 5;
+        return _SchoolDivisionConstants.avaliacao;
       case SchoolDivision.mirins:
-        return 6;
+        return _SchoolDivisionConstants.mirins;
       case SchoolDivision.blocosDeEnredo1:
-        return 7;
+        return _SchoolDivisionConstants.blocosDeEnredo1;
       case SchoolDivision.blocosDeEnredo2:
-        return 8;
+        return _SchoolDivisionConstants.blocosDeEnredo2;
       case SchoolDivision.blocosDeRua:
-        return 9;
+        return _SchoolDivisionConstants.blocosDeRua;
     }
   }
 }
@@ -171,7 +171,7 @@ class SchoolMapper extends ClassMapperBase<School> {
       Field('colors', _$colors);
   static IList<Color> _$colorsCode(School v) => v.colorsCode;
   static const Field<School, IList<Color>> _f$colorsCode =
-      Field('colorsCode', _$colorsCode, key: 'colors', hook: ColorHook());
+      Field('colorsCode', _$colorsCode, key: 'colors', hook: SchoolColorHook());
   static IList<String> _$symbols(School v) => v.symbols;
   static const Field<School, IList<String>> _f$symbols =
       Field('symbols', _$symbols);

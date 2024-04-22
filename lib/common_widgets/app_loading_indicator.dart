@@ -34,6 +34,7 @@ class AppLoadingIndicator extends StatelessWidget {
         ),
       );
     }
+
     return AnimatedSize(
       duration: const Duration(milliseconds: 300),
       child: !showLoading

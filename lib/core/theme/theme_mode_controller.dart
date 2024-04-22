@@ -2,39 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../utils/app_loggers.dart';
-import '../providers/prefs_provider.dart';
+import '../providers/prefs.dart';
 
-part 'theme_provider.g.dart';
-
-@riverpod
-class AppThemeTrueBlack extends _$AppThemeTrueBlack {
-  @override
-  bool build() {
-    try {
-      return ref.watch(prefsProvider).value!.getBool('true_black') ?? false;
-    } catch (e) {
-      logViews.finest('$e');
-      return false;
-    }
-  }
-
-  void toggleTrueBlack({bool? forceState}) {
-    final prefs = ref.read(prefsProvider).requireValue;
-    state = forceState ?? !state;
-    if (state) {
-      prefs.setBool('true_black', state);
-    } else {
-      prefs.remove('true_black');
-    }
-  }
-}
+part 'theme_mode_controller.g.dart';
 
 @Riverpod(keepAlive: true)
-class AppThemeMode extends _$AppThemeMode {
+class ThemeModeController extends _$ThemeModeController {
   @override
   ThemeMode build() {
     try {
-      final mode = ref.watch(prefsProvider).value!.getString('theme_mode');
+      final prefs = ref.watch(prefsProvider).value;
+      final mode = prefs?.getString('theme_mode');
+
       return switch (mode) {
         'light' => ThemeMode.light,
         'dark' => ThemeMode.dark,
@@ -42,6 +21,7 @@ class AppThemeMode extends _$AppThemeMode {
       };
     } catch (e) {
       logViews.finest('$e');
+
       return ThemeMode.system;
     }
   }
@@ -78,6 +58,31 @@ class AppThemeMode extends _$AppThemeMode {
       case ThemeMode.dark:
         prefs.setString('theme_mode', 'dark');
         state = ThemeMode.dark;
+    }
+  }
+}
+
+@riverpod
+class AppThemeTrueBlack extends _$AppThemeTrueBlack {
+  @override
+  bool build() {
+    try {
+      return ref.watch(prefsProvider).requireValue.getBool('true_black') ??
+          false;
+    } catch (e) {
+      logViews.finest('$e');
+
+      return false;
+    }
+  }
+
+  void toggleTrueBlack({bool? forceState}) {
+    final prefs = ref.read(prefsProvider).requireValue;
+    state = forceState ?? !state;
+    if (state) {
+      prefs.setBool('true_black', state);
+    } else {
+      prefs.remove('true_black');
     }
   }
 }

@@ -8,19 +8,20 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../constants.dart';
 import '../../localization/language.dart';
-import '../../localization/language_app_provider.dart';
+import '../../localization/language_app_controller.dart';
 import '../../utils/app_loggers.dart';
 import 'client_network/network_client_adapter.dart'
     if (dart.library.js_interop) 'client_network/network_client_adapter_web.dart';
 
-part 'client_network_provider.g.dart';
+part 'client_network.g.dart';
 
 @Riverpod(keepAlive: true)
 class ClientNetwork extends _$ClientNetwork {
   @override
   FutureOr<Dio> build() async {
     final cacheDirPath = await _getTemporaryDirectory();
-    final futureLanguage = await ref.watch(languageAppProvider.future);
+    final futureLanguage =
+        await ref.watch(languageAppControllerProvider.future);
     final language = futureLanguage.languageCode;
     final cache = CacheOptions(
       store: BackupCacheStore(
@@ -31,12 +32,12 @@ class ClientNetwork extends _$ClientNetwork {
     );
     final options = BaseOptions(
       baseUrl: Endpoint.basePath.path,
-      connectTimeout: AppConstants.connectTimeout,
-      receiveTimeout: AppConstants.receiveTimeout,
+      connectTimeout: Constants.connectTimeout,
+      receiveTimeout: Constants.receiveTimeout,
       queryParameters: {'language': language},
     );
     final dio = Dio(options)
-      ..httpClientAdapter = getNativeAdapter(cronetHttp2: true)
+      ..httpClientAdapter = getNativeAdapter()
       ..interceptors.add(DioCacheInterceptor(options: cache))
       ..interceptors.add(
         LogInterceptor(
@@ -60,9 +61,11 @@ class ClientNetwork extends _$ClientNetwork {
   Future<String?> _getTemporaryDirectory() async {
     try {
       final dir = await getTemporaryDirectory();
+
       return dir.path;
     } catch (e) {
       logNetwork.info('Error getting temporary directory: $e');
+
       return null;
     }
   }
@@ -77,7 +80,7 @@ enum Endpoint {
   String get pathId => '$path/';
   String get pathSearch => '$path/search';
   String get path => switch (this) {
-        basePath => AppConstants.baseUrlPath,
+        basePath => Constants.baseUrlPath,
         parades => '/parades',
         instruments => '/instruments',
         schools => '/schools',
@@ -85,18 +88,19 @@ enum Endpoint {
 }
 
 class AppNetworkError extends Error {
+  final String message;
+
   AppNetworkError(this.message);
 
   AppNetworkError.fromNetworkClientException(Object e)
       : message = messageFromDio(e);
-
-  final String message;
 
   @override
   String toString() => message;
 
   static String messageFromDio(Object e) {
     if (e is! DioException) return 'Unknown error 🤷';
+
     return switch (e.type) {
       DioExceptionType.badCertificate => 'Bad certificate 📜',
       DioExceptionType.connectionTimeout => 'Connection timeout ⏰',

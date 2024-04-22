@@ -41,29 +41,18 @@ class AppWebPadding extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (kIsWeb) {
-      return color != null
-          ? ColoredBox(
-              color: color!,
-              child: Padding(
-                padding: EdgeInsets.only(
-                  bottom: bottom ? bottomInset() : 0,
-                  top: top ? topInset() : 0,
-                  left: left ? leftInset() : 0,
-                  right: right ? rightInset() : 0,
-                ),
-                child: child,
-              ),
-            )
-          : Padding(
-              padding: EdgeInsets.only(
-                bottom: bottom ? bottomInset() : 0,
-                top: top ? topInset() : 0,
-                left: left ? leftInset() : 0,
-                right: right ? rightInset() : 0,
-              ),
-              child: child,
-            );
+      return Container(
+        color: color,
+        padding: EdgeInsets.only(
+          bottom: bottom ? bottomInset() : 0,
+          top: top ? topInset() : 0,
+          left: left ? leftInset() : 0,
+          right: right ? rightInset() : 0,
+        ),
+        child: child,
+      );
     }
+
     return child;
   }
 }
@@ -101,29 +90,20 @@ class WebPaddingSliver extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (kIsWeb) {
-      return color != null
-          ? DecoratedSliver(
-              decoration: BoxDecoration(color: color),
-              sliver: SliverPadding(
-                padding: EdgeInsets.only(
-                  bottom: bottom ? bottomInset() : 0,
-                  top: top ? topInset() : 0,
-                  left: left ? leftInset() : 0,
-                  right: right ? rightInset() : 0,
-                ),
-                sliver: sliver,
-              ),
-            )
-          : SliverPadding(
-              padding: EdgeInsets.only(
-                bottom: bottom ? bottomInset() : 0,
-                top: top ? topInset() : 0,
-                left: left ? leftInset() : 0,
-                right: right ? rightInset() : 0,
-              ),
-              sliver: sliver,
-            );
+      DecoratedSliver(
+        decoration: BoxDecoration(color: color),
+        sliver: SliverPadding(
+          padding: EdgeInsets.only(
+            bottom: bottom ? bottomInset() : 0,
+            top: top ? topInset() : 0,
+            left: left ? leftInset() : 0,
+            right: right ? rightInset() : 0,
+          ),
+          sliver: sliver,
+        ),
+      );
     }
+
     return sliver;
   }
 }

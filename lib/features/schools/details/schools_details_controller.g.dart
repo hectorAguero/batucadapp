@@ -1,12 +1,13 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'instrument_details_providers.dart';
+part of 'schools_details_controller.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$instrumentDetailsHash() => r'8cd61b14528469a50013bae24788ac4938ee68b7';
+String _$schoolsDetailsControllerHash() =>
+    r'29336ca2472c1525ae7bf07f6539f5557d5e486b';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -29,23 +30,23 @@ class _SystemHash {
   }
 }
 
-abstract class _$InstrumentDetails
-    extends BuildlessAutoDisposeNotifier<Instrument> {
+abstract class _$SchoolsDetailsController
+    extends BuildlessAutoDisposeNotifier<School> {
   late final int id;
 
-  Instrument build(
+  School build(
     int id,
   );
 }
 
-/// See also [InstrumentDetails].
-@ProviderFor(InstrumentDetails)
-const instrumentDetailsProvider = InstrumentDetailsFamily();
+/// See also [SchoolsDetailsController].
+@ProviderFor(SchoolsDetailsController)
+const schoolsDetailsControllerProvider = SchoolsDetailsControllerFamily();
 
-/// See also [InstrumentDetails].
-class InstrumentDetailsFamily extends Family {
-  /// See also [InstrumentDetails].
-  const InstrumentDetailsFamily();
+/// See also [SchoolsDetailsController].
+class SchoolsDetailsControllerFamily extends Family {
+  /// See also [SchoolsDetailsController].
+  const SchoolsDetailsControllerFamily();
 
   static const Iterable<ProviderOrFamily>? _dependencies = null;
 
@@ -59,21 +60,21 @@ class InstrumentDetailsFamily extends Family {
       _allTransitiveDependencies;
 
   @override
-  String? get name => r'instrumentDetailsProvider';
+  String? get name => r'schoolsDetailsControllerProvider';
 
-  /// See also [InstrumentDetails].
-  InstrumentDetailsProvider call(
+  /// See also [SchoolsDetailsController].
+  SchoolsDetailsControllerProvider call(
     int id,
   ) {
-    return InstrumentDetailsProvider(
+    return SchoolsDetailsControllerProvider(
       id,
     );
   }
 
   @visibleForOverriding
   @override
-  InstrumentDetailsProvider getProviderOverride(
-    covariant InstrumentDetailsProvider provider,
+  SchoolsDetailsControllerProvider getProviderOverride(
+    covariant SchoolsDetailsControllerProvider provider,
   ) {
     return call(
       provider.id,
@@ -81,48 +82,48 @@ class InstrumentDetailsFamily extends Family {
   }
 
   /// Enables overriding the behavior of this provider, no matter the parameters.
-  Override overrideWith(InstrumentDetails Function() create) {
-    return _$InstrumentDetailsFamilyOverride(this, create);
+  Override overrideWith(SchoolsDetailsController Function() create) {
+    return _$SchoolsDetailsControllerFamilyOverride(this, create);
   }
 }
 
-class _$InstrumentDetailsFamilyOverride implements FamilyOverride {
-  _$InstrumentDetailsFamilyOverride(this.overriddenFamily, this.create);
+class _$SchoolsDetailsControllerFamilyOverride implements FamilyOverride {
+  _$SchoolsDetailsControllerFamilyOverride(this.overriddenFamily, this.create);
 
-  final InstrumentDetails Function() create;
-
-  @override
-  final InstrumentDetailsFamily overriddenFamily;
+  final SchoolsDetailsController Function() create;
 
   @override
-  InstrumentDetailsProvider getProviderOverride(
-    covariant InstrumentDetailsProvider provider,
+  final SchoolsDetailsControllerFamily overriddenFamily;
+
+  @override
+  SchoolsDetailsControllerProvider getProviderOverride(
+    covariant SchoolsDetailsControllerProvider provider,
   ) {
     return provider._copyWith(create);
   }
 }
 
-/// See also [InstrumentDetails].
-class InstrumentDetailsProvider
-    extends AutoDisposeNotifierProviderImpl<InstrumentDetails, Instrument> {
-  /// See also [InstrumentDetails].
-  InstrumentDetailsProvider(
+/// See also [SchoolsDetailsController].
+class SchoolsDetailsControllerProvider
+    extends AutoDisposeNotifierProviderImpl<SchoolsDetailsController, School> {
+  /// See also [SchoolsDetailsController].
+  SchoolsDetailsControllerProvider(
     int id,
   ) : this._internal(
-          () => InstrumentDetails()..id = id,
-          from: instrumentDetailsProvider,
-          name: r'instrumentDetailsProvider',
+          () => SchoolsDetailsController()..id = id,
+          from: schoolsDetailsControllerProvider,
+          name: r'schoolsDetailsControllerProvider',
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : _$instrumentDetailsHash,
-          dependencies: InstrumentDetailsFamily._dependencies,
+                  : _$schoolsDetailsControllerHash,
+          dependencies: SchoolsDetailsControllerFamily._dependencies,
           allTransitiveDependencies:
-              InstrumentDetailsFamily._allTransitiveDependencies,
+              SchoolsDetailsControllerFamily._allTransitiveDependencies,
           id: id,
         );
 
-  InstrumentDetailsProvider._internal(
+  SchoolsDetailsControllerProvider._internal(
     super.create, {
     required super.name,
     required super.dependencies,
@@ -135,8 +136,8 @@ class InstrumentDetailsProvider
   final int id;
 
   @override
-  Instrument runNotifierBuild(
-    covariant InstrumentDetails notifier,
+  School runNotifierBuild(
+    covariant SchoolsDetailsController notifier,
   ) {
     return notifier.build(
       id,
@@ -144,10 +145,10 @@ class InstrumentDetailsProvider
   }
 
   @override
-  Override overrideWith(InstrumentDetails Function() create) {
+  Override overrideWith(SchoolsDetailsController Function() create) {
     return ProviderOverride(
       origin: this,
-      override: InstrumentDetailsProvider._internal(
+      override: SchoolsDetailsControllerProvider._internal(
         () => create()..id = id,
         from: from,
         name: null,
@@ -165,15 +166,15 @@ class InstrumentDetailsProvider
   }
 
   @override
-  AutoDisposeNotifierProviderElement<InstrumentDetails, Instrument>
+  AutoDisposeNotifierProviderElement<SchoolsDetailsController, School>
       createElement() {
-    return _InstrumentDetailsProviderElement(this);
+    return _SchoolsDetailsControllerProviderElement(this);
   }
 
-  InstrumentDetailsProvider _copyWith(
-    InstrumentDetails Function() create,
+  SchoolsDetailsControllerProvider _copyWith(
+    SchoolsDetailsController Function() create,
   ) {
-    return InstrumentDetailsProvider._internal(
+    return SchoolsDetailsControllerProvider._internal(
       () => create()..id = id,
       name: name,
       dependencies: dependencies,
@@ -186,7 +187,7 @@ class InstrumentDetailsProvider
 
   @override
   bool operator ==(Object other) {
-    return other is InstrumentDetailsProvider && other.id == id;
+    return other is SchoolsDetailsControllerProvider && other.id == id;
   }
 
   @override
@@ -198,18 +199,18 @@ class InstrumentDetailsProvider
   }
 }
 
-mixin InstrumentDetailsRef on AutoDisposeNotifierProviderRef<Instrument> {
+mixin SchoolsDetailsControllerRef on AutoDisposeNotifierProviderRef<School> {
   /// The parameter `id` of this provider.
   int get id;
 }
 
-class _InstrumentDetailsProviderElement
-    extends AutoDisposeNotifierProviderElement<InstrumentDetails, Instrument>
-    with InstrumentDetailsRef {
-  _InstrumentDetailsProviderElement(super.provider);
+class _SchoolsDetailsControllerProviderElement
+    extends AutoDisposeNotifierProviderElement<SchoolsDetailsController, School>
+    with SchoolsDetailsControllerRef {
+  _SchoolsDetailsControllerProviderElement(super.provider);
 
   @override
-  int get id => (origin as InstrumentDetailsProvider).id;
+  int get id => (origin as SchoolsDetailsControllerProvider).id;
 }
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, inference_failure_on_uninitialized_variable, inference_failure_on_function_return_type, inference_failure_on_untyped_parameter, deprecated_member_use_from_same_package

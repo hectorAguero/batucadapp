@@ -28,6 +28,7 @@ class AdaptiveNavigationRail extends StatelessWidget {
     final footerHeight = height <= ScreenSize.smallHeight
         ? AdaptiveNavigationRailFooter.heightCollapsed
         : AdaptiveNavigationRailFooter.heightFull;
+
     return ColoredBox(
       color: context.colorScheme.surface,
       child: Column(

@@ -5,10 +5,10 @@ import '../../utils/immutable_list.dart';
 import 'parade.dart';
 import 'parades_repo.dart';
 
-part 'parades_tab_providers.g.dart';
+part 'parades_tab_controller.g.dart';
 
 @riverpod
-class Parades extends _$Parades {
+class ParadesTabController extends _$ParadesTabController {
   static const _pageSize = 10;
 
   @override
@@ -19,19 +19,23 @@ class Parades extends _$Parades {
   }
 
   Future<bool?> fetchNextPage({int pageSize = _pageSize}) async {
+    final current = state.value ?? const IList.empty();
     try {
       final parades = await getParades(
-        page: state.value!.length ~/ pageSize + 1,
+        page: current.length ~/ pageSize + 1,
         pageSize: pageSize,
       );
       if (parades.isNotEmpty) {
-        state = AsyncData(ImmutableList([...state.value!, ...parades]));
+        state = AsyncData(ImmutableList([...current, ...parades]));
+
         return true;
       }
       ref.read(paradesTabReachedLimitProvider.notifier).setReachedLimit();
+
       return false;
     } catch (e, st) {
       logViews.warning('Failed to fetch next page $e', e, st);
+
       return null;
     }
   }
@@ -48,8 +52,10 @@ class Parades extends _$Parades {
         );
     if (parades.isEmpty || parades.length < pageSize) {
       ref.read(paradesTabReachedLimitProvider.notifier).setReachedLimit();
+
       return parades;
     }
+
     return parades;
   }
 }

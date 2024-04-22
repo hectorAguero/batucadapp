@@ -1,27 +1,30 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'schools_tab_providers.dart';
+part of 'schools_tab_controller.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$schoolsHash() => r'4aba4f933e856cc38139fc9d9b77abbb5496fbeb';
+String _$schoolsTabControllerHash() =>
+    r'86239ab4bdf4f3bbf10ab430895ff410a2efcafe';
 
-/// See also [Schools].
-@ProviderFor(Schools)
-final schoolsProvider =
-    AutoDisposeAsyncNotifierProvider<Schools, ImmutableList<School>>.internal(
-  Schools.new,
-  name: r'schoolsProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$schoolsHash,
+/// See also [SchoolsTabController].
+@ProviderFor(SchoolsTabController)
+final schoolsTabControllerProvider = AutoDisposeAsyncNotifierProvider<
+    SchoolsTabController, ImmutableList<School>>.internal(
+  SchoolsTabController.new,
+  name: r'schoolsTabControllerProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$schoolsTabControllerHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$Schools = AutoDisposeAsyncNotifier<ImmutableList<School>>;
-String _$favoriteSchoolsHash() => r'8acf3025d87137d207d0871badbc5b455f90d8c6';
+typedef _$SchoolsTabController
+    = AutoDisposeAsyncNotifier<ImmutableList<School>>;
+String _$favoriteSchoolsHash() => r'bbf5471b1c45dfd748df53c883c674586c4d7a3b';
 
 /// See also [FavoriteSchools].
 @ProviderFor(FavoriteSchools)
@@ -37,7 +40,7 @@ final favoriteSchoolsProvider = AutoDisposeNotifierProvider<FavoriteSchools,
 );
 
 typedef _$FavoriteSchools = AutoDisposeNotifier<ImmutableList<String>>;
-String _$schoolDivisionsHash() => r'fd0bd47cb45eff1499fdb954f54778f2b22f4347';
+String _$schoolDivisionsHash() => r'a37f839f4ee8d6e192affdb0cb63e1fbabe0aabe';
 
 /// See also [SchoolDivisions].
 @ProviderFor(SchoolDivisions)
@@ -53,7 +56,7 @@ final schoolDivisionsProvider = AutoDisposeNotifierProvider<SchoolDivisions,
 );
 
 typedef _$SchoolDivisions = AutoDisposeNotifier<Map<SchoolDivision, bool>>;
-String _$searchedSchoolHash() => r'1109496d2bb599150694d30dc372748c439e63bc';
+String _$searchedSchoolHash() => r'23d65b61351b411c9230f5f87ffe7ba56348b0a6';
 
 /// See also [SearchedSchool].
 @ProviderFor(SearchedSchool)

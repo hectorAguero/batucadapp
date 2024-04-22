@@ -1,26 +1,29 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'parades_tab_providers.dart';
+part of 'parades_tab_controller.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$paradesHash() => r'212ae8bb76bd4971f4aa3e384283957fe8dd780c';
+String _$paradesTabControllerHash() =>
+    r'6c5d4cd7a66b471fdd03be710654b7eea981fc4e';
 
-/// See also [Parades].
-@ProviderFor(Parades)
-final paradesProvider =
-    AutoDisposeAsyncNotifierProvider<Parades, ImmutableList<Parade>>.internal(
-  Parades.new,
-  name: r'paradesProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$paradesHash,
+/// See also [ParadesTabController].
+@ProviderFor(ParadesTabController)
+final paradesTabControllerProvider = AutoDisposeAsyncNotifierProvider<
+    ParadesTabController, ImmutableList<Parade>>.internal(
+  ParadesTabController.new,
+  name: r'paradesTabControllerProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$paradesTabControllerHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$Parades = AutoDisposeAsyncNotifier<ImmutableList<Parade>>;
+typedef _$ParadesTabController
+    = AutoDisposeAsyncNotifier<ImmutableList<Parade>>;
 String _$paradesTabReachedLimitHash() =>
     r'e24c9ae9f3318555dd548f146cde6bc7ff0fb670';
 

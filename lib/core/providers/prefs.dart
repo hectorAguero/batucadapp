@@ -1,8 +1,9 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-part 'prefs_provider.g.dart';
+part 'prefs.g.dart';
 
 @Riverpod(keepAlive: true)
-Future<SharedPreferences> prefs(PrefsRef ref) =>
-    SharedPreferences.getInstance();
+Future<SharedPreferences> prefs(PrefsRef _) {
+  return SharedPreferences.getInstance();
+}

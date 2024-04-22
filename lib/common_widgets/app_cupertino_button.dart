@@ -6,13 +6,6 @@ import '../core/extensions/theme_of_context_extension.dart';
 
 ///extended CupertinoButton to pass null values in the minimumSize and padding
 
-enum CupertinoButtonType {
-  plain,
-  gray,
-  tinted,
-  filled,
-}
-
 class AppCupertinoButton extends StatelessWidget {
   const AppCupertinoButton({
     required this.child,
@@ -24,7 +17,7 @@ class AppCupertinoButton extends StatelessWidget {
     this.padding = EdgeInsets.zero,
     this.minSize,
     this.borderRadius = const BorderRadius.all(Radius.circular(32)),
-    this.type,
+    this.type = CupertinoButtonType.plain,
   });
 
   const AppCupertinoButton.tinted({
@@ -48,11 +41,14 @@ class AppCupertinoButton extends StatelessWidget {
   final Color? color;
   final Color? disabledColor;
   final BorderRadius borderRadius;
-  final CupertinoButtonType? type;
+  final CupertinoButtonType type;
 
   @override
   Widget build(BuildContext context) {
-    final typeSize = type == null ? 0.0 : kMinInteractiveDimensionCupertino;
+    final typeSize = type == CupertinoButtonType.plain
+        ? 0.0
+        : kMinInteractiveDimensionCupertino;
+
     return Theme(
       data: Theme.of(context).copyWith(
         cupertinoOverrideTheme: CupertinoThemeData(
@@ -74,7 +70,7 @@ class AppCupertinoButton extends StatelessWidget {
             padding: padding,
             minSize: minSize ?? typeSize,
             borderRadius: borderRadius,
-            color: _calculateColor(context),
+            color: type.calculateColor(color, context),
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -91,12 +87,24 @@ class AppCupertinoButton extends StatelessWidget {
       ),
     );
   }
+}
 
-  Color? _calculateColor(BuildContext context) {
-    return switch (type) {
-      CupertinoButtonType.plain || null => null,
+enum CupertinoButtonType {
+  plain,
+  gray,
+  tinted,
+  filled;
+
+  static const tintedOpacity = 0.2;
+
+  Color? calculateColor(
+    Color? color,
+    BuildContext context,
+  ) {
+    return switch (this) {
+      CupertinoButtonType.plain => null,
       CupertinoButtonType.gray => CupertinoColors.systemFill,
-      CupertinoButtonType.tinted => color!.withOpacity(0.2),
+      CupertinoButtonType.tinted => color?.withOpacity(tintedOpacity),
       CupertinoButtonType.filled => context.colorScheme.primary.darken()
     };
   }

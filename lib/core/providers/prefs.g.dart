@@ -1,12 +1,12 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'prefs_provider.dart';
+part of 'prefs.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$prefsHash() => r'e8538273305ad075d4c7d66aa5893f862d51be3f';
+String _$prefsHash() => r'5fa192c20a47a46153bec9274d10ff8a5807f867';
 
 /// See also [prefs].
 @ProviderFor(prefs)

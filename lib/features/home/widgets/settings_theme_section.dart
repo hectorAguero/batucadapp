@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/extensions/app_localization_extension.dart';
 import '../../../core/extensions/theme_of_context_extension.dart';
-import '../../../core/theme/theme_provider.dart';
+import '../../../core/theme/theme_mode_controller.dart';
 
 class SettingsThemeSection extends ConsumerWidget {
   const SettingsThemeSection({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final themeMode = ref.watch(appThemeModeProvider);
+    final themeMode = ref.watch(themeModeControllerProvider);
     final trueBlack = ref.watch(appThemeTrueBlackProvider);
 
     return CupertinoListSection.insetGrouped(
@@ -30,10 +30,10 @@ class SettingsThemeSection extends ConsumerWidget {
           title: CupertinoSegmentedControl<ThemeMode>(
             padding: EdgeInsets.zero,
             // This represents a currently selected segmented control.
-            groupValue: ref.watch(appThemeModeProvider),
+            groupValue: ref.watch(themeModeControllerProvider),
             // Callback that sets the selected segmented control.
             onValueChanged: (ThemeMode value) {
-              ref.read(appThemeModeProvider.notifier).setTheme(value);
+              ref.read(themeModeControllerProvider.notifier).setTheme(value);
             },
             children: <ThemeMode, Widget>{
               ThemeMode.light: Padding(

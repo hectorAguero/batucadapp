@@ -6,6 +6,7 @@ import '../../../common_widgets/app_cupertino_button.dart';
 import '../../../common_widgets/app_cupertino_sliver_navigation_bar.dart';
 import '../../../core/extensions/app_localization_extension.dart';
 import '../../../core/extensions/hardcoded_extension.dart';
+import '../../../utils/app_loggers.dart';
 import '../../../utils/screen_size.dart';
 
 class SchoolsTabNavBar extends StatelessWidget {
@@ -26,7 +27,9 @@ class SchoolsTabNavBar extends StatelessWidget {
             PullDownMenuItem.selectable(
               title: '🇧🇷 Rio de Janeiro'.hardcoded,
               selected: true,
-              onTap: () {},
+              onTap: () {
+                logViews.info('Selected Rio de Janeiro');
+              },
             ),
           ],
           buttonBuilder: (context, showMenu) => AppCupertinoButton(

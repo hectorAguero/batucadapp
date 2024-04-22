@@ -7,5 +7,6 @@ import 'package:fetch_client/fetch_client.dart';
 // ignore: implementation_imports
 import 'package:native_dio_adapter/src/conversion_layer_adapter.dart';
 
-HttpClientAdapter getNativeAdapter({bool? cronetHttp2}) =>
+// ignore: avoid_unused_parameters
+HttpClientAdapter getNativeAdapter() =>
     ConversionLayerAdapter(FetchClient(mode: RequestMode.cors));

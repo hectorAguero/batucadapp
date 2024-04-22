@@ -20,6 +20,7 @@ class ParadeItemBottomRow extends StatelessWidget {
     final medalColor = parade.medalColor(context);
     final day = parade.performanceDay.intlOrdinal(context);
     final order = parade.performanceOrder.intlOrdinal(context);
+
     return AppAnimatedLinearGradient(
       duration: const Duration(seconds: 10),
       colors: [
@@ -54,7 +55,7 @@ class ParadeItemBottomRow extends StatelessWidget {
                 '$order${context.loc.schoolToParade}',
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: context.textTheme.labelMedium!.copyWith(
+                style: context.labelMedium.copyWith(
                   fontStyle: FontStyle.italic,
                 ),
               ),

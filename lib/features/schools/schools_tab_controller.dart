@@ -1,37 +1,46 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../../core/providers/prefs_provider.dart';
+import '../../core/providers/prefs.dart';
 import '../../utils/app_loggers.dart';
 import '../../utils/immutable_list.dart';
 import 'school.dart';
 import 'schools_repo.dart';
 import 'widgets/school_card.dart';
 
-part 'schools_tab_providers.g.dart';
+part 'schools_tab_controller.g.dart';
 
 @riverpod
-class Schools extends _$Schools {
+class SchoolsTabController extends _$SchoolsTabController {
   static const _pageSize = 12;
 
   @override
-  FutureOr<ImmutableList<School>> build() async {
+  Future<ImmutableList<School>> build() async {
     return getSchools(pageSize: _pageSize);
   }
 
   Future<bool?> fetchNextPage({int pageSize = _pageSize}) async {
+    final current = state.value ?? const ImmutableList.empty();
     try {
       final schools = await getSchools(
-        page: state.value!.length ~/ pageSize + 1,
+        page: current.length ~/ pageSize + 1,
         pageSize: pageSize,
       );
       if (schools.isNotEmpty) {
-        state = AsyncData(ImmutableList([...state.value!, ...schools]));
+        state = AsyncData(
+          ImmutableList([
+            ...current,
+            ...schools,
+          ]),
+        );
+
         return true;
       }
       ref.read(schoolReachedMaxProvider.notifier).reached();
+
       return false;
     } catch (e, st) {
       logViews.warning('Failed to fetch next page $e', e, st);
+
       return null;
     }
   }
@@ -56,8 +65,10 @@ class Schools extends _$Schools {
         );
     if (schools.isEmpty || schools.length < pageSize) {
       ref.read(schoolReachedMaxProvider.notifier).reached();
+
       return schools;
     }
+
     return schools;
   }
 }
@@ -66,24 +77,26 @@ class Schools extends _$Schools {
 class FavoriteSchools extends _$FavoriteSchools {
   @override
   ImmutableList<String> build() {
-    final prefs = ref.watch(prefsProvider).value!;
-    return ImmutableList(prefs.getStringList('favoriteSchools') ?? []);
+    final prefs = ref.watch(prefsProvider).value;
+
+    return ImmutableList(prefs?.getStringList('favoriteSchools') ?? []);
   }
 
   void toggleFavorite(SchoolId id) {
-    final prefs = ref.watch(prefsProvider).value!;
-    final favoriteSchools = prefs.getStringList('favoriteSchools') ?? [];
+    final prefs = ref.watch(prefsProvider).value;
+    final favoriteSchools = prefs?.getStringList('favoriteSchools') ?? [];
     if (favoriteSchools.contains('$id')) {
       favoriteSchools.remove('$id');
     } else {
       favoriteSchools.add('$id');
     }
-    prefs.setStringList('favoriteSchools', favoriteSchools);
+    prefs?.setStringList('favoriteSchools', favoriteSchools);
     state = ImmutableList(favoriteSchools);
   }
 
   bool isFavorite(SchoolId id) {
     final favoriteSchools = state;
+
     return favoriteSchools.contains('$id');
   }
 }
@@ -92,8 +105,9 @@ class FavoriteSchools extends _$FavoriteSchools {
 class SchoolDivisions extends _$SchoolDivisions {
   @override
   Map<SchoolDivision, bool> build() {
-    final schools = ref.watch(schoolsProvider).valueOrNull;
+    final schools = ref.watch(schoolsTabControllerProvider).valueOrNull;
     final divisions = schools?.map((e) => e.currentDivision).toSet() ?? {};
+
     return <SchoolDivision, bool>{
       for (final division in divisions) division: true,
     };
@@ -122,14 +136,12 @@ class SchoolDivisions extends _$SchoolDivisions {
 @riverpod
 class SearchedSchool extends _$SearchedSchool {
   @override
-  String build() {
-    return '';
-  }
+  String build() => '';
 
   void setSearch(String search) {
     if (state != search.trim()) {
       state = search.trim();
-      ref.read(schoolsProvider.notifier).searchSchools();
+      ref.read(schoolsTabControllerProvider.notifier).searchSchools();
     }
   }
 }
@@ -160,13 +172,14 @@ class ShowOnlyFavoriteSchools extends _$ShowOnlyFavoriteSchools {
 final filteredSchoolsProvider =
     Provider.autoDispose<ImmutableList<School>>((ref) {
   final filter = ref.watch(schoolDivisionsProvider);
-  final schools = ref.watch(schoolsProvider).valueOrNull;
+  final schools = ref.watch(schoolsTabControllerProvider).valueOrNull;
   final favoritesIds = ref.watch(favoriteSchoolsProvider);
   final onlyFavorites = ref.watch(showOnlyFavoriteSchoolsProvider);
   if (schools == null) return ImmutableList(const []);
+
   return ImmutableList([
     for (final school in schools)
-      if (filter[school.currentDivision]! &&
+      if ((filter[school.currentDivision] ?? false) &&
           (!onlyFavorites || favoritesIds.contains('${school.id}')))
         school,
   ]);

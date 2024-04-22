@@ -5,12 +5,12 @@ import 'package:go_router/go_router.dart';
 
 import '../../../core/extensions/app_localization_extension.dart';
 import '../../../core/extensions/intl_extension.dart';
-import '../../../core/extensions/string_extension.dart';
+import '../../../core/extensions/string_extensions.dart';
 import '../../../core/extensions/theme_of_context_extension.dart';
 import '../../../utils/screen_size.dart';
 import '../school.dart';
 import '../school_extensions.dart';
-import '../schools_tab_providers.dart';
+import '../schools_tab_controller.dart';
 import 'school_flag.dart';
 
 class SchoolCard extends ConsumerStatefulWidget {
@@ -32,6 +32,7 @@ class _SchoolCardState extends ConsumerState<SchoolCard> {
   @override
   Widget build(BuildContext context) {
     final school = ref.watch(currentSchoolProvider);
+
     return Padding(
       padding: widget.margin ?? const EdgeInsets.only(bottom: 4),
       child: Card(
@@ -47,7 +48,7 @@ class _SchoolCardState extends ConsumerState<SchoolCard> {
           onLongPress: school.name == school.translatedName
               ? null
               : () => showOriginal.value = !showOriginal.value,
-          child: Container(
+          child: DecoratedBox(
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topLeft,
@@ -125,19 +126,19 @@ class SchoolInfoCard extends StatelessWidget {
                       '${school.translatedName}'
                       '${context.screenSize.isLarge ? '\n' : ' '}',
                       maxLines: 2,
-                      style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                            color: colorScheme.onSurface,
-                            fontWeight: FontWeight.bold,
-                          ),
+                      style: context.titleLarge.copyWith(
+                        color: colorScheme.onSurface,
+                        fontWeight: FontWeight.bold,
+                      ),
                     )
                   : Text(
                       '${school.name}'
                       '${!context.screenSize.isLarge ? '\n' : ' '}',
                       maxLines: 2,
-                      style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                            color: colorScheme.onSurface,
-                            fontWeight: FontWeight.bold,
-                          ),
+                      style: context.titleLarge.copyWith(
+                        color: colorScheme.onSurface,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
             ),
           ),
@@ -164,9 +165,9 @@ class SchoolInfoCard extends StatelessWidget {
                   ),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                        color: colorScheme.onSurface,
-                      ),
+                  style: context.titleMedium.copyWith(
+                    color: colorScheme.onSurface,
+                  ),
                 ),
               ),
             ),
@@ -174,16 +175,16 @@ class SchoolInfoCard extends StatelessWidget {
               child: Consumer(
                 builder: (context, ref, child) {
                   final sort = ref.watch(selectedSchoolSortProvider);
+
                   return Padding(
                     padding: const EdgeInsets.only(bottom: 8, right: 8),
                     child: TextButton(
                       onPressed: null,
                       style: TextButton.styleFrom(
-                        textStyle:
-                            Theme.of(context).textTheme.labelLarge!.copyWith(
-                                  wordSpacing: -1,
-                                  letterSpacing: -0.5,
-                                ),
+                        textStyle: context.labelLarge.copyWith(
+                          wordSpacing: -1,
+                          letterSpacing: -0.5,
+                        ),
                       ),
                       child: Text.rich(
                         TextSpan(
@@ -212,6 +213,7 @@ class SchoolInfoCard extends StatelessWidget {
 
 extension SelectedSchoolSortExtension on SchoolSort {
   String getSortedValue(School school, BuildContext context) {
+    final foundation = school.foundationDate;
     switch (this) {
       case SchoolSort.lastPerformance:
         if (school.lastPosition == 0) {
@@ -223,8 +225,8 @@ extension SelectedSchoolSortExtension on SchoolSort {
       case SchoolSort.name:
       case SchoolSort.foundationDate:
       case SchoolSort.location:
-        if (school.foundationDate != null) {
-          return school.foundationDate!.intlShort(context);
+        if (foundation != null) {
+          return foundation.intlShort(context);
         }
         return '';
     }

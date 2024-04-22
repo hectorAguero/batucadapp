@@ -11,6 +11,7 @@ void registerErrorHandlers() {
   // * Handle errors from the underlying platform/OS
   PlatformDispatcher.instance.onError = (Object error, StackTrace stack) {
     debugPrint(error.toString());
+
     return true;
   };
   // * Show some error UI when any widget in the app fails to build

@@ -22,9 +22,10 @@ class AdaptiveNavigationBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    const maxScaleFactor = 1.8;
     if (kIsCupertino) {
       return MediaQuery.withClampedTextScaling(
-        maxScaleFactor: 1.8,
+        maxScaleFactor: maxScaleFactor,
         child: AnimatedTheme(
           data: Theme.of(context),
           child: AppWebPadding.only(
@@ -48,6 +49,7 @@ class AdaptiveNavigationBar extends StatelessWidget {
         ),
       );
     }
+
     return AppWebPadding.only(
       color: context.colorScheme.primaryContainer,
       bottom: true,

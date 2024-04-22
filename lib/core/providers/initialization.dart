@@ -5,9 +5,9 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../../utils/app_error_handler.dart';
 import '../../utils/app_loggers.dart';
 import '../../utils/immutable_list.dart';
-import 'prefs_provider.dart';
+import 'prefs.dart';
 
-part 'initialization_provider.g.dart';
+part 'initialization.g.dart';
 
 @Riverpod(keepAlive: true)
 Future<void> initialization(InitializationRef ref) async {

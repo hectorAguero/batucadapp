@@ -1,6 +1,6 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../../core/providers/client_network_provider.dart';
+import '../../core/providers/client_network.dart';
 import '../../utils/immutable_list.dart';
 import 'details/instrument_details_page.dart';
 import 'instrument.dart';
@@ -19,20 +19,21 @@ abstract class InstrumentsRepo {
 }
 
 class InstrumentsRepoImpls implements InstrumentsRepo {
-  InstrumentsRepoImpls(this.ref);
-
   final InstrumentsRepoRef ref;
+
+  InstrumentsRepoImpls(this.ref);
 
   @override
   Future<ImmutableList<Instrument>> getInstruments() async {
     try {
-      final response = await ref
-          .watch(clientNetworkProvider)
-          .value!
-          .get<Iterable<dynamic>>(Endpoint.instruments.path);
-      final data = response.data!.cast<Map<String, dynamic>>();
+      final dio = await ref.watch(clientNetworkProvider.future);
+      final response =
+          await dio.get<Iterable<dynamic>>(Endpoint.instruments.path);
+      final data = response.data ?? [];
+
       return ImmutableList([
-        for (final item in data) Instrument.fromMap(item),
+        for (final item in data.cast<Map<String, dynamic>>())
+          Instrument.fromMap(item),
       ]);
     } catch (e) {
       throw AppNetworkError.fromNetworkClientException(e);
@@ -42,13 +43,12 @@ class InstrumentsRepoImpls implements InstrumentsRepo {
   @override
   Future<Instrument> getDetails(InstrumentId id) async {
     try {
-      final response = await ref
-          .watch(clientNetworkProvider)
-          .value!
-          .get<Map<String, dynamic>>(
-            '${Endpoint.instruments.pathId}/$id',
-          );
-      return Instrument.fromMap(response.data!);
+      final dio = await ref.watch(clientNetworkProvider.future);
+      final response = await dio.get<Map<String, dynamic>>(
+        '${Endpoint.instruments.pathId}/$id',
+      );
+
+      return Instrument.fromMap(response.data ?? {});
     } catch (e) {
       throw AppNetworkError.fromNetworkClientException(e);
     }

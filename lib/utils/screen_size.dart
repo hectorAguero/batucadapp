@@ -7,6 +7,10 @@ const _smallWidth = 600.0;
 const _mediumWidth = 900.0;
 const _largeWidth = 1200.0;
 
+const _smallAxisCount = 1;
+const _mediumAxisCount = 2;
+const _largeAxisCount = 3;
+
 enum ScreenSize {
   xs,
   md,
@@ -22,6 +26,12 @@ enum ScreenSize {
         (ScreenSize.lg) => _largeWidth,
       };
 
+  int get defaultCrossAxisCount => switch (this) {
+        (ScreenSize.xs) => _smallAxisCount,
+        (ScreenSize.md) => _mediumAxisCount,
+        (ScreenSize.lg) => _largeAxisCount,
+      };
+
   static double get smallHeight => _smallHeight;
 }
 
@@ -30,6 +40,10 @@ extension MediaQueryExtension on BuildContext {
     final width = MediaQuery.sizeOf(this).width;
     if (width < ScreenSize.xs.value) return ScreenSize.xs;
     if (width < ScreenSize.md.value) return ScreenSize.md;
+
     return ScreenSize.lg;
   }
+
+  bool get isSmallHeight =>
+      MediaQuery.sizeOf(this).height < ScreenSize.smallHeight;
 }

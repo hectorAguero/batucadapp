@@ -6,12 +6,12 @@ import '../../../common_widgets/app_cupertino_button.dart';
 import '../../../common_widgets/app_page_indicator.dart';
 import '../../../core/extensions/app_localization_extension.dart';
 import '../../../core/extensions/intl_extension.dart';
-import '../../../core/extensions/string_extension.dart';
+import '../../../core/extensions/string_extensions.dart';
 import '../../../core/extensions/theme_of_context_extension.dart';
 import '../school.dart';
 import '../school_extensions.dart';
 import '../widgets/school_flag.dart';
-import 'schools_details_providers.dart';
+import 'schools_details_controller.dart';
 
 class SchoolDetailsPage extends ConsumerStatefulWidget {
   const SchoolDetailsPage({
@@ -34,7 +34,8 @@ class _SchoolDetailsPageState extends ConsumerState<SchoolDetailsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final school = ref.watch(selectedSchoolProvider(widget.id));
+    final school = ref.watch(schoolsDetailsControllerProvider(widget.id));
+
     return ListView(
       shrinkWrap: true,
       children: [
@@ -155,6 +156,9 @@ class SchoolDetailsText extends StatefulWidget {
 class _SchoolDetailsTextState extends State<SchoolDetailsText> {
   @override
   Widget build(BuildContext context) {
+    final school = widget.school;
+    final foundationDate = school.foundationDate;
+
     return AnimatedSwitcher(
       duration: kThemeAnimationDuration,
       child: Padding(
@@ -176,7 +180,7 @@ class _SchoolDetailsTextState extends State<SchoolDetailsText> {
                             : '${widget.school.name}${'\n'}',
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
-                        style: context.textTheme.headlineMedium!
+                        style: context.headlineMedium
                             .copyWith(fontWeight: FontWeight.w600),
                       ),
                     ),
@@ -190,7 +194,7 @@ class _SchoolDetailsTextState extends State<SchoolDetailsText> {
                           children: [
                             Text(
                               '${widget.school.firstDivisionChampionships}',
-                              style: context.textTheme.headlineMedium!.copyWith(
+                              style: context.headlineMedium.copyWith(
                                 color: context.customColors.goldColor,
                                 fontWeight: FontWeight.bold,
                                 height: 1,
@@ -235,11 +239,11 @@ class _SchoolDetailsTextState extends State<SchoolDetailsText> {
                         ? widget.school.symbols.join(', ')
                         : widget.school.translatedSymbols.join(', '),
                   ),
-                if (widget.school.foundationDate != null)
+                if (foundationDate != null)
                   SchoolTextTile(
                     icon: Icons.date_range_outlined,
                     title: '${context.loc.schoolFoundation}: ',
-                    content: widget.school.foundationDate!.intlShort(context),
+                    content: foundationDate.intlShort(context),
                   ),
                 if (widget.school.godmotherSchool.isNotEmpty)
                   SchoolTextTile(
@@ -352,10 +356,10 @@ class SchoolTextTile extends StatelessWidget {
             TextSpan(text: title),
             TextSpan(
               text: content,
-              style: context.textTheme.bodyLarge,
+              style: context.bodyLarge,
             ),
           ],
-          style: context.textTheme.bodyLarge!.copyWith(
+          style: context.bodyLarge.copyWith(
             fontWeight: FontWeight.w600,
           ),
         ),

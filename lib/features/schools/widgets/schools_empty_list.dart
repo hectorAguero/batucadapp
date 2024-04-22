@@ -3,13 +3,15 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/extensions/app_localization_extension.dart';
 import '../../../core/extensions/theme_of_context_extension.dart';
-import '../schools_tab_providers.dart';
+import '../schools_tab_controller.dart';
 
 class SchoolsEmptyList extends ConsumerWidget {
   const SchoolsEmptyList({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final schools = ref.watch(schoolsTabControllerProvider).value;
+
     return SliverFillRemaining(
       child: Center(
         child: Padding(
@@ -17,11 +19,11 @@ class SchoolsEmptyList extends ConsumerWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              if (ref.watch(schoolsProvider).value?.isEmpty ?? false) ...[
+              if (schools == null || schools.isEmpty) ...[
                 const SizedBox(height: 8),
                 Text(
                   context.loc.noSchoolsFound,
-                  style: context.textTheme.titleMedium!.copyWith(
+                  style: context.titleMedium.copyWith(
                     color: context.colorScheme.onSurfaceVariant,
                   ),
                   textAlign: TextAlign.center,
@@ -31,7 +33,7 @@ class SchoolsEmptyList extends ConsumerWidget {
                 if (ref.watch(favoriteSchoolsProvider).isEmpty)
                   Text(
                     context.loc.noFavoriteSchools,
-                    style: context.textTheme.titleMedium!.copyWith(
+                    style: context.titleMedium.copyWith(
                       color: context.colorScheme.onSurfaceVariant,
                     ),
                     textAlign: TextAlign.center,
@@ -39,7 +41,7 @@ class SchoolsEmptyList extends ConsumerWidget {
                 else
                   Text(
                     context.loc.noFilteredSchools,
-                    style: context.textTheme.titleMedium!.copyWith(
+                    style: context.titleMedium.copyWith(
                       color: context.colorScheme.onSurfaceVariant,
                     ),
                     textAlign: TextAlign.center,

@@ -19,6 +19,7 @@ class HomePage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final screenSize = context.screenSize;
+
     return Scaffold(
       body: screenSize.isSmall
           ? navigationShell

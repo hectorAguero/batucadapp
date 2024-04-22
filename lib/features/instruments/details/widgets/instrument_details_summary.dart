@@ -15,6 +15,7 @@ class InstrumentDetailsSummary extends StatelessWidget {
       builder: (context, constraints) {
         final padding = (constraints.maxWidth - ScreenSize.md.value)
             .clamp(16.0, ScreenSize.md.value);
+
         return SingleChildScrollView(
           padding: EdgeInsets.symmetric(vertical: 16, horizontal: padding),
           physics: const NeverScrollableScrollPhysics(),

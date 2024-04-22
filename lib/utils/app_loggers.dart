@@ -47,9 +47,10 @@ void deactivateLoggers(Set<Logger> loggers) {
 }
 
 void _printLog(LogRecord record) {
+  const padLimit = 3;
   print(
     '(${record.time.second}.'
-    '${record.time.millisecond.toString().padLeft(3, '0')})'
+    '${record.time.millisecond.toString().padLeft(padLimit, '0')})'
     ' ${record.loggerName} > ${record.level.name}: ${record.message}',
   );
 }

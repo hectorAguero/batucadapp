@@ -24,6 +24,7 @@ class InstrumentHeaderImages extends StatelessWidget {
     final imageQuantity = context.screenSize.isSmall ? 2 : 3;
     final largeImageHeight =
         imageHeight * imageQuantity + (imageQuantity - 1) * 16;
+
     return Padding(
       padding: const EdgeInsets.all(24),
       child: Column(

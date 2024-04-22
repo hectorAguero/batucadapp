@@ -1,6 +1,6 @@
-import 'package:batucadapp/core/providers/prefs_provider.dart';
+import 'package:batucadapp/core/providers/prefs.dart';
 import 'package:batucadapp/localization/language.dart';
-import 'package:batucadapp/localization/language_app_provider.dart';
+import 'package:batucadapp/localization/language_app_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -15,10 +15,11 @@ ProviderContainer makeProviderContainer(
     overrides: [
       if (mockSharedPreferences != null)
         prefsProvider.overrideWith((_) => mockSharedPreferences),
-      languageAppProvider.overrideWith(LanguageApp.new),
+      languageAppControllerProvider.overrideWith(LanguageAppController.new),
     ],
   );
   addTearDown(container.dispose);
+
   return container;
 }
 
@@ -28,7 +29,8 @@ void main() {
   group('Build Language App Provider', () {
     test('Return default when SharedPreferences doesnt have a value', () async {
       final container = makeProviderContainer(MockSharedPreferences());
-      final language = await container.read(languageAppProvider.future);
+      final language =
+          await container.read(languageAppControllerProvider.future);
       expect(
         language.languageCode,
         TestWidgetsFlutterBinding
@@ -41,7 +43,8 @@ void main() {
       TestWidgetsFlutterBinding.instance.platformDispatcher.localeTestValue =
           const Locale('und', '');
       final container = makeProviderContainer(MockSharedPreferences());
-      final language = await container.read(languageAppProvider.future);
+      final language =
+          await container.read(languageAppControllerProvider.future);
       expect(
         language.languageCode,
         'en',
@@ -54,7 +57,8 @@ void main() {
       };
       final mockPrefs = MockSharedPreferences.setMockInitialValues(initialData);
       final container = makeProviderContainer(mockPrefs);
-      final language = await container.read(languageAppProvider.future);
+      final language =
+          await container.read(languageAppControllerProvider.future);
       expect(language, Language.pt);
     });
   });
@@ -67,10 +71,11 @@ void main() {
       final mock = MockSharedPreferences.setMockInitialValues(initialData);
       when(() => mock.setString('locale', any())).thenAnswer((_) async => true);
       final container = makeProviderContainer(mock);
-      final languageApp = container.read(languageAppProvider.notifier);
+      final languageApp =
+          container.read(languageAppControllerProvider.notifier);
       await languageApp.setLanguage(Language.es);
       await expectLater(
-        container.read(languageAppProvider.future),
+        container.read(languageAppControllerProvider.future),
         completion(Language.es),
       );
     });
@@ -82,10 +87,11 @@ void main() {
       final mock = MockSharedPreferences.setMockInitialValues(initialData);
       when(() => mock.remove('locale')).thenAnswer((_) async => true);
       final container = makeProviderContainer(mock);
-      final languageApp = container.read(languageAppProvider.notifier);
+      final languageApp =
+          container.read(languageAppControllerProvider.notifier);
       await languageApp.setLanguage(Language.es);
       await expectLater(
-        container.read(languageAppProvider.future),
+        container.read(languageAppControllerProvider.future),
         completion(Language.es),
       );
     });

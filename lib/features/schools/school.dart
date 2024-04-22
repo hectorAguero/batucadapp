@@ -12,6 +12,35 @@ typedef SchoolId = int;
 
 @MappableClass()
 class School with SchoolMappable {
+  final SchoolId id;
+  final String name;
+  final String imageUrl;
+  @MappableField(hook: DateTimeHook())
+  final DateTime? foundationDate;
+  final String godmotherSchool;
+  final ImmutableList<String> colors;
+  final ImmutableList<String> symbols;
+  final SchoolCategory carnivalCategory;
+  final int divisionNumber;
+  final int? subdivisionNumber;
+  final int firstDivisionChampionships;
+  final String country;
+  final String leagueLocation;
+  final int lastPosition;
+  final String translatedName;
+  final ImmutableList<String> translatedColors;
+  final ImmutableList<String> translatedSymbols;
+  final String translatedGodmotherSchool;
+  final String translatedCountry;
+  final String translatedLeagueLocation;
+  @MappableField(hook: SchoolColorHook(), key: 'colors')
+  final ImmutableList<Color> colorsCode;
+  @MappableField(key: 'divisionNumber')
+  final SchoolDivision currentDivision;
+
+  static const fromMap = SchoolMapper.fromMap;
+  static const fromJson = SchoolMapper.fromJson;
+
   const School({
     required this.id,
     required this.name,
@@ -36,35 +65,6 @@ class School with SchoolMappable {
     required this.translatedLeagueLocation,
     required this.translatedCountry,
   });
-
-  final SchoolId id;
-  final String name;
-  final String imageUrl;
-  @MappableField(hook: DateTimeHook())
-  final DateTime? foundationDate;
-  final String godmotherSchool;
-  final ImmutableList<String> colors;
-  final ImmutableList<String> symbols;
-  final SchoolCategory carnivalCategory;
-  final int divisionNumber;
-  final int? subdivisionNumber;
-  final int firstDivisionChampionships;
-  final String country;
-  final String leagueLocation;
-  final int lastPosition;
-  final String translatedName;
-  final ImmutableList<String> translatedColors;
-  final ImmutableList<String> translatedSymbols;
-  final String translatedGodmotherSchool;
-  final String translatedCountry;
-  final String translatedLeagueLocation;
-  @MappableField(hook: ColorHook(), key: 'colors')
-  final ImmutableList<Color> colorsCode;
-  @MappableField(key: 'divisionNumber')
-  final SchoolDivision currentDivision;
-
-  static const fromMap = SchoolMapper.fromMap;
-  static const fromJson = SchoolMapper.fromJson;
 }
 
 @MappableEnum(caseStyle: CaseStyle.upperCase)
@@ -79,25 +79,37 @@ enum SchoolCategory {
   blocoDeRua,
 }
 
+class _SchoolDivisionConstants {
+  static const int especial = 1;
+  static const int ouro = 2;
+  static const int prata = 3;
+  static const int bronze = 4;
+  static const int avaliacao = 5;
+  static const int mirins = 6;
+  static const int blocosDeEnredo1 = 7;
+  static const int blocosDeEnredo2 = 8;
+  static const int blocosDeRua = 9;
+}
+
 @MappableEnum()
 enum SchoolDivision {
-  @MappableValue(1)
+  @MappableValue(_SchoolDivisionConstants.especial)
   especial,
-  @MappableValue(2)
+  @MappableValue(_SchoolDivisionConstants.ouro)
   ouro,
-  @MappableValue(3)
+  @MappableValue(_SchoolDivisionConstants.prata)
   prata,
-  @MappableValue(4)
+  @MappableValue(_SchoolDivisionConstants.bronze)
   bronze,
-  @MappableValue(5)
+  @MappableValue(_SchoolDivisionConstants.avaliacao)
   avaliacao,
-  @MappableValue(6)
+  @MappableValue(_SchoolDivisionConstants.mirins)
   mirins,
-  @MappableValue(7)
+  @MappableValue(_SchoolDivisionConstants.blocosDeEnredo1)
   blocosDeEnredo1,
-  @MappableValue(8)
+  @MappableValue(_SchoolDivisionConstants.blocosDeEnredo2)
   blocosDeEnredo2,
-  @MappableValue(9)
+  @MappableValue(_SchoolDivisionConstants.blocosDeRua)
   blocosDeRua
 }
 
@@ -122,8 +134,9 @@ class DateTimeHook extends MappingHook {
       //1946/6/24
       if (value.isEmpty) return null;
       final data = value.trim().split('/');
+
       return DateTime(
-        int.parse(data[0]),
+        int.parse(data.first),
         data.length > 1 ? int.parse(data[1]) : 1,
         data.length > 2 ? int.parse(data[2]) : 1,
       );

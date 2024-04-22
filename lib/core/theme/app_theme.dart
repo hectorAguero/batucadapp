@@ -3,6 +3,8 @@ import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+const _iOSFontLetterSpacing = -1.5;
+
 class AppTheme {
   static ThemeData get lightTheme => FlexThemeData.light(
         useMaterial3: true,
@@ -79,7 +81,7 @@ class AppTheme {
             .navLargeTitleTextStyle
             // fixes a small bug with spacing
             .copyWith(
-              letterSpacing: -1.5,
+              letterSpacing: _iOSFontLetterSpacing,
             ),
       ),
     );
@@ -134,6 +136,7 @@ class AppCustomColors extends ThemeExtension<AppCustomColors> {
     if (other is! AppCustomColors) {
       return this;
     }
+
     return AppCustomColors(
       textColor: Color.lerp(textColor, other.textColor, t),
       inverseTextColor: Color.lerp(inverseTextColor, other.inverseTextColor, t),

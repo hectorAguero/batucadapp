@@ -22,21 +22,14 @@ class AppAnimatedLinearGradient extends StatefulWidget {
 
 class _AppAnimatedLinearGradientState extends State<AppAnimatedLinearGradient>
     with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
-  late Animation<double> _animation;
+  late final _controller =
+      AnimationController(duration: widget.duration, vsync: this);
+  late final _animation = Tween<double>(begin: 0, end: 1).animate(_controller);
 
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(duration: widget.duration, vsync: this)
-      ..repeat(reverse: true);
-    _animation = Tween<double>(begin: 0, end: 1).animate(_controller);
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
+    _controller.repeat(reverse: true);
   }
 
   @override
@@ -54,19 +47,26 @@ class _AppAnimatedLinearGradientState extends State<AppAnimatedLinearGradient>
       },
     );
   }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 }
 
 class LinearGradientPainter extends CustomPainter {
+  final List<Color> colors;
+  final double percent;
+  final Alignment begin;
+  final Alignment end;
+
   LinearGradientPainter({
     required this.colors,
     required this.percent,
     this.begin = Alignment.topLeft,
     this.end = Alignment.bottomRight,
   });
-  final List<Color> colors;
-  final double percent;
-  final Alignment begin;
-  final Alignment end;
 
   @override
   void paint(Canvas canvas, Size size) {

@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import '../../utils/app_loggers.dart';
 import '../../utils/immutable_list.dart';
 
-class ColorHook extends MappingHook {
-  const ColorHook();
+class SchoolColorHook extends MappingHook {
+  const SchoolColorHook();
 
   @override
   Object? beforeDecode(Object? value) {
@@ -14,6 +14,7 @@ class ColorHook extends MappingHook {
         for (final color in value) _getColor(color as String),
       ]);
     }
+
     return value;
   }
 
@@ -56,6 +57,7 @@ class ColorHook extends MappingHook {
 
   Color _defaultColor(String color) {
     logColorParse.info('Color not parsed $color');
+
     return Colors.white;
   }
 }

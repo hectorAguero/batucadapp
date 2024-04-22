@@ -6,7 +6,7 @@ import '../../../common_widgets/app_fade_in_image.dart';
 import '../../../core/extensions/app_localization_extension.dart';
 import '../../../core/extensions/theme_of_context_extension.dart';
 import '../school.dart';
-import '../schools_tab_providers.dart';
+import '../schools_tab_controller.dart';
 
 class SchoolFlag extends ConsumerWidget {
   const SchoolFlag({
@@ -27,6 +27,7 @@ class SchoolFlag extends ConsumerWidget {
     final isFavorite = ref.watch(
       favoriteSchoolsProvider.select((v) => v.contains('${school.id}')),
     );
+
     return Stack(
       children: [
         ClipRRect(
@@ -136,7 +137,7 @@ class EmptyImage extends StatelessWidget {
           const SizedBox(height: 8),
           Text(
             context.loc.noImage,
-            style: context.textTheme.titleLarge!.copyWith(
+            style: context.titleLarge.copyWith(
               color: context.colorScheme.onPrimaryContainer,
             ),
           ),

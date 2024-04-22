@@ -3,8 +3,29 @@ library;
 
 import 'package:flutter/material.dart';
 import '../../core/extensions/app_localization_extension.dart';
-import '../../core/extensions/string_extension.dart';
+import '../../core/extensions/string_extensions.dart';
 import 'school.dart';
+
+extension SchoolExtensions on School {
+  bool searchLogic(String search) {
+    if (name.removeAccents.contains(search)) {
+      return true;
+    }
+    if (symbols.join(' ').removeAccents.contains(search)) {
+      return true;
+    }
+
+    if (godmotherSchool.removeAccents.contains(search)) {
+      return true;
+    }
+
+    if (colorsCode.join(' ').removeAccents.contains(search)) {
+      return true;
+    }
+
+    return false;
+  }
+}
 
 extension SchoolDivisionExtension on SchoolDivision {
   String fullName(BuildContext context) => switch (this) {
@@ -35,25 +56,4 @@ extension SchoolDivisionExtension on SchoolDivision {
           context.loc.schoolDivisionEnredoBloco2,
         (SchoolDivision.blocosDeRua) => context.loc.schoolDivisionStreetBloco,
       };
-}
-
-extension SearchLogicSchoolExtension on School {
-  bool searchLogic(String search) {
-    if (name.removeAccents.contains(search)) {
-      return true;
-    }
-    if (symbols.join(' ').removeAccents.contains(search)) {
-      return true;
-    }
-
-    if (godmotherSchool.removeAccents.contains(search)) {
-      return true;
-    }
-
-    if (colorsCode.join(' ').removeAccents.contains(search)) {
-      return true;
-    }
-
-    return false;
-  }
 }

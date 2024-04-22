@@ -10,7 +10,7 @@ import '../../../core/extensions/theme_of_context_extension.dart';
 import '../../../utils/screen_size.dart';
 import '../../home/widgets/adaptive_navigation_rail.dart';
 import '../school.dart';
-import '../schools_tab_providers.dart';
+import '../schools_tab_controller.dart';
 
 class SchoolsTabSearchHeader extends ConsumerStatefulWidget {
   const SchoolsTabSearchHeader({super.key});
@@ -25,15 +25,10 @@ class _SchoolsTabSearchHeaderState
   late final controller = TextEditingController();
 
   @override
-  void dispose() {
-    super.dispose();
-    controller.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     // Watch to not dispose the provider
     ref.watch(searchedSchoolProvider);
+
     return WebPaddingSliver.only(
       right: true,
       sliver: SliverSafeArea(
@@ -112,14 +107,24 @@ class _SchoolsTabSearchHeaderState
     );
   }
 
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
   Rect calculateRect(BuildContext context) {
+    const top = 100.0;
+    const height = 48.0;
     if (context.screenSize.isLarge) {
       final left = ScreenSize.lg.value + AdaptiveNavigationRail.largeRailWidth;
+      const largeWidth = -48.0;
 
-      return Rect.fromLTWH(left, 100, -48, 48);
+      return Rect.fromLTWH(left, top, largeWidth, height);
     }
+    const width = 48.0;
     final left = MediaQuery.sizeOf(context).width - 48;
 
-    return Rect.fromLTWH(left, 100, 48, 48);
+    return Rect.fromLTWH(left, top, width, height);
   }
 }

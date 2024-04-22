@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_non_null_assertion, avoid_returning_widgets,
+// ignore_for_file: avoid_unnecessary_type_assertions
 // Copyright 2014 The Flutter Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
@@ -62,6 +64,7 @@ class _CupertinoSheetDecorationBuilder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final topPadding = MediaQuery.paddingOf(context).top;
+
     return SafeArea(
       bottom: false,
       minimum: EdgeInsets.only(top: topPadding + _kPreviousRouteVisibleOffset),
@@ -103,6 +106,14 @@ class _CupertinoSheetDecorationBuilder extends StatelessWidget {
 ///
 /// * [AppCupertinoSheetPage], which is the [Page] version of this class
 class CupertinoSheetRoute<T> extends SheetRoute<T> {
+  final SheetController _sheetController = SheetController();
+
+  @override
+  Color? get barrierColor => Colors.transparent;
+
+  @override
+  bool get barrierDismissible => true;
+
   CupertinoSheetRoute({
     required WidgetBuilder builder,
     super.stops,
@@ -124,18 +135,10 @@ class CupertinoSheetRoute<T> extends SheetRoute<T> {
           initialExtent: initialStop,
         );
 
-  final SheetController _sheetController = SheetController();
-
   @override
   SheetController createSheetController() {
     return _sheetController;
   }
-
-  @override
-  Color? get barrierColor => Colors.transparent;
-
-  @override
-  bool get barrierDismissible => true;
 
   @override
   Widget buildSheet(BuildContext context, Widget child) {
@@ -152,6 +155,7 @@ class CupertinoSheetRoute<T> extends SheetRoute<T> {
     final topPadding = MediaQuery.paddingOf(context).top;
     final topMargin = math.max(_kSheetMinimalOffset, topPadding) +
         _kPreviousRouteVisibleOffset;
+
     return Sheet.raw(
       initialExtent: initialExtent,
       decorationBuilder: decorationBuilder,
@@ -172,6 +176,7 @@ class CupertinoSheetRoute<T> extends SheetRoute<T> {
   ) {
     final topPadding = MediaQuery.paddingOf(context).top;
     final double topOffset = math.max(_kSheetMinimalOffset, topPadding);
+
     return AnimatedBuilder(
       animation: secondaryAnimation,
       child: CupertinoUserInterfaceLevel(
@@ -184,6 +189,7 @@ class CupertinoSheetRoute<T> extends SheetRoute<T> {
         final distanceWithScale =
             (topOffset + _kPreviousRouteVisibleOffset) * 0.9;
         final offset = Offset(0, progress * (topOffset - distanceWithScale));
+
         return Transform.translate(
           offset: offset,
           child: Transform.scale(
@@ -252,6 +258,7 @@ class CupertinoSheetBottomRouteTransition extends StatelessWidget {
     // Round corners for iPhone devices from X to the newest version
     final isRoundedDevice = defaultTargetPlatform == TargetPlatform.iOS &&
         topPadding > _kRoundedDeviceStatusBarHeight;
+
     return isRoundedDevice ? _kRoundedDeviceRadius : Radius.zero;
   }
 
@@ -277,6 +284,7 @@ class CupertinoSheetBottomRouteTransition extends StatelessWidget {
           final radius = progress == 0
               ? Radius.zero
               : Radius.lerp(deviceCorner, _kCupertinoSheetTopRadius, progress)!;
+
           return Stack(
             children: <Widget>[
               Container(color: CupertinoColors.black),
@@ -323,6 +331,14 @@ class CupertinoSheetBottomRouteTransition extends StatelessWidget {
 ///
 ///  * [CupertinoSheetRoute], which is the [PageRoute] version of this class
 class AppCupertinoSheetPage<T> extends Page<T> {
+  /// The content to be shown in the [Route] created by this page.
+  final Widget child;
+
+  /// {@macro flutter.widgets.modalRoute.maintainState}
+  final bool maintainState;
+
+  final SheetFit fit;
+
   /// Creates a material page.
   const AppCupertinoSheetPage({
     required this.child,
@@ -332,14 +348,6 @@ class AppCupertinoSheetPage<T> extends Page<T> {
     super.name,
     super.arguments,
   });
-
-  /// The content to be shown in the [Route] created by this page.
-  final Widget child;
-
-  /// {@macro flutter.widgets.modalRoute.maintainState}
-  final bool maintainState;
-
-  final SheetFit fit;
 
   @override
   Route<T> createRoute(BuildContext context) {
@@ -352,6 +360,13 @@ class AppCupertinoSheetPage<T> extends Page<T> {
 // This route uses the builder from the page to build its content. This ensures
 // the content is up to date after page updates.
 class _PageBasedCupertinoSheetRoute<T> extends CupertinoSheetRoute<T> {
+  AppCupertinoSheetPage<T> get _page => settings as AppCupertinoSheetPage<T>;
+
+  @override
+  bool get maintainState => _page.maintainState;
+
+  @override
+  String get debugLabel => '${super.debugLabel}(${_page.name})';
   _PageBasedCupertinoSheetRoute({
     required AppCupertinoSheetPage<T> page,
     super.stops,
@@ -367,12 +382,4 @@ class _PageBasedCupertinoSheetRoute<T> extends CupertinoSheetRoute<T> {
                 .child;
           },
         );
-
-  AppCupertinoSheetPage<T> get _page => settings as AppCupertinoSheetPage<T>;
-
-  @override
-  bool get maintainState => _page.maintainState;
-
-  @override
-  String get debugLabel => '${super.debugLabel}(${_page.name})';
 }

@@ -4,10 +4,10 @@ import '../../utils/immutable_list.dart';
 import 'instrument.dart';
 import 'instruments_repo.dart';
 
-part 'instruments_tab_providers.g.dart';
+part 'instruments_tab_controller.g.dart';
 
 @riverpod
-class InstrumentsTab extends _$InstrumentsTab {
+class InstrumentsTabController extends _$InstrumentsTabController {
   @override
   FutureOr<ImmutableList<Instrument>> build() async {
     return await ref.watch(instrumentsRepoProvider).getInstruments();

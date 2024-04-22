@@ -8,7 +8,7 @@ import '../schools/schools_tab_page.dart';
 part 'home_page_controller.g.dart';
 
 @Riverpod(keepAlive: true)
-class CurrentTab extends _$CurrentTab {
+class HomePageController extends _$HomePageController {
   @override
 
   ///Change for a pattern or record of hometab and boolean is is top

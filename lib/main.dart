@@ -8,11 +8,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
 
 import 'core/extensions/app_localization_extension.dart';
-import 'core/theme/theme_data.dart';
-import 'core/theme/theme_provider.dart';
+import 'core/theme/app_theme.dart';
+import 'core/theme/theme_mode_controller.dart';
 import 'l10n/app_localizations.dart';
 import 'localization/language.dart';
-import 'localization/language_app_provider.dart';
+import 'localization/language_app_controller.dart';
 import 'routing/app_router.dart';
 
 void main() {
@@ -20,7 +20,7 @@ void main() {
   runApp(const ProviderScope(child: MainApp()));
 }
 
-///This widget is the root of your application.
+// ignore: prefer_match_file_name
 class MainApp extends ConsumerWidget {
   const MainApp({super.key});
 
@@ -36,9 +36,10 @@ class MainApp extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     _initAndroid();
     final router = ref.watch(appRouterProvider);
-    final themeMode = ref.watch(appThemeModeProvider);
+    final themeMode = ref.watch(themeModeControllerProvider);
     final isTrueBlack = ref.watch(appThemeTrueBlackProvider);
-    final language = ref.watch(languageAppProvider).valueOrNull;
+    final language = ref.watch(languageAppControllerProvider).valueOrNull;
+
     return MaterialApp.router(
       routerConfig: router,
       onGenerateTitle: (context) => context.loc.appTitle,
@@ -57,7 +58,7 @@ class MainApp extends ConsumerWidget {
       ],
       builder: (context, child) => MediaQuery.withClampedTextScaling(
         maxScaleFactor: 2,
-        child: child!,
+        child: child ?? const SizedBox.shrink(),
       ),
       supportedLocales: AppLocalizations.supportedLocales,
       locale: language?.locale,

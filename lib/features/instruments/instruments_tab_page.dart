@@ -10,7 +10,7 @@ import '../../common_widgets/app_web_padding.dart';
 import '../../core/extensions/app_localization_extension.dart';
 import '../../utils/screen_size.dart';
 import '../home/home_page_controller.dart';
-import 'instruments_tab_providers.dart';
+import 'instruments_tab_controller.dart';
 import 'widgets/instrument_list_tile.dart';
 
 class InstrumentsTabPage extends ConsumerWidget {
@@ -35,8 +35,9 @@ class InstrumentsTabPage extends ConsumerWidget {
                 SliverAnimatedSwitcher(
                   duration: const Duration(milliseconds: 300),
                   child: AppAsyncSliverWidget(
-                    asyncValue: ref.watch(instrumentsTabProvider),
-                    onErrorRetry: () => ref.invalidate(instrumentsTabProvider),
+                    asyncValue: ref.watch(instrumentsTabControllerProvider),
+                    onErrorRetry: () =>
+                        ref.invalidate(instrumentsTabControllerProvider),
                     child: (value) => WebPaddingSliver.only(
                       right: true,
                       sliver: SliverSafeArea(
@@ -46,6 +47,7 @@ class InstrumentsTabPage extends ConsumerWidget {
                           itemCount: value.length,
                           itemBuilder: (context, index) {
                             final instrument = value[index];
+
                             return InstrumentListTile(
                               title: instrument.translatedName,
                               originalTitle: instrument.name,

@@ -6,34 +6,38 @@ import '../../../common_widgets/app_back_button.dart';
 import '../../../common_widgets/app_cupertino_sliver_navigation_bar.dart';
 import '../../../common_widgets/app_web_padding.dart';
 import '../../../core/extensions/app_localization_extension.dart';
+import '../../../core/extensions/text_lines_extension.dart';
 import '../../../utils/screen_size.dart';
-import 'instrument_details_providers.dart';
+import '../instrument.dart';
+import 'instrument_details_controller.dart';
 import 'widgets/instrument_details_summary.dart';
 import 'widgets/instrument_header_images.dart';
 
 typedef InstrumentId = int;
-
-enum InstrumentDetailsTab { summary, learning }
 
 class InstrumentDetailsPage extends ConsumerStatefulWidget {
   const InstrumentDetailsPage({required this.id, super.key});
 
   final InstrumentId id;
   static const path = 'details/:id';
+  static const bottomPaddingContent = 200.0;
 
   @override
   ConsumerState<InstrumentDetailsPage> createState() =>
       _InstrumentDetailsPageState();
 }
 
+enum InstrumentDetailsTab { summary, learning }
+
 class _InstrumentDetailsPageState extends ConsumerState<InstrumentDetailsPage> {
   final _controller = ScrollController();
 
   @override
   Widget build(BuildContext context) {
-    final value = ref.watch(instrumentDetailsProvider(widget.id));
+    final value = ref.watch(instrumentDetailsControllerProvider(widget.id));
     final screenConstraint = ScreenSize.lg.value;
     const imageHeight = 80.0;
+
     return DefaultTabController(
       length: InstrumentDetailsTab.values.length,
       child: Scaffold(
@@ -114,16 +118,8 @@ class _InstrumentDetailsPageState extends ConsumerState<InstrumentDetailsPage> {
                           top: 8,
                         ),
                         sliver: SliverToBoxAdapter(
-                          // TODO(hectorAguero): hardcoded to avoid overscroll
                           child: SizedBox(
-                            height: value.translatedDescription
-                                        .calculateLines(
-                                          context,
-                                          width: screenConstraint,
-                                        )
-                                        .toDouble() *
-                                    20 +
-                                200,
+                            height: _height(value, context, screenConstraint),
                             child: TabBarView(
                               physics: const ClampingScrollPhysics(),
                               children: [
@@ -148,17 +144,16 @@ class _InstrumentDetailsPageState extends ConsumerState<InstrumentDetailsPage> {
       ),
     );
   }
-}
 
-extension TextLinesExtension on String {
-  int calculateLines(BuildContext context, {double? width, TextStyle? style}) {
-    final textPainter = TextPainter(
-      text: TextSpan(
-        text: this,
-        style: style ?? DefaultTextStyle.of(context).style,
-      ),
-      textDirection: TextDirection.ltr,
-    )..layout(maxWidth: width ?? MediaQuery.of(context).size.width);
-    return textPainter.computeLineMetrics().length;
+  double _height(
+    Instrument value,
+    BuildContext context,
+    double screenConstraint,
+  ) {
+    return value.translatedDescription.calculateHeightByLines(
+      context,
+      width: screenConstraint,
+      paddingHeight: InstrumentDetailsPage.bottomPaddingContent,
+    );
   }
 }
