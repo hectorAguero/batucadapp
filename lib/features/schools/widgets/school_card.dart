@@ -81,7 +81,7 @@ class _SchoolCardState extends ConsumerState<SchoolCard> {
                 ),
                 ValueListenableBuilder(
                   valueListenable: showOriginal,
-                  builder: (context, value, child) {
+                  builder: (_, value, __) {
                     return SchoolInfoCard(
                       school: school,
                       showOriginal: value,
@@ -173,7 +173,7 @@ class SchoolInfoCard extends StatelessWidget {
             ),
             Flexible(
               child: Consumer(
-                builder: (context, ref, child) {
+                builder: (context, ref, _) {
                   final sort = ref.watch(selectedSchoolSortProvider);
 
                   return Padding(

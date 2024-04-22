@@ -29,14 +29,14 @@ class AppRouter extends _$AppRouter {
     return GoRouter(
       navigatorKey: _rootNavigatorKey,
       initialLocation: HomeTab.instruments.path,
-      errorPageBuilder: (context, state) => const NoTransitionPage(
+      errorPageBuilder: (_, __) => const NoTransitionPage(
         child: Scaffold(body: Text('404 - Not Found')),
       ),
-      redirect: (context, state) => _redirect(state, controllers),
+      redirect: (_, state) => _redirect(state, controllers),
       routes: [
         GoRoute(
           path: Initialization.path,
-          pageBuilder: (context, state) => NoTransitionPage(
+          pageBuilder: (_, __) => NoTransitionPage(
             child: Initialization(
               // * Just a placeholder, route will be managed by GoRouter
               onLoaded: (_) => const SizedBox.shrink(),
@@ -58,7 +58,7 @@ class AppRouter extends _$AppRouter {
                   routes: [
                     GoRoute(
                       path: InstrumentDetailsPage.path,
-                      onExit: (context) {
+                      onExit: (_) {
                         Future.microtask(
                           () => ref
                               .read(homePageControllerProvider.notifier)
@@ -90,7 +90,7 @@ class AppRouter extends _$AppRouter {
               routes: [
                 GoRoute(
                   path: SchoolsTabPage.path,
-                  builder: (context, state) {
+                  builder: (_, __) {
                     return PrimaryScrollController(
                       controller: controllers[SchoolsTabPage.tab.name]!,
                       child: const SchoolsTabPage(),
@@ -99,14 +99,14 @@ class AppRouter extends _$AppRouter {
                   routes: [
                     GoRoute(
                       path: SchoolDetailsPage.path,
-                      pageBuilder: (context, state) {
+                      pageBuilder: (_, state) {
                         return AppCupertinoSheetPage(
                           child: SchoolDetailsPage(
                             id: int.parse(state.pathParameters['id']!),
                           ),
                         );
                       },
-                      onExit: (context) {
+                      onExit: (_) {
                         Future.microtask(
                           () => ref
                               .read(homePageControllerProvider.notifier)

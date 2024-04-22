@@ -43,7 +43,7 @@ class _InstrumentDetailsPageState extends ConsumerState<InstrumentDetailsPage> {
       child: Scaffold(
         body: NestedScrollView(
           controller: _controller,
-          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+          headerSliverBuilder: (BuildContext context, _) {
             return <Widget>[
               SliverOverlapAbsorber(
                 handle: NestedScrollView.sliverOverlapAbsorberHandleFor(

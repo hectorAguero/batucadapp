@@ -101,7 +101,7 @@ class ParadeItemContent extends StatelessWidget {
                           child: AppFadeInImage(
                             parade.school.imageUrl,
                             fadeInDuration: const Duration(milliseconds: 300),
-                            imageErrorBuilder: (context, error, stackTrace) {
+                            imageErrorBuilder: (_, __, ___) {
                               return const SizedBox();
                             },
                           ),

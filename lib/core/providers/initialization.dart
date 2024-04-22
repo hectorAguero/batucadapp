@@ -2,9 +2,9 @@ import 'package:flutter/foundation.dart';
 import 'package:logging/logging.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../../utils/app_error_handler.dart';
 import '../../utils/app_loggers.dart';
 import '../../utils/immutable_list.dart';
+import '../../utils/register_error_handler.dart';
 import 'prefs.dart';
 
 part 'initialization.g.dart';

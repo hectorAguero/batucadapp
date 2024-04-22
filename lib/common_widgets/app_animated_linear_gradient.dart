@@ -36,7 +36,7 @@ class _AppAnimatedLinearGradientState extends State<AppAnimatedLinearGradient>
   Widget build(BuildContext context) {
     return AnimatedBuilder(
       animation: _animation,
-      builder: (context, child) {
+      builder: (_, __) {
         return CustomPaint(
           painter: LinearGradientPainter(
             colors: widget.colors,
@@ -61,6 +61,9 @@ class LinearGradientPainter extends CustomPainter {
   final Alignment begin;
   final Alignment end;
 
+  // Double the width to allow for a continuous flow
+  static const widthMultiplier = 2;
+
   LinearGradientPainter({
     required this.colors,
     required this.percent,
@@ -81,7 +84,7 @@ class LinearGradientPainter extends CustomPainter {
     final shaderRect = Rect.fromLTWH(
       -size.width * percent, // Shift the left boundary of the gradient
       0,
-      size.width * 2, // Double the width to allow for a continuous flow
+      size.width * widthMultiplier,
       size.height,
     );
 

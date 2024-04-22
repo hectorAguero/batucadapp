@@ -56,7 +56,7 @@ class MainApp extends ConsumerWidget {
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      builder: (context, child) => MediaQuery.withClampedTextScaling(
+      builder: (_, child) => MediaQuery.withClampedTextScaling(
         maxScaleFactor: 2,
         child: child ?? const SizedBox.shrink(),
       ),

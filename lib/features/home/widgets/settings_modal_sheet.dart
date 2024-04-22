@@ -19,7 +19,7 @@ void showSettingModalSheet(
     useRootNavigator: true,
     showDragHandle: false,
     isScrollControlled: true,
-    builder: (context) => SettingsModalSheet(showAsDialog: showAsDialog),
+    builder: (_) => SettingsModalSheet(showAsDialog: showAsDialog),
   );
 }
 

@@ -24,8 +24,8 @@ class SchoolsTabBody extends ConsumerWidget {
       sliver: AppAsyncSliverWidget(
         asyncValue: ref.watch(schoolsTabControllerProvider),
         onErrorRetry: () => ref.invalidate(schoolsTabControllerProvider),
-        child: (value) => Consumer(
-          builder: (context, ref, child) {
+        child: (_) => Consumer(
+          builder: (_, ref, __) {
             final schools = ref.watch(filteredSchoolsProvider);
 
             return SliverCrossAxisConstrained(
@@ -63,7 +63,7 @@ class SliverSchoolsList extends StatelessWidget {
     return SliverDynamicHeightGridView(
       itemCount: schools.length,
       crossAxisCount: context.screenSize.defaultCrossAxisCount,
-      builder: (context, index) {
+      builder: (_, index) {
         final school = schools[index];
 
         return AppAnimationWrapper(

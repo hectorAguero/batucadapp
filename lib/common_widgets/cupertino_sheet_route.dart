@@ -124,7 +124,7 @@ class CupertinoSheetRoute<T> extends SheetRoute<T> {
     super.draggable = true,
     super.fit,
   }) : super(
-          builder: (BuildContext context) {
+          builder: (_) {
             return _CupertinoSheetDecorationBuilder(
               backgroundColor: backgroundColor,
               topRadius: _kCupertinoSheetTopRadius,
@@ -183,7 +183,7 @@ class CupertinoSheetRoute<T> extends SheetRoute<T> {
         data: CupertinoUserInterfaceLevelData.elevated,
         child: child,
       ),
-      builder: (BuildContext context, Widget? child) {
+      builder: (_, Widget? child) {
         final progress = secondaryAnimation.value;
         final scale = 1 - progress / 10;
         final distanceWithScale =

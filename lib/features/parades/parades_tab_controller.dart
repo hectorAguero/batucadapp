@@ -70,7 +70,7 @@ class ParadesTabReachedLimit extends _$ParadesTabReachedLimit {
   }
 }
 
-final currentParadeProvider = Provider<Parade>((ref) {
+final currentParadeProvider = Provider<Parade>((_) {
   throw UnimplementedError();
 });
 

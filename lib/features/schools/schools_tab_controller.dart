@@ -199,4 +199,4 @@ class SchoolReachedMax extends _$SchoolReachedMax {
 /// This ensures that when we add/remove/edit schools, only what the
 /// impacted widgets rebuilds, instead of the entire list of items.
 final currentSchoolProvider =
-    Provider<School>((ref) => throw UnimplementedError());
+    Provider<School>((_) => throw UnimplementedError());

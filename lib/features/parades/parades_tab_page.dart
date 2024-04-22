@@ -73,7 +73,7 @@ class _ParadesTabPageState extends ConsumerState<ParadesTabPage> {
               child: SuperSliverList.builder(
                 itemCount: value.length,
                 listController: _listController,
-                itemBuilder: (context, index) {
+                itemBuilder: (_, index) {
                   final parade = value[index];
 
                   return ProviderScope(

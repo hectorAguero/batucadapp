@@ -44,11 +44,9 @@ class SchoolFilterChips extends ConsumerWidget {
                   selected: ref.watch(showOnlyFavoriteSchoolsProvider),
                   label: Text(context.loc.schoolFavorites),
                   selectedColor: context.colorScheme.primaryContainer,
-                  onSelected: (value) {
-                    ref
-                        .read(showOnlyFavoriteSchoolsProvider.notifier)
-                        .toggleShowFavorites();
-                  },
+                  onSelected: (_) => ref
+                      .read(showOnlyFavoriteSchoolsProvider.notifier)
+                      .toggleShowFavorites(),
                 ),
               ),
               Padding(

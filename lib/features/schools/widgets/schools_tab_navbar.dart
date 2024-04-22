@@ -22,7 +22,7 @@ class SchoolsTabNavBar extends StatelessWidget {
         largeTitle: context.loc.schoolsTitle,
         leading: PullDownButton(
           // menuOffset: context.screenSize.currentRailWidth,
-          itemBuilder: (context) => [
+          itemBuilder: (_) => [
             // TODO(hectorAguero): Should get this from the Data
             PullDownMenuItem.selectable(
               title: '🇧🇷 Rio de Janeiro'.hardcoded,
@@ -32,7 +32,7 @@ class SchoolsTabNavBar extends StatelessWidget {
               },
             ),
           ],
-          buttonBuilder: (context, showMenu) => AppCupertinoButton(
+          buttonBuilder: (_, showMenu) => AppCupertinoButton(
             onPressed: showMenu,
             child: const Icon(CupertinoIcons.ellipsis_circle),
           ),

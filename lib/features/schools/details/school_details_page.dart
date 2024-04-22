@@ -69,7 +69,7 @@ class _SchoolDetailsPageState extends ConsumerState<SchoolDetailsPage> {
               child: Column(
                 children: [
                   LayoutBuilder(
-                    builder: (context, constraints) => ConstrainedBox(
+                    builder: (_, constraints) => ConstrainedBox(
                       constraints: BoxConstraints(
                         maxHeight: ((constraints.maxWidth - 20) / 3) * 2,
                       ),
@@ -83,7 +83,7 @@ class _SchoolDetailsPageState extends ConsumerState<SchoolDetailsPage> {
                               itemCount: imageCount,
                               onPageChanged: (value) =>
                                   currentImage.value = value,
-                              itemBuilder: (context, index) {
+                              itemBuilder: (_, __) {
                                 return Padding(
                                   padding: const EdgeInsets.symmetric(
                                     horizontal: 12,
@@ -103,7 +103,7 @@ class _SchoolDetailsPageState extends ConsumerState<SchoolDetailsPage> {
                             ),
                             ValueListenableBuilder<int>(
                               valueListenable: currentImage,
-                              builder: (context, index, child) {
+                              builder: (_, index, __) {
                                 return AppPageIndicator(
                                   pageCount: imageCount,
                                   currentPage: index,
@@ -117,7 +117,7 @@ class _SchoolDetailsPageState extends ConsumerState<SchoolDetailsPage> {
                   ),
                   ValueListenableBuilder<bool>(
                     valueListenable: showOriginal,
-                    builder: (context, value, child) {
+                    builder: (_, value, __) {
                       return SchoolDetailsText(
                         school: school,
                         showOriginal: value,
