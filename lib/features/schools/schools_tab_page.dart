@@ -20,7 +20,7 @@ class SchoolsTabPage extends ConsumerStatefulWidget {
 }
 
 class _SchoolsTabState extends ConsumerState<SchoolsTabPage> {
-  final _debouncer = Debouncer(defaultDelay);
+  final _debouncer = Debouncer();
   late final ScrollController controller = PrimaryScrollController.of(context);
 
   @override

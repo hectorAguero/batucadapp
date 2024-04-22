@@ -27,7 +27,7 @@ class ParadesTabPage extends ConsumerStatefulWidget {
 }
 
 class _ParadesTabPageState extends ConsumerState<ParadesTabPage> {
-  final _debouncer = Debouncer(defaultDelay);
+  final _debouncer = Debouncer();
   final _listController = ListController();
   late final ScrollController controller = PrimaryScrollController.of(context);
 

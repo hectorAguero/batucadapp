@@ -1,13 +1,14 @@
 import 'dart:async';
 
-/// Duration(milliseconds: 300)
-const defaultDelay = Duration(milliseconds: 300);
+import '../constants.dart';
 
 class Debouncer {
   final Duration delay;
   Timer? _timer;
   bool _isFirstCall = true;
-  Debouncer(this.delay);
+
+  /// Debouncer constructor with default delay of 300 milliseconds
+  Debouncer([this.delay = Constants.debouncerDelay]);
 
   void run(void Function() action) {
     if (_isFirstCall) {
