@@ -9,7 +9,7 @@ part 'instruments_repo.g.dart';
 
 @riverpod
 InstrumentsRepo instrumentsRepo(InstrumentsRepoRef ref) {
-  return InstrumentRepoImpls(ref);
+  return InstrumentsRepoImpls(ref);
 }
 
 abstract class InstrumentsRepo {
@@ -18,8 +18,8 @@ abstract class InstrumentsRepo {
   Future<Instrument> getDetails(InstrumentId id);
 }
 
-class InstrumentRepoImpls implements InstrumentsRepo {
-  InstrumentRepoImpls(this.ref);
+class InstrumentsRepoImpls implements InstrumentsRepo {
+  InstrumentsRepoImpls(this.ref);
 
   final InstrumentsRepoRef ref;
 

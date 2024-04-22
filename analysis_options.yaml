@@ -7,7 +7,7 @@
 
 # The following line activates a set of recommended lints for Flutter apps,
 # packages, and plugins designed to encourage good coding practices.
-include: package:very_good_analysis/analysis_options.yaml
+include: package:solid_lints/analysis_options.yaml
 
 linter:
   # The lint rules applied to this project can be customized in the
@@ -22,6 +22,7 @@ linter:
   # producing the lint.
   rules:
     public_member_api_docs: false
+    sort_constructors_first: true
     use_setters_to_change_properties: false
     one_member_abstracts: false
     always_use_package_imports: false
@@ -31,4 +32,5 @@ analyzer:
   plugins:
     - custom_lint
   exclude:
+    - member_ordering: false
     - 'lib/l10n/*.dart'

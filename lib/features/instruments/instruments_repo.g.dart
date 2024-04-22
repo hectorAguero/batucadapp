@@ -6,7 +6,7 @@ part of 'instruments_repo.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$instrumentsRepoHash() => r'c18f42f8a1f93748803582ffb4297d1c76dfce20';
+String _$instrumentsRepoHash() => r'be669548808c3c86e523d75611dc91bdc21f2387';
 
 /// See also [instrumentsRepo].
 @ProviderFor(instrumentsRepo)

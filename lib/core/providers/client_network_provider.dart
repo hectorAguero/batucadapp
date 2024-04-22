@@ -18,9 +18,10 @@ part 'client_network_provider.g.dart';
 @Riverpod(keepAlive: true)
 class ClientNetwork extends _$ClientNetwork {
   @override
-  Future<Dio> build() async {
-    final language = ref.watch(languageAppProvider).value!.languageCode;
+  FutureOr<Dio> build() async {
     final cacheDirPath = await _getTemporaryDirectory();
+    final futureLanguage = await ref.watch(languageAppProvider.future);
+    final language = futureLanguage.languageCode;
     final cache = CacheOptions(
       store: BackupCacheStore(
         primary: MemCacheStore(),

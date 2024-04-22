@@ -23,16 +23,28 @@ ProviderContainer makeProviderContainer(
 }
 
 void main() {
-  TestWidgetsFlutterBinding.ensureInitialized();
+  setUpAll(TestWidgetsFlutterBinding.ensureInitialized);
 
   group('Build Language App Provider', () {
     test('Return default when SharedPreferences doesnt have a value', () async {
       final container = makeProviderContainer(MockSharedPreferences());
       final language = await container.read(languageAppProvider.future);
       expect(
-        language?.languageCode,
+        language.languageCode,
         TestWidgetsFlutterBinding
             .instance.platformDispatcher.locale.languageCode,
+      );
+    });
+
+    test('Return default when SharedPreferences nor Flutter have a right value',
+        () async {
+      TestWidgetsFlutterBinding.instance.platformDispatcher.localeTestValue =
+          const Locale('und', '');
+      final container = makeProviderContainer(MockSharedPreferences());
+      final language = await container.read(languageAppProvider.future);
+      expect(
+        language.languageCode,
+        'en',
       );
     });
 

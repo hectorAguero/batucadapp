@@ -6,12 +6,12 @@ part of 'language_app_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$languageAppHash() => r'e52112c6cd9856f2bf3ac95d9aa646ace4d03ed8';
+String _$languageAppHash() => r'ef2e6c2b06254f577831c8b2bdebcff29909220e';
 
 /// See also [LanguageApp].
 @ProviderFor(LanguageApp)
 final languageAppProvider =
-    AsyncNotifierProvider<LanguageApp, Language?>.internal(
+    AsyncNotifierProvider<LanguageApp, Language>.internal(
   LanguageApp.new,
   name: r'languageAppProvider',
   debugGetCreateSourceHash:
@@ -20,6 +20,6 @@ final languageAppProvider =
   allTransitiveDependencies: null,
 );
 
-typedef _$LanguageApp = AsyncNotifier<Language?>;
+typedef _$LanguageApp = AsyncNotifier<Language>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, inference_failure_on_uninitialized_variable, inference_failure_on_function_return_type, inference_failure_on_untyped_parameter, deprecated_member_use_from_same_package
