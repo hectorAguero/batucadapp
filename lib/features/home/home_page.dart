@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../common_widgets/app_web_padding.dart';
-import '../../extensions/theme_of_context_extension.dart';
+import '../../core/extensions/theme_of_context_extension.dart';
 import '../../utils/immutable_list.dart';
 import '../../utils/screen_size.dart';
 import 'home_page_controller.dart';
@@ -19,6 +19,7 @@ class HomePage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final screenSize = context.screenSize;
+
     return Scaffold(
       body: screenSize.isSmall
           ? navigationShell

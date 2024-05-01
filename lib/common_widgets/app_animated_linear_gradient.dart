@@ -22,28 +22,21 @@ class AppAnimatedLinearGradient extends StatefulWidget {
 
 class _AppAnimatedLinearGradientState extends State<AppAnimatedLinearGradient>
     with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
-  late Animation<double> _animation;
+  late final _controller =
+      AnimationController(duration: widget.duration, vsync: this);
+  late final _animation = Tween<double>(begin: 0, end: 1).animate(_controller);
 
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(duration: widget.duration, vsync: this)
-      ..repeat(reverse: true);
-    _animation = Tween<double>(begin: 0, end: 1).animate(_controller);
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
+    _controller.repeat(reverse: true);
   }
 
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
       animation: _animation,
-      builder: (context, child) {
+      builder: (_, __) {
         return CustomPaint(
           painter: LinearGradientPainter(
             colors: widget.colors,
@@ -54,19 +47,29 @@ class _AppAnimatedLinearGradientState extends State<AppAnimatedLinearGradient>
       },
     );
   }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 }
 
 class LinearGradientPainter extends CustomPainter {
+  final List<Color> colors;
+  final double percent;
+  final Alignment begin;
+  final Alignment end;
+
+  // Double the width to allow for a continuous flow
+  static const widthMultiplier = 2;
+
   LinearGradientPainter({
     required this.colors,
     required this.percent,
     this.begin = Alignment.topLeft,
     this.end = Alignment.bottomRight,
   });
-  final List<Color> colors;
-  final double percent;
-  final Alignment begin;
-  final Alignment end;
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -81,7 +84,7 @@ class LinearGradientPainter extends CustomPainter {
     final shaderRect = Rect.fromLTWH(
       -size.width * percent, // Shift the left boundary of the gradient
       0,
-      size.width * 2, // Double the width to allow for a continuous flow
+      size.width * widthMultiplier,
       size.height,
     );
 

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../common_widgets/app_fade_in_image.dart';
-import '../../../extensions/theme_of_context_extension.dart';
+import '../../../core/extensions/theme_of_context_extension.dart';
 
 typedef ImageUrl = String;
 
@@ -76,34 +76,26 @@ class _InstrumentListTileState extends State<InstrumentListTile> {
                           children: [
                             TextSpan(
                               text: widget.title,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headlineSmall!
-                                  .copyWith(
-                                    fontWeight: FontWeight.bold,
-                                    color: context.colorScheme.onSurfaceVariant,
-                                  ),
+                              style: context.headlineSmall.copyWith(
+                                fontWeight: FontWeight.bold,
+                                color: context.colorScheme.onSurfaceVariant,
+                              ),
                             ),
                             if (widget.title != widget.originalTitle)
                               TextSpan(
                                 text: ' ${widget.originalTitle}',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .titleLarge!
-                                    .copyWith(
-                                      color:
-                                          context.colorScheme.onSurfaceVariant,
-                                    ),
+                                style: context.titleLarge.copyWith(
+                                  color: context.colorScheme.onSurfaceVariant,
+                                ),
                               ),
                           ],
                           style: Theme.of(context).textTheme.headlineSmall,
                         ),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        style:
-                            Theme.of(context).textTheme.headlineSmall!.copyWith(
-                                  fontWeight: FontWeight.bold,
-                                ),
+                        style: context.headlineSmall.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                     Row(

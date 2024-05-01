@@ -1,6 +1,6 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../../core/client_network_provider.dart';
+import '../../core/providers/client_network.dart';
 import '../../utils/immutable_list.dart';
 import 'parade.dart';
 
@@ -20,26 +20,29 @@ abstract class ParadesRepo {
 }
 
 class ParadesRepoImpl implements ParadesRepo {
-  ParadesRepoImpl(this.ref);
-
   final ParadesRepoRef ref;
+  ParadesRepoImpl(this.ref);
 
   @override
   Future<ImmutableList<Parade>> getParades({
     ParadeQueryParams? queryParams,
   }) async {
     try {
-      final response =
-          await ref.watch(clientNetworkProvider).value!.get<Iterable<dynamic>>(
+      final dio = await ref.watch(clientNetworkProvider.future);
+      final page = queryParams?.page;
+      final pageSize = queryParams?.pageSize;
+      final response = await dio.get<Iterable<dynamic>>(
         Endpoint.parades.path,
         queryParameters: {
-          if (queryParams?.page != null) 'page': queryParams!.page,
-          if (queryParams?.pageSize != null) 'pageSize': queryParams!.pageSize,
+          if (page != null) 'page': page,
+          if (pageSize != null) 'pageSize': pageSize,
         },
       );
-      final data = response.data!.cast<Map<String, dynamic>>();
+      final data = response.data ?? <Map<String, dynamic>>[];
+
       return ImmutableList([
-        for (final item in data) Parade.fromMap(item),
+        for (final item in data.cast<Map<String, dynamic>>())
+          Parade.fromMap(item),
       ]);
     } catch (e) {
       throw AppNetworkError.fromNetworkClientException(e);
@@ -49,11 +52,11 @@ class ParadesRepoImpl implements ParadesRepo {
   @override
   Future<Parade> getParade(int id, {ParadeQueryParams? queryParams}) async {
     try {
-      final response = await ref
-          .watch(clientNetworkProvider)
-          .value!
-          .get<Map<String, dynamic>>('${Endpoint.parades.pathId}/$id');
-      return Parade.fromMap(response.data!);
+      final dio = await ref.watch(clientNetworkProvider.future);
+      final response =
+          await dio.get<Map<String, dynamic>>('${Endpoint.parades.pathId}/$id');
+
+      return Parade.fromMap(response.data ?? {});
     } catch (e) {
       throw AppNetworkError.fromNetworkClientException(e);
     }

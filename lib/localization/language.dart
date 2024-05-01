@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../extensions/app_localization_extension.dart';
+import '../core/extensions/app_localization_extension.dart';
 
 enum Language {
   en,
@@ -45,9 +45,9 @@ extension LanguageExtension on Language {
       };
 
   bool get isSameAsPlatform {
-    final platformLanguage =
-        WidgetsBinding.instance.platformDispatcher.locale.languageCode;
-    return languageCode == platformLanguage;
+    final platformLanguage = WidgetsBinding.instance.platformDispatcher;
+
+    return languageCode == platformLanguage.locale.languageCode;
   }
 }
 

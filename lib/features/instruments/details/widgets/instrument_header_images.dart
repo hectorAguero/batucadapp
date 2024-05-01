@@ -3,7 +3,7 @@ import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../common_widgets/app_fade_in_image.dart';
-import '../../../../extensions/theme_of_context_extension.dart';
+import '../../../../core/extensions/theme_of_context_extension.dart';
 import '../../../../utils/immutable_list.dart';
 import '../../../../utils/screen_size.dart';
 import '../../instrument.dart';
@@ -24,6 +24,7 @@ class InstrumentHeaderImages extends StatelessWidget {
     final imageQuantity = context.screenSize.isSmall ? 2 : 3;
     final largeImageHeight =
         imageHeight * imageQuantity + (imageQuantity - 1) * 16;
+
     return Padding(
       padding: const EdgeInsets.all(24),
       child: Column(

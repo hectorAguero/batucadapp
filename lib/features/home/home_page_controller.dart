@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import '../../extensions/app_localization_extension.dart';
+import '../../core/extensions/app_localization_extension.dart';
 import '../instruments/instruments_tab_page.dart';
 import '../parades/parades_tab_page.dart';
 import '../schools/schools_tab_page.dart';
@@ -8,7 +8,7 @@ import '../schools/schools_tab_page.dart';
 part 'home_page_controller.g.dart';
 
 @Riverpod(keepAlive: true)
-class CurrentTab extends _$CurrentTab {
+class HomePageController extends _$HomePageController {
   @override
 
   ///Change for a pattern or record of hometab and boolean is is top

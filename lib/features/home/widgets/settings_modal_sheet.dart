@@ -3,15 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../common_widgets/app_cupertino_button.dart';
-import '../../../extensions/app_localization_extension.dart';
-import '../../../extensions/theme_of_context_extension.dart';
+import '../../../core/extensions/app_localization_extension.dart';
+import '../../../core/extensions/theme_of_context_extension.dart';
 import '../../../localization/language.dart';
-import '../../../localization/language_app_provider.dart';
+import '../../../localization/language_app_controller.dart';
 import 'settings_theme_section.dart';
 
 void showSettingModalSheet(
   BuildContext context, {
-  EdgeInsets padding = const EdgeInsets.only(top: 24),
   bool showAsDialog = true,
 }) {
   showModalBottomSheet<void>(
@@ -20,7 +19,20 @@ void showSettingModalSheet(
     useRootNavigator: true,
     showDragHandle: false,
     isScrollControlled: true,
-    builder: (context) => SingleChildScrollView(
+    builder: (_) => SettingsModalSheet(showAsDialog: showAsDialog),
+  );
+}
+
+class SettingsModalSheet extends StatelessWidget {
+  final bool showAsDialog;
+  const SettingsModalSheet({
+    super.key,
+    this.showAsDialog = true,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
       padding: const EdgeInsets.only(bottom: 32),
       controller: PrimaryScrollController.of(context),
       physics: const ClampingScrollPhysics(),
@@ -31,7 +43,7 @@ void showSettingModalSheet(
             automaticallyImplyLeading: false,
             elevation: 0,
             title: Text(context.loc.settingsTitle),
-            titleTextStyle: context.textTheme.titleLarge!.copyWith(
+            titleTextStyle: context.titleLarge.copyWith(
               fontWeight: FontWeight.bold,
             ),
             backgroundColor:
@@ -60,8 +72,8 @@ void showSettingModalSheet(
           const SettingsLanguageSection(),
         ],
       ),
-    ),
-  );
+    );
+  }
 }
 
 class SettingsLanguageSection extends ConsumerWidget {
@@ -86,16 +98,15 @@ class SettingsLanguageSection extends ConsumerWidget {
           CupertinoListTile.notched(
             backgroundColor: context.colorScheme.surface,
             leading: Icon(
-              ref.watch(languageAppProvider).value == language
+              ref.watch(languageAppControllerProvider).value == language
                   ? CupertinoIcons.check_mark_circled
                   : null,
               color: context.colorScheme.primary,
             ),
             onTap: () {
-              ref.read(languageAppProvider.notifier).setLanguage(
-                    language,
-                    isSameAsPlatform: language.isSameAsPlatform,
-                  );
+              ref
+                  .read(languageAppControllerProvider.notifier)
+                  .setLanguage(language);
             },
             title: Text(
               language.nativeName,

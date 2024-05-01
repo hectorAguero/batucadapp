@@ -5,12 +5,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../common_widgets/app_animated_linear_gradient.dart';
 import '../../../common_widgets/app_fade_in_image.dart';
-import '../../../extensions/app_localization_extension.dart';
-import '../../../extensions/theme_of_context_extension.dart';
+import '../../../core/extensions/app_localization_extension.dart';
+import '../../../core/extensions/theme_of_context_extension.dart';
 import '../../schools/school_extensions.dart';
 import '../parade.dart';
 import '../parade_extension.dart';
-import '../parades_tab_providers.dart';
+import '../parades_tab_controller.dart';
 import 'parade_item_bottom_row.dart';
 import 'parade_item_sidebar.dart';
 
@@ -23,6 +23,7 @@ class ParadeItem extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final parade = ref.watch(currentParadeProvider);
     final medalColor = parade.medalColor(context);
+
     return Card(
       clipBehavior: Clip.antiAlias,
       margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
@@ -71,6 +72,7 @@ class ParadeItemContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final medalColor = parade.medalColor(context);
+
     return Stack(
       children: [
         Column(
@@ -99,7 +101,7 @@ class ParadeItemContent extends StatelessWidget {
                           child: AppFadeInImage(
                             parade.school.imageUrl,
                             fadeInDuration: const Duration(milliseconds: 300),
-                            imageErrorBuilder: (context, error, stackTrace) {
+                            imageErrorBuilder: (_, __, ___) {
                               return const SizedBox();
                             },
                           ),
@@ -131,6 +133,7 @@ class ParadeItemBadge extends StatelessWidget {
   Widget build(BuildContext context) {
     final medalColor = parade.medalColor(context);
     final divisionName = parade.divisionNumber.shortName(context);
+
     return DecoratedBox(
       decoration: BoxDecoration(
         borderRadius: const BorderRadius.only(
@@ -155,7 +158,7 @@ class ParadeItemBadge extends StatelessWidget {
             padding: const EdgeInsets.all(8),
             child: Text(
               divisionName,
-              style: context.textTheme.labelSmall!.copyWith(
+              style: context.labelSmall.copyWith(
                 color: context.colorScheme.onSurface,
                 fontWeight: FontWeight.bold,
               ),
@@ -181,6 +184,7 @@ class ParadeItemTextContentHeader extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final showOriginal = ref.watch(paradeShowOriginalProvider);
     final enredo = showOriginal ? parade.enredo : parade.translatedEnredo;
+
     return Padding(
       padding: padding,
       child: Column(
@@ -197,7 +201,7 @@ class ParadeItemTextContentHeader extends ConsumerWidget {
                         ? '${parade.school.name}\n'
                         : '${parade.school.translatedName}\n',
                     maxLines: 2,
-                    style: context.textTheme.labelSmall!.copyWith(
+                    style: context.labelSmall.copyWith(
                       color: context.colorScheme.onSurfaceVariant,
                     ),
                     strutStyle: const StrutStyle(
@@ -210,7 +214,7 @@ class ParadeItemTextContentHeader extends ConsumerWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 8),
                   child: Text(
                     parade.divisionNumber.shortName(context),
-                    style: context.textTheme.labelSmall!.copyWith(
+                    style: context.labelSmall.copyWith(
                       color: Colors.transparent,
                     ),
                   ),
@@ -227,7 +231,7 @@ class ParadeItemTextContentHeader extends ConsumerWidget {
                   TextSpan(text: parade.details),
               ],
             ),
-            style: context.textTheme.titleSmall!.copyWith(
+            style: context.titleSmall.copyWith(
               fontWeight: FontWeight.w700,
             ),
             strutStyle: const StrutStyle(
@@ -254,6 +258,7 @@ class ParadeItemTextContentDetails extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final showOriginal = ref.watch(paradeShowOriginalProvider);
+
     return Padding(
       padding: padding,
       child: Column(
@@ -289,13 +294,13 @@ class ParadeItemTextContentDetails extends ConsumerWidget {
                 children: [
                   TextSpan(
                     text: '${context.loc.schoolComponents}: ',
-                    style: context.textTheme.labelSmall!.copyWith(
+                    style: context.labelSmall.copyWith(
                       fontWeight: FontWeight.w400,
                     ),
                   ),
                   TextSpan(
                     text: parade.components.toString(),
-                    style: context.textTheme.labelSmall!.copyWith(
+                    style: context.labelSmall.copyWith(
                       fontWeight: FontWeight.w400,
                     ),
                   ),
@@ -333,7 +338,7 @@ class ParadeItemTextContentDetails extends ConsumerWidget {
                             : '',
                       ),
                     ],
-                    style: context.textTheme.labelSmall!.copyWith(
+                    style: context.labelSmall.copyWith(
                       fontWeight: FontWeight.w300,
                       fontStyle: FontStyle.italic,
                     ),

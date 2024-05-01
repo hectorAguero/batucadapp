@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../common_widgets/app_loading_indicator.dart';
 import '../../utils/debouncer.dart';
 import '../home/home_page_controller.dart';
-import 'schools_tab_providers.dart';
+import 'schools_tab_controller.dart';
 import 'widgets/school_filter_chips.dart';
 import 'widgets/schools_tab_body.dart';
 import 'widgets/schools_tab_navbar.dart';
@@ -20,30 +20,24 @@ class SchoolsTabPage extends ConsumerStatefulWidget {
 }
 
 class _SchoolsTabState extends ConsumerState<SchoolsTabPage> {
-  final _debouncer = Debouncer(defaultDelay);
-  ScrollController? controller;
+  final _debouncer = Debouncer();
+  late final ScrollController controller = PrimaryScrollController.of(context);
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      controller = PrimaryScrollController.of(context);
-      controller?.addListener(_loadMoreListener);
+      controller.addListener(_loadMoreListener);
     });
   }
 
-  @override
-  void dispose() {
-    _debouncer.dispose();
-    controller?.removeListener(_loadMoreListener);
-    super.dispose();
-  }
-
   void _loadMoreListener() {
-    final position = controller!.position;
+    final position = controller.position;
     if (position.pixels == position.maxScrollExtent) {
       if (!ref.read(schoolReachedMaxProvider)) {
-        _debouncer.run(ref.read(schoolsProvider.notifier).fetchNextPage);
+        _debouncer.run(
+          ref.read(schoolsTabControllerProvider.notifier).fetchNextPage,
+        );
       }
     }
   }
@@ -51,6 +45,7 @@ class _SchoolsTabState extends ConsumerState<SchoolsTabPage> {
   @override
   Widget build(BuildContext context) {
     final focus = FocusScope.of(context);
+
     return Scaffold(
       body: GestureDetector(
         onTap: () => focus.hasFocus ? focus.unfocus() : null,
@@ -67,6 +62,13 @@ class _SchoolsTabState extends ConsumerState<SchoolsTabPage> {
       ),
     );
   }
+
+  @override
+  void dispose() {
+    _debouncer.dispose();
+    controller.removeListener(_loadMoreListener);
+    super.dispose();
+  }
 }
 
 class SchoolsTabLoadMoreIndicator extends ConsumerWidget {
@@ -77,7 +79,8 @@ class SchoolsTabLoadMoreIndicator extends ConsumerWidget {
     final reachedLimit = ref.watch(schoolReachedMaxProvider);
     final isNotEmpty = ref.watch(filteredSchoolsProvider).isNotEmpty;
     final isFiltered = ref.watch(filteredSchoolsProvider).length !=
-        ref.watch(schoolsProvider).valueOrNull?.length;
+        ref.watch(schoolsTabControllerProvider).valueOrNull?.length;
+
     return AppLoadingIndicator(
       showLoading: !reachedLimit && isNotEmpty && !isFiltered,
       sliver: true,

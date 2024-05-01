@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 import '../../../common_widgets/app_animated_linear_gradient.dart';
-import '../../../extensions/app_localization_extension.dart';
-import '../../../extensions/intl_extension.dart';
-import '../../../extensions/theme_of_context_extension.dart';
+import '../../../core/extensions/app_localization_extension.dart';
+import '../../../core/extensions/intl_extension.dart';
+import '../../../core/extensions/theme_of_context_extension.dart';
 import '../parade.dart';
 import '../parade_extension.dart';
 
@@ -20,6 +20,7 @@ class ParadeItemBottomRow extends StatelessWidget {
     final medalColor = parade.medalColor(context);
     final day = parade.performanceDay.intlOrdinal(context);
     final order = parade.performanceOrder.intlOrdinal(context);
+
     return AppAnimatedLinearGradient(
       duration: const Duration(seconds: 10),
       colors: [
@@ -54,7 +55,7 @@ class ParadeItemBottomRow extends StatelessWidget {
                 '$order${context.loc.schoolToParade}',
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: context.textTheme.labelMedium!.copyWith(
+                style: context.labelMedium.copyWith(
                   fontStyle: FontStyle.italic,
                 ),
               ),

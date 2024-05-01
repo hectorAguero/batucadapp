@@ -1,6 +1,6 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../../core/client_network_provider.dart';
+import '../../core/providers/client_network.dart';
 import '../../utils/immutable_list.dart';
 import 'school.dart';
 
@@ -21,9 +21,9 @@ abstract class SchoolsRepo {
 }
 
 class SchoolsRepoImpls implements SchoolsRepo {
-  SchoolsRepoImpls(this.ref);
-
   final SchoolsRepoRef ref;
+
+  SchoolsRepoImpls(this.ref);
 
   @override
   Future<ImmutableList<School>> getSchools({
@@ -33,7 +33,7 @@ class SchoolsRepoImpls implements SchoolsRepo {
     required String search,
   }) async {
     try {
-      final networkClient = ref.watch(clientNetworkProvider).requireValue;
+      final networkClient = await ref.watch(clientNetworkProvider.future);
       final response = await networkClient.get<Iterable<dynamic>>(
         search.isEmpty ? Endpoint.schools.path : Endpoint.schools.pathSearch,
         queryParameters: {
@@ -43,9 +43,11 @@ class SchoolsRepoImpls implements SchoolsRepo {
           // if (sort.isNotEmpty) 'sort': sort,
         },
       );
-      final data = response.data!.cast<Map<String, dynamic>>();
+      final data = response.data ?? <Map<String, dynamic>>[];
+
       return ImmutableList([
-        for (final item in data) School.fromMap(item),
+        for (final item in data.cast<Map<String, dynamic>>())
+          School.fromMap(item),
       ]);
     } catch (e) {
       throw AppNetworkError.fromNetworkClientException(e);

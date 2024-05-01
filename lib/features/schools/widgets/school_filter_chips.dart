@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sliver_tools/sliver_tools.dart';
 
-import '../../../extensions/app_localization_extension.dart';
-import '../../../extensions/theme_of_context_extension.dart';
+import '../../../core/extensions/app_localization_extension.dart';
+import '../../../core/extensions/theme_of_context_extension.dart';
 import '../../../utils/screen_size.dart';
 import '../school_extensions.dart';
-import '../schools_tab_providers.dart';
+import '../schools_tab_controller.dart';
 
 class SchoolFilterChips extends ConsumerWidget {
   const SchoolFilterChips({
@@ -21,6 +21,7 @@ class SchoolFilterChips extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final selectedDivisions = ref.watch(schoolDivisionsProvider);
     final padding = MediaQuery.paddingOf(context);
+
     return SliverCrossAxisConstrained(
       maxCrossAxisExtent: ScreenSize.lg.value,
       child: SliverToBoxAdapter(
@@ -43,11 +44,9 @@ class SchoolFilterChips extends ConsumerWidget {
                   selected: ref.watch(showOnlyFavoriteSchoolsProvider),
                   label: Text(context.loc.schoolFavorites),
                   selectedColor: context.colorScheme.primaryContainer,
-                  onSelected: (value) {
-                    ref
-                        .read(showOnlyFavoriteSchoolsProvider.notifier)
-                        .toggleShowFavorites();
-                  },
+                  onSelected: (_) => ref
+                      .read(showOnlyFavoriteSchoolsProvider.notifier)
+                      .toggleShowFavorites(),
                 ),
               ),
               Padding(

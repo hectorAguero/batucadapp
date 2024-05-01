@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../../extensions/app_localization_extension.dart';
-import '../../../extensions/intl_extension.dart';
-import '../../../extensions/theme_of_context_extension.dart';
+import '../../../core/extensions/app_localization_extension.dart';
+import '../../../core/extensions/intl_extension.dart';
+import '../../../core/extensions/theme_of_context_extension.dart';
 import '../parade.dart';
 import '../parade_extension.dart';
 
@@ -19,6 +19,7 @@ class ParadeItemSideBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final medalColor = parade.medalColor(context);
+
     return Container(
       width: 48,
       height: double.infinity,
@@ -64,7 +65,7 @@ class ParadeItemSideBar extends StatelessWidget {
                   TextSpan(
                     children: [
                       TextSpan(
-                        style: context.textTheme.headlineSmall!.copyWith(
+                        style: context.headlineSmall.copyWith(
                           color: context.colorScheme.onSurface,
                           fontWeight: FontWeight.w600,
                         ),

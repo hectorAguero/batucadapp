@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../../extensions/hardcoded_extension.dart';
+import '../../../../core/extensions/hardcoded_extension.dart';
 
 class InstrumentDetailsLearning extends StatelessWidget {
   const InstrumentDetailsLearning({super.key});

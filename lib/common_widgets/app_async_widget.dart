@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sliver_tools/sliver_tools.dart';
 
-import '../extensions/app_localization_extension.dart';
+import '../core/extensions/app_localization_extension.dart';
 import 'app_cupertino_button.dart';
 import 'app_infinite_rotation_animation.dart';
 
@@ -77,6 +77,7 @@ class _AppAsyncSliverWidgetState<T> extends State<AppAsyncSliverWidget<T>> {
   @override
   Widget build(BuildContext context) {
     final isRefreshing = widget.asyncValue.isRefreshing;
+
     return SliverAnimatedSwitcher(
       duration: kThemeAnimationDuration,
       child: switch (widget.asyncValue) {
@@ -129,7 +130,7 @@ class _AppAsyncSliverWidgetState<T> extends State<AppAsyncSliverWidget<T>> {
 
   Future<void> errorRetry() async {
     setState(() => isLoading = true);
-    widget.onErrorRetry!();
+    widget.onErrorRetry?.call();
     await Future<void>.delayed(const Duration(milliseconds: 700));
     setState(() => isLoading = false);
   }
