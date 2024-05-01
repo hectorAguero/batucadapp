@@ -58,7 +58,7 @@ class AppRouter extends _$AppRouter {
                   routes: [
                     GoRoute(
                       path: InstrumentDetailsPage.path,
-                      onExit: (_) {
+                      onExit: (_, __) {
                         Future.microtask(
                           () => ref
                               .read(homePageControllerProvider.notifier)
@@ -106,7 +106,7 @@ class AppRouter extends _$AppRouter {
                           ),
                         );
                       },
-                      onExit: (_) {
+                      onExit: (_, __) {
                         Future.microtask(
                           () => ref
                               .read(homePageControllerProvider.notifier)

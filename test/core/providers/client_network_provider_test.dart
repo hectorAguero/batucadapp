@@ -9,13 +9,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:http_mock_adapter/http_mock_adapter.dart';
 import 'package:mocktail/mocktail.dart';
 
-class MockBaseOptions with Mock implements BaseOptions {}
-
-class MockDio with Mock implements Dio {}
-
-class MockCacheInterceptor with Mock implements Interceptor {}
-
-class MockLogInterceptor with Mock implements Interceptor {}
+import '../../create_container.dart';
 
 class MockClientNetwork extends AsyncNotifier<Dio>
     with Mock
@@ -63,22 +57,4 @@ void main() {
       );
     });
   });
-}
-
-ProviderContainer createContainer({
-  ProviderContainer? parent,
-  List<Override> overrides = const [],
-  List<ProviderObserver>? observers,
-}) {
-  // Create a ProviderContainer, and optionally allow specifying parameters.
-  final container = ProviderContainer(
-    parent: parent,
-    overrides: overrides,
-    observers: observers,
-  );
-
-  // When the test ends, dispose the container.
-  addTearDown(container.dispose);
-
-  return container;
 }
