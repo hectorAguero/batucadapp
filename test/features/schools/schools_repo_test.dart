@@ -6,7 +6,7 @@ import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
-import '../../create_container.dart';
+import '../../utils.dart';
 
 class SchoolsRepoMock with Mock implements SchoolsRepoImpls {}
 

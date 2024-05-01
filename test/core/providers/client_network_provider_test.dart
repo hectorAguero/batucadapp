@@ -9,11 +9,16 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:http_mock_adapter/http_mock_adapter.dart';
 import 'package:mocktail/mocktail.dart';
 
-import '../../create_container.dart';
+import '../../utils.dart';
 
 class MockClientNetwork extends AsyncNotifier<Dio>
     with Mock
     implements ClientNetwork {}
+
+// a generic Listener class, used to track a provider notifying its listeners
+class Listener<T> extends Mock {
+  void call(T? previous, T next);
+}
 
 void main() {
   const dioOkResponseCode = 200;
@@ -28,8 +33,18 @@ void main() {
       final dio = Dio(baseOptions);
       final mock = MockClientNetwork();
       when(mock.build).thenReturn(dio);
+
       final container = createContainer(
         overrides: [clientNetworkProvider.overrideWith(() => mock)],
+      );
+
+      // create a listener
+      final listener = Listener<AsyncValue<Dio>>();
+      // listen to the provider and call [listener] whenever its value changes
+      container.listen(
+        clientNetworkProvider,
+        listener,
+        fireImmediately: true,
       );
 
       final readDio = await container.read(clientNetworkProvider.future);
@@ -40,6 +55,10 @@ void main() {
 
       final response = await readDio.get<dynamic>(Endpoint.basePath.path);
 
+      // verify
+      verify(() => listener(null, AsyncData<Dio>(dio)));
+      // verify that the listener is no longer called
+      verifyNoMoreInteractions(listener);
       expect(response.data, 'OK');
       expect(
         readDio.options,

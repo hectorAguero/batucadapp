@@ -1,4 +1,3 @@
-import 'package:country_picker/country_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -50,7 +49,6 @@ class MainApp extends ConsumerWidget {
       themeMode: themeMode,
       themeAnimationStyle: AnimationStyle.noAnimation,
       localizationsDelegates: const [
-        CountryLocalizations.delegate,
         AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
