@@ -3,17 +3,21 @@ import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'theme_mode_controller.dart';
+
 const _iOSFontLetterSpacing = -1.5;
 
 class AppTheme {
-  static ThemeData get lightTheme => FlexThemeData.light(
+  static ThemeData lightTheme(AppColors colors) => FlexThemeData.light(
         useMaterial3: true,
-        keyColors: const FlexKeyColors(
-          useSecondary: true,
+        keyColors: FlexKeyColors(
+          useSecondary: colors.secondary != null,
+          useTertiary: colors.tertiary != null,
         ),
-        colors: const FlexSchemeColor(
-          primary: Color(0xffff00a5),
-          secondary: Color(0xff00a859),
+        colors: FlexSchemeColor(
+          primary: colors.primary,
+          secondary: colors.secondary ?? colors.primary,
+          tertiary: colors.tertiary,
         ),
         background: CupertinoColors.systemGroupedBackground,
         surface: CupertinoColors.systemBackground,
@@ -38,43 +42,55 @@ class AppTheme {
           AppCustomColors.light(),
         ],
       ).copyWith(
-        cupertinoOverrideTheme: getCupertinoTheme(Brightness.light),
+        cupertinoOverrideTheme: getCupertinoTheme(
+          colors.primary,
+          Brightness.light,
+        ),
       );
 
-  static ThemeData darkTheme({required bool trueBlack}) => FlexThemeData.dark(
-        useMaterial3: true,
-        keyColors: const FlexKeyColors(
-          useSecondary: true,
-        ),
-        colors: const FlexSchemeColor(
-          primary: Color(0xffff00a5),
-          secondary: Color(0xff00a859),
-        ),
-        subThemesData: const FlexSubThemesData(
-          tooltipSchemeColor: SchemeColor.inverseSurface,
-          adaptiveSplash: FlexAdaptive.apple(),
-          chipSchemeColor: SchemeColor.surfaceTint,
-          snackBarBackgroundSchemeColor: SchemeColor.inversePrimary,
-          snackBarRadius: 8,
-          snackBarElevation: 2,
-          bottomSheetRadius: 16,
-          bottomSheetModalBackgroundColor: SchemeColor.background,
-        ),
-        surface: CupertinoColors.systemBackground.darkColor,
-        background: CupertinoColors.systemGroupedBackground.darkColor,
-        splashFactory: InkSparkle.splashFactory,
-        darkIsTrueBlack: trueBlack,
-        extensions: [AppCustomColors.dark()],
-      ).copyWith(
-        cupertinoOverrideTheme: getCupertinoTheme(Brightness.dark),
-      );
+  static ThemeData darkTheme(AppColors colors, {required bool trueBlack}) {
+    return FlexThemeData.dark(
+      useMaterial3: true,
+      keyColors: FlexKeyColors(
+        useSecondary: colors.secondary != null,
+        useTertiary: colors.tertiary != null,
+      ),
+      colors: FlexSchemeColor.from(
+        primary: colors.primary,
+        secondary: colors.secondary ?? colors.primary,
+        tertiary: colors.tertiary,
+      ),
+      usedColors: colors.usedColors,
+      subThemesData: const FlexSubThemesData(
+        tooltipSchemeColor: SchemeColor.inverseSurface,
+        adaptiveSplash: FlexAdaptive.apple(),
+        chipSchemeColor: SchemeColor.surfaceTint,
+        snackBarBackgroundSchemeColor: SchemeColor.inversePrimary,
+        snackBarRadius: 8,
+        snackBarElevation: 2,
+        bottomSheetRadius: 16,
+        bottomSheetModalBackgroundColor: SchemeColor.background,
+      ),
+      surface: CupertinoColors.systemBackground.darkColor,
+      background: CupertinoColors.systemGroupedBackground.darkColor,
+      splashFactory: InkSparkle.splashFactory,
+      darkIsTrueBlack: trueBlack,
+      extensions: [AppCustomColors.dark()],
+    ).copyWith(
+      cupertinoOverrideTheme: getCupertinoTheme(
+        colors.primary,
+        Brightness.dark,
+      ),
+    );
+  }
 
   static CupertinoThemeData getCupertinoTheme(
+    Color primaryColor,
     Brightness brightness,
   ) {
     return CupertinoThemeData(
       brightness: brightness,
-      primaryColor: const Color(0xffff00a5),
+      primaryColor: primaryColor,
       barBackgroundColor: brightness == Brightness.dark
           ? CupertinoColors.systemBackground.darkColor
           : CupertinoColors.systemBackground.color,

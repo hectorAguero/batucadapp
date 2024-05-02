@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/extensions/app_localization_extension.dart';
 import '../../../core/extensions/theme_of_context_extension.dart';
-import '../../../core/theme/theme_mode_controller.dart';
+import '../../../theme/theme_mode_controller.dart';
 
 class SettingsThemeSection extends ConsumerWidget {
   const SettingsThemeSection({super.key});

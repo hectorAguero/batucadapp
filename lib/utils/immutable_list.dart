@@ -16,3 +16,8 @@ void initializeFICMappers() {
     ),
   ]);
 }
+
+// ignore: prefer_match_file_name
+extension ListX<T> on List<T> {
+  ImmutableList<T> get toImmutable => ImmutableList<T>(this);
+}

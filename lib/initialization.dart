@@ -4,8 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'core/extensions/app_localization_extension.dart';
 import 'core/providers/initialization.dart';
-import 'core/theme/theme_mode_controller.dart';
 import 'features/home/widgets/adaptive_navigation_rail.dart';
+import 'theme/theme_mode_controller.dart';
 import 'utils/screen_size.dart';
 
 class Initialization extends ConsumerWidget {

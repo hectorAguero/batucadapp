@@ -7,12 +7,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
 
 import 'core/extensions/app_localization_extension.dart';
-import 'core/theme/app_theme.dart';
-import 'core/theme/theme_mode_controller.dart';
 import 'l10n/app_localizations.dart';
 import 'localization/language.dart';
 import 'localization/language_app_controller.dart';
 import 'routing/app_router.dart';
+import 'theme/app_theme.dart';
+import 'theme/theme_mode_controller.dart';
 
 void main() {
   usePathUrlStrategy();
@@ -46,6 +46,7 @@ class MainApp extends ConsumerWidget {
     final router = ref.watch(appRouterProvider);
     final themeMode = ref.watch(themeModeControllerProvider);
     final isTrueBlack = ref.watch(appThemeTrueBlackProvider);
+    final themeColors = ref.watch(appSelectedColorsProvider);
     final language = ref.watch(languageAppControllerProvider).valueOrNull;
 
     return MaterialApp.router(
@@ -53,8 +54,8 @@ class MainApp extends ConsumerWidget {
       onGenerateTitle: (context) => context.loc.appTitle,
       restorationScopeId: 'app',
       debugShowCheckedModeBanner: false,
-      theme: AppTheme.lightTheme,
-      darkTheme: AppTheme.darkTheme(trueBlack: isTrueBlack),
+      theme: AppTheme.lightTheme(themeColors),
+      darkTheme: AppTheme.darkTheme(themeColors, trueBlack: isTrueBlack),
       themeMode: themeMode,
       themeAnimationStyle: AnimationStyle.noAnimation,
       localizationsDelegates: const [

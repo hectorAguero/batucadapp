@@ -1,3 +1,4 @@
+import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import '../../../common_widgets/app_fade_in_image.dart';
 import '../../../core/extensions/theme_of_context_extension.dart';

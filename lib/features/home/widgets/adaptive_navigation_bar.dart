@@ -50,22 +50,20 @@ class AdaptiveNavigationBar extends StatelessWidget {
       );
     }
 
-    return  NavigationBar(
-
-        height: kBottomNavigationBarHeight,
-        backgroundColor: context.colorScheme.primaryContainer,
-        surfaceTintColor: Colors.transparent,
-        selectedIndex: selectedIndex,
-        onDestinationSelected: onDestinationSelected,
-        destinations: <Widget>[
-          for (final destination in tabDestinations)
-            NavigationDestination(
-              icon: Icon(destination.icon),
-              selectedIcon: Icon(destination.selectedIcon),
-              label: destination.label(context),
-            ),
-        ],
-
+    return NavigationBar(
+      height: kBottomNavigationBarHeight,
+      backgroundColor: context.colorScheme.primaryContainer,
+      surfaceTintColor: Colors.transparent,
+      selectedIndex: selectedIndex,
+      onDestinationSelected: onDestinationSelected,
+      destinations: <Widget>[
+        for (final destination in tabDestinations)
+          NavigationDestination(
+            icon: Icon(destination.icon),
+            selectedIcon: Icon(destination.selectedIcon),
+            label: destination.label(context),
+          ),
+      ],
     );
   }
 }

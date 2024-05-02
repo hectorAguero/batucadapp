@@ -8,6 +8,7 @@ import '../../../core/extensions/app_localization_extension.dart';
 import '../../../core/extensions/intl_extension.dart';
 import '../../../core/extensions/string_extensions.dart';
 import '../../../core/extensions/theme_of_context_extension.dart';
+import '../../../theme/theme_mode_controller.dart';
 import '../school.dart';
 import '../school_extensions.dart';
 import '../widgets/school_flag.dart';
@@ -137,7 +138,7 @@ class _SchoolDetailsPageState extends ConsumerState<SchoolDetailsPage> {
   }
 }
 
-class SchoolDetailsText extends StatefulWidget {
+class SchoolDetailsText extends ConsumerStatefulWidget {
   const SchoolDetailsText({
     required this.school,
     required this.showOriginal,
@@ -150,10 +151,23 @@ class SchoolDetailsText extends StatefulWidget {
   final VoidCallback onTranslate;
 
   @override
-  State<SchoolDetailsText> createState() => _SchoolDetailsTextState();
+  ConsumerState<SchoolDetailsText> createState() => _SchoolDetailsTextState();
 }
 
-class _SchoolDetailsTextState extends State<SchoolDetailsText> {
+class _SchoolDetailsTextState extends ConsumerState<SchoolDetailsText> {
+  void setColors() {
+    final schoolColors = widget.school.colorsCode;
+    if (schoolColors.isNotEmpty) {
+      final colors = AppColors(
+        primary: schoolColors.first,
+        secondary: schoolColors.elementAtOrNull(1),
+        tertiary: schoolColors.elementAtOrNull(2),
+      );
+      print('Colors: $colors');
+      ref.read(appSelectedColorsProvider.notifier).setColors(colors);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final school = widget.school;
@@ -276,48 +290,52 @@ class _SchoolDetailsTextState extends State<SchoolDetailsText> {
                 const SizedBox(height: 8),
               ],
             ),
-            if (widget.school.translatedName != widget.school.name ||
-                widget.school.symbols != widget.school.translatedSymbols)
-              Positioned(
-                bottom: 0,
-                right: 0,
-                child: Padding(
-                  padding: const EdgeInsets.only(bottom: 8),
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        width: 32,
-                        child: Tooltip(
-                          message: widget.school.translatedColors.join(', '),
-                          child: Stack(
-                            alignment: Alignment.bottomRight,
-                            children: [
-                              for (final (index, colorCode)
-                                  in widget.school.colorsCode.indexed)
-                                Container(
-                                  height: 32,
-                                  width: 32,
-                                  margin: EdgeInsets.only(bottom: index * 12.0),
-                                  decoration: BoxDecoration(
-                                    color: colorCode,
-                                    shape: BoxShape.circle,
-                                    boxShadow: const [
-                                      BoxShadow(
-                                        color: Colors.black12,
-                                        blurRadius: 4,
-                                        offset: Offset(0, 2),
-                                      ),
-                                    ],
+            Positioned(
+              bottom: 0,
+              right: 0,
+              child: Padding(
+                padding: const EdgeInsets.only(bottom: 8),
+                child: Column(
+                  children: [
+                    SizedBox(
+                      width: 32,
+                      child: Consumer(
+                        builder: (context, ref, child) {
+                          return Tooltip(
+                            message: widget.school.translatedColors.join(', '),
+                            onTriggered: setColors,
+                            child: Stack(
+                              alignment: Alignment.bottomRight,
+                              children: [
+                                for (final (index, colorCode)
+                                    in widget.school.colorsCode.indexed)
+                                  Container(
+                                    height: 32,
+                                    width: 32,
+                                    margin:
+                                        EdgeInsets.only(bottom: index * 12.0),
+                                    decoration: BoxDecoration(
+                                      color: colorCode,
+                                      shape: BoxShape.circle,
+                                      boxShadow: const [
+                                        BoxShadow(
+                                          color: Colors.black12,
+                                          blurRadius: 4,
+                                          offset: Offset(0, 2),
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                ),
-                            ],
-                          ),
-                        ),
+                              ],
+                            ),
+                          );
+                        },
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
+            ),
           ],
         ),
       ),

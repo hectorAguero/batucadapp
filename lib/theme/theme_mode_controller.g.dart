@@ -39,5 +39,21 @@ final appThemeTrueBlackProvider =
 );
 
 typedef _$AppThemeTrueBlack = AutoDisposeNotifier<bool>;
+String _$appSelectedColorsHash() => r'8023fcc20e38ba8b0e0457630a55aa8ada5c045f';
+
+/// See also [AppSelectedColors].
+@ProviderFor(AppSelectedColors)
+final appSelectedColorsProvider =
+    AutoDisposeNotifierProvider<AppSelectedColors, AppColors>.internal(
+  AppSelectedColors.new,
+  name: r'appSelectedColorsProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$appSelectedColorsHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$AppSelectedColors = AutoDisposeNotifier<AppColors>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, inference_failure_on_uninitialized_variable, inference_failure_on_function_return_type, inference_failure_on_untyped_parameter, deprecated_member_use_from_same_package

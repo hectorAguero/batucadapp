@@ -5,9 +5,9 @@ import 'package:pull_down_button/pull_down_button.dart';
 
 import '../../../core/extensions/app_localization_extension.dart';
 import '../../../core/extensions/theme_of_context_extension.dart';
-import '../../../core/theme/theme_mode_controller.dart';
 import '../../../localization/language.dart';
 import '../../../localization/language_app_controller.dart';
+import '../../../theme/theme_mode_controller.dart';
 import '../../../utils/screen_size.dart';
 import 'settings_modal_sheet.dart';
 

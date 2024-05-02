@@ -1,8 +1,9 @@
+import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../../utils/app_loggers.dart';
-import '../providers/prefs.dart';
+import '../core/providers/prefs.dart';
+import '../utils/app_loggers.dart';
 
 part 'theme_mode_controller.g.dart';
 
@@ -84,5 +85,82 @@ class AppThemeTrueBlack extends _$AppThemeTrueBlack {
     } else {
       prefs.remove('true_black');
     }
+  }
+}
+
+@riverpod
+class AppSelectedColors extends _$AppSelectedColors {
+  @override
+  AppColors build() {
+    return AppColors.defaultColors();
+  }
+
+  void setColors(AppColors colors) {
+    final luminance = colors.primary.computeLuminance();
+    const percentage = 30;
+    Color primary = colors.primary;
+    if (luminance == 0) {
+      primary = primary.lighten(percentage);
+    } else if (luminance == 1) {
+      primary = primary.darken(percentage);
+    }
+
+    state = AppColors(
+      primary: primary,
+      secondary: colors.secondary,
+      tertiary: colors.tertiary,
+    );
+  }
+}
+
+class AppColors {
+  final Color primary;
+  final Color? secondary;
+  final Color? tertiary;
+
+  AppColors({
+    required this.primary,
+    this.secondary,
+    this.tertiary,
+  });
+
+  AppColors.defaultColors()
+      : primary = const Color(0xffff00a5),
+        secondary = const Color(0xff00a859),
+        tertiary = null;
+
+  AppColors copyWith({
+    Color? primary,
+    Color? secondary,
+    Color? tertiary,
+  }) {
+    return AppColors(
+      primary: primary ?? this.primary,
+      secondary: secondary ?? this.secondary,
+      tertiary: tertiary ?? this.tertiary,
+    );
+  }
+
+  // ignore: member_ordering
+  @override
+  int get hashCode => primary.hashCode ^ secondary.hashCode ^ tertiary.hashCode;
+
+  @override
+  bool operator ==(covariant AppColors other) {
+    return primary == other.primary &&
+        secondary == other.secondary &&
+        tertiary == other.tertiary;
+  }
+
+  @override
+  String toString() {
+    return 'AppColors{primary: $primary, '
+        'secondary: $secondary, tertiary: $tertiary}';
+  }
+}
+
+extension AppColorsExtension on AppColors {
+  int get usedColors {
+    return (secondary != null ? 1 : 0) + (tertiary != null ? 1 : 0) + 1;
   }
 }

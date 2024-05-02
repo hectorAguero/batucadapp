@@ -365,10 +365,10 @@ packages:
     dependency: "direct main"
     description:
       name: fetch_client
-      sha256: e11722d7d8cd21f944b52af780392274f7c34a41156b1c80053fc2a414e09a1b
+      sha256: "29ce228fc9401626448a9758fe147bdf52e10195340e4ec42b58229111402c6a"
       url: "https://pub.dev"
     source: hosted
-    version: "1.1.0-wasm"
+    version: "1.1.0"
   ffi:
     dependency: transitive
     description:
