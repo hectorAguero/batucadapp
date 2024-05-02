@@ -54,15 +54,14 @@ class SettingsModalSheet extends StatelessWidget {
                   padding: const EdgeInsets.only(right: 16),
                   child: AppCupertinoButton(
                     onPressed: () => Navigator.of(context).pop(),
-                    color: CupertinoDynamicColor.resolve(
-                      CupertinoColors.lightBackgroundGray,
-                      context,
-                    ),
                     padding: const EdgeInsets.all(4),
+                    color: const CupertinoDynamicColor.withBrightness(
+                      color: CupertinoColors.darkBackgroundGray,
+                      darkColor: CupertinoColors.lightBackgroundGray,
+                    ).resolveFrom(context),
                     child: const Icon(
                       CupertinoIcons.xmark,
                       size: 16,
-                      color: CupertinoColors.label,
                     ),
                   ),
                 ),

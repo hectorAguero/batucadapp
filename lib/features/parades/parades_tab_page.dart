@@ -80,27 +80,31 @@ class _ParadesTabPageState extends ConsumerState<ParadesTabPage> {
                     overrides: [
                       currentParadeProvider.overrideWithValue(value[index]),
                     ],
-                    child: Padding(
-                      padding: index != 0
-                          ? EdgeInsets.zero
-                          : const EdgeInsets.only(top: 24),
-                      child: SizedBox(
-                        height: ParadeItem.height,
-                        child: Row(
-                          children: [
-                            ParadeItemYearLine(
-                              year: parade.champion &&
-                                      parade.divisionNumber ==
-                                          SchoolDivision.especial
-                                  ? parade.paradeYear.toString()
-                                  : null,
-                            ),
-                            const Expanded(
-                              child: AppAnimationWrapper(
-                                child: ParadeItem(),
+                    child: SafeArea(
+                      top: false,
+                      bottom: false,
+                      child: Padding(
+                        padding: index != 0
+                            ? EdgeInsets.zero
+                            : const EdgeInsets.only(top: 24),
+                        child: SizedBox(
+                          height: ParadeItem.height,
+                          child: Row(
+                            children: [
+                              ParadeItemYearLine(
+                                year: parade.champion &&
+                                        parade.divisionNumber ==
+                                            SchoolDivision.especial
+                                    ? parade.paradeYear.toString()
+                                    : null,
                               ),
-                            ),
-                          ],
+                              const Expanded(
+                                child: AppAnimationWrapper(
+                                  child: ParadeItem(),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
