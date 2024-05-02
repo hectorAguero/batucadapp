@@ -50,10 +50,8 @@ class AdaptiveNavigationBar extends StatelessWidget {
       );
     }
 
-    return AppWebPadding.only(
-      color: context.colorScheme.primaryContainer,
-      bottom: true,
-      child: NavigationBar(
+    return  NavigationBar(
+
         height: kBottomNavigationBarHeight,
         backgroundColor: context.colorScheme.primaryContainer,
         surfaceTintColor: Colors.transparent,
@@ -67,7 +65,7 @@ class AdaptiveNavigationBar extends StatelessWidget {
               label: destination.label(context),
             ),
         ],
-      ),
+
     );
   }
 }

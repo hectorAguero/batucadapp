@@ -1,5 +1,8 @@
+import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -19,47 +22,63 @@ class HomePage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final screenSize = context.screenSize;
+    final color = defaultTargetPlatform == TargetPlatform.iOS ||
+            defaultTargetPlatform == TargetPlatform.macOS
+        ? Theme.of(context).bottomNavigationBarTheme.backgroundColor
+        : Theme.of(context).colorScheme.primaryContainer;
+    final orientation = MediaQuery.orientationOf(context);
 
-    return Scaffold(
-      body: screenSize.isSmall
-          ? navigationShell
-          : AppWebPadding.only(
-              left: true,
-              color: context.colorScheme.surface,
-              child: Row(
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: FlexColorScheme.themedSystemNavigationBar(
+        context,
+        systemNavBarStyle: orientation == Orientation.landscape
+            ? FlexSystemNavBarStyle.transparent
+            : FlexSystemNavBarStyle.system,
+        nullContextBrightness: Brightness.dark,
+        systemNavigationBarColor:
+            orientation == Orientation.landscape ? null : color,
+      ),
+      child: Scaffold(
+        body: screenSize.isSmall
+            ? navigationShell
+            : AppWebPadding.only(
+                left: true,
+                color: context.colorScheme.surface,
+                child: Row(
+                  children: [
+                    AdaptiveNavigationRail(
+                      destinations: ImmutableList(HomeTab.values),
+                      selectedIndex: navigationShell.currentIndex,
+                      onDestinationSelected: onDestinationSelected,
+                    ),
+                    const VerticalDivider(width: 1, thickness: 1),
+                    Expanded(
+                      child: navigationShell,
+                    ),
+                  ],
+                ),
+              ),
+        bottomNavigationBar: !screenSize.isSmall
+            ? null
+            : Column(
+                mainAxisSize: MainAxisSize.min,
                 children: [
-                  AdaptiveNavigationRail(
-                    destinations: ImmutableList(HomeTab.values),
+                  Divider(
+                    height: 1,
+                    thickness: 1,
+                    color: CupertinoDynamicColor.resolve(
+                      CupertinoColors.opaqueSeparator,
+                      context,
+                    ),
+                  ),
+                  AdaptiveNavigationBar(
+                    tabDestinations: ImmutableList(HomeTab.values),
                     selectedIndex: navigationShell.currentIndex,
                     onDestinationSelected: onDestinationSelected,
                   ),
-                  const VerticalDivider(width: 1, thickness: 1),
-                  Expanded(
-                    child: navigationShell,
-                  ),
                 ],
               ),
-            ),
-      bottomNavigationBar: screenSize.isMedium || screenSize.isLarge
-          ? null
-          : Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Divider(
-                  height: 1,
-                  thickness: 1,
-                  color: CupertinoDynamicColor.resolve(
-                    CupertinoColors.opaqueSeparator,
-                    context,
-                  ),
-                ),
-                AdaptiveNavigationBar(
-                  tabDestinations: ImmutableList(HomeTab.values),
-                  selectedIndex: navigationShell.currentIndex,
-                  onDestinationSelected: onDestinationSelected,
-                ),
-              ],
-            ),
+      ),
     );
   }
 

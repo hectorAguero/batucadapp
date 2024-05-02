@@ -22,7 +22,7 @@ class InstrumentListTile extends StatefulWidget {
   final ImageUrl imageUrl;
   final int index;
 
-  static const double cardMaxWidth = 400;
+  static const double cardMaxWidth = 480;
 
   @override
   State<InstrumentListTile> createState() => _InstrumentListTileState();

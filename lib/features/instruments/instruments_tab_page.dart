@@ -10,6 +10,7 @@ import '../../common_widgets/app_web_padding.dart';
 import '../../core/extensions/app_localization_extension.dart';
 import '../../utils/screen_size.dart';
 import '../home/home_page_controller.dart';
+import '../home/widgets/app_bar_trailing_settings_icon.dart';
 import 'instruments_tab_controller.dart';
 import 'widgets/instrument_list_tile.dart';
 
@@ -23,6 +24,7 @@ class InstrumentsTabPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       body: CustomScrollView(
+        primary: true,
         slivers: [
           SliverCrossAxisConstrained(
             maxCrossAxisExtent: ScreenSize.lg.value,
@@ -30,6 +32,7 @@ class InstrumentsTabPage extends ConsumerWidget {
               slivers: [
                 AppCupertinoSliverNavigationBar(
                   largeTitle: context.loc.instrumentsTitle,
+                  trailing: const AppBarTrailingSettingsIcon(),
                 ),
                 const SliverPadding(padding: EdgeInsets.only(top: 8)),
                 SliverAnimatedSwitcher(

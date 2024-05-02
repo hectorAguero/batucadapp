@@ -1,12 +1,11 @@
-import 'package:easy_image_viewer/easy_image_viewer.dart';
-import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../common_widgets/app_fade_in_image.dart';
 import '../../../../core/extensions/theme_of_context_extension.dart';
-import '../../../../utils/immutable_list.dart';
 import '../../../../utils/screen_size.dart';
 import '../../instrument.dart';
+import '../gallery_page/instruments_gallery_page.dart';
 
 class InstrumentHeaderImages extends StatelessWidget {
   const InstrumentHeaderImages({
@@ -41,10 +40,7 @@ class InstrumentHeaderImages extends StatelessWidget {
                         child: InkWell(
                           onTap: () => showImage(
                             context,
-                            ImmutableList([
-                              ...instrument.gallery.take(3),
-                              instrument.imageUrl,
-                            ]),
+                            instrumentId: instrument.id,
                             initialIndex: i,
                           ),
                           borderRadius: const BorderRadius.all(
@@ -79,12 +75,7 @@ class InstrumentHeaderImages extends StatelessWidget {
                     child: InkWell(
                       onTap: () => showImage(
                         context,
-                        ImmutableList(
-                          [
-                            ...instrument.gallery.take(3),
-                            instrument.imageUrl,
-                          ],
-                        ),
+                        instrumentId: instrument.id,
                         initialIndex: 3,
                       ),
                       borderRadius: const BorderRadius.all(
@@ -139,21 +130,16 @@ class InstrumentHeaderImages extends StatelessWidget {
   }
 
   void showImage(
-    BuildContext context,
-    ImmutableList<String> images, {
-    int? initialIndex,
+    BuildContext context, {
+    required int instrumentId,
+    required int initialIndex,
   }) {
-    final multiImageProvider = MultiImageProvider(
-      [
-        for (final image in images)
-          ExtendedNetworkImageProvider(image, cache: true),
-      ],
-      initialIndex: initialIndex ?? 0,
-    );
-
-    showImageViewerPager(
-      context,
-      multiImageProvider,
+    context.go(
+      '/instruments/details/$instrumentId/${InstrumentsGalleryPage.path}',
+      extra: {
+        'index': initialIndex.toString(),
+        'id': instrumentId.toString(),
+      },
     );
   }
 }

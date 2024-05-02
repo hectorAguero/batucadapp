@@ -1,10 +1,13 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+
 import '../common_widgets/cupertino_sheet_route.dart';
 import '../core/providers/initialization.dart';
 import '../features/home/home_page.dart';
 import '../features/home/home_page_controller.dart';
+import '../features/instruments/details/gallery_page/instruments_gallery_page.dart';
 import '../features/instruments/details/instrument_details_page.dart';
 import '../features/instruments/instruments_tab_page.dart';
 import '../features/parades/parades_tab_page.dart';
@@ -16,6 +19,9 @@ part 'app_router.g.dart';
 
 /// Required by StatefulShellRoute in GoRouter
 final _rootNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'root');
+
+/// If we want to show a page/dialog that cover the bottombar
+final _tabInstruments = GlobalKey<NavigatorState>(debugLabel: 'tabInstruments');
 
 @riverpod
 class AppRouter extends _$AppRouter {
@@ -48,6 +54,7 @@ class AppRouter extends _$AppRouter {
               NoTransitionPage(child: HomePage(shell)),
           branches: <StatefulShellBranch>[
             StatefulShellBranch(
+              navigatorKey: _tabInstruments,
               routes: [
                 GoRoute(
                   path: InstrumentsTabPage.path,
@@ -70,6 +77,26 @@ class AppRouter extends _$AppRouter {
                       builder: (_, state) => InstrumentDetailsPage(
                         id: int.parse(state.pathParameters['id']!),
                       ),
+                      routes: [
+                        GoRoute(
+                          parentNavigatorKey: _rootNavigatorKey,
+                          path: InstrumentsGalleryPage.path,
+                          pageBuilder: (_, state) {
+                            final extra = state.extra as Map<String, String>?;
+                            if (extra == null) throw GoError('Extra is null');
+                            final initialIndex = int.parse(extra['index']!);
+                            final instrumentId = int.parse(extra['id']!);
+
+                            return CupertinoPage(
+                              fullscreenDialog: true,
+                              child: InstrumentsGalleryPage(
+                                initialIndex: initialIndex,
+                                instrumentId: instrumentId,
+                              ),
+                            );
+                          },
+                        ),
+                      ],
                     ),
                   ],
                 ),
@@ -147,20 +174,24 @@ class AppRouter extends _$AppRouter {
     if (init.hasError) {
       return Initialization.path;
     }
-    final path = state.fullPath?.split('/');
-    final topPath = path?.sublist(0, 2).join('/');
-    if (path != null && HomeTab.values.any((v) => v.path == topPath)) {
-      final home = ref.read(homePageControllerProvider);
-      final nextTab = HomeTab.values.firstWhere((t) => t.path == topPath);
-      final top = path.length <= 2;
-      if (home.tab.path != nextTab.path || home.topRoute != top) {
+
+    /// Logic to handle the scroll to the top when the root tab is the same
+    final splittedPath =
+        state.fullPath?.split('/').where((v) => v.isNotEmpty).toList();
+    final topPath = '/${splittedPath?.first ?? ''}';
+    if (splittedPath != null && HomeTab.values.any((v) => v.path == topPath)) {
+      final (homeTab, isTopRoute) = ref.read(homePageControllerProvider);
+      final isPathTop = splittedPath.length == 1;
+      if (homeTab.path != topPath || isTopRoute != isPathTop) {
+        final nextTab = HomeTab.values.firstWhere((v) => v.path == topPath);
         await Future.microtask(
           () => ref
               .read(homePageControllerProvider.notifier)
-              .set(nextTab, top: top),
+              .set(nextTab, top: isPathTop),
         );
       }
-      if (home.tab.path == nextTab.path && home.topRoute == top) {
+      if (homeTab.path == topPath && isTopRoute && isPathTop) {
+        final nextTab = HomeTab.values.firstWhere((v) => v.path == topPath);
         await Future.microtask(
           () => _scrollTabToTheTop(controllers[nextTab.name]!),
         );

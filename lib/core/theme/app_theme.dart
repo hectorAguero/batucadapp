@@ -27,6 +27,12 @@ class AppTheme {
           bottomSheetRadius: 16,
           bottomSheetModalBackgroundColor: SchemeColor.background,
         ),
+        pageTransitionsTheme: const PageTransitionsTheme(
+          builders: {
+            TargetPlatform.android: PredictiveBackPageTransitionsBuilder(),
+            TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
+          },
+        ),
         splashFactory: InkSparkle.splashFactory,
         extensions: [
           AppCustomColors.light(),

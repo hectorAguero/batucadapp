@@ -13,11 +13,9 @@ class HomePageController extends _$HomePageController {
 
   ///Change for a pattern or record of hometab and boolean is is top
   // HomeTab build() => HomeTab.instruments;
-  ({HomeTab tab, bool topRoute}) build() =>
-      (tab: HomeTab.instruments, topRoute: false);
+  (HomeTab tab, bool isTopRoute) build() => (HomeTab.instruments, false);
 
-  void set(HomeTab tab, {bool top = false}) =>
-      state = (tab: tab, topRoute: top);
+  void set(HomeTab tab, {bool top = false}) => state = (tab, top);
 }
 
 enum HomeTab { instruments, parades, schools }
