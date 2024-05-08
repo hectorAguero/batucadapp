@@ -21,15 +21,13 @@ jobs:
           cache: true
       
       - name: Make envfile
-        uses: SpicyPizza/create-envfile@v2.0
-        with:
-          envkey_API_URL: ${{ secrets.API_URL }}
-
-      - name: Run Tests
-        run: flutter test
+        run: echo "API_URL=${{ secrets.API_URL }}" > .env
         
       - name: Install dependencies
         run: flutter pub get
+      
+      - name: Run Tests
+        run: flutter test
 
       # 404.html and flutter_bootstrap.js are mannually added to the web folder to
       # fix the 404 error on GH Pages and fix PWA Padding issue
