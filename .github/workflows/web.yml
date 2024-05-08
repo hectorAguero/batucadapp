@@ -31,8 +31,10 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
+      # 404.html and flutter_bootstrap.js are mannually added to the web folder to
+      # fix the 404 error on GH Pages and fix PWA Padding issue
       - name: Build web
-        run: flutter build web --wasm --base-href /batucadapp/ 
+        run: flutter build web --wasm --base-href /batucadapp/ --no-web-resources-cdn
 
       - name: Commit changes
         run: |

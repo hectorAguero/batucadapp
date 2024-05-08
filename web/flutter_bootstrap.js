@@ -25,10 +25,7 @@ function leftInset() {
 {{flutter_build_config}}
 window.addEventListener("load", (_) => {
 	_flutter.loader.load({
-		config: {
-			// Use the local CanvasKit bundle instead of the CDN to reduce test flakiness.
-			canvasKitBaseUrl: '/batucadapp/canvaskit/',
-		},
+		
 		onEntrypointLoaded: (engineInitializer) => {
 			engineInitializer.initializeEngine().then((appRunner) => {
 				appRunner.runApp().then((_) => {
