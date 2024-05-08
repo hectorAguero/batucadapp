@@ -27,6 +27,8 @@
 	"spanish": "Espanhol",
 	"japanese": "Japonês",
 	"theme": "Tema",
+	"defaultTheme": "Padrão",
+	"resetTheme": "Redefinir",
 	"light": "Claro",
 	"dark": "Escuro",
 	"system": "Sistema",

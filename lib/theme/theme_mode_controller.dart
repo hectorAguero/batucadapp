@@ -2,6 +2,7 @@ import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../constants.dart';
 import '../core/providers/prefs.dart';
 import '../utils/app_loggers.dart';
 
@@ -47,7 +48,7 @@ class ThemeModeController extends _$ThemeModeController {
     }
   }
 
-  void setTheme(ThemeMode mode) {
+  void setThemeMode(ThemeMode mode) {
     final prefs = ref.read(prefsProvider).requireValue;
     switch (mode) {
       case ThemeMode.system:
@@ -95,20 +96,31 @@ class AppSelectedColors extends _$AppSelectedColors {
     return AppColors.defaultColors();
   }
 
-  void setColors(AppColors colors) {
-    final luminance = colors.primary.computeLuminance();
+  void setThemeColors(AppColors colors) {
     const percentage = 30;
+
+    final primaryLuminance = colors.primary.computeLuminance();
+    final secondaryLuminance = colors.secondary?.computeLuminance() ?? 0;
+    final validLuminance = secondaryLuminance != 0 && secondaryLuminance != 1;
+
     Color primary = colors.primary;
-    if (luminance == 0) {
-      primary = primary.lighten(percentage);
-    } else if (luminance == 1) {
-      primary = primary.darken(percentage);
+    final secondary = colors.secondary;
+
+    if (primaryLuminance == 0) {
+      primary = secondary != null && validLuminance
+          ? secondary
+          : colors.primary.lighten(percentage);
+    } else if (primaryLuminance == 1) {
+      primary = secondary != null && validLuminance
+          ? secondary
+          : colors.primary.darken(percentage);
     }
 
     state = AppColors(
       primary: primary,
       secondary: colors.secondary,
       tertiary: colors.tertiary,
+      name: colors.name,
     );
   }
 }
@@ -117,15 +129,18 @@ class AppColors {
   final Color primary;
   final Color? secondary;
   final Color? tertiary;
+  final String name;
 
   AppColors({
     required this.primary,
+    required this.name,
     this.secondary,
     this.tertiary,
   });
 
   AppColors.defaultColors()
       : primary = const Color(0xffff00a5),
+        name = Constants.defaultColorName,
         secondary = const Color(0xff00a859),
         tertiary = null;
 
@@ -133,11 +148,13 @@ class AppColors {
     Color? primary,
     Color? secondary,
     Color? tertiary,
+    String? name,
   }) {
     return AppColors(
       primary: primary ?? this.primary,
       secondary: secondary ?? this.secondary,
       tertiary: tertiary ?? this.tertiary,
+      name: name ?? this.name,
     );
   }
 
@@ -149,6 +166,7 @@ class AppColors {
   bool operator ==(covariant AppColors other) {
     return primary == other.primary &&
         secondary == other.secondary &&
+        name == other.name &&
         tertiary == other.tertiary;
   }
 

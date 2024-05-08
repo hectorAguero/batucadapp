@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 // ignore:depend_on_referenced_packages
@@ -14,8 +15,9 @@ import 'routing/app_router.dart';
 import 'theme/app_theme.dart';
 import 'theme/theme_mode_controller.dart';
 
-void main() {
+Future<void> main() async {
   usePathUrlStrategy();
+  await dotenv.load();
   runApp(const ProviderScope(child: MainApp()));
 }
 
@@ -24,7 +26,7 @@ class MainApp extends ConsumerWidget {
   const MainApp({super.key});
 
   void _initAndroid() {
-    if (TargetPlatform.android != defaultTargetPlatform) return;
+    if (defaultTargetPlatform != TargetPlatform.android) return;
     SystemChrome.setEnabledSystemUIMode(
       SystemUiMode.edgeToEdge,
       overlays: [SystemUiOverlay.top],

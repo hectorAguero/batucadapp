@@ -78,8 +78,8 @@ class ParadeItemContent extends StatelessWidget {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            ParadeItemTextContentHeader(
-              padding: const EdgeInsets.only(left: 8, right: 8, top: 8),
+            ParadeItemSchoolName(
+              padding: const EdgeInsets.only(left: 8, right: 8),
               parade: parade,
             ),
             const Spacer(),
@@ -100,7 +100,6 @@ class ParadeItemContent extends StatelessWidget {
                           imageFilter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
                           child: AppFadeInImage(
                             parade.school.imageUrl,
-                            fadeInDuration: const Duration(milliseconds: 300),
                             imageErrorBuilder: (_, __, ___) {
                               return const SizedBox();
                             },
@@ -170,8 +169,8 @@ class ParadeItemBadge extends StatelessWidget {
   }
 }
 
-class ParadeItemTextContentHeader extends ConsumerWidget {
-  const ParadeItemTextContentHeader({
+class ParadeItemSchoolName extends ConsumerWidget {
+  const ParadeItemSchoolName({
     required this.padding,
     required this.parade,
     super.key,
@@ -190,37 +189,43 @@ class ParadeItemTextContentHeader extends ConsumerWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(
-            height: 36,
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Flexible(
-                  child: Text(
-                    showOriginal
-                        ? '${parade.school.name}\n'
-                        : '${parade.school.translatedName}\n',
-                    maxLines: 2,
-                    style: context.labelSmall.copyWith(
-                      color: context.colorScheme.onSurfaceVariant,
+          Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(bottom: 8, top: 12),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Flexible(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Text(
+                            showOriginal
+                                ? parade.school.name
+                                : parade.school.translatedName,
+                            maxLines: 2,
+                            style: context.labelSmall.copyWith(
+                              color: context.colorScheme.onSurfaceVariant,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                    strutStyle: const StrutStyle(
-                      forceStrutHeight: true,
-                      height: 1.1,
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8),
+                      child: Text(
+                        parade.divisionNumber.shortName(context),
+                        style: context.labelSmall.copyWith(
+                          color: Colors.transparent,
+                        ),
+                      ),
                     ),
-                  ),
+                  ],
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
-                  child: Text(
-                    parade.divisionNumber.shortName(context),
-                    style: context.labelSmall.copyWith(
-                      color: Colors.transparent,
-                    ),
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
           Text.rich(
             TextSpan(
@@ -269,7 +274,7 @@ class ParadeItemTextContentDetails extends ConsumerWidget {
               TextSpan(
                 children: [
                   TextSpan(
-                    text: '${context.loc.carnavalescos}:',
+                    text: '${context.loc.carnavalescos}: ',
                     style: context.textTheme.labelMedium,
                   ),
                   TextSpan(

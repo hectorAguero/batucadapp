@@ -22,7 +22,7 @@ class AppFadeInImage extends StatelessWidget {
     this.fit,
     this.imageErrorBuilder,
     this.placeholder,
-    this.fadeInDuration = const Duration(milliseconds: 700),
+    this.fadeInDuration = const Duration(milliseconds: 300),
     super.key,
   });
 
@@ -39,6 +39,7 @@ class AppFadeInImage extends StatelessWidget {
     return FadeInImage(
       fadeInDuration: fadeInDuration,
       placeholder: placeholder ?? MemoryImage(kTransparentImage),
+      placeholderColorBlendMode: BlendMode.color,
       image:
           ExtendedNetworkImageProvider(image, cache: true, printError: false),
       imageErrorBuilder: imageErrorBuilder ??

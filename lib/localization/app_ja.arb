@@ -27,6 +27,8 @@
 	"spanish": "スペイン語",
 	"japanese": "日本語",
 	"theme": "テーマ",
+	"defaultTheme": "デフォルト",
+	"resetTheme": "リセット",
 	"light": "ライト",
 	"dark": "ダーク",
 	"system": "システム",

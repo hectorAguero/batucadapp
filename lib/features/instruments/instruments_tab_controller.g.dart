@@ -7,7 +7,7 @@ part of 'instruments_tab_controller.dart';
 // **************************************************************************
 
 String _$instrumentsTabControllerHash() =>
-    r'af042f105ac11e3ed447c7fb429bd9abe1a3aaf1';
+    r'420f49a5f0db47244e5af9e202883c8090876a86';
 
 /// See also [InstrumentsTabController].
 @ProviderFor(InstrumentsTabController)

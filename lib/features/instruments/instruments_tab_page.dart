@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:go_router/go_router.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 import 'package:sliver_tools/sliver_tools.dart';
 
 import '../../common_widgets/app_async_widget.dart';
@@ -35,36 +36,48 @@ class InstrumentsTabPage extends ConsumerWidget {
                   trailing: const AppBarTrailingSettingsIcon(),
                 ),
                 const SliverPadding(padding: EdgeInsets.only(top: 8)),
-                SliverAnimatedSwitcher(
-                  duration: const Duration(milliseconds: 300),
-                  child: AppAsyncSliverWidget(
-                    asyncValue: ref.watch(instrumentsTabControllerProvider),
-                    onErrorRetry: () =>
-                        ref.invalidate(instrumentsTabControllerProvider),
-                    child: (value) => WebPaddingSliver.only(
-                      right: true,
-                      sliver: SliverSafeArea(
-                        top: false,
-                        sliver: SliverAlignedGrid.extent(
+                AppAsyncSliverWidget(
+                  asyncValue: ref.watch(instrumentsTabControllerProvider),
+                  onErrorRetry: () =>
+                      ref.invalidate(instrumentsTabControllerProvider),
+                  loadingSliver: WebPaddingSliver.only(
+                    right: true,
+                    sliver: SliverSafeArea(
+                      top: false,
+                      sliver: SliverSkeletonizer(
+                        child: SliverAlignedGrid.extent(
                           maxCrossAxisExtent: InstrumentListTile.cardMaxWidth,
-                          itemCount: value.length,
+                          itemCount: 10,
                           itemBuilder: (context, index) {
-                            final instrument = value[index];
-
-                            return InstrumentListTile(
-                              title: instrument.translatedName,
-                              originalTitle: instrument.name,
-                              subtitle: instrument.translatedDescription,
-                              index: index,
-                              onTap: () {
-                                context.go(
-                                  '$path/details/${instrument.id}',
-                                );
-                              },
-                              imageUrl: instrument.imageUrl,
-                            );
+                            return InstrumentListTile.skeleton();
                           },
                         ),
+                      ),
+                    ),
+                  ),
+                  child: (value) => WebPaddingSliver.only(
+                    right: true,
+                    sliver: SliverSafeArea(
+                      top: false,
+                      sliver: SliverAlignedGrid.extent(
+                        maxCrossAxisExtent: InstrumentListTile.cardMaxWidth,
+                        itemCount: value.length,
+                        itemBuilder: (context, index) {
+                          final instrument = value[index];
+
+                          return InstrumentListTile(
+                            title: instrument.translatedName,
+                            originalTitle: instrument.name,
+                            subtitle: instrument.translatedDescription,
+                            index: index,
+                            onTap: () {
+                              context.go(
+                                '$path/details/${instrument.id}',
+                              );
+                            },
+                            imageUrl: instrument.imageUrl,
+                          );
+                        },
                       ),
                     ),
                   ),

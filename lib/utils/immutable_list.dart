@@ -3,6 +3,7 @@ import 'package:fast_immutable_collections/fast_immutable_collections.dart'
     as ic;
 
 typedef ImmutableList<T> = IList<T>;
+typedef IListConst<T> = ic.IListConst<T>;
 typedef IList<T> = ic.IList<T>;
 
 void initializeFICMappers() {

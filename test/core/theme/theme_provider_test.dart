@@ -100,7 +100,7 @@ void main() {
       expect(container.read(themeModeControllerProvider), ThemeMode.system);
       container
           .read(themeModeControllerProvider.notifier)
-          .setTheme(ThemeMode.system);
+          .setThemeMode(ThemeMode.system);
       verify(() => mockSharedPreferences.remove('theme_mode')).called(1);
       expect(container.read(themeModeControllerProvider), ThemeMode.system);
     });
@@ -112,7 +112,7 @@ void main() {
       final container = makeProviderContainer(mockSharedPreferences);
       container
           .read(themeModeControllerProvider.notifier)
-          .setTheme(ThemeMode.light);
+          .setThemeMode(ThemeMode.light);
       verify(() => mockSharedPreferences.setString('theme_mode', 'light'))
           .called(1);
       expect(container.read(themeModeControllerProvider), ThemeMode.light);
@@ -125,7 +125,7 @@ void main() {
       final container = makeProviderContainer(mockSharedPreferences);
       container
           .read(themeModeControllerProvider.notifier)
-          .setTheme(ThemeMode.dark);
+          .setThemeMode(ThemeMode.dark);
       verify(() => mockSharedPreferences.setString('theme_mode', 'dark'))
           .called(1);
       expect(container.read(themeModeControllerProvider), ThemeMode.dark);

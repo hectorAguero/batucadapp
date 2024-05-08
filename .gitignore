@@ -44,3 +44,4 @@ app.*.map.json
 
 # Until I change the config for dev and release
 web/flutter_bootstrap.js
+.env*

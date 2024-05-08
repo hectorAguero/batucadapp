@@ -7,7 +7,7 @@ part of 'theme_mode_controller.dart';
 // **************************************************************************
 
 String _$themeModeControllerHash() =>
-    r'dff5d6a2e47b086ae84bc400b4308dbce1143d7e';
+    r'ecfde857bd61bdf69250f1c193d00e516093c95f';
 
 /// See also [ThemeModeController].
 @ProviderFor(ThemeModeController)
@@ -39,7 +39,7 @@ final appThemeTrueBlackProvider =
 );
 
 typedef _$AppThemeTrueBlack = AutoDisposeNotifier<bool>;
-String _$appSelectedColorsHash() => r'8023fcc20e38ba8b0e0457630a55aa8ada5c045f';
+String _$appSelectedColorsHash() => r'64409300153e2b76f2101793ba95598deea1ff76';
 
 /// See also [AppSelectedColors].
 @ProviderFor(AppSelectedColors)

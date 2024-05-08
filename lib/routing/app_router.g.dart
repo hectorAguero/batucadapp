@@ -6,7 +6,22 @@ part of 'app_router.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$appRouterHash() => r'8b8246f3944c234781b166bcdcba7ecb818fc2f4';
+String _$initialLocationHash() => r'4c7394612af5559b8ca199b5410a10f3356021cf';
+
+/// See also [initialLocation].
+@ProviderFor(initialLocation)
+final initialLocationProvider = AutoDisposeFutureProvider<String?>.internal(
+  initialLocation,
+  name: r'initialLocationProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$initialLocationHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef InitialLocationRef = AutoDisposeFutureProviderRef<String?>;
+String _$appRouterHash() => r'f9fdd4f7f1c3ccc126de96231254893c15fc3252';
 
 /// See also [AppRouter].
 @ProviderFor(AppRouter)

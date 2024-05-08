@@ -1,6 +1,6 @@
-import 'package:flex_color_scheme/flex_color_scheme.dart';
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
-import '../../../common_widgets/app_fade_in_image.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 import '../../../core/extensions/theme_of_context_extension.dart';
 
 typedef ImageUrl = String;
@@ -16,10 +16,18 @@ class InstrumentListTile extends StatefulWidget {
     super.key,
   });
 
+  const InstrumentListTile.skeleton({super.key})
+      : title = 'Instrument',
+        originalTitle = 'Original Title',
+        subtitle = 'Subtitle' * 50,
+        imageUrl = '',
+        onTap = null,
+        index = 0;
+
   final String title;
   final String originalTitle;
   final String subtitle;
-  final VoidCallback onTap;
+  final VoidCallback? onTap;
   final ImageUrl imageUrl;
   final int index;
 
@@ -32,8 +40,8 @@ class InstrumentListTile extends StatefulWidget {
 class _InstrumentListTileState extends State<InstrumentListTile> {
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8),
+    return Card(
+      margin: const EdgeInsets.all(8),
       child: ClipRRect(
         borderRadius: const BorderRadius.all(
           Radius.circular(12),
@@ -117,9 +125,12 @@ class _InstrumentListTileState extends State<InstrumentListTile> {
                             ),
                             child: AspectRatio(
                               aspectRatio: 8 / 9,
-                              child: AppFadeInImage(
-                                widget.imageUrl,
-                                fit: BoxFit.cover,
+                              child: Skeleton.replace(
+                                child: ExtendedImage.network(
+                                  widget.imageUrl,
+                                  gaplessPlayback: true,
+                                  fit: BoxFit.cover,
+                                ),
                               ),
                             ),
                           ),

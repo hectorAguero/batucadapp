@@ -28,17 +28,16 @@ with the data of multiples sites about the Samba Schools in Brazil 🇧🇷
 - [x] Offload initialization of the main method
 - [x] Personalized Widgets with helper extensions
 - [x] Pagination and TextSearch to the API
+- [x] Make web deploy automatic
+- [x] Make design adaptive for material3
+- [x] Deploy in Web
+- [x] Use Dio Cache
 
 # To do
 
-- [ ] Deploy in Web
+
 - [ ] Testing
-- [ ] Make deploy automatic
-- [ ] Make design adaptive for material3
-- [ ] Search in the 3 tabs
 - [ ] Load Favorites by separate at the start
-- [ ] Update Parades Design
-- [ ] Fix some schools image names
 - [ ] Add Instruments photos
 - [ ] Add Instruments learning text
-- [ ] Store data in cache for offline use
+

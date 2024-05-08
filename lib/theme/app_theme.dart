@@ -14,10 +14,11 @@ class AppTheme {
           useSecondary: colors.secondary != null,
           useTertiary: colors.tertiary != null,
         ),
-        colors: FlexSchemeColor(
+        colors: FlexSchemeColor.from(
           primary: colors.primary,
           secondary: colors.secondary ?? colors.primary,
           tertiary: colors.tertiary,
+          brightness: Brightness.light,
         ),
         background: CupertinoColors.systemGroupedBackground,
         surface: CupertinoColors.systemBackground,
@@ -59,6 +60,7 @@ class AppTheme {
         primary: colors.primary,
         secondary: colors.secondary ?? colors.primary,
         tertiary: colors.tertiary,
+        brightness: Brightness.dark,
       ),
       usedColors: colors.usedColors,
       subThemesData: const FlexSubThemesData(

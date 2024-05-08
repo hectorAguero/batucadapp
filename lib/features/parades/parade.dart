@@ -42,7 +42,7 @@ class Parade with ParadeMappable {
   static const fromMap = ParadeMapper.fromMap;
   static const fromJson = ParadeMapper.fromJson;
 
-  Parade({
+  const Parade({
     required this.id,
     required this.schoolId,
     required this.carnivalId,

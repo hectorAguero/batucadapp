@@ -160,11 +160,11 @@ class _SchoolDetailsTextState extends ConsumerState<SchoolDetailsText> {
     if (schoolColors.isNotEmpty) {
       final colors = AppColors(
         primary: schoolColors.first,
+        name: widget.school.name,
         secondary: schoolColors.elementAtOrNull(1),
         tertiary: schoolColors.elementAtOrNull(2),
       );
-      print('Colors: $colors');
-      ref.read(appSelectedColorsProvider.notifier).setColors(colors);
+      ref.read(appSelectedColorsProvider.notifier).setThemeColors(colors);
     }
   }
 
