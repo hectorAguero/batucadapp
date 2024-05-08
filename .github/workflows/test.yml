@@ -9,5 +9,10 @@ jobs:
         with:
             channel: beta
             cache: true
+            
+      - name: Make envfile
+        uses: SpicyPizza/create-envfile@v2.0
+        with:
+          envkey_API_URL: ${{ secrets.API_URL }}
         
       - run: flutter test
