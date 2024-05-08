@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:dio/dio.dart';
 import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
 import 'package:dio_cache_interceptor_hive_store/dio_cache_interceptor_hive_store.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -80,7 +81,7 @@ enum Endpoint {
   String get pathId => '$path/';
   String get pathSearch => '$path/search';
   String get path => switch (this) {
-        basePath => Constants.baseUrlPath,
+        basePath => dotenv.env['API_URL']!,
         parades => '/parades',
         instruments => '/instruments',
         schools => '/schools',

@@ -10,7 +10,7 @@ part 'instruments_tab_controller.g.dart';
 class InstrumentsTabController extends _$InstrumentsTabController {
   @override
   FutureOr<ImmutableList<Instrument>> build() async {
-    return await ref.watch(instrumentsRepoProvider).getInstruments();
+    return ref.watch(instrumentsRepoProvider).getInstruments();
   }
 
   void updateInstrument(Instrument instrument) {

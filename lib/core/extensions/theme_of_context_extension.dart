@@ -1,11 +1,13 @@
 // ignore_for_file: avoid_non_null_assertion
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../theme/app_theme.dart';
+import '../../theme/app_theme.dart';
 import 'app_localization_extension.dart';
 
 extension ThemeOfContextExtension on BuildContext {
   ThemeData get theme => Theme.of(this);
+  CupertinoThemeData get cupertinoTheme => CupertinoTheme.of(this);
 
   Brightness get brightness => theme.brightness;
   bool get brightnessIsDark => brightness == Brightness.dark;

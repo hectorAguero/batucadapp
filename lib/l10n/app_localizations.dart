@@ -175,6 +175,12 @@ abstract class AppLocalizations {
   /// **'Theme'**
   String get theme;
 
+  /// No description provided for @resetTheme.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset'**
+  String get resetTheme;
+
   /// No description provided for @light.
   ///
   /// In en, this message translates to:
@@ -216,6 +222,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'System Theme'**
   String get systemTheme;
+
+  /// No description provided for @defaultTheme.
+  ///
+  /// In en, this message translates to:
+  /// **'Default'**
+  String get defaultTheme;
 
   /// No description provided for @all.
   ///

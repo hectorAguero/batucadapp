@@ -1,6 +1,8 @@
+import 'package:const_date_time/const_date_time.dart';
 import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 import 'package:sliver_tools/sliver_tools.dart';
 
 import '../../../common_widgets/app_animation_wrapper.dart';
@@ -24,6 +26,22 @@ class SchoolsTabBody extends ConsumerWidget {
       sliver: AppAsyncSliverWidget(
         asyncValue: ref.watch(schoolsTabControllerProvider),
         onErrorRetry: () => ref.invalidate(schoolsTabControllerProvider),
+        loadingSliver: SliverCrossAxisConstrained(
+          maxCrossAxisExtent: ScreenSize.lg.value,
+          child: SliverPadding(
+            padding: EdgeInsets.only(
+              left: 16,
+              right: 16 + rightInset(),
+            ),
+            sliver: SliverSkeletonizer(
+              child: SliverSchoolsList(
+                schools: ImmutableList(
+                  [for (var i = 0; i < 10; i++) _schoolSkeleton],
+                ),
+              ),
+            ),
+          ),
+        ),
         child: (_) => Consumer(
           builder: (_, ref, __) {
             final schools = ref.watch(filteredSchoolsProvider);
@@ -67,6 +85,7 @@ class SliverSchoolsList extends StatelessWidget {
         final school = schools[index];
 
         return AppAnimationWrapper(
+          start: schools.length > 10 ? 0.6 : 1.0,
           child: ProviderScope(
             overrides: [
               currentSchoolProvider.overrideWithValue(school),
@@ -78,3 +97,28 @@ class SliverSchoolsList extends StatelessWidget {
     );
   }
 }
+
+School get _schoolSkeleton => const School(
+      id: 1,
+      name: "name",
+      translatedName: "translatedName",
+      imageUrl: "",
+      foundationDate: ConstDateTime(2024),
+      godmotherSchool: "godmotherSchool",
+      colors: IListConst([]),
+      colorsCode: IListConst([]),
+      symbols: IListConst([]),
+      carnivalCategory: SchoolCategory.escolasDeSamba,
+      currentDivision: SchoolDivision.especial,
+      divisionNumber: 1,
+      subdivisionNumber: 1,
+      firstDivisionChampionships: 1,
+      country: "country",
+      leagueLocation: "leagueLocation",
+      lastPosition: 1,
+      translatedColors: IListConst([]),
+      translatedSymbols: IListConst([]),
+      translatedGodmotherSchool: "translatedGodmotherSchool",
+      translatedLeagueLocation: "translatedLeagueLocation",
+      translatedCountry: "translatedCountry",
+    );

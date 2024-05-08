@@ -1,4 +1,3 @@
-import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -15,7 +14,7 @@ class AppCupertinoButton extends StatelessWidget {
     this.disabledColor,
     this.icon,
     this.padding = EdgeInsets.zero,
-    this.minSize,
+    this.minSize = kMinInteractiveDimensionCupertino,
     this.borderRadius = const BorderRadius.all(Radius.circular(32)),
     this.type = CupertinoButtonType.plain,
   });
@@ -23,21 +22,34 @@ class AppCupertinoButton extends StatelessWidget {
   const AppCupertinoButton.tinted({
     required this.child,
     required this.onPressed,
-    required this.color,
+    this.color,
     super.key,
     this.disabledColor,
     this.icon,
     this.borderRadius = const BorderRadius.all(Radius.circular(12)),
-    this.padding = const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+    this.padding = EdgeInsets.zero,
     this.type = CupertinoButtonType.tinted,
-    this.minSize,
+    this.minSize = kMinInteractiveDimensionCupertino,
+  });
+
+  const AppCupertinoButton.filled({
+    required this.child,
+    required this.onPressed,
+    this.color,
+    super.key,
+    this.disabledColor,
+    this.icon,
+    this.borderRadius = const BorderRadius.all(Radius.circular(12)),
+    this.padding = EdgeInsets.zero,
+    this.type = CupertinoButtonType.filled,
+    this.minSize = kMinInteractiveDimensionCupertino,
   });
 
   final Widget child;
   final Widget? icon;
   final VoidCallback? onPressed;
   final EdgeInsetsGeometry? padding;
-  final double? minSize;
+  final double minSize;
   final Color? color;
   final Color? disabledColor;
   final BorderRadius borderRadius;
@@ -45,30 +57,47 @@ class AppCupertinoButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final typeSize = type == CupertinoButtonType.plain
-        ? 0.0
-        : kMinInteractiveDimensionCupertino;
-
     return Theme(
       data: Theme.of(context).copyWith(
         cupertinoOverrideTheme: CupertinoThemeData(
-          primaryColor: color ?? context.colorScheme.primary,
-          primaryContrastingColor: color ?? context.colorScheme.primary,
+          primaryColor:
+              color ?? context.theme.cupertinoOverrideTheme?.primaryColor,
+          primaryContrastingColor: type == CupertinoButtonType.tinted
+              ? color ?? context.colorScheme.primary
+              : null,
           scaffoldBackgroundColor: color ?? context.colorScheme.primary,
-          textTheme: const CupertinoTextThemeData(
-            primaryColor: Colors.white,
-            textStyle: TextStyle(),
-          ),
         ),
       ),
       child: Builder(
         builder: (context) {
+          if (type == CupertinoButtonType.filled) {
+            CupertinoButton.filled(
+              disabledColor:
+                  disabledColor ?? CupertinoColors.quaternarySystemFill,
+              onPressed: onPressed,
+              padding: padding,
+              minSize: minSize,
+              borderRadius: borderRadius,
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  if (icon != null)
+                    Padding(
+                      padding: const EdgeInsets.only(right: 4),
+                      child: icon,
+                    ),
+                  child,
+                ],
+              ),
+            );
+          }
+
           return CupertinoButton(
             disabledColor:
                 disabledColor ?? CupertinoColors.quaternarySystemFill,
             onPressed: onPressed,
             padding: padding,
-            minSize: minSize ?? typeSize,
+            minSize: minSize,
             borderRadius: borderRadius,
             color: type.calculateColor(color, context),
             child: Row(
@@ -95,7 +124,7 @@ enum CupertinoButtonType {
   tinted,
   filled;
 
-  static const tintedOpacity = 0.2;
+  static const tintedOpacity = 0.5;
 
   Color? calculateColor(
     Color? color,
@@ -104,8 +133,11 @@ enum CupertinoButtonType {
     return switch (this) {
       CupertinoButtonType.plain => null,
       CupertinoButtonType.gray => CupertinoColors.systemFill,
-      CupertinoButtonType.tinted => color?.withOpacity(tintedOpacity),
-      CupertinoButtonType.filled => context.colorScheme.primary.darken()
+      CupertinoButtonType.tinted => color?.withOpacity(tintedOpacity) ??
+          context.theme.cupertinoOverrideTheme?.primaryColor
+              ?.withOpacity(tintedOpacity),
+      CupertinoButtonType.filled =>
+        color ?? context.theme.cupertinoOverrideTheme?.primaryColor
     };
   }
 }

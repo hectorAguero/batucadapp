@@ -83,25 +83,29 @@ class _InstrumentDetailsPageState extends ConsumerState<InstrumentDetailsPage> {
                   ),
                   WebPaddingSliver.only(
                     right: true,
-                    sliver: SliverCrossAxisConstrained(
-                      maxCrossAxisExtent: ScreenSize.md.value,
-                      child: SliverPadding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 24,
-                        ),
-                        sliver: SliverToBoxAdapter(
-                          child: TabBar(
-                            overlayColor: const WidgetStatePropertyAll(
-                              Colors.transparent,
+                    sliver: SliverSafeArea(
+                      top: false,
+                      bottom: false,
+                      sliver: SliverCrossAxisConstrained(
+                        maxCrossAxisExtent: ScreenSize.md.value,
+                        child: SliverPadding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 24,
+                          ),
+                          sliver: SliverToBoxAdapter(
+                            child: TabBar(
+                              overlayColor: const WidgetStatePropertyAll(
+                                Colors.transparent,
+                              ),
+                              indicatorSize: TabBarIndicatorSize.tab,
+                              indicatorPadding: const EdgeInsets.symmetric(
+                                horizontal: 4,
+                              ),
+                              tabs: [
+                                Tab(text: context.loc.instrumentDescription),
+                                Tab(text: context.loc.instrumentLearning),
+                              ],
                             ),
-                            indicatorSize: TabBarIndicatorSize.tab,
-                            indicatorPadding: const EdgeInsets.symmetric(
-                              horizontal: 4,
-                            ),
-                            tabs: [
-                              Tab(text: context.loc.instrumentDescription),
-                              Tab(text: context.loc.instrumentLearning),
-                            ],
                           ),
                         ),
                       ),

@@ -6,14 +6,15 @@ class AppAnimationWrapper extends StatefulWidget {
     super.key,
     this.keepAlive = false,
     this.duration = const Duration(milliseconds: 350),
+    this.start = 0.6,
+    this.end = 1.0,
   });
 
   final bool keepAlive;
   final Widget child;
   final Duration duration;
-
-  static const start = 0.6;
-  static const end = 1.0;
+  final double start;
+  final double end;
 
   @override
   State<AppAnimationWrapper> createState() => _AppAnimationWrapperState();
@@ -26,8 +27,8 @@ class _AppAnimationWrapperState extends State<AppAnimationWrapper>
     duration: widget.duration,
   )..forward();
   late final Animation<double> _animation = Tween<double>(
-    begin: AppAnimationWrapper.start,
-    end: AppAnimationWrapper.end,
+    begin: widget.start,
+    end: widget.end,
   ).animate(
     CurvedAnimation(
       parent: _controller,

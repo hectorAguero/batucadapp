@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../../core/extensions/app_localization_extension.dart';
+import '../../core/providers/prefs.dart';
+import '../../routing/app_router.dart';
 import '../instruments/instruments_tab_page.dart';
 import '../parades/parades_tab_page.dart';
 import '../schools/schools_tab_page.dart';
@@ -10,14 +12,22 @@ part 'home_page_controller.g.dart';
 @Riverpod(keepAlive: true)
 class HomePageController extends _$HomePageController {
   @override
+  (HomeTab tab, bool isTopRoute) build() {
+    final initialPath = ref.read(initialLocationProvider).value;
+    if (initialPath != null) {
+      final tab = HomeTab.values.firstWhere((tab) => tab.path == initialPath);
 
-  ///Change for a pattern or record of hometab and boolean is is top
-  // HomeTab build() => HomeTab.instruments;
-  ({HomeTab tab, bool topRoute}) build() =>
-      (tab: HomeTab.instruments, topRoute: false);
+      return (tab, false);
+    }
 
-  void set(HomeTab tab, {bool top = false}) =>
-      state = (tab: tab, topRoute: top);
+    return (HomeTab.instruments, false);
+  }
+
+  void set(HomeTab tab, {bool top = false}) {
+    final prefs = ref.read(prefsProvider).value;
+    prefs?.setString(initialLocationPrefKey, tab.path);
+    state = (tab, top);
+  }
 }
 
 enum HomeTab { instruments, parades, schools }

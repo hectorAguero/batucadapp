@@ -44,6 +44,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get theme => 'Theme';
 
   @override
+  String get resetTheme => 'Reset';
+
+  @override
   String get light => 'Light';
 
   @override
@@ -63,6 +66,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get systemTheme => 'System Theme';
+
+  @override
+  String get defaultTheme => 'Default';
 
   @override
   String get all => 'All';

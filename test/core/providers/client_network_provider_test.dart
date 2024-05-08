@@ -4,6 +4,7 @@
 import 'package:batucadapp/constants.dart';
 import 'package:batucadapp/core/providers/client_network.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http_mock_adapter/http_mock_adapter.dart';
@@ -21,6 +22,14 @@ class Listener<T> extends Mock {
 }
 
 void main() {
+  setUpAll(() {
+    dotenv.testLoad(
+      fileInput: '''
+                  API_URL=https://api.example.com
+                  ''',
+    );
+  });
+
   const dioOkResponseCode = 200;
   group('ClientNetwork build', () {
     test('Dio is configured with correct base URL and language', () async {

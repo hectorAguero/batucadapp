@@ -13,9 +13,7 @@ class ParadesTabController extends _$ParadesTabController {
 
   @override
   FutureOr<ImmutableList<Parade>> build() async {
-    final parades = await getParades();
-
-    return parades;
+    return getParades();
   }
 
   Future<bool?> fetchNextPage({int pageSize = _pageSize}) async {

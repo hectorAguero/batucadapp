@@ -3,6 +3,7 @@ import 'package:fast_immutable_collections/fast_immutable_collections.dart'
     as ic;
 
 typedef ImmutableList<T> = IList<T>;
+typedef IListConst<T> = ic.IListConst<T>;
 typedef IList<T> = ic.IList<T>;
 
 void initializeFICMappers() {
@@ -15,4 +16,9 @@ void initializeFICMappers() {
       type: <E>(f) => f<ImmutableList<E>>(),
     ),
   ]);
+}
+
+// ignore: prefer_match_file_name
+extension ListX<T> on List<T> {
+  ImmutableList<T> get toImmutable => ImmutableList<T>(this);
 }

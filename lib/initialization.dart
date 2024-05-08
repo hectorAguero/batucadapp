@@ -4,15 +4,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'core/extensions/app_localization_extension.dart';
 import 'core/providers/initialization.dart';
-import 'core/theme/theme_mode_controller.dart';
 import 'features/home/widgets/adaptive_navigation_rail.dart';
+import 'theme/theme_mode_controller.dart';
 import 'utils/screen_size.dart';
 
 class Initialization extends ConsumerWidget {
-  const Initialization({required this.onLoaded, super.key});
-  final WidgetBuilder onLoaded;
+  const Initialization({super.key});
 
-  static const path = '/startup';
+  static const path = '/';
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -22,7 +21,7 @@ class Initialization extends ConsumerWidget {
     return AnimatedSwitcher(
       duration: const Duration(milliseconds: 300),
       child: switch (initProvider) {
-        AsyncData() => onLoaded(context),
+        AsyncData() => const Scaffold(),
         AsyncLoading() => const AppStartupLoadingWidget(),
         AsyncError(:final error) => AppStartupErrorWidget(
             message: error.toString(),

@@ -11,46 +11,53 @@ class AppAsyncWidget<T> extends StatelessWidget {
   const AppAsyncWidget({
     required this.asyncValue,
     required this.child,
-    super.key,
     this.onErrorRetry,
+    this.loadingWidget,
+    super.key,
   });
 
   final AsyncValue<T> asyncValue;
   final VoidCallback? onErrorRetry;
+  final Widget? loadingWidget;
+
   final Widget child;
 
   @override
   Widget build(BuildContext context) {
-    return switch (asyncValue) {
-      AsyncData() => child,
-      AsyncError(:final error) => Center(
-          key: const ValueKey('error'),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                error.toString(),
-                style: Theme.of(context).textTheme.titleLarge,
-              ),
-              if (onErrorRetry != null)
-                CupertinoButton(
-                  onPressed: onErrorRetry,
-                  child: Text(context.loc.retry),
+    return AnimatedSwitcher(
+      duration: kThemeAnimationDuration,
+      child: switch (asyncValue) {
+        AsyncData() => child,
+        AsyncError(:final error) => Center(
+            key: const ValueKey('error'),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  error.toString(),
+                  style: Theme.of(context).textTheme.titleLarge,
                 ),
-            ],
-          ),
-        ),
-      AsyncLoading() => const Center(
-          key: ValueKey('loading'),
-          child: Center(
-            child: SizedBox(
-              width: 32,
-              height: 32,
-              child: CircularProgressIndicator.adaptive(),
+                if (onErrorRetry != null)
+                  CupertinoButton(
+                    onPressed: onErrorRetry,
+                    child: Text(context.loc.retry),
+                  ),
+              ],
             ),
           ),
-        ),
-    };
+        AsyncLoading() => loadingWidget ??
+            const Center(
+              key: ValueKey('loading'),
+              child: Center(
+                child: SizedBox(
+                  width: 32,
+                  height: 32,
+                  child: CircularProgressIndicator.adaptive(),
+                ),
+              ),
+            ),
+      },
+    );
   }
 }
 
@@ -59,12 +66,14 @@ class AppAsyncSliverWidget<T> extends StatefulWidget {
     required this.asyncValue,
     required this.child,
     this.onErrorRetry,
+    this.loadingSliver,
     super.key,
   });
 
   final AsyncValue<T> asyncValue;
   final VoidCallback? onErrorRetry;
   final Widget Function(T) child;
+  final Widget? loadingSliver;
 
   @override
   State<AppAsyncSliverWidget<T>> createState() =>
@@ -82,16 +91,17 @@ class _AppAsyncSliverWidgetState<T> extends State<AppAsyncSliverWidget<T>> {
       duration: kThemeAnimationDuration,
       child: switch (widget.asyncValue) {
         AsyncData(:final value) => widget.child(value),
-        AsyncLoading() => const SliverFillRemaining(
-            key: ValueKey('loading'),
-            child: Center(
-              child: SizedBox(
-                width: 32,
-                height: 32,
-                child: CircularProgressIndicator.adaptive(),
+        AsyncLoading() => widget.loadingSliver ??
+            const SliverFillRemaining(
+              key: ValueKey('loading'),
+              child: Center(
+                child: SizedBox(
+                  width: 32,
+                  height: 32,
+                  child: CircularProgressIndicator.adaptive(),
+                ),
               ),
             ),
-          ),
         AsyncError(:final error) => SliverFillRemaining(
             key: const ValueKey('error'),
             child: Padding(

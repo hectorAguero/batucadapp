@@ -44,6 +44,9 @@ class AppLocalizationsJa extends AppLocalizations {
   String get theme => 'テーマ';
 
   @override
+  String get resetTheme => 'リセット';
+
+  @override
   String get light => 'ライト';
 
   @override
@@ -63,6 +66,9 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get systemTheme => 'システムテーマ';
+
+  @override
+  String get defaultTheme => 'デフォルト';
 
   @override
   String get all => 'すべて';
