@@ -3,8 +3,6 @@ name: Github-Pages
 on:
   push:
     branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
   workflow_dispatch:
 
 jobs:
@@ -21,18 +19,18 @@ jobs:
           cache: true
       
       - name: Make envfile
-        uses: SpicyPizza/create-envfile@v2.0
-        with:
-          envkey_API_URL: ${{ secrets.API_URL }}
-
-      - name: Run Tests
-        run: flutter test
+        run: echo "API_URL=${{ secrets.API_URL }}" > .env
         
       - name: Install dependencies
         run: flutter pub get
+      
+      - name: Run Tests
+        run: flutter test
 
+      # 404.html and flutter_bootstrap.js are mannually added to the web folder to
+      # fix the 404 error on GH Pages and fix PWA Padding issue
       - name: Build web
-        run: flutter build web --wasm --base-href /batucadapp/ 
+        run: flutter build web --wasm --base-href /batucadapp/ --no-web-resources-cdn
 
       - name: Commit changes
         run: |
