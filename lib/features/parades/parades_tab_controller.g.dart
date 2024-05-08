@@ -7,7 +7,7 @@ part of 'parades_tab_controller.dart';
 // **************************************************************************
 
 String _$paradesTabControllerHash() =>
-    r'6c5d4cd7a66b471fdd03be710654b7eea981fc4e';
+    r'e15cecd0b0e7a576d5478587e95a8f9f4a93ec73';
 
 /// See also [ParadesTabController].
 @ProviderFor(ParadesTabController)

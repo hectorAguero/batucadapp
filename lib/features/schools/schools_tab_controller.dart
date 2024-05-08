@@ -11,10 +11,10 @@ part 'schools_tab_controller.g.dart';
 
 @riverpod
 class SchoolsTabController extends _$SchoolsTabController {
-  static const _pageSize = 12;
+  static const _pageSize = 10;
 
   @override
-  Future<ImmutableList<School>> build() async {
+  FutureOr<ImmutableList<School>> build() async {
     return getSchools(pageSize: _pageSize);
   }
 

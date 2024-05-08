@@ -8,6 +8,7 @@ import '../../../core/extensions/app_localization_extension.dart';
 import '../../../core/extensions/intl_extension.dart';
 import '../../../core/extensions/string_extensions.dart';
 import '../../../core/extensions/theme_of_context_extension.dart';
+import '../../../theme/app_theme_colors.dart';
 import '../../../theme/theme_mode_controller.dart';
 import '../school.dart';
 import '../school_extensions.dart';
@@ -158,7 +159,7 @@ class _SchoolDetailsTextState extends ConsumerState<SchoolDetailsText> {
   void setColors() {
     final schoolColors = widget.school.colorsCode;
     if (schoolColors.isNotEmpty) {
-      final colors = AppColors(
+      final colors = AppThemeColors(
         primary: schoolColors.first,
         name: widget.school.name,
         secondary: schoolColors.elementAtOrNull(1),

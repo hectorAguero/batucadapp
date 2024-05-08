@@ -54,7 +54,7 @@ class _SchoolCardState extends ConsumerState<SchoolCard> {
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
                 colors: [
-                  if (school.colors.isEmpty)
+                  if (school.colorsCode.isEmpty)
                     for (final _ in Iterable<int>.generate(2))
                       CupertinoDynamicColor.resolve(
                         CupertinoColors.systemGrey5,

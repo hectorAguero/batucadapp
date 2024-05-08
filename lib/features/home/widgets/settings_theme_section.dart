@@ -5,6 +5,7 @@ import '../../../common_widgets/app_cupertino_button.dart';
 import '../../../constants.dart';
 import '../../../core/extensions/app_localization_extension.dart';
 import '../../../core/extensions/theme_of_context_extension.dart';
+import '../../../theme/app_theme_colors.dart';
 import '../../../theme/theme_mode_controller.dart';
 import '../../../utils/app_loggers.dart';
 
@@ -64,7 +65,8 @@ class SettingsThemeSection extends ConsumerWidget {
         Consumer(
           builder: (context, ref, child) {
             final colors = ref.watch(appSelectedColorsProvider);
-            final isDefault = colors.name == AppColors.defaultColors().name;
+            final isDefault =
+                colors.name == AppThemeColors.defaultColors().name;
 
             return CupertinoListTile(
               backgroundColor: context.colorScheme.surface,
@@ -76,7 +78,7 @@ class SettingsThemeSection extends ConsumerWidget {
                     ? null
                     : () => ref
                         .read(appSelectedColorsProvider.notifier)
-                        .setThemeColors(AppColors.defaultColors()),
+                        .setThemeColors(AppThemeColors.defaultColors()),
                 child: Text(isDefault ? '' : context.loc.resetTheme),
               ),
               subtitle: Text(

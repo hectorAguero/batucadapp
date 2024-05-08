@@ -2,6 +2,7 @@ import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 import '../../../common_widgets/app_fade_in_image.dart';
 import '../../../core/extensions/app_localization_extension.dart';
 import '../../../core/extensions/theme_of_context_extension.dart';
@@ -54,12 +55,15 @@ class SchoolFlag extends ConsumerWidget {
             },
             child: AspectRatio(
               aspectRatio: 3 / 2,
-              child: school.imageUrl.isNotEmpty
-                  ? AppFadeInImage(
-                      school.imageUrl,
-                      fit: BoxFit.cover,
-                    )
-                  : EmptyImage(colors: school.colorsCode),
+              child: Skeleton.replace(
+                child: AppFadeInImage(
+                  school.imageUrl,
+                  fit: BoxFit.cover,
+                  imageErrorBuilder: (context, error, stackTrace) => EmptyImage(
+                    colors: school.colorsCode,
+                  ),
+                ),
+              ),
             ),
           ),
         ),

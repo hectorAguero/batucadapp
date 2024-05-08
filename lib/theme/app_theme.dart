@@ -3,12 +3,12 @@ import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'theme_mode_controller.dart';
+import 'app_theme_colors.dart';
 
 const _iOSFontLetterSpacing = -1.5;
 
 class AppTheme {
-  static ThemeData lightTheme(AppColors colors) => FlexThemeData.light(
+  static ThemeData lightTheme(AppThemeColors colors) => FlexThemeData.light(
         useMaterial3: true,
         keyColors: FlexKeyColors(
           useSecondary: colors.secondary != null,
@@ -49,7 +49,7 @@ class AppTheme {
         ),
       );
 
-  static ThemeData darkTheme(AppColors colors, {required bool trueBlack}) {
+  static ThemeData darkTheme(AppThemeColors colors, {required bool trueBlack}) {
     return FlexThemeData.dark(
       useMaterial3: true,
       keyColors: FlexKeyColors(

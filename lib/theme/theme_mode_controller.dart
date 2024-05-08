@@ -2,9 +2,9 @@ import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../constants.dart';
 import '../core/providers/prefs.dart';
 import '../utils/app_loggers.dart';
+import 'app_theme_colors.dart';
 
 part 'theme_mode_controller.g.dart';
 
@@ -92,11 +92,17 @@ class AppThemeTrueBlack extends _$AppThemeTrueBlack {
 @riverpod
 class AppSelectedColors extends _$AppSelectedColors {
   @override
-  AppColors build() {
-    return AppColors.defaultColors();
+  AppThemeColors build() {
+    final prefs = ref.watch(prefsProvider).value;
+    final colors = prefs?.getString('theme_color');
+    if (colors != null) {
+      return AppThemeColors.fromJson(colors);
+    }
+
+    return AppThemeColors.defaultColors();
   }
 
-  void setThemeColors(AppColors colors) {
+  Future<void> setThemeColors(AppThemeColors colors) async {
     const percentage = 30;
 
     final primaryLuminance = colors.primary.computeLuminance();
@@ -116,69 +122,10 @@ class AppSelectedColors extends _$AppSelectedColors {
           : colors.primary.darken(percentage);
     }
 
-    state = AppColors(
-      primary: primary,
-      secondary: colors.secondary,
-      tertiary: colors.tertiary,
-      name: colors.name,
-    );
-  }
-}
-
-class AppColors {
-  final Color primary;
-  final Color? secondary;
-  final Color? tertiary;
-  final String name;
-
-  AppColors({
-    required this.primary,
-    required this.name,
-    this.secondary,
-    this.tertiary,
-  });
-
-  AppColors.defaultColors()
-      : primary = const Color(0xffff00a5),
-        name = Constants.defaultColorName,
-        secondary = const Color(0xff00a859),
-        tertiary = null;
-
-  AppColors copyWith({
-    Color? primary,
-    Color? secondary,
-    Color? tertiary,
-    String? name,
-  }) {
-    return AppColors(
-      primary: primary ?? this.primary,
-      secondary: secondary ?? this.secondary,
-      tertiary: tertiary ?? this.tertiary,
-      name: name ?? this.name,
-    );
-  }
-
-  // ignore: member_ordering
-  @override
-  int get hashCode => primary.hashCode ^ secondary.hashCode ^ tertiary.hashCode;
-
-  @override
-  bool operator ==(covariant AppColors other) {
-    return primary == other.primary &&
-        secondary == other.secondary &&
-        name == other.name &&
-        tertiary == other.tertiary;
-  }
-
-  @override
-  String toString() {
-    return 'AppColors{primary: $primary, '
-        'secondary: $secondary, tertiary: $tertiary}';
-  }
-}
-
-extension AppColorsExtension on AppColors {
-  int get usedColors {
-    return (secondary != null ? 1 : 0) + (tertiary != null ? 1 : 0) + 1;
+    state = colors.copyWith(primary: primary);
+    await ref
+        .read(prefsProvider)
+        .value
+        ?.setString('theme_color', colors.toJson());
   }
 }
