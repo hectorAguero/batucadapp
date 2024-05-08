@@ -1,8 +1,15 @@
 name: Run Tests
-on: [push, workflow_dispatch]
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
 jobs:
   drive:
     runs-on: ubuntu-latest
+    environment: github-pages
     steps:
       - uses: actions/checkout@v4
       - uses: subosito/flutter-action@v2
@@ -11,6 +18,6 @@ jobs:
             cache: true
       # Not needed for tests but pubspec.yaml requires it
       - name: Make envfile
-        run: echo "API_URL=${{ secrets.API_URL }}" > .env
+        run: echo "API_URL=${{ vars.API_URL }}" > .env
         
       - run: flutter test

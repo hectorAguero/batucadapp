@@ -8,6 +8,7 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    environment: github-pages
     steps:
       - name: Clone repository
         uses: actions/checkout@v4
@@ -19,7 +20,7 @@ jobs:
           cache: true
       
       - name: Make envfile
-        run: echo "API_URL=${{ secrets.API_URL }}" > .env
+        run: echo "API_URL=${{ vars.API_URL }}" > .env
         
       - name: Install dependencies
         run: flutter pub get
