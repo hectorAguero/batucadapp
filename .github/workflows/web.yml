@@ -20,7 +20,7 @@ jobs:
           cache: true
       
       - name: Make envfile
-        run: echo "API_URL=${{ vars.API_URL }}" > .env
+        run: echo "API_URL=${{ vars.API_URL }}" > dotenv
         
       - name: Install dependencies
         run: flutter pub get

@@ -17,7 +17,7 @@ import 'theme/theme_mode_controller.dart';
 
 Future<void> main() async {
   usePathUrlStrategy();
-  await dotenv.load();
+  await dotenv.load(fileName: 'dotenv');
   runApp(const ProviderScope(child: MainApp()));
 }
 
